@@ -1,5 +1,5 @@
 //
-//  ViewController.h
+//  MarbleNavigationController.h
 //  Marble
 //
 //  Created by Iru on 9/29/14.
@@ -8,8 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ViewController : UIViewController
-
+@interface MarbleNavigationController : UINavigationController
 
 @end
-
