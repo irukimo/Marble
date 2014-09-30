@@ -8,9 +8,11 @@
 
 #import "HomeViewController.h"
 #import "QuizViewController.h"
+#import "SelectPeopleViewController.h"
 
 @interface HomeViewController ()
-@property (weak, nonatomic) IBOutlet UIView *quizView;
+@property (strong, nonatomic) QuizViewController *quizViewController;
+@property (strong, nonatomic) SelectPeopleViewController *selectPeopleViewController;
 
 @end
 
@@ -18,9 +20,11 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    QuizViewController *quizViewController = [self.childViewControllers firstObject];
-    [quizViewController setDelegate:self];
-    [self.view addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:quizViewController.view action:@selector(endEditing:)]];
+    _quizViewController = [[QuizViewController alloc] init];
+    [_quizViewController.view setFrame:CGRectMake(0, 50, self.view.frame.size.width, 100)];
+    [self.view addSubview:_quizViewController.view];
+    [_quizViewController setDelegate:self];
+//    [self.view addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:_quizViewController.view action:@selector(endEditing:)]];
     self.navigationController.navigationBar.hidden = YES;
     // Do any additional setup after loading the view.
 }
@@ -42,18 +46,31 @@
 #pragma mark -
 #pragma mark QuizViewController Delegate Methods
 - (void)shouldDisplayPeople:(QuizViewController *)viewController withPeople:(NSArray *)people{
-    _quizView.frame = CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y,
-               self.view.bounds.size.width, _quizView.frame.size.height);
+    _selectPeopleViewController = [[SelectPeopleViewController alloc] init];
+//    _selectPeopleViewController.view.frame = CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y + 200, self.view.bounds.size.width, 100);
+    _selectPeopleViewController.view.frame = CGRectMake(0, 200, self.view.bounds.size.width, 100);
+    _selectPeopleViewController.view.tag = 100;
+    [self.view addSubview:_selectPeopleViewController.view];
+    _quizViewController.view.frame = CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y,
+                                                self.view.bounds.size.width, _quizViewController.view.frame.size.height);
+
 }
 
 - (void)shouldDisplayKeywords:(QuizViewController *)viewController withKeywords:(NSArray *)keywords{
-    _quizView.frame = CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y,
-                                 self.view.bounds.size.width, _quizView.frame.size.height);
+    _quizViewController.view.frame = CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y,
+                                 self.view.bounds.size.width, _quizViewController.view.frame.size.height);
 }
 
 - (void)backToNormal:(QuizViewController *)viewController{
-    _quizView.frame = CGRectMake(self.view.frame.origin.x, 150,
-                                 self.view.bounds.size.width, _quizView.frame.size.height);
+    for(id view in self.view.subviews){
+        if([view tag] == 100){
+            [view removeFromSuperview];
+        }
+    }
+    NSLog(@"backtonormal");
+    _quizViewController.view.frame = CGRectMake(self.view.frame.origin.x, 100,
+                                 self.view.bounds.size.width, _quizViewController.view.frame.size.height);
+
 }
 
 

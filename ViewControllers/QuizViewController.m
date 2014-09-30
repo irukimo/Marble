@@ -9,9 +9,12 @@
 #import "QuizViewController.h"
 
 @interface QuizViewController ()
-@property (weak, nonatomic) IBOutlet UITextField *keywordTextField;
-@property (weak, nonatomic) IBOutlet UITextField *name1TextField;
-@property (weak, nonatomic) IBOutlet UITextField *name2TextField;
+@property (strong, nonatomic) UITextField *keywordTextField;
+@property (strong, nonatomic) UITextField *name1TextField;
+@property (strong, nonatomic) UITextField *name2TextField;
+@property (strong, nonatomic) UIButton *shuffleKeywordBtn;
+@property (strong, nonatomic) UIButton *shufflePeopleBtn;
+
 
 @end
 
@@ -19,7 +22,24 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self addTextFields];
+    [self addShuffleButtons];
+
+    
+    [self.view addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self.view action:@selector(endEditing:)]];
+    // Do any additional setup after loading the view.
+}
+
+-(void)addTextFields{
+    _keywordTextField = [[UITextField alloc] initWithFrame:CGRectMake(100, 10, 50, 50)];
+    _name1TextField = [[UITextField alloc] initWithFrame:CGRectMake(10, 10, 100, 50)];
+    _name2TextField = [[UITextField alloc] initWithFrame:CGRectMake(200, 10, 100, 50)];
     [_keywordTextField setText:@"yay"];
+    [_name1TextField setText:@"Albert"];
+    [_name2TextField setText:@"胖仔"];
+    [self.view addSubview:_keywordTextField];
+    [self.view addSubview:_name1TextField];
+    [self.view addSubview:_name2TextField];
     [_keywordTextField setBorderStyle:UITextBorderStyleNone];
     [_keywordTextField setDelegate:self];
     [_keywordTextField setBackgroundColor:[UIColor yellowColor]];
@@ -30,10 +50,19 @@
     [_name2TextField setTextAlignment:NSTextAlignmentCenter];
     [_name1TextField setDelegate:self];
     [_name2TextField setDelegate:self];
+}
 
-    
-    [self.view addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self.view action:@selector(endEditing:)]];
-    // Do any additional setup after loading the view.
+-(void)addShuffleButtons{
+    _shuffleKeywordBtn = [[UIButton alloc] initWithFrame:CGRectMake(30, 60, 100, 50)];
+    _shufflePeopleBtn = [[UIButton alloc] initWithFrame:CGRectMake(140, 60, 100, 50)];
+    [_shuffleKeywordBtn setTitle:@"關鍵字" forState:UIControlStateNormal];
+    [_shufflePeopleBtn setTitle:@"朋友" forState:UIControlStateNormal];
+    [_shuffleKeywordBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [_shufflePeopleBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [self.view addSubview:_shuffleKeywordBtn];
+    [self.view addSubview:_shufflePeopleBtn];
+    [_shufflePeopleBtn addTarget:self action:@selector(shufflePeople:) forControlEvents:UIControlEventTouchUpInside];
+    [_shuffleKeywordBtn addTarget:self action:@selector(shuffleKeyword:) forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -41,10 +70,11 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (IBAction)shuffleKeyword:(id)sender {
+- (void)shuffleKeyword:(id)sender {
     [_keywordTextField setText:@"人性"];
 }
-- (IBAction)shufflePeople:(id)sender {
+
+- (void)shufflePeople:(id)sender {
     [_name1TextField setText:@"王大明"];
     [_name2TextField setText:@"范冰冰"];
 }
@@ -81,7 +111,7 @@
 }
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField{
-    if(textField == _name1TextField || _name2TextField){
+    if(textField == _name1TextField || textField == _name2TextField){
         if(self.delegate){
             NSArray* people = [NSArray arrayWithObjects:@"obj1",@"obj2",@"ibj3",@"obj4",@"obj5",nil];
             [self.delegate shouldDisplayPeople:self withPeople:people];
