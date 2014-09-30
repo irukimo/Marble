@@ -29,9 +29,12 @@
     [self addShuffleButtons];
 
     
-    [self.view addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self.view action:@selector(endEditing:)]];
+    [self.view addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedView)]];
+    [self recordData];
     // Do any additional setup after loading the view.
 }
+
+
 
 -(void)addTextFields{
     _keywordTextField = [[UITextField alloc] initWithFrame:CGRectMake(100, 10, 50, 50)];
@@ -75,11 +78,13 @@
 
 - (void)shuffleKeyword:(id)sender {
     [_keywordTextField setText:@"人性"];
+    [self recordData];
 }
 
 - (void)shufflePeople:(id)sender {
     [_name1TextField setText:@"王大明"];
     [_name2TextField setText:@"范冰冰"];
+    [self recordData];
 }
 
 
@@ -96,6 +101,12 @@
 -(void) setPerson:(NSString *)person{
     [_ongoingTextField setText:person];
     [_ongoingTextField endEditing:YES];
+    [self recordData];
+}
+
+-(void) tappedView{
+    [self.view endEditing:YES];
+    [self presentData];
 }
 
 #pragma mark -
@@ -111,24 +122,31 @@
 
     
 //
-        
-        
-        
-    [Utility generateAlertWithMessage:@"請選一個朋友"];
-    return YES;
+    if(textField == _keywordTextField){
+        [textField resignFirstResponder];
+        if(_delegate && [_delegate respondsToSelector:@selector(backToNormal:)]){
+            [_delegate backToNormal:self];
+        }
+        [self recordData];
+        return NO;
+    } else{
+        [Utility generateAlertWithMessage:@"請選一個朋友"];
+        return YES;
+    }
 
-//    }
-//    return YES;
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField{
-    if(self.delegate){
-        [self.delegate backToNormal:self];
+    if(_delegate && [_delegate respondsToSelector:@selector(backToNormal:)]){
+        [_delegate backToNormal:self];
+    }
+    if(textField == _keywordTextField && ![textField.text isEqualToString:@""] ){
+        [self recordData];
     }
 }
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField{
-    [self recordAndEmptyData:textField];
+    [self presentAndEmptyData:textField];
     if(textField == _name1TextField || textField == _name2TextField){
         _ongoingTextField = textField;
         if(self.delegate && [_delegate respondsToSelector:@selector(shouldDisplayPeople:withPeople:)]){
@@ -143,11 +161,21 @@
     }
 }
 
--(void) recordAndEmptyData:(UITextField *)textField{
+-(void) presentAndEmptyData:(UITextField *)textField{
+    [self presentData];
+    [textField setText:@""];
+}
+
+-(void) recordData{
     _name1CurrentValue = [_name1TextField text];
     _name2CurrentValue = [_name2TextField text];
     _keywordCurrentValue = [_keywordTextField text];
-    [textField setText:@""];
+}
+
+-(void) presentData{
+    [_name1TextField setText:_name1CurrentValue];
+    [_name2TextField setText:_name2CurrentValue];
+    [_keywordTextField setText:_keywordCurrentValue];
 }
 
 @end
