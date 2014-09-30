@@ -25,7 +25,7 @@
     [self.view addSubview:_quizViewController.view];
     [_quizViewController setDelegate:self];
 //    [self.view addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:_quizViewController.view action:@selector(endEditing:)]];
-    self.navigationController.navigationBar.hidden = YES;
+//    self.navigationController.navigationBar.hidden = YES;
     // Do any additional setup after loading the view.
 }
 
