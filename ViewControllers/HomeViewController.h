@@ -8,7 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "QuizViewController.h"
+#import "SelectPeopleViewController.h"
 
-@interface HomeViewController : UIViewController <QuizViewControllerDelegate>
+@interface HomeViewController : UIViewController <QuizViewControllerDelegate, SelectPeopleViewControllerDelegate>
 
 @end

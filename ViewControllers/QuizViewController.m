@@ -14,7 +14,10 @@
 @property (strong, nonatomic) UITextField *name2TextField;
 @property (strong, nonatomic) UIButton *shuffleKeywordBtn;
 @property (strong, nonatomic) UIButton *shufflePeopleBtn;
-
+@property (strong, nonatomic) UITextField *ongoingTextField;
+@property (strong, nonatomic) NSString *name1CurrentValue;
+@property (strong, nonatomic) NSString *name2CurrentValue;
+@property (strong, nonatomic) NSString *keywordCurrentValue;
 
 @end
 
@@ -90,15 +93,29 @@
 }
 */
 
+-(void) setPerson:(NSString *)person{
+    [_ongoingTextField setText:person];
+    [_ongoingTextField endEditing:YES];
+}
+
 #pragma mark -
 #pragma mark UITextField Delegate Methods
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
 //    if (textField == _keywordTextField) {
-    [textField resignFirstResponder];
-    if(self.delegate){
-        [self.delegate backToNormal:self];
-    }
-    return NO;
+//    [textField resignFirstResponder];
+//    if(self.delegate){
+//        [self.delegate backToNormal:self];
+//    }
+    
+    // Alert style
+
+    
+//
+        
+        
+        
+    [Utility generateAlertWithMessage:@"請選一個朋友"];
+    return YES;
 
 //    }
 //    return YES;
@@ -111,17 +128,26 @@
 }
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField{
+    [self recordAndEmptyData:textField];
     if(textField == _name1TextField || textField == _name2TextField){
-        if(self.delegate){
-            NSArray* people = [NSArray arrayWithObjects:@"obj1",@"obj2",@"ibj3",@"obj4",@"obj5",nil];
+        _ongoingTextField = textField;
+        if(self.delegate && [_delegate respondsToSelector:@selector(shouldDisplayPeople:withPeople:)]){
+            NSArray* people = [NSArray arrayWithObjects:@"Iru",@"Wen",@"Henry",@"Albert",@"Sandy",nil];
             [self.delegate shouldDisplayPeople:self withPeople:people];
         }
     } else{
-        if(self.delegate){
-            NSArray* keywords = [NSArray arrayWithObjects:@"obj1",@"obj2",@"ibj3",@"obj4",@"obj5",nil];
-            [self.delegate shouldDisplayKeywords:self withKeywords:keywords];
+        if(_delegate && [_delegate respondsToSelector:@selector(shouldDisplayKeywords:withKeywords:)]){
+            NSArray* keywords = [NSArray arrayWithObjects:@"Iru",@"Wen",@"Henry",@"Albert",@"Sandy",nil];
+            [_delegate shouldDisplayKeywords:self withKeywords:keywords];
         }
     }
+}
+
+-(void) recordAndEmptyData:(UITextField *)textField{
+    _name1CurrentValue = [_name1TextField text];
+    _name2CurrentValue = [_name2TextField text];
+    _keywordCurrentValue = [_keywordTextField text];
+    [textField setText:@""];
 }
 
 @end

@@ -8,6 +8,17 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol SelectPeopleViewControllerDelegate;
+
 @interface SelectPeopleViewController : UITableViewController
+@property (nonatomic, weak) id<SelectPeopleViewControllerDelegate> delegate;
+@property (strong, nonatomic) NSArray *peopleArray;
+@end
+
+@protocol SelectPeopleViewControllerDelegate <NSObject>
+
+- (void)selectedPerson:(NSString *)person;
+
 
 @end
+

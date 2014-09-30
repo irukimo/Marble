@@ -12,6 +12,7 @@
 
 @interface QuizViewController : UIViewController <UITextFieldDelegate>
 @property (nonatomic, weak) id<QuizViewControllerDelegate> delegate;
+-(void) setPerson:(NSString *)person;
 @end
 
 @protocol QuizViewControllerDelegate <NSObject>

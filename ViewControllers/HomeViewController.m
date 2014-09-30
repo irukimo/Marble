@@ -43,13 +43,22 @@
     // Pass the selected object to the new view controller.
 }
 */
+
+#pragma mark -
+#pragma mark SelectPeopleViewController Delegate Methods
+- (void)selectedPerson:(NSString *)person{
+    [_quizViewController setPerson:person];
+}
+
 #pragma mark -
 #pragma mark QuizViewController Delegate Methods
 - (void)shouldDisplayPeople:(QuizViewController *)viewController withPeople:(NSArray *)people{
     _selectPeopleViewController = [[SelectPeopleViewController alloc] init];
 //    _selectPeopleViewController.view.frame = CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y + 200, self.view.bounds.size.width, 100);
-    _selectPeopleViewController.view.frame = CGRectMake(0, 200, self.view.bounds.size.width, 100);
+    _selectPeopleViewController.view.frame = CGRectMake(0, 100, self.view.bounds.size.width, 200);
     _selectPeopleViewController.view.tag = 100;
+    _selectPeopleViewController.delegate = self;
+    [_selectPeopleViewController setPeopleArray:people];
     [self.view addSubview:_selectPeopleViewController.view];
     _quizViewController.view.frame = CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y,
                                                 self.view.bounds.size.width, _quizViewController.view.frame.size.height);
@@ -67,7 +76,7 @@
             [view removeFromSuperview];
         }
     }
-    NSLog(@"backtonormal");
+//    NSLog(@"backtonormal");
     _quizViewController.view.frame = CGRectMake(self.view.frame.origin.x, 100,
                                  self.view.bounds.size.width, _quizViewController.view.frame.size.height);
 

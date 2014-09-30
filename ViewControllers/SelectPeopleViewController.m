@@ -10,14 +10,13 @@
 #import "SelectPeopleViewCell.h"
 
 @interface SelectPeopleViewController ()
-@property (strong, nonatomic) NSArray *people;
 @end
 
 @implementation SelectPeopleViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    _people = [NSArray arrayWithObjects:@"Peanut",@"Wen Shaw",  nil];
+    _peopleArray = [NSArray arrayWithObjects:@"Peanut",@"Wen Shaw",  nil];
     
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -31,6 +30,12 @@
     // Dispose of any resources that can be recreated.
 }
 
+-(void) setPeopleArray:(NSArray *)array{
+    NSLog(@"setpeoplearraycalled");
+    _peopleArray = [array copy];
+    [self.tableView reloadData];
+}
+
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -40,9 +45,15 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     // Return the number of rows in the section.
-    return [_people count];
+    return [_peopleArray count];
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSString *personSelected = [_peopleArray objectAtIndex:indexPath.row];
+    if(_delegate && [_delegate respondsToSelector:@selector(selectedPerson:)]){
+        [_delegate selectedPerson:personSelected];
+    }
+}
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     NSString *selectPeopleViewCellIdentifier = @"selectPeopleCell";
@@ -51,13 +62,13 @@
         cell = [[SelectPeopleViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:selectPeopleViewCellIdentifier];
     }
     
-    [cell setPersonName:[_people objectAtIndex:indexPath.row]];
+    [cell setPersonName:[_peopleArray objectAtIndex:indexPath.row]];
     
     return cell;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 100;
+    return 50;
 }
 
 
