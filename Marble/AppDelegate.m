@@ -6,7 +6,10 @@
 //  Copyright (c) 2014 Orrzs Inc. All rights reserved.
 //
 
+#import <FacebookSDK/FacebookSDK.h>
+
 #import "AppDelegate.h"
+#import "RestKitInitializer.h"
 
 @interface AppDelegate ()
 
@@ -23,6 +26,47 @@
         [lagFreeField resignFirstResponder];
         [lagFreeField removeFromSuperview];
     // Override point for customization after application launch.
+    
+    NSError *error = nil;
+    NSManagedObjectModel *managedObjectModel = [NSManagedObjectModel mergedModelFromBundles:nil];
+    RKManagedObjectStore *managedObjectStore = [[RKManagedObjectStore alloc] initWithManagedObjectModel:managedObjectModel];
+    BOOL success = RKEnsureDirectoryExistsAtPath(RKApplicationDataDirectory(), &error);
+    if (! success) {
+        RKLogError(@"Failed to create Application Data Directory at path '%@': %@", RKApplicationDataDirectory(), error);
+    }
+    //    NSString *path = [RKApplicationDataDirectory() stringByAppendingPathComponent:@"Moose.sqlite"];
+    NSPersistentStore *persistentStore = [managedObjectStore addInMemoryPersistentStore:&error];/*[managedObjectStore addSQLitePersistentStoreAtPath:path fromSeedDatabaseAtPath:nil withConfiguration:nil options:nil error:&error];*/
+    if (! persistentStore) {
+        RKLogError(@"Failed adding in-memory persistent store: %@", error);
+    }
+    [managedObjectStore createManagedObjectContexts];
+    
+    
+    // Set the default store shared instance
+    [RKManagedObjectStore setDefaultStore:managedObjectStore];
+    
+    // configure the object manager
+    // Let's let the URL end with '/' so later in response descriptors or routes we don't need to prefix path patterns with '/'
+    // Remeber, evaluation of path patterns against base URL could be surprising.
+    RKObjectManager *objectManager = [RKObjectManager managerWithBaseURL:[NSURL URLWithString:BASE_URL]];
+    MBDebug(@"BASE URL: %@", BASE_URL);
+    
+    // DON'T EVER ADD FOLLOWING LINE because last time when I added it, ghost entities pop out everywhere...
+    // THIS is kept here for the warning purpose
+    //managedObjectStore.managedObjectCache = [[RKInMemoryManagedObjectCache alloc] initWithManagedObjectContext:managedObjectStore.persistentStoreManagedObjectContext];
+    
+    objectManager.managedObjectStore = managedObjectStore;
+    // only accepts JSON from the server
+    [objectManager setAcceptHeaderWithMIMEType:@"application/json"];
+    [RKObjectManager setSharedManager:objectManager];
+    
+    [RestKitInitializer setupWithObjectManager:objectManager inManagedObjectStore:managedObjectStore];
+    
+    
+    // make sure that the FBLoginView class is loaded before the login view is shown.
+    [FBLoginView class];
+
+    
     return YES;
 }
 
@@ -46,6 +90,19 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+
+#pragma mark - Facebook SDK methods
+/**
+ Processes the response from interacting with the Facebook login process
+ */
+- (BOOL)application:(UIApplication *)application
+            openURL:(NSURL *)url
+  sourceApplication:(NSString *)sourceApplication
+         annotation:(id)annotation {
+    // attempt to extract a token from the url
+    return [FBAppCall handleOpenURL:url sourceApplication:sourceApplication];
 }
 
 @end

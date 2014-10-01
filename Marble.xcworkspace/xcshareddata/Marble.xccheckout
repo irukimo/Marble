@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>20838E8B-677C-4E1A-8CCA-3881E67955F3</string>
+	<key>IDESourceControlProjectName</key>
+	<string>Marble</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>BDD4E8DA3D78BAB585152B985D74346DB6A8E78E</key>
+		<string>github.com:irukimo/Marble.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>Marble.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>BDD4E8DA3D78BAB585152B985D74346DB6A8E78E</key>
+		<string>..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>github.com:irukimo/Marble.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>BDD4E8DA3D78BAB585152B985D74346DB6A8E78E</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>BDD4E8DA3D78BAB585152B985D74346DB6A8E78E</string>
+			<key>IDESourceControlWCCName</key>
+			<string>marble_client</string>
+		</dict>
+	</array>
+</dict>
+</plist>

@@ -22,7 +22,7 @@
 #import <CoreData/CoreData.h>
 #import <Foundation/Foundation.h>
 #import "AppDelegate.h"
-//#import "Constants.h"
+#import "Constants.h"
 //#import "UIColor+MSColor.h"
 //#import "Flurry.h"
 #endif
@@ -35,5 +35,5 @@
 #import <CoreServices/CoreServices.h>
 #endif
 
-//#import <RestKit/RestKit.h>
+#import <RestKit/RestKit.h>
 #import "Utility.h" // Utility needs RestKit

@@ -7,6 +7,7 @@
 //
 
 #import "LoginViewController.h"
+#import "KeyChainWrapper.h"
 
 @interface LoginViewController ()
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
@@ -24,8 +25,10 @@
     [self.view addSubview:kerker];
     // Do any additional setup after loading the view.
     
-    _loginView = [[FBLoginView alloc] initWithReadPermissions:@[@"basic_info", @"email", @"user_birthday"]];
+    _loginView = [[FBLoginView alloc] initWithReadPermissions:@[@"public_profile", @"user_friends"]];
     _loginView.delegate = self;
+    // Align the button in the center horizontally
+    _loginView.frame = CGRectOffset(_loginView.frame, (self.view.center.x - (_loginView.frame.size.width / 2)), 500);
     [self.view addSubview:_loginView];
 }
 
@@ -48,17 +51,12 @@
     FBAccessTokenData *accessTokenData = FBSession.activeSession.accessTokenData;
     NSString *FBAccessToken = accessTokenData.accessToken;
     
-    MSDebug(@"FB Access Token: %@", FBAccessToken);
+    MBDebug(@"FB Access Token: %@", FBAccessToken);
     
     [ClientManager login:FBAccessToken delegate:self];
 }
 
 - (void) loginViewShowingLoggedOutUser:(FBLoginView *)loginView{
-    for(UIView *view in self.view.subviews){
-        if(view.tag == NAME_LOGINOUT_TAG){
-            [view removeFromSuperview];
-        }
-    }
     [_statusLabel setText:@"You shall not pass!"];
     [ClientManager logout];
 }
@@ -107,31 +105,40 @@
 }
 
 #pragma mark -
-#pragma mark TVMClient Delegate methods
-- (void) TVMLoggedIn
+#pragma mark ClientClient Delegate methods
+- (void) ClientLoggedIn
 {
     //Set Badge number to 0
     ASYNC({
-        [ClientManager sendBadgeNumber:0];
+//        [ClientManager sendBadgeNumber:0];
     });
-    [self performSegueWithIdentifier:@"viewMultiPostsSegue" sender:nil];
+    [self performSegueWithIdentifier:@"homeSegue" sender:nil];
 }
 
-- (void) TVMLoggingInFailed
+- (void) ClientLoggingInFailed
 {
     [self logoutFBUser];
 }
 
-- (void) TVMSignedUp
+- (void) ClientSignedUp
 {
-    [Flurry logEvent:@"Signed_Up"];
     //Set Badge number to 0
     ASYNC({
-        [ClientManager sendBadgeNumber:0];
+//        [ClientManager sendBadgeNumber:0];
     });
-    [self performSegueWithIdentifier:@"viewMultiPostsSegue" sender:nil];
+    [self performSegueWithIdentifier:@"homeSegue" sender:nil];
 }
 
+#pragma mark - log out user method
+-(void) logoutUser{
+    [ClientManager logout];
+    [KeyChainWrapper cleanUpCredentials];
+    [self logoutFBUser];
+}
+
+-(void) logoutFBUser{
+    [FBSession.activeSession closeAndClearTokenInformation];
+}
 
 
 /*
