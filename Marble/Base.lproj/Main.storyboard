@@ -62,7 +62,7 @@
         <!--我-->
         <scene sceneID="V7B-nv-GCP">
             <objects>
-                <viewController id="Hih-Ce-HV3" sceneMemberID="viewController">
+                <viewController id="Hih-Ce-HV3" customClass="ProfileViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Pqn-SJ-T9x"/>
                         <viewControllerLayoutGuide type="bottom" id="lCP-sk-VZR"/>
@@ -70,39 +70,7 @@
                     <view key="view" contentMode="scaleToFill" id="Vjo-Vt-mep">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Profile" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="37T-9N-M0l">
-                                <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                                <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="170" y="98" width="49" height="21"/>
-                                </variation>
-                            </label>
-                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oRb-HR-aWv">
-                                <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
-                                <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="0.0" y="179" width="400" height="165"/>
-                                </variation>
-                                <connections>
-                                    <segue destination="4p7-kQ-rO5" kind="embed" id="LCS-pP-nP7"/>
-                                </connections>
-                            </containerView>
-                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <variation key="default">
-                            <mask key="subviews">
-                                <exclude reference="37T-9N-M0l"/>
-                                <exclude reference="oRb-HR-aWv"/>
-                            </mask>
-                        </variation>
-                        <variation key="heightClass=regular-widthClass=compact">
-                            <mask key="subviews">
-                                <include reference="37T-9N-M0l"/>
-                                <include reference="oRb-HR-aWv"/>
-                            </mask>
-                        </variation>
                     </view>
                     <tabBarItem key="tabBarItem" title="我" id="hOd-oV-qys"/>
                 </viewController>
@@ -319,10 +287,10 @@
             </objects>
             <point key="canvasLocation" x="-15" y="70.5"/>
         </scene>
-        <!--Tab Bar Controller-->
+        <!--Marble Tab Bar Controller-->
         <scene sceneID="kfX-47-ULO">
             <objects>
-                <tabBarController id="kcK-BR-RNu" sceneMemberID="viewController">
+                <tabBarController id="kcK-BR-RNu" customClass="MarbleTabBarController" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" id="xuF-cL-lc6"/>
                     <nil key="simulatedBottomBarMetrics"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="sqN-vR-sp2">
@@ -331,6 +299,7 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </tabBar>
                     <connections>
+                        <outlet property="delegate" destination="sqN-vR-sp2" id="uBo-IH-5wJ"/>
                         <segue destination="97P-Eq-SN7" kind="relationship" relationship="viewControllers" id="H4r-Ka-Gb9"/>
                         <segue destination="ySs-3s-vSM" kind="relationship" relationship="viewControllers" id="NiS-Go-en4"/>
                         <segue destination="Hih-Ce-HV3" kind="relationship" relationship="viewControllers" id="cgk-ob-Rt5"/>
@@ -361,10 +330,10 @@
             </objects>
             <point key="canvasLocation" x="2395.5" y="138.75"/>
         </scene>
-        <!--Quiz View Controller-->
+        <!--Create Quiz View Controller-->
         <scene sceneID="w6P-Q7-0o1">
             <objects>
-                <viewController automaticallyAdjustsScrollViewInsets="NO" id="4p7-kQ-rO5" customClass="QuizViewController" sceneMemberID="viewController">
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="4p7-kQ-rO5" customClass="CreateQuizViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="r0e-sh-aIR"/>
                         <viewControllerLayoutGuide type="bottom" id="II2-rM-nTz"/>

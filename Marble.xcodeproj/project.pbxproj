@@ -11,6 +11,8 @@
 		517C894A19DB706C005A8407 /* ClientManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 517C894919DB706C005A8407 /* ClientManager.m */; };
 		517C894D19DB7129005A8407 /* KeyChainWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 517C894C19DB7129005A8407 /* KeyChainWrapper.m */; };
 		517C895019DB7DB4005A8407 /* RestKitInitializer.m in Sources */ = {isa = PBXBuildFile; fileRef = 517C894F19DB7DB4005A8407 /* RestKitInitializer.m */; };
+		7A0E976919DCB194003A9359 /* ProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A0E976819DCB194003A9359 /* ProfileViewController.m */; };
+		7A0E976C19DCB389003A9359 /* MarbleTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A0E976B19DCB389003A9359 /* MarbleTabBarController.m */; };
 		7AF4123319D9FB6C00A470E1 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AF4123219D9FB6C00A470E1 /* main.m */; };
 		7AF4123619D9FB6C00A470E1 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AF4123519D9FB6C00A470E1 /* AppDelegate.m */; };
 		7AF4123C19D9FB6C00A470E1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7AF4123A19D9FB6C00A470E1 /* Main.storyboard */; };
@@ -18,7 +20,7 @@
 		7AF4124119D9FB6C00A470E1 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7AF4123F19D9FB6C00A470E1 /* LaunchScreen.xib */; };
 		7AF4124D19D9FB6C00A470E1 /* MarbleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AF4124C19D9FB6C00A470E1 /* MarbleTests.m */; };
 		7AF4125819D9FFB800A470E1 /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AF4125719D9FFB800A470E1 /* HomeViewController.m */; };
-		7AF4126119DA035400A470E1 /* QuizViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AF4126019DA035400A470E1 /* QuizViewController.m */; };
+		7AF4126119DA035400A470E1 /* CreateQuizViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AF4126019DA035400A470E1 /* CreateQuizViewController.m */; };
 		7AF4126419DA113000A470E1 /* MarbleNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AF4126319DA113000A470E1 /* MarbleNavigationController.m */; };
 		7AF4126B19DA2EC200A470E1 /* PostsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AF4126A19DA2EC200A470E1 /* PostsViewController.m */; };
 		7AF4126E19DA672500A470E1 /* SelectPeopleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AF4126D19DA672500A470E1 /* SelectPeopleViewController.m */; };
@@ -48,6 +50,10 @@
 		517C894E19DB7DB4005A8407 /* RestKitInitializer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RestKitInitializer.h; path = Clients/RestKitInitializer.h; sourceTree = "<group>"; };
 		517C894F19DB7DB4005A8407 /* RestKitInitializer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RestKitInitializer.m; path = Clients/RestKitInitializer.m; sourceTree = "<group>"; };
 		517C895119DB7E0C005A8407 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Constants.h; path = Utilities/Constants.h; sourceTree = "<group>"; };
+		7A0E976719DCB194003A9359 /* ProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileViewController.h; sourceTree = "<group>"; };
+		7A0E976819DCB194003A9359 /* ProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileViewController.m; sourceTree = "<group>"; };
+		7A0E976A19DCB389003A9359 /* MarbleTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MarbleTabBarController.h; sourceTree = "<group>"; };
+		7A0E976B19DCB389003A9359 /* MarbleTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MarbleTabBarController.m; sourceTree = "<group>"; };
 		7AF4122D19D9FB6C00A470E1 /* Marble.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Marble.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7AF4123119D9FB6C00A470E1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7AF4123219D9FB6C00A470E1 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -61,8 +67,8 @@
 		7AF4124C19D9FB6C00A470E1 /* MarbleTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MarbleTests.m; sourceTree = "<group>"; };
 		7AF4125619D9FFB800A470E1 /* HomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeViewController.h; sourceTree = "<group>"; };
 		7AF4125719D9FFB800A470E1 /* HomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeViewController.m; sourceTree = "<group>"; };
-		7AF4125F19DA035400A470E1 /* QuizViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuizViewController.h; sourceTree = "<group>"; };
-		7AF4126019DA035400A470E1 /* QuizViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuizViewController.m; sourceTree = "<group>"; };
+		7AF4125F19DA035400A470E1 /* CreateQuizViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateQuizViewController.h; sourceTree = "<group>"; };
+		7AF4126019DA035400A470E1 /* CreateQuizViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateQuizViewController.m; sourceTree = "<group>"; };
 		7AF4126219DA113000A470E1 /* MarbleNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MarbleNavigationController.h; path = NavigationControllers/MarbleNavigationController.h; sourceTree = SOURCE_ROOT; };
 		7AF4126319DA113000A470E1 /* MarbleNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MarbleNavigationController.m; path = NavigationControllers/MarbleNavigationController.m; sourceTree = SOURCE_ROOT; };
 		7AF4126919DA2EC200A470E1 /* PostsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PostsViewController.h; sourceTree = "<group>"; };
@@ -199,16 +205,20 @@
 		7AF4125919D9FFD600A470E1 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				7A0E976719DCB194003A9359 /* ProfileViewController.h */,
+				7A0E976819DCB194003A9359 /* ProfileViewController.m */,
 				7AF4127319DB392200A470E1 /* LoginViewController.h */,
 				7AF4127419DB392200A470E1 /* LoginViewController.m */,
 				7AF4126C19DA672500A470E1 /* SelectPeopleViewController.h */,
 				7AF4126D19DA672500A470E1 /* SelectPeopleViewController.m */,
 				7AF4126919DA2EC200A470E1 /* PostsViewController.h */,
 				7AF4126A19DA2EC200A470E1 /* PostsViewController.m */,
-				7AF4125F19DA035400A470E1 /* QuizViewController.h */,
-				7AF4126019DA035400A470E1 /* QuizViewController.m */,
+				7AF4125F19DA035400A470E1 /* CreateQuizViewController.h */,
+				7AF4126019DA035400A470E1 /* CreateQuizViewController.m */,
 				7AF4125619D9FFB800A470E1 /* HomeViewController.h */,
 				7AF4125719D9FFB800A470E1 /* HomeViewController.m */,
+				7A0E976A19DCB389003A9359 /* MarbleTabBarController.h */,
+				7A0E976B19DCB389003A9359 /* MarbleTabBarController.m */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -388,13 +398,15 @@
 				517C894D19DB7129005A8407 /* KeyChainWrapper.m in Sources */,
 				7AF4127119DA6A8300A470E1 /* SelectPeopleViewCell.m in Sources */,
 				7AF4123319D9FB6C00A470E1 /* main.m in Sources */,
+				7A0E976919DCB194003A9359 /* ProfileViewController.m in Sources */,
 				517C895019DB7DB4005A8407 /* RestKitInitializer.m in Sources */,
 				7AF4126B19DA2EC200A470E1 /* PostsViewController.m in Sources */,
+				7A0E976C19DCB389003A9359 /* MarbleTabBarController.m in Sources */,
 				7AF4127F19DB62C600A470E1 /* Utility.m in Sources */,
 				7AF4126E19DA672500A470E1 /* SelectPeopleViewController.m in Sources */,
 				7AF4127519DB392200A470E1 /* LoginViewController.m in Sources */,
 				7AF4125819D9FFB800A470E1 /* HomeViewController.m in Sources */,
-				7AF4126119DA035400A470E1 /* QuizViewController.m in Sources */,
+				7AF4126119DA035400A470E1 /* CreateQuizViewController.m in Sources */,
 				7AF4126419DA113000A470E1 /* MarbleNavigationController.m in Sources */,
 				517C894A19DB706C005A8407 /* ClientManager.m in Sources */,
 			);

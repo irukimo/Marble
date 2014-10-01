@@ -1,15 +1,15 @@
 //
-//  QuizViewController.m
+//  CreateQuizViewController.m
 //  Marble
 //
 //  Created by Iru on 9/29/14.
 //  Copyright (c) 2014 Orrzs Inc. All rights reserved.
 //
 
-#import "QuizViewController.h"
+#import "CreateQuizViewController.h"
 //#import "TouchTextField.h"
 
-@interface QuizViewController ()
+@interface CreateQuizViewController ()
 @property (strong, nonatomic) UITextField *keywordTextField;
 @property (strong, nonatomic) UITextField *name1TextField;
 @property (strong, nonatomic) UITextField *name2TextField;
@@ -25,7 +25,7 @@
 
 @end
 
-@implementation QuizViewController
+@implementation CreateQuizViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
