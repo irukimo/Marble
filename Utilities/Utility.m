@@ -21,4 +21,13 @@
     
 }
 
++ (RKSuccessBlock) successBlockWithDebugMessage:(NSString *)message block:(void (^)(void))callbackBlock
+{
+    return ^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult){
+        if (callbackBlock) {callbackBlock();}
+        MBDebug(@"%@", message);
+    };
+}
+
+
 @end

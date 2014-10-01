@@ -10,4 +10,9 @@
 
 @interface Utility : NSObject
 + (void) generateAlertWithMessage:(NSString *)message;
+
+typedef void (^RKFailureBlock)(RKObjectRequestOperation *, NSError *);
+typedef void (^RKSuccessBlock)(RKObjectRequestOperation *, RKMappingResult *);
+
++ (RKSuccessBlock) successBlockWithDebugMessage:(NSString *)message block:(void (^)(void))callbackBlock;
 @end

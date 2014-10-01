@@ -6,7 +6,14 @@
 //  Copyright (c) 2014 Orrzs Inc. All rights reserved.
 //
 
+
 #import "CreateQuizViewController.h"
+
+#import "KeyChainWrapper.h"
+
+#import "Quiz.h"
+
+
 //#import "TouchTextField.h"
 
 @interface CreateQuizViewController ()
@@ -36,6 +43,7 @@
     
     [self.view addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedView)]];
     [self recordData];
+
     // Do any additional setup after loading the view.
 }
 
@@ -54,7 +62,28 @@
 
 -(void)chooseName1BtnClicked{
     NSLog(@"author chose %@ over %@ for keyword: %@", _name1CurrentValue, _name2CurrentValue, _keywordCurrentValue);
+    
+    Quiz *quiz = [NSEntityDescription insertNewObjectForEntityForName:@"Quiz"
+                                               inManagedObjectContext:[RKManagedObjectStore defaultStore].mainQueueManagedObjectContext];
+    
+    [quiz setKeyword:_keywordCurrentValue];
+    [quiz setOption0:_name1CurrentValue];
+    [quiz setOption1:_name2CurrentValue];
+
+    NSString *sessionToken = [KeyChainWrapper getSessionTokenForUser];
+    NSDictionary *params = [NSDictionary dictionaryWithObjects:@[sessionToken] forKeys:@[@"auth_token"]];
+    
+    [[RKObjectManager sharedManager]
+     postObject:quiz
+     path:nil
+     parameters:params
+     success:[Utility successBlockWithDebugMessage:@"Succcessfully posted the quiz"
+                                             block:^{                                             }]
+     failure:^(RKObjectRequestOperation *operation, NSError *error) {
+         [Utility generateAlertWithMessage:@"No network!"];
+     }];
 }
+
 -(void)chooseName2BtnClicked{
     NSLog(@"author chose %@ over %@ for keyword: %@", _name2CurrentValue, _name1CurrentValue, _keywordCurrentValue);
 }
