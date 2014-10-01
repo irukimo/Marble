@@ -11,6 +11,7 @@
 		517C894A19DB706C005A8407 /* ClientManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 517C894919DB706C005A8407 /* ClientManager.m */; };
 		517C894D19DB7129005A8407 /* KeyChainWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 517C894C19DB7129005A8407 /* KeyChainWrapper.m */; };
 		517C895019DB7DB4005A8407 /* RestKitInitializer.m in Sources */ = {isa = PBXBuildFile; fileRef = 517C894F19DB7DB4005A8407 /* RestKitInitializer.m */; };
+		7AC8890D19DB935200C59C1E /* TouchTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AC8890C19DB935200C59C1E /* TouchTextField.m */; };
 		7AF4123319D9FB6C00A470E1 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AF4123219D9FB6C00A470E1 /* main.m */; };
 		7AF4123619D9FB6C00A470E1 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AF4123519D9FB6C00A470E1 /* AppDelegate.m */; };
 		7AF4123C19D9FB6C00A470E1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7AF4123A19D9FB6C00A470E1 /* Main.storyboard */; };
@@ -39,6 +40,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+<<<<<<< HEAD
 		3634F2606FB7FDA06677D4FC /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		517C894519DB67B0005A8407 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = Libraries/FacebookSDK/FacebookSDK.framework; sourceTree = "<group>"; };
 		517C894819DB702D005A8407 /* ClientManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ClientManager.h; path = Clients/ClientManager.h; sourceTree = "<group>"; };
@@ -48,6 +50,10 @@
 		517C894E19DB7DB4005A8407 /* RestKitInitializer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RestKitInitializer.h; path = Clients/RestKitInitializer.h; sourceTree = "<group>"; };
 		517C894F19DB7DB4005A8407 /* RestKitInitializer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RestKitInitializer.m; path = Clients/RestKitInitializer.m; sourceTree = "<group>"; };
 		517C895119DB7E0C005A8407 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Constants.h; path = Utilities/Constants.h; sourceTree = "<group>"; };
+=======
+		7AC8890B19DB935200C59C1E /* TouchTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TouchTextField.h; path = UIObjectSubclasses/TouchTextField.h; sourceTree = "<group>"; };
+		7AC8890C19DB935200C59C1E /* TouchTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TouchTextField.m; path = UIObjectSubclasses/TouchTextField.m; sourceTree = "<group>"; };
+>>>>>>> Fix UI height problem, add choose buttons
 		7AF4122D19D9FB6C00A470E1 /* Marble.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Marble.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7AF4123119D9FB6C00A470E1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7AF4123219D9FB6C00A470E1 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -100,6 +106,7 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+<<<<<<< HEAD
 		17B5C9C40802364FADDA11CA /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -128,11 +135,22 @@
 				517C894519DB67B0005A8407 /* FacebookSDK.framework */,
 			);
 			name = Framework;
+=======
+		7AC8890E19DB937300C59C1E /* UIObjectSubclasses */ = {
+			isa = PBXGroup;
+			children = (
+				7AC8890B19DB935200C59C1E /* TouchTextField.h */,
+				7AC8890C19DB935200C59C1E /* TouchTextField.m */,
+			);
+			name = UIObjectSubclasses;
+>>>>>>> Fix UI height problem, add choose buttons
 			sourceTree = "<group>";
 		};
 		7AF4122419D9FB6C00A470E1 = {
 			isa = PBXGroup;
 			children = (
+				7AC8890E19DB937300C59C1E /* UIObjectSubclasses */,
+				7AF4128219DB7F7000A470E1 /* Images */,
 				7AF4127619DB518900A470E1 /* Utilities */,
 				517C894419DB6793005A8407 /* Framework */,
 				517C894319DB630E005A8407 /* Clients */,
@@ -242,12 +260,20 @@
 			name = Utilities;
 			sourceTree = "<group>";
 		};
+<<<<<<< HEAD
 		D85B1E611F9E19FEC539FC9A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
 				3634F2606FB7FDA06677D4FC /* libPods.a */,
 			);
 			name = Frameworks;
+=======
+		7AF4128219DB7F7000A470E1 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Images;
+>>>>>>> Fix UI height problem, add choose buttons
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -397,7 +423,11 @@
 				7AF4125819D9FFB800A470E1 /* HomeViewController.m in Sources */,
 				7AF4126119DA035400A470E1 /* QuizViewController.m in Sources */,
 				7AF4126419DA113000A470E1 /* MarbleNavigationController.m in Sources */,
+<<<<<<< HEAD
 				517C894A19DB706C005A8407 /* ClientManager.m in Sources */,
+=======
+				7AC8890D19DB935200C59C1E /* TouchTextField.m in Sources */,
+>>>>>>> Fix UI height problem, add choose buttons
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -522,15 +552,20 @@
 			baseConfigurationReference = D619E12F33A6253011BD463F /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+<<<<<<< HEAD
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Libraries/FacebookSDK",
 				);
+=======
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+>>>>>>> Fix UI height problem, add choose buttons
 				GCC_PREFIX_HEADER = "Marble/Marble-Prefix.pch";
 				INFOPLIST_FILE = Marble/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -539,15 +574,20 @@
 			baseConfigurationReference = B4D021A1ADB6A726F90326D9 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+<<<<<<< HEAD
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Libraries/FacebookSDK",
 				);
+=======
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+>>>>>>> Fix UI height problem, add choose buttons
 				GCC_PREFIX_HEADER = "Marble/Marble-Prefix.pch";
 				INFOPLIST_FILE = Marble/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};

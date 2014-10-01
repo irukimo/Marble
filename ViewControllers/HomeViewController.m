@@ -24,8 +24,8 @@
     [_quizViewController.view setFrame:CGRectMake(0, 50, self.view.frame.size.width, 100)];
     [self.view addSubview:_quizViewController.view];
     [_quizViewController setDelegate:self];
-//    [self.view addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:_quizViewController.view action:@selector(endEditing:)]];
-//    self.navigationController.navigationBar.hidden = YES;
+    //    [self.view addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:_quizViewController.view action:@selector(endEditing:)]];
+    //    self.navigationController.navigationBar.hidden = YES;
     // Do any additional setup after loading the view.
 }
 
@@ -35,14 +35,22 @@
 }
 
 /*
-#pragma mark - Navigation
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+-(void) prepareSelectPeopleViewController{
+    _selectPeopleViewController = [[SelectPeopleViewController alloc] init];
+    //    _selectPeopleViewController.view.frame = CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y + 200, self.view.bounds.size.width, 100);
+    _selectPeopleViewController.view.frame = CGRectMake(0, 100, self.view.bounds.size.width, 200);
+    _selectPeopleViewController.view.tag = 100;
+    _selectPeopleViewController.delegate = self;
 }
-*/
 
 -(void) prepareSelectPeopleViewController{
     _selectPeopleViewController = [[SelectPeopleViewController alloc] init];
@@ -66,12 +74,12 @@
     [self.view addSubview:_selectPeopleViewController.view];
     _quizViewController.view.frame = CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y,
                                                 self.view.bounds.size.width, _quizViewController.view.frame.size.height);
-
+    
 }
 
 - (void)shouldDisplayKeywords:(QuizViewController *)viewController withKeywords:(NSArray *)keywords{
     _quizViewController.view.frame = CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y,
-                                 self.view.bounds.size.width, _quizViewController.view.frame.size.height);
+                                                self.view.bounds.size.width, _quizViewController.view.frame.size.height);
 }
 
 - (void)backToNormal:(QuizViewController *)viewController{
@@ -80,10 +88,10 @@
             [view removeFromSuperview];
         }
     }
-//    NSLog(@"backtonormal");
+    //    NSLog(@"backtonormal");
     _quizViewController.view.frame = CGRectMake(self.view.frame.origin.x, 100,
-                                 self.view.bounds.size.width, _quizViewController.view.frame.size.height);
-
+                                                self.view.bounds.size.width, _quizViewController.view.frame.size.height);
+    
 }
 
 

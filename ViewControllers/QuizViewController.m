@@ -7,9 +7,10 @@
 //
 
 #import "QuizViewController.h"
+#import "TouchTextField.h"
 
 @interface QuizViewController ()
-@property (strong, nonatomic) UITextField *keywordTextField;
+@property (strong, nonatomic) TouchTextField *keywordTextField;
 @property (strong, nonatomic) UITextField *name1TextField;
 @property (strong, nonatomic) UITextField *name2TextField;
 @property (strong, nonatomic) UIButton *shuffleKeywordBtn;
@@ -18,6 +19,9 @@
 @property (strong, nonatomic) NSString *name1CurrentValue;
 @property (strong, nonatomic) NSString *name2CurrentValue;
 @property (strong, nonatomic) NSString *keywordCurrentValue;
+@property (strong, nonatomic) UIButton *chooseName1Btn;
+@property (strong, nonatomic) UIButton *chooseName2Btn;
+@property(nonatomic)CGPoint startPoint;
 
 @end
 
@@ -27,19 +31,38 @@
     [super viewDidLoad];
     [self addTextFields];
     [self addShuffleButtons];
-
+    [self addPeopleButtons];
+    
     
     [self.view addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedView)]];
     [self recordData];
     // Do any additional setup after loading the view.
 }
 
+-(void) addPeopleButtons{
+    _chooseName1Btn = [[UIButton alloc] initWithFrame:CGRectMake(10, 0, 100, 20)];
+    _chooseName2Btn =[[UIButton alloc] initWithFrame:CGRectMake(200, 0, 100, 20)];
+    [_chooseName1Btn setTitle:@"Choose" forState:UIControlStateNormal];
+    [_chooseName2Btn setTitle:@"Choose" forState:UIControlStateNormal];
+    [_chooseName1Btn addTarget:self action:@selector(chooseName1BtnClicked) forControlEvents:UIControlEventTouchUpInside];
+    [_chooseName2Btn addTarget:self action:@selector(chooseName2BtnClicked) forControlEvents:UIControlEventTouchUpInside];
+    [_chooseName1Btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [_chooseName2Btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [self.view addSubview:_chooseName1Btn];
+    [self.view addSubview:_chooseName2Btn];
+}
 
+-(void)chooseName1BtnClicked{
+    NSLog(@"author chose %@ over %@ for keyword: %@", _name1CurrentValue, _name2CurrentValue, _keywordCurrentValue);
+}
+-(void)chooseName2BtnClicked{
+    NSLog(@"author chose %@ over %@ for keyword: %@", _name2CurrentValue, _name1CurrentValue, _keywordCurrentValue);
+}
 
 -(void)addTextFields{
-    _keywordTextField = [[UITextField alloc] initWithFrame:CGRectMake(100, 10, 50, 50)];
-    _name1TextField = [[UITextField alloc] initWithFrame:CGRectMake(10, 10, 100, 50)];
-    _name2TextField = [[UITextField alloc] initWithFrame:CGRectMake(200, 10, 100, 50)];
+    _keywordTextField = [[TouchTextField alloc] initWithFrame:CGRectMake(100, 20, 50, 50)];
+    _name1TextField = [[UITextField alloc] initWithFrame:CGRectMake(10, 20, 100, 50)];
+    _name2TextField = [[UITextField alloc] initWithFrame:CGRectMake(200, 20, 100, 50)];
     [_keywordTextField setText:@"yay"];
     [_name1TextField setText:@"Albert"];
     [_name2TextField setText:@"胖仔"];
@@ -78,25 +101,40 @@
 
 - (void)shuffleKeyword:(id)sender {
     [_keywordTextField setText:@"人性"];
+<<<<<<< HEAD
     [self recordData];
+=======
+    _keywordCurrentValue = [_keywordTextField text];
+    
+>>>>>>> Fix UI height problem, add choose buttons
 }
 
 - (void)shufflePeople:(id)sender {
     [_name1TextField setText:@"王大明"];
     [_name2TextField setText:@"范冰冰"];
+<<<<<<< HEAD
     [self recordData];
+=======
+    _name1CurrentValue = [_name1TextField text];
+    _name2CurrentValue = [_name2TextField text];
+>>>>>>> Fix UI height problem, add choose buttons
 }
 
+-(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
+    NSLog(@"got touched!");
+    UITouch *touch = [touches anyObject];
+    _startPoint = [touch locationInView:self.view];
+}
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 -(void) setPerson:(NSString *)person{
     [_ongoingTextField setText:person];
@@ -112,16 +150,20 @@
 #pragma mark -
 #pragma mark UITextField Delegate Methods
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
-//    if (textField == _keywordTextField) {
-//    [textField resignFirstResponder];
-//    if(self.delegate){
-//        [self.delegate backToNormal:self];
-//    }
+    //    if (textField == _keywordTextField) {
+    //    [textField resignFirstResponder];
+    //    if(self.delegate){
+    //        [self.delegate backToNormal:self];
+    //    }
     
     // Alert style
-
     
+<<<<<<< HEAD
 //
+=======
+    
+    //
+>>>>>>> Fix UI height problem, add choose buttons
     if(textField == _keywordTextField){
         [textField resignFirstResponder];
         if(_delegate && [_delegate respondsToSelector:@selector(backToNormal:)]){
@@ -133,7 +175,11 @@
         [Utility generateAlertWithMessage:@"請選一個朋友"];
         return YES;
     }
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> Fix UI height problem, add choose buttons
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField{

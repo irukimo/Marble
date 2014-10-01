@@ -19,12 +19,12 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-        // Preloads keyboard so there's no lag on initial keyboard appearance.
-        UITextField *lagFreeField = [[UITextField alloc] init];
-        [self.window addSubview:lagFreeField];
-        [lagFreeField becomeFirstResponder];
-        [lagFreeField resignFirstResponder];
-        [lagFreeField removeFromSuperview];
+    // Preloads keyboard so there's no lag on initial keyboard appearance.
+    UITextField *lagFreeField = [[UITextField alloc] init];
+    [self.window addSubview:lagFreeField];
+    [lagFreeField becomeFirstResponder];
+    [lagFreeField resignFirstResponder];
+    [lagFreeField removeFromSuperview];
     // Override point for customization after application launch.
     
     NSError *error = nil;
