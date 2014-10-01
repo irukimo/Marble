@@ -44,13 +44,6 @@
  }
  */
 
--(void) prepareSelectPeopleViewController{
-    _selectPeopleViewController = [[SelectPeopleViewController alloc] init];
-    //    _selectPeopleViewController.view.frame = CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y + 200, self.view.bounds.size.width, 100);
-    _selectPeopleViewController.view.frame = CGRectMake(0, 100, self.view.bounds.size.width, 200);
-    _selectPeopleViewController.view.tag = 100;
-    _selectPeopleViewController.delegate = self;
-}
 
 -(void) prepareSelectPeopleViewController{
     _selectPeopleViewController = [[SelectPeopleViewController alloc] init];

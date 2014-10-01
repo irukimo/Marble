@@ -7,10 +7,10 @@
 //
 
 #import "QuizViewController.h"
-#import "TouchTextField.h"
+//#import "TouchTextField.h"
 
 @interface QuizViewController ()
-@property (strong, nonatomic) TouchTextField *keywordTextField;
+@property (strong, nonatomic) UITextField *keywordTextField;
 @property (strong, nonatomic) UITextField *name1TextField;
 @property (strong, nonatomic) UITextField *name2TextField;
 @property (strong, nonatomic) UIButton *shuffleKeywordBtn;
@@ -60,7 +60,7 @@
 }
 
 -(void)addTextFields{
-    _keywordTextField = [[TouchTextField alloc] initWithFrame:CGRectMake(100, 20, 50, 50)];
+    _keywordTextField = [[UITextField alloc] initWithFrame:CGRectMake(100, 20, 50, 50)];
     _name1TextField = [[UITextField alloc] initWithFrame:CGRectMake(10, 20, 100, 50)];
     _name2TextField = [[UITextField alloc] initWithFrame:CGRectMake(200, 20, 100, 50)];
     [_keywordTextField setText:@"yay"];
@@ -101,23 +101,14 @@
 
 - (void)shuffleKeyword:(id)sender {
     [_keywordTextField setText:@"人性"];
-<<<<<<< HEAD
-    [self recordData];
-=======
     _keywordCurrentValue = [_keywordTextField text];
-    
->>>>>>> Fix UI height problem, add choose buttons
 }
 
 - (void)shufflePeople:(id)sender {
     [_name1TextField setText:@"王大明"];
     [_name2TextField setText:@"范冰冰"];
-<<<<<<< HEAD
-    [self recordData];
-=======
     _name1CurrentValue = [_name1TextField text];
     _name2CurrentValue = [_name2TextField text];
->>>>>>> Fix UI height problem, add choose buttons
 }
 
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
@@ -158,12 +149,6 @@
     
     // Alert style
     
-<<<<<<< HEAD
-//
-=======
-    
-    //
->>>>>>> Fix UI height problem, add choose buttons
     if(textField == _keywordTextField){
         [textField resignFirstResponder];
         if(_delegate && [_delegate respondsToSelector:@selector(backToNormal:)]){
@@ -175,11 +160,7 @@
         [Utility generateAlertWithMessage:@"請選一個朋友"];
         return YES;
     }
-<<<<<<< HEAD
 
-=======
-    
->>>>>>> Fix UI height problem, add choose buttons
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField{
