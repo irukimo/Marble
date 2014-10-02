@@ -8,9 +8,11 @@
 
 #import "ProfileViewController.h"
 
+
 @interface ProfileViewController ()
-@property (strong, nonatomic) UILabel *name;
-@property (strong, nonatomic) CreateQuizViewController *CreateQuizViewController;
+@property (strong, nonatomic) UILabel *nameLabel;
+@property (strong, nonatomic) CreateQuizViewController *createQuizViewController;
+@property (strong, nonatomic) PostsViewController *postsViewController;
 
 @end
 
@@ -21,11 +23,24 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self addProfileUI];
-    _CreateQuizViewController = [[CreateQuizViewController alloc] init];
-    [_CreateQuizViewController.view setFrame:CGRectMake(0, 150, self.view.frame.size.width, 100)];
-    [self.view addSubview:_CreateQuizViewController.view];
-    [_CreateQuizViewController setDelegate:self];
+    [self initiateCreateQuizViewController];
+    [self initiatePostsViewController];
     // Do any additional setup after loading the view.
+}
+
+-(void) initiatePostsViewController{
+    _postsViewController = [[PostsViewController alloc] init];
+    [_postsViewController.view setFrame:CGRectMake(0, 250, self.view.frame.size.width, 200)];
+    [self.view addSubview:_postsViewController.view];
+    _postsViewController.delegate = self;
+}
+
+
+-(void) initiateCreateQuizViewController{
+    _createQuizViewController = [[CreateQuizViewController alloc] init];
+    [_createQuizViewController.view setFrame:CGRectMake(0, 150, self.view.frame.size.width, 100)];
+    [self.view addSubview:_createQuizViewController.view];
+    [_createQuizViewController setDelegate:self];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -34,13 +49,21 @@
 }
 
 -(void) addProfileUI{
-    _name = [[UILabel alloc] initWithFrame:CGRectMake(50, 50, 100, 30)];
-    [self.view addSubview:_name];
+    _nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(50, 100, 100, 30)];
+    [_nameLabel setText:@"Hello"];
+    if(_name){
+        [_nameLabel setText:_name];
+    }
+    [self.view addSubview:_nameLabel];
 }
 
--(void) setPerson:(NSString *)person{
-    [_name setText:person];
-    _person = person;
+-(void) setName:(NSString *)name{
+    _name = [name copy];
+    [_nameLabel setText:name];
+}
+
+-(void) postSelected:(NSString *)name{
+    [self performSegueWithIdentifier:@"ProfileViewControllerSegue" sender:name];
 }
 /*
 #pragma mark - Navigation
@@ -51,5 +74,44 @@
     // Pass the selected object to the new view controller.
 }
 */
+
+- (void)backToNormal:(CreateQuizViewController *)viewController{
+    for(id view in self.view.subviews){
+        if([view tag] == 100){
+            [view removeFromSuperview];
+        }
+    }
+    //    NSLog(@"backtonormal");
+    _createQuizViewController.view.frame = CGRectMake(self.view.frame.origin.x, 150,
+                                                      self.view.bounds.size.width, _createQuizViewController.view.frame.size.height);
+    
+}
+
+
+#pragma mark -
+#pragma mark CreateQuizViewController Delegate Methods
+//- (void)shouldDisplayPeople:(CreateQuizViewController *)viewController withPeople:(NSArray *)people{
+//    [self prepareSelectPeopleViewController];
+//    [_selectPeopleViewController setPeopleArray:people];
+//    [self.view addSubview:_selectPeopleViewController.view];
+//    _createQuizViewController.view.frame = CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y,
+//                                                      self.view.bounds.size.width, _createQuizViewController.view.frame.size.height);
+//    
+//}
+//
+//- (void)shouldDisplayKeywords:(CreateQuizViewController *)viewController withKeywords:(NSArray *)keywords{
+//    _createQuizViewController.view.frame = CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y,
+//                                                      self.view.bounds.size.width, _createQuizViewController.view.frame.size.height);
+//}
+
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if([[segue destinationViewController] isKindOfClass:[ProfileViewController class]]){
+        ProfileViewController *viewController =[segue destinationViewController];
+        [viewController setName:(NSString *)sender];
+    }
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
+}
 
 @end

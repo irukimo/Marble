@@ -8,7 +8,19 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol PostsViewControllerDelegate;
+
 @interface PostsViewController : UITableViewController
 @property (strong, nonatomic) NSArray *postArray;
+@property (nonatomic, weak) id<PostsViewControllerDelegate> delegate;
 
 @end
+
+
+@protocol PostsViewControllerDelegate <NSObject>
+
+- (void)postSelected:(NSString *)name;
+
+
+@end
+

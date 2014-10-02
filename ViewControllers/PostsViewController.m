@@ -7,6 +7,7 @@
 //
 
 #import "PostsViewController.h"
+#import "QuizTableViewCell.h"
 
 @interface PostsViewController ()
 
@@ -42,17 +43,25 @@
 }
 
 
-//- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-//    NSString *selectPeopleViewCellIdentifier = @"selectPeopleCell";
-//    SelectPeopleViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:selectPeopleViewCellIdentifier];
-//    if (!cell){
-//        cell = [[SelectPeopleViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:selectPeopleViewCellIdentifier];
-//    }
-//    
-//    [cell setPersonName:[_peopleArray objectAtIndex:indexPath.row]];
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSString *quizTableViewCellIdentifier = @"quizTableViewCellIdentifier";
+    QuizTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:quizTableViewCellIdentifier];
+    if (!cell){
+        cell = [[QuizTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:quizTableViewCellIdentifier];
+    }
     
-//    return cell;
-//}
+    [cell setPersonName:[_postArray objectAtIndex:indexPath.row]];
+    
+    return cell;
+}
+
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSString *personSelected = [_postArray objectAtIndex:indexPath.row];
+    if(_delegate && [_delegate respondsToSelector:@selector(postSelected:)]){
+        [_delegate postSelected:personSelected];
+    }
+}
 
 /*
 // Override to support conditional editing of the table view.

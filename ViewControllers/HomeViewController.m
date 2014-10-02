@@ -9,10 +9,13 @@
 #import "HomeViewController.h"
 #import "CreateQuizViewController.h"
 #import "SelectPeopleViewController.h"
+#import "ProfileViewController.h"
+
 
 @interface HomeViewController ()
-@property (strong, nonatomic) CreateQuizViewController *CreateQuizViewController;
+@property (strong, nonatomic) CreateQuizViewController *createQuizViewController;
 @property (strong, nonatomic) SelectPeopleViewController *selectPeopleViewController;
+@property (strong, nonatomic) PostsViewController *postsViewController;
 
 @end
 
@@ -20,13 +23,26 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    _CreateQuizViewController = [[CreateQuizViewController alloc] init];
-    [_CreateQuizViewController.view setFrame:CGRectMake(0, 50, self.view.frame.size.width, 100)];
-    [self.view addSubview:_CreateQuizViewController.view];
-    [_CreateQuizViewController setDelegate:self];
+    [self initiatePostsViewController];
+    [self initiateCreateQuizViewController];
     //    [self.view addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:_CreateQuizViewController.view action:@selector(endEditing:)]];
     //    self.navigationController.navigationBar.hidden = YES;
     // Do any additional setup after loading the view.
+}
+
+-(void) initiatePostsViewController{
+    _postsViewController = [[PostsViewController alloc] init];
+    [_postsViewController.view setFrame:CGRectMake(0, 200, self.view.frame.size.width, 200)];
+    [self.view addSubview:_postsViewController.view];
+    _postsViewController.delegate = self;
+}
+
+
+-(void) initiateCreateQuizViewController{
+    _createQuizViewController = [[CreateQuizViewController alloc] init];
+    [_createQuizViewController.view setFrame:CGRectMake(0, 50, self.view.frame.size.width, 100)];
+    [self.view addSubview:_createQuizViewController.view];
+    [_createQuizViewController setDelegate:self];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -53,10 +69,14 @@
     _selectPeopleViewController.delegate = self;
 }
 
+-(void) postSelected:(NSString *)name{
+    [self performSegueWithIdentifier:@"ProfileViewControllerSegue" sender:name];
+}
+
 #pragma mark -
 #pragma mark SelectPeopleViewController Delegate Methods
 - (void)selectedPerson:(NSString *)person{
-    [_CreateQuizViewController setPerson:person];
+    [_createQuizViewController setPerson:person];
 }
 
 #pragma mark -
@@ -65,14 +85,14 @@
     [self prepareSelectPeopleViewController];
     [_selectPeopleViewController setPeopleArray:people];
     [self.view addSubview:_selectPeopleViewController.view];
-    _CreateQuizViewController.view.frame = CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y,
-                                                self.view.bounds.size.width, _CreateQuizViewController.view.frame.size.height);
+    _createQuizViewController.view.frame = CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y,
+                                                self.view.bounds.size.width, _createQuizViewController.view.frame.size.height);
     
 }
 
 - (void)shouldDisplayKeywords:(CreateQuizViewController *)viewController withKeywords:(NSArray *)keywords{
-    _CreateQuizViewController.view.frame = CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y,
-                                                self.view.bounds.size.width, _CreateQuizViewController.view.frame.size.height);
+    _createQuizViewController.view.frame = CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y,
+                                                self.view.bounds.size.width, _createQuizViewController.view.frame.size.height);
 }
 
 - (void)backToNormal:(CreateQuizViewController *)viewController{
@@ -82,11 +102,19 @@
         }
     }
     //    NSLog(@"backtonormal");
-    _CreateQuizViewController.view.frame = CGRectMake(self.view.frame.origin.x, 100,
-                                                self.view.bounds.size.width, _CreateQuizViewController.view.frame.size.height);
+    _createQuizViewController.view.frame = CGRectMake(self.view.frame.origin.x, 100,
+                                                self.view.bounds.size.width, _createQuizViewController.view.frame.size.height);
     
 }
 
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if([[segue destinationViewController] isKindOfClass:[ProfileViewController class]]){
+        ProfileViewController *viewController =[segue destinationViewController];
+        [viewController setName:(NSString *)sender];
+    }
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
+}
 
 
 @end

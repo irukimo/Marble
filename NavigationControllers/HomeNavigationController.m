@@ -1,18 +1,18 @@
 //
-//  MarbleNavigationController.m
+//  HomeNavigationController.m
 //  Marble
 //
-//  Created by Iru on 9/29/14.
+//  Created by Iru on 10/1/14.
 //  Copyright (c) 2014 Orrzs Inc. All rights reserved.
 //
 
-#import "MarbleNavigationController.h"
+#import "HomeNavigationController.h"
 
-@interface MarbleNavigationController ()
+@interface HomeNavigationController ()
 
 @end
 
-@implementation MarbleNavigationController
+@implementation HomeNavigationController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -22,6 +22,10 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+-(void)backToRoot{
+    [self popToRootViewControllerAnimated:NO];
 }
 
 /*

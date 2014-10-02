@@ -8,7 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "CreateQuizViewController.h"
+#import "PostsViewController.h"
 
-@interface ProfileViewController : UIViewController <CreateQuizViewControllerDelegate>
-@property (strong,nonatomic) NSString *person;
+@interface ProfileViewController : UIViewController <CreateQuizViewControllerDelegate, PostsViewControllerDelegate>
+@property (strong,nonatomic) NSString *name;
 @end

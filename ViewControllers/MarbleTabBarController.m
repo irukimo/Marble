@@ -7,7 +7,8 @@
 //
 
 #import "MarbleTabBarController.h"
-#import "ProfileViewController.h"
+#import "ProfileNavigationController.h"
+#import "HomeNavigationController.h"
 
 @interface MarbleTabBarController ()
 
@@ -29,9 +30,15 @@
 - (void)tabBarController:(UITabBarController *)tabBarController
  didSelectViewController:(UIViewController *)viewController{
     NSLog(@"selectedViewController");
-    if([viewController isKindOfClass:[ProfileViewController class]]){
-        ProfileViewController *profileViewController = viewController;
-        [profileViewController setPerson:@"Iru Wang"];
+    if([viewController isKindOfClass:[HomeNavigationController class]]){
+        HomeNavigationController *homeNavigationController = (HomeNavigationController *)viewController;
+        [homeNavigationController backToRoot];
+    }
+    if([viewController isKindOfClass:[ProfileNavigationController class]]){
+        ProfileNavigationController *profileNavigationController = (ProfileNavigationController *)viewController;
+        [profileNavigationController setSelf:@"Iru Wang"];
+        [profileNavigationController backToRoot];
+        NSLog(@"sent Iru Wang");
     }
     //    if([viewController isKindOfClass:MyPostsViewController.class]){
     //        //dont add it in here, add it in my post
