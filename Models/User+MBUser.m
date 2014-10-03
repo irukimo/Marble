@@ -60,7 +60,7 @@
         return FALSE;
     } else if([matches count]){
         if([matches count] > num){
-            *usersToReturn = [matches subarrayWithRange:NSMakeRange(0, (int)num - 1)];
+            *usersToReturn = [matches subarrayWithRange:NSMakeRange(0, (int)num)];
         } else{
             *usersToReturn = matches;
         }

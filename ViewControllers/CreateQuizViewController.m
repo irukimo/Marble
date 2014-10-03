@@ -108,6 +108,9 @@
     [_name2TextField setTextAlignment:NSTextAlignmentCenter];
     [_name1TextField setDelegate:self];
     [_name2TextField setDelegate:self];
+    [_name1TextField addTarget:self
+                        action:@selector(textFieldDidChange:)
+              forControlEvents:UIControlEventEditingChanged];
     [_name2TextField addTarget:self
                    action:@selector(textFieldDidChange:)
         forControlEvents:UIControlEventEditingChanged];
@@ -198,10 +201,9 @@
 }
 
 -(void)textFieldDidChange :(UITextField *)textField{
-    if(textField == _name2TextField){
-        NSLog(@"textfield changed");
+    if(textField == _name2TextField || textField == _name1TextField){
         NSArray *arrayOfUsers;
-        [User searchUserThatContains:[_name2TextField text] returnThisManyUsers:3 inThisArray:&arrayOfUsers inManagedObjectContext:[RKManagedObjectStore defaultStore].mainQueueManagedObjectContext];
+        [User searchUserThatContains:[textField text] returnThisManyUsers:10 inThisArray:&arrayOfUsers inManagedObjectContext:[RKManagedObjectStore defaultStore].mainQueueManagedObjectContext];
         if(_delegate && [_delegate respondsToSelector:@selector(gotSearchUsersResult:)]){
             [_delegate gotSearchUsersResult:arrayOfUsers];
         }
