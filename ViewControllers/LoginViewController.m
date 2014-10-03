@@ -222,6 +222,7 @@
                                     parameters:params
                                        success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
                                            MBDebug(@"Successfully loadded options from server");
+                                           MBDebug(@"%ld options were loaded.", [[mappingResult array] count]);
 //                                           for(User *opt in [mappingResult array]) {
 //                                               MBDebug(@"%@", opt.name);
 //                                           }

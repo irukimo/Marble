@@ -34,7 +34,7 @@
         return FALSE;
     } else if([matches count]){
         *userToReturn = [matches firstObject];
-        NSLog(@"user found");
+        NSLog(@"User %@ found", (*userToReturn).name);
         return TRUE;
     } else {
         *userToReturn = [User createNewUserWithName:name andfbID:fbID inManagedObjectContext:context];
@@ -77,7 +77,7 @@
     [user setFbID:fbID];
     [user setName:name];
     
-    NSLog(@"Created a user with name %@", name);
+//    MBDebug(@"Created a user with name %@", name);
     return user;
 }
 
