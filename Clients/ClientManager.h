@@ -11,7 +11,7 @@
 
 @protocol ClientLoginDelegate;
 
-@interface ClientManager : NSObject
+@interface ClientManager : NSObject <UIAlertViewDelegate>
 
 +(bool)isLoggedIn;
 +(void)login:(NSString *)FBAccessToken delegate:(id<ClientLoginDelegate>)delegate;;
