@@ -55,60 +55,70 @@
 //    [FBRequest requestwith]
     
 
-//    ASYNC({
-        NSLog(@"Hello?");
+
+        NSLog(@"Hello? Im in async");
         [FBRequestConnection startWithGraphPath:@"me/friends"
                                      parameters: englishParams
                                      HTTPMethod:nil
                               completionHandler:^(FBRequestConnection *connection,
                                                   id result,
                                                   NSError *error) {
+                                 ASYNC({
                                   if (!error) {
                                       // Get the result
                                       NSArray* friends = [result objectForKey:@"data"];
                                       NSLog(@"Found: %lu friends", (unsigned long)friends.count);
+                                      NSManagedObjectContext *context = [[RKManagedObjectStore defaultStore] newChildManagedObjectContextWithConcurrencyType:NSPrivateQueueConcurrencyType tracksChanges:NO];
                                       for (NSDictionary<FBGraphUser>* friend in friends) {
-                                          
                                           User *user;
-                                          [User findOrCreateUserForName:friend.name withfbID:friend.id returnAsEntity:&user inManagedObjectContext:[RKManagedObjectStore defaultStore].mainQueueManagedObjectContext];
+                                          [User findOrCreateUserForName:friend.name withfbID:friend.id returnAsEntity:&user inManagedObjectContext:context];
+
                                           
                                           
                                           
                                           //                                      NSLog(@"%@", friend);
                                           //                                      NSLog(@"I have a friend named %@ with id %@", friend.name, friend.id);
                                       }
+                                      [Utility saveToPersistenceStore:context failureMessage:@"Failed to save friends."];
                                   } else{
                                       NSLog(@"theres error");
                                   }
-                                  [Utility saveToPersistenceStore:[RKManagedObjectStore defaultStore].mainQueueManagedObjectContext
-                                                   failureMessage:@"Failed to delete posts and related objects persistenly."];
+         
+                                     
+                                 });
                               }];
+    
+    
+    
         [FBRequestConnection startWithGraphPath:@"me/friends"
                                      parameters: chineseParams
                                      HTTPMethod:nil
                               completionHandler:^(FBRequestConnection *connection,
                                                   id result,
                                                   NSError *error) {
+                            ASYNC({
                                   if (!error) {
                                       // Get the result
                                       NSArray* friends = [result objectForKey:@"data"];
                                       NSLog(@"Found: %lu friends", (unsigned long)friends.count);
+                                      NSManagedObjectContext *context = [[RKManagedObjectStore defaultStore] newChildManagedObjectContextWithConcurrencyType:NSPrivateQueueConcurrencyType tracksChanges:NO];
                                       for (NSDictionary<FBGraphUser>* friend in friends) {
                                           
                                           User *user;
-                                          [User findOrCreateUserForName:friend.name withfbID:friend.id returnAsEntity:&user inManagedObjectContext:[RKManagedObjectStore defaultStore].mainQueueManagedObjectContext];
+                                          [User findOrCreateUserForName:friend.name withfbID:friend.id returnAsEntity:&user inManagedObjectContext:context];
                                           
                                           
                                           
                                           //                                      NSLog(@"%@", friend);
                                           //                                      NSLog(@"I have a friend named %@ with id %@", friend.name, friend.id);
                                       }
-                                  }
-                                  [Utility saveToPersistenceStore:[RKManagedObjectStore defaultStore].mainQueueManagedObjectContext
-                                                   failureMessage:@"Failed to delete posts and related objects persistenly."];
+                                      [Utility saveToPersistenceStore:context failureMessage:@"Failed to save friends."];
+                                  }                             
+                                
+                            });
                               }];
+    
 
-//          )};
     
      
      

@@ -20,6 +20,7 @@
          inManagedObjectContext:(NSManagedObjectContext *)context{
     NSError *error = nil;
     
+     
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"User"];
     request.predicate = [NSPredicate predicateWithFormat:@"fbID = %@ AND name = %@", fbID, name];
     NSArray *matches = [context
@@ -50,7 +51,7 @@
     NSError *error = nil;
     
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"User"];
-    request.predicate = [NSPredicate predicateWithFormat:@"name CONTAINS %@", string];
+    request.predicate = [NSPredicate predicateWithFormat:@"name CONTAINS[c] %@", string];
     NSArray *matches = [context
                         executeFetchRequest:request error:&error];
     if(!matches || error){
