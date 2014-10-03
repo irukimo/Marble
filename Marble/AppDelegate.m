@@ -10,6 +10,8 @@
 
 #import "AppDelegate.h"
 #import "RestKitInitializer.h"
+#import "KeyChainWrapper.h"
+#import "ClientManager.h"
 
 @interface AppDelegate ()
 
@@ -90,6 +92,21 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+#pragma mark -
+#pragma mark Push Notification Delegate Methods
+- (void)application:(UIApplication *)application
+didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
+{
+    MBDebug(@"application:didRegisterForRemoteNotificationsWithDeviceToken: %@", deviceToken);
+    
+    [KeyChainWrapper storeDeviceToken:deviceToken];
+    // Note that ClientManager is called to send device token twice. One is called here. Another one is called when
+    // ClientClient receives session token from moose server. The reason is because we don't konw which is received first -
+    // device token or session token. Therefore, we call ClientManager to send device token when the app receives either of them
+    // and let ClientManager to check if both are ready. If yes, ClientManager sends to device token to moose server.
+    [ClientManager sendDeviceToken];
 }
 
 

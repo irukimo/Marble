@@ -72,6 +72,7 @@
     [objectManager addRequestDescriptorsFromArray:@[quizPOSTRequestDescriptor]];
     
     
+    
     /* Set up routing
      *
      */
@@ -80,8 +81,13 @@
 
     RKRoute *quizPOSTRoute = [RKRoute routeWithClass:[Quiz class] pathPattern:@"quizzes" method:RKRequestMethodPOST];
     
+    //Thirdly, named routes
+    RKRoute *sendDeviceTokenRoute = [RKRoute routeWithName:@"set_device_token" pathPattern:@"set_device_token" method:RKRequestMethodPOST];
+
     [objectManager.router.routeSet addRoutes:@[// class routes
-                                               quizGETRoute, quizPOSTRoute]];
+                                               quizGETRoute, quizPOSTRoute,
+                                               // named routes
+                                               sendDeviceTokenRoute]];
 
 
 }
