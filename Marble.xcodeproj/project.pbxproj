@@ -7,9 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		5137169319DCBFB100571C9A /* Quiz.m in Sources */ = {isa = PBXBuildFile; fileRef = 5137169219DCBFB100571C9A /* Quiz.m */; };
+		5109105E19DE248C00EFDBB5 /* Quiz.m in Sources */ = {isa = PBXBuildFile; fileRef = 5109105D19DE248C00EFDBB5 /* Quiz.m */; };
+		5109106119DE248C00EFDBB5 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 5109106019DE248C00EFDBB5 /* User.m */; };
+		511D9F1319DCDD1900FCCFB2 /* User+MBUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 511D9F1219DCDD1900FCCFB2 /* User+MBUser.m */; };
 		5152F8DF19DCAD86008E99DB /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 5152F8DD19DCAD86008E99DB /* Model.xcdatamodeld */; };
-		5152F8E219DCB848008E99DB /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 5152F8E119DCB848008E99DB /* User.m */; };
 		517C894619DB67B0005A8407 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 517C894519DB67B0005A8407 /* FacebookSDK.framework */; };
 		517C894A19DB706C005A8407 /* ClientManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 517C894919DB706C005A8407 /* ClientManager.m */; };
 		517C894D19DB7129005A8407 /* KeyChainWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 517C894C19DB7129005A8407 /* KeyChainWrapper.m */; };
@@ -47,12 +48,15 @@
 
 /* Begin PBXFileReference section */
 		3634F2606FB7FDA06677D4FC /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		5109105C19DE248C00EFDBB5 /* Quiz.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Quiz.h; sourceTree = "<group>"; };
+		5109105D19DE248C00EFDBB5 /* Quiz.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Quiz.m; sourceTree = "<group>"; };
+		5109105F19DE248C00EFDBB5 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
+		5109106019DE248C00EFDBB5 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
+		511D9F1119DCDD1900FCCFB2 /* User+MBUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "User+MBUser.h"; sourceTree = "<group>"; };
+		511D9F1219DCDD1900FCCFB2 /* User+MBUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "User+MBUser.m"; sourceTree = "<group>"; };
+		511D9F1419DCDDC300FCCFB2 /* Model 3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Model 3.xcdatamodel"; sourceTree = "<group>"; };
 		5137168D19DCBF7B00571C9A /* Model 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Model 2.xcdatamodel"; sourceTree = "<group>"; };
-		5137169119DCBFB100571C9A /* Quiz.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Quiz.h; sourceTree = "<group>"; };
-		5137169219DCBFB100571C9A /* Quiz.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Quiz.m; sourceTree = "<group>"; };
 		5152F8DE19DCAD86008E99DB /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
-		5152F8E019DCB848008E99DB /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
-		5152F8E119DCB848008E99DB /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
 		517C894519DB67B0005A8407 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = Libraries/FacebookSDK/FacebookSDK.framework; sourceTree = "<group>"; };
 		517C894819DB702D005A8407 /* ClientManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ClientManager.h; path = Clients/ClientManager.h; sourceTree = "<group>"; };
 		517C894919DB706C005A8407 /* ClientManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ClientManager.m; path = Clients/ClientManager.m; sourceTree = "<group>"; };
@@ -134,10 +138,12 @@
 			isa = PBXGroup;
 			children = (
 				5152F8DD19DCAD86008E99DB /* Model.xcdatamodeld */,
-				5137169119DCBFB100571C9A /* Quiz.h */,
-				5137169219DCBFB100571C9A /* Quiz.m */,
-				5152F8E019DCB848008E99DB /* User.h */,
-				5152F8E119DCB848008E99DB /* User.m */,
+				5109105F19DE248C00EFDBB5 /* User.h */,
+				5109106019DE248C00EFDBB5 /* User.m */,
+				5109105C19DE248C00EFDBB5 /* Quiz.h */,
+				5109105D19DE248C00EFDBB5 /* Quiz.m */,
+				511D9F1119DCDD1900FCCFB2 /* User+MBUser.h */,
+				511D9F1219DCDD1900FCCFB2 /* User+MBUser.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -442,9 +448,13 @@
 				5137169319DCBFB100571C9A /* Quiz.m in Sources */,
 				7A0E976F19DCBCBF003A9359 /* QuizTableViewCell.m in Sources */,
 				7AF4127519DB392200A470E1 /* LoginViewController.m in Sources */,
+				511D9F1319DCDD1900FCCFB2 /* User+MBUser.m in Sources */,
 				7AF4125819D9FFB800A470E1 /* HomeViewController.m in Sources */,
 				7A0E977219DCD8BB003A9359 /* ProfileNavigationController.m in Sources */,
 				7AF4126119DA035400A470E1 /* CreateQuizViewController.m in Sources */,
+				5109106119DE248C00EFDBB5 /* User.m in Sources */,
+				7AF4126419DA113000A470E1 /* MarbleNavigationController.m in Sources */,
+				5109105E19DE248C00EFDBB5 /* Quiz.m in Sources */,
 				517C894A19DB706C005A8407 /* ClientManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -671,10 +681,11 @@
 		5152F8DD19DCAD86008E99DB /* Model.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				511D9F1419DCDDC300FCCFB2 /* Model 3.xcdatamodel */,
 				5137168D19DCBF7B00571C9A /* Model 2.xcdatamodel */,
 				5152F8DE19DCAD86008E99DB /* Model.xcdatamodel */,
 			);
-			currentVersion = 5137168D19DCBF7B00571C9A /* Model 2.xcdatamodel */;
+			currentVersion = 511D9F1419DCDDC300FCCFB2 /* Model 3.xcdatamodel */;
 			path = Model.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

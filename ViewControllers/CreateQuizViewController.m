@@ -69,7 +69,7 @@
     [quiz setKeyword:_keywordCurrentValue];
     [quiz setOption0:_name1CurrentValue];
     [quiz setOption1:_name2CurrentValue];
-
+    [quiz setAnswer:_name1CurrentValue];
     NSString *sessionToken = [KeyChainWrapper getSessionTokenForUser];
     NSDictionary *params = [NSDictionary dictionaryWithObjects:@[sessionToken] forKeys:@[@"auth_token"]];
     
