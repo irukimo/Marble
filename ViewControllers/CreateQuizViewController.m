@@ -108,9 +108,9 @@
     [_name2TextField setTextAlignment:NSTextAlignmentCenter];
     [_name1TextField setDelegate:self];
     [_name2TextField setDelegate:self];
-//    [_name2TextField addTarget:self
-//                  action:@selector(textFieldDidChange:)
-//        forControlEvents:UIControlEventEditingChanged];
+    [_name2TextField addTarget:self
+                   action:@selector(textFieldDidChange:)
+        forControlEvents:UIControlEventEditingChanged];
 }
 
 

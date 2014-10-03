@@ -54,8 +54,8 @@
 //                          graphPath:@"me/friends" parameters:params HTTPMethod:
 //    [FBRequest requestwith]
     
-    /*
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+
+//    ASYNC({
         NSLog(@"Hello?");
         [FBRequestConnection startWithGraphPath:@"me/friends"
                                      parameters: englishParams
@@ -108,12 +108,11 @@
                                                    failureMessage:@"Failed to delete posts and related objects persistenly."];
                               }];
 
-    });
+//          )};
+    
      
      
-     
-     */
-     
+
     
 //    
 //    NSLocale *locale = [NSLocale currentLocale];
