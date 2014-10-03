@@ -10,7 +10,7 @@
 
 @protocol PostsViewControllerDelegate;
 
-@interface PostsViewController : UITableViewController
+@interface PostsViewController : UITableViewController <NSFetchedResultsControllerDelegate>
 @property (strong, nonatomic) NSArray *postArray;
 @property (nonatomic, weak) id<PostsViewControllerDelegate> delegate;
 
