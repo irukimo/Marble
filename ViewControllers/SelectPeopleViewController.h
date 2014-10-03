@@ -12,7 +12,8 @@
 
 @interface SelectPeopleViewController : UITableViewController
 @property (nonatomic, weak) id<SelectPeopleViewControllerDelegate> delegate;
-@property (strong, nonatomic) NSArray *peopleArray;
+@property (strong, nonatomic) NSMutableArray *peopleArray;
+-(void) displaySearchResult:(NSArray *)arrayOfUsers;
 @end
 
 @protocol SelectPeopleViewControllerDelegate <NSObject>

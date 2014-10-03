@@ -20,6 +20,6 @@
 - (void)shouldDisplayPeople:(CreateQuizViewController*)viewController withPeople:(NSArray *)people;
 - (void)backToNormal:(CreateQuizViewController*)viewController;
 - (void)shouldDisplayKeywords:(CreateQuizViewController*)viewController withKeywords:(NSArray *)keywords;
-
+- (void)gotSearchUsersResult:(NSArray *)arrayOfUsers;
 
 @end

@@ -10,7 +10,7 @@
 #import "CreateQuizViewController.h"
 
 #import "KeyChainWrapper.h"
-
+#import "User+MBUser.h"
 #import "Quiz.h"
 
 
@@ -108,7 +108,12 @@
     [_name2TextField setTextAlignment:NSTextAlignmentCenter];
     [_name1TextField setDelegate:self];
     [_name2TextField setDelegate:self];
+//    [_name2TextField addTarget:self
+//                  action:@selector(textFieldDidChange:)
+//        forControlEvents:UIControlEventEditingChanged];
 }
+
+
 
 -(void)addShuffleButtons{
     _shuffleKeywordBtn = [[UIButton alloc] initWithFrame:CGRectMake(30, 60, 100, 50)];
@@ -190,6 +195,17 @@
         return YES;
     }
 
+}
+
+-(void)textFieldDidChange :(UITextField *)textField{
+    if(textField == _name2TextField){
+        NSLog(@"textfield changed");
+        NSArray *arrayOfUsers;
+        [User searchUserThatContains:[_name2TextField text] returnThisManyUsers:3 inThisArray:&arrayOfUsers inManagedObjectContext:[RKManagedObjectStore defaultStore].mainQueueManagedObjectContext];
+        if(_delegate && [_delegate respondsToSelector:@selector(gotSearchUsersResult:)]){
+            [_delegate gotSearchUsersResult:arrayOfUsers];
+        }
+    }
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField{

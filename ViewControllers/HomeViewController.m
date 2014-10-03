@@ -25,6 +25,7 @@
     [super viewDidLoad];
     [self initiatePostsViewController];
     [self initiateCreateQuizViewController];
+    [self createAnotherCreateQuizViewController];
     //    [self.view addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:_CreateQuizViewController.view action:@selector(endEditing:)]];
     //    self.navigationController.navigationBar.hidden = YES;
     // Do any additional setup after loading the view.
@@ -33,16 +34,23 @@
 -(void) initiatePostsViewController{
     _postsViewController = [[PostsViewController alloc] init];
     [_postsViewController.view setFrame:CGRectMake(0, 200, self.view.frame.size.width, 200)];
-    [self.view addSubview:_postsViewController.view];
+//    [self.view addSubview:_postsViewController.view];
     _postsViewController.delegate = self;
 }
 
 
 -(void) initiateCreateQuizViewController{
     _createQuizViewController = [[CreateQuizViewController alloc] init];
-    [_createQuizViewController.view setFrame:CGRectMake(0, 50, self.view.frame.size.width, 100)];
+    [_createQuizViewController.view setFrame:CGRectMake(0, 200, self.view.frame.size.width, 100)];
     [self.view addSubview:_createQuizViewController.view];
-    [_createQuizViewController setDelegate:self];
+//    [_createQuizViewController setDelegate:self];
+}
+
+-(void) createAnotherCreateQuizViewController{
+    CreateQuizViewController *createQuizViewController = [[CreateQuizViewController alloc] init];
+    [createQuizViewController.view setFrame:CGRectMake(0, 400, self.view.frame.size.width, 100)];
+    [self.view addSubview:createQuizViewController.view];
+    //    [_createQuizViewController setDelegate:self];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -64,7 +72,7 @@
 -(void) prepareSelectPeopleViewController{
     _selectPeopleViewController = [[SelectPeopleViewController alloc] init];
     //    _selectPeopleViewController.view.frame = CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y + 200, self.view.bounds.size.width, 100);
-    _selectPeopleViewController.view.frame = CGRectMake(0, 100, self.view.bounds.size.width, 200);
+    _selectPeopleViewController.view.frame = CGRectMake(0, 150, self.view.bounds.size.width, 200);
     _selectPeopleViewController.view.tag = 100;
     _selectPeopleViewController.delegate = self;
 }
@@ -84,7 +92,7 @@
 - (void)shouldDisplayPeople:(CreateQuizViewController *)viewController withPeople:(NSArray *)people{
     [self prepareSelectPeopleViewController];
     [_selectPeopleViewController setPeopleArray:people];
-    [self.view addSubview:_selectPeopleViewController.view];
+//    [self.view addSubview:_selectPeopleViewController.view];
     _createQuizViewController.view.frame = CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y,
                                                 self.view.bounds.size.width, _createQuizViewController.view.frame.size.height);
     
@@ -102,9 +110,13 @@
         }
     }
     //    NSLog(@"backtonormal");
-    _createQuizViewController.view.frame = CGRectMake(self.view.frame.origin.x, 100,
+    _createQuizViewController.view.frame = CGRectMake(self.view.frame.origin.x, 20,
                                                 self.view.bounds.size.width, _createQuizViewController.view.frame.size.height);
     
+}
+
+- (void)gotSearchUsersResult:(NSArray *)arrayOfUsers{
+    [_selectPeopleViewController displaySearchResult:arrayOfUsers];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {

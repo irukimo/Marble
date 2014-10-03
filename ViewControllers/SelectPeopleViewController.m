@@ -8,6 +8,7 @@
 
 #import "SelectPeopleViewController.h"
 #import "SelectPeopleViewCell.h"
+#import "User.h"
 
 @interface SelectPeopleViewController ()
 @end
@@ -16,6 +17,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+//    NSManagedObjectContext *context = [[RKManagedObjectStore defaultStore].mainQueueManagedObjectContext];
+    
     _peopleArray = [NSArray arrayWithObjects:@"Peanut",@"Wen Shaw",  nil];
     
     // Uncomment the following line to preserve selection between presentations.
@@ -33,6 +36,18 @@
 -(void) setPeopleArray:(NSArray *)array{
     NSLog(@"setpeoplearraycalled");
     _peopleArray = [array copy];
+    [self.tableView reloadData];
+}
+
+
+-(void) displaySearchResult:(NSArray *)arrayOfUsers{
+    _peopleArray = [[NSMutableArray alloc] init];
+    for(id user in arrayOfUsers){
+        if([user isKindOfClass:[User class]]){
+            User *thisUser = (User *)user;
+            [_peopleArray addObject:thisUser.name];
+        }
+    }
     [self.tableView reloadData];
 }
 

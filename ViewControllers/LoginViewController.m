@@ -8,10 +8,12 @@
 
 #import "LoginViewController.h"
 #import "KeyChainWrapper.h"
+#import "User.h"
+#import "User+MBUser.h"
 
 @interface LoginViewController ()
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
-    @property (strong, nonatomic) FBLoginView *loginView;
+@property (strong, nonatomic) FBLoginView *loginView;
 @property (weak, nonatomic) IBOutlet UILabel *statusLabel;
 @property (strong, nonatomic) NSString *userName;
 @end
@@ -43,6 +45,102 @@
 - (void) loginViewFetchedUserInfo:(FBLoginView *)loginView user:(id<FBGraphUser>)user{
     _userName = [user.name copy];
     [_nameLabel setText:_userName];
+//    FBRequest* friendsRequest = [FBRequest requestForMyFriends];
+    NSMutableDictionary* chineseParams = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                   @"zh_TW",  @"locale", nil];
+    NSMutableDictionary* englishParams = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                   @"en_US",  @"locale", nil];
+//    FBRequest *request = [[FBRequest alloc] initWithSession:FBSession.activeSession
+//                          graphPath:@"me/friends" parameters:params HTTPMethod:
+//    [FBRequest requestwith]
+    
+    /*
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        NSLog(@"Hello?");
+        [FBRequestConnection startWithGraphPath:@"me/friends"
+                                     parameters: englishParams
+                                     HTTPMethod:nil
+                              completionHandler:^(FBRequestConnection *connection,
+                                                  id result,
+                                                  NSError *error) {
+                                  if (!error) {
+                                      // Get the result
+                                      NSArray* friends = [result objectForKey:@"data"];
+                                      NSLog(@"Found: %lu friends", (unsigned long)friends.count);
+                                      for (NSDictionary<FBGraphUser>* friend in friends) {
+                                          
+                                          User *user;
+                                          [User findOrCreateUserForName:friend.name withfbID:friend.id returnAsEntity:&user inManagedObjectContext:[RKManagedObjectStore defaultStore].mainQueueManagedObjectContext];
+                                          
+                                          
+                                          
+                                          //                                      NSLog(@"%@", friend);
+                                          //                                      NSLog(@"I have a friend named %@ with id %@", friend.name, friend.id);
+                                      }
+                                  } else{
+                                      NSLog(@"theres error");
+                                  }
+                                  [Utility saveToPersistenceStore:[RKManagedObjectStore defaultStore].mainQueueManagedObjectContext
+                                                   failureMessage:@"Failed to delete posts and related objects persistenly."];
+                              }];
+        [FBRequestConnection startWithGraphPath:@"me/friends"
+                                     parameters: chineseParams
+                                     HTTPMethod:nil
+                              completionHandler:^(FBRequestConnection *connection,
+                                                  id result,
+                                                  NSError *error) {
+                                  if (!error) {
+                                      // Get the result
+                                      NSArray* friends = [result objectForKey:@"data"];
+                                      NSLog(@"Found: %lu friends", (unsigned long)friends.count);
+                                      for (NSDictionary<FBGraphUser>* friend in friends) {
+                                          
+                                          User *user;
+                                          [User findOrCreateUserForName:friend.name withfbID:friend.id returnAsEntity:&user inManagedObjectContext:[RKManagedObjectStore defaultStore].mainQueueManagedObjectContext];
+                                          
+                                          
+                                          
+                                          //                                      NSLog(@"%@", friend);
+                                          //                                      NSLog(@"I have a friend named %@ with id %@", friend.name, friend.id);
+                                      }
+                                  }
+                                  [Utility saveToPersistenceStore:[RKManagedObjectStore defaultStore].mainQueueManagedObjectContext
+                                                   failureMessage:@"Failed to delete posts and related objects persistenly."];
+                              }];
+
+    });
+     
+     
+     
+     */
+     
+    
+//    
+//    NSLocale *locale = [NSLocale currentLocale];
+//    NSString *countryCode = [locale objectForKey:NSLocaleCountryCode];
+//    NSString *language;
+//    if ([[NSLocale preferredLanguages] count] > 0)
+//    {
+//        language = [[NSLocale preferredLanguages] objectAtIndex:0];
+//        NSLog(@"language %@", language);
+//    }
+//    else
+//    {
+//        language = [locale objectForKey:NSLocaleLanguageCode];
+//        NSLog(@"language %@", language);
+//
+//    }
+//    [friendsRequest startWithCompletionHandler: ^(FBRequestConnection *connection,
+//                                                  NSDictionary* result,
+//                                                  
+//                                                  NSError *error) {
+//        NSArray* friends = [result objectForKey:@"data"];
+//        NSLog(@"Found: %lu friends", (unsigned long)friends.count);
+//        for (NSDictionary<FBGraphUser>* friend in friends) {
+//            NSLog(@"%@", friend);
+//            NSLog(@"I have a friend named %@ with id %@", friend.name, friend.id);
+//        }
+//    }];
 }
 
 - (void) loginViewShowingLoggedInUser:(FBLoginView *)loginView {

@@ -20,6 +20,7 @@
 		7A0E976F19DCBCBF003A9359 /* QuizTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A0E976E19DCBCBF003A9359 /* QuizTableViewCell.m */; };
 		7A0E977219DCD8BB003A9359 /* ProfileNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A0E977119DCD8BB003A9359 /* ProfileNavigationController.m */; };
 		7A0E977519DCDFBC003A9359 /* HomeNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A0E977419DCDFBC003A9359 /* HomeNavigationController.m */; };
+		7AD2A32E19DE1F9800B200E9 /* User+MBUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AD2A32D19DE1F9800B200E9 /* User+MBUser.m */; };
 		7AF4123319D9FB6C00A470E1 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AF4123219D9FB6C00A470E1 /* main.m */; };
 		7AF4123619D9FB6C00A470E1 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AF4123519D9FB6C00A470E1 /* AppDelegate.m */; };
 		7AF4123C19D9FB6C00A470E1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7AF4123A19D9FB6C00A470E1 /* Main.storyboard */; };
@@ -75,6 +76,8 @@
 		7A0E977119DCD8BB003A9359 /* ProfileNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ProfileNavigationController.m; path = NavigationControllers/ProfileNavigationController.m; sourceTree = "<group>"; };
 		7A0E977319DCDFBC003A9359 /* HomeNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HomeNavigationController.h; path = NavigationControllers/HomeNavigationController.h; sourceTree = "<group>"; };
 		7A0E977419DCDFBC003A9359 /* HomeNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HomeNavigationController.m; path = NavigationControllers/HomeNavigationController.m; sourceTree = "<group>"; };
+		7AD2A32C19DE1F9800B200E9 /* User+MBUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "User+MBUser.h"; sourceTree = "<group>"; };
+		7AD2A32D19DE1F9800B200E9 /* User+MBUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "User+MBUser.m"; sourceTree = "<group>"; };
 		7AF4122D19D9FB6C00A470E1 /* Marble.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Marble.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7AF4123119D9FB6C00A470E1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7AF4123219D9FB6C00A470E1 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -138,12 +141,12 @@
 			isa = PBXGroup;
 			children = (
 				5152F8DD19DCAD86008E99DB /* Model.xcdatamodeld */,
-				5109105F19DE248C00EFDBB5 /* User.h */,
-				5109106019DE248C00EFDBB5 /* User.m */,
-				5109105C19DE248C00EFDBB5 /* Quiz.h */,
-				5109105D19DE248C00EFDBB5 /* Quiz.m */,
-				511D9F1119DCDD1900FCCFB2 /* User+MBUser.h */,
-				511D9F1219DCDD1900FCCFB2 /* User+MBUser.m */,
+				5137169119DCBFB100571C9A /* Quiz.h */,
+				5137169219DCBFB100571C9A /* Quiz.m */,
+				5152F8E019DCB848008E99DB /* User.h */,
+				5152F8E119DCB848008E99DB /* User.m */,
+				7AD2A32C19DE1F9800B200E9 /* User+MBUser.h */,
+				7AD2A32D19DE1F9800B200E9 /* User+MBUser.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -436,6 +439,7 @@
 				517C894D19DB7129005A8407 /* KeyChainWrapper.m in Sources */,
 				7AF4127119DA6A8300A470E1 /* SelectPeopleViewCell.m in Sources */,
 				5152F8DF19DCAD86008E99DB /* Model.xcdatamodeld in Sources */,
+				7AD2A32E19DE1F9800B200E9 /* User+MBUser.m in Sources */,
 				7AF4123319D9FB6C00A470E1 /* main.m in Sources */,
 				7A0E976919DCB194003A9359 /* ProfileViewController.m in Sources */,
 				5152F8E219DCB848008E99DB /* User.m in Sources */,

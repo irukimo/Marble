@@ -29,5 +29,14 @@
     };
 }
 
++ (void)saveToPersistenceStore:(NSManagedObjectContext *)context failureMessage:(NSString *)failureMessage{
+    if ([context saveToPersistentStore:nil]) {
+        NSLog(@"Successfully saved to persistence store.");
+    } else {
+        NSLog(@"%@", failureMessage);
+    }
+    
+}
+
 
 @end

@@ -2,15 +2,22 @@
 //  User+MBUser.h
 //  Marble
 //
-//  Created by Wen-Hsiang Shaw on 10/1/14.
-//  Copyright (c) 2014 Orrzs Inc. All rights reserved.
-//
 
 #import "User.h"
+#import <Foundation/Foundation.h>
 
 @interface User (MBUser)
 
 - (NSString *)profileURL;
 
 
++ (BOOL)findOrCreateUserForName:(NSString *)name
+                       withfbID:(NSString *)fbID
+                 returnAsEntity:(User **)userToReturn
+         inManagedObjectContext:(NSManagedObjectContext *)context;
+
++ (BOOL)searchUserThatContains:(NSString *)string
+           returnThisManyUsers:(int)num
+                   inThisArray:(NSArray **)usersToReturn
+        inManagedObjectContext:(NSManagedObjectContext *)context;
 @end
