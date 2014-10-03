@@ -48,8 +48,25 @@
                                         keyPath:@"Quiz"
                                     statusCodes:successCode];
     
+    
+    
+    // options mapping
+    RKEntityMapping *optionsMapping = [RKEntityMapping mappingForEntityForName:@"User" inManagedObjectStore:managedObjectStore];
+    [optionsMapping addAttributeMappingsFromDictionary:@{@"name": @"name",
+                                                   @"fb_id": @"fbID"}];
+    
+    optionsMapping.identificationAttributes = @[@"fbID"];
+    
+    RKResponseDescriptor *optionsGETResponseDescriptor =
+    [RKResponseDescriptor responseDescriptorWithMapping:optionsMapping
+                                                 method:RKRequestMethodGET
+                                            pathPattern:@"options"
+                                                keyPath:nil
+                                            statusCodes:successCode];
+    
+    
     // add response descriptors to object manager
-    [objectManager addResponseDescriptorsFromArray:@[quizGETResponseDescriptor]];
+    [objectManager addResponseDescriptorsFromArray:@[quizGETResponseDescriptor, optionsGETResponseDescriptor]];
 
     /* Set up request descriptor
      *

@@ -15,5 +15,7 @@ typedef void (^RKFailureBlock)(RKObjectRequestOperation *, NSError *);
 typedef void (^RKSuccessBlock)(RKObjectRequestOperation *, RKMappingResult *);
 
 + (RKSuccessBlock) successBlockWithDebugMessage:(NSString *)message block:(void (^)(void))callbackBlock;
++ (RKFailureBlock) failureBlockWithAlertMessage:(NSString *)message block:(void (^)(void))callbackBlock;
+
 + (void)saveToPersistenceStore:(NSManagedObjectContext *)context failureMessage:(NSString *)failureMessage;
 @end

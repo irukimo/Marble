@@ -29,6 +29,19 @@
     };
 }
 
++ (RKFailureBlock) failureBlockWithAlertMessage:(NSString *)message block:(void (^)(void))callbackBlock
+{
+    return ^(RKObjectRequestOperation *operation, NSError *error){
+        if (callbackBlock) {callbackBlock();}
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:message
+                                                            message:[error localizedDescription]
+                                                           delegate:nil
+                                                  cancelButtonTitle:@"OK"
+                                                  otherButtonTitles:nil];
+        [alertView show];
+    };
+}
+
 + (void)saveToPersistenceStore:(NSManagedObjectContext *)context failureMessage:(NSString *)failureMessage{
     if ([context saveToPersistentStore:nil]) {
         NSLog(@"Successfully saved to persistence store.");

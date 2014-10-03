@@ -53,8 +53,6 @@
 //    FBRequest *request = [[FBRequest alloc] initWithSession:FBSession.activeSession
 //                          graphPath:@"me/friends" parameters:params HTTPMethod:
 //    [FBRequest requestwith]
-    
-
 
         NSLog(@"Hello? Im in async");
         [FBRequestConnection startWithGraphPath:@"me/friends"
@@ -120,10 +118,6 @@
     
 
     
-     
-     
-
-    
 //    
 //    NSLocale *locale = [NSLocale currentLocale];
 //    NSString *countryCode = [locale objectForKey:NSLocaleCountryCode];
@@ -150,6 +144,10 @@
 //            NSLog(@"I have a friend named %@ with id %@", friend.name, friend.id);
 //        }
 //    }];
+    
+    
+    
+    
 }
 
 - (void) loginViewShowingLoggedInUser:(FBLoginView *)loginView {
@@ -213,13 +211,36 @@
 
 #pragma mark -
 #pragma mark ClientClient Delegate methods
+- (void) afterLoggedIn
+{
+    NSString *sessionToken = [KeyChainWrapper getSessionTokenForUser];
+    NSDictionary *params = [NSDictionary dictionaryWithObjects:@[sessionToken] forKeys:@[@"auth_token"]];
+    MBDebug(@"Loading options...");
+    
+    [[RKObjectManager sharedManager] getObject:[User alloc]
+                                          path:@"options"
+                                    parameters:params
+                                       success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+                                           MBDebug(@"Successfully loadded options from server");
+//                                           for(User *opt in [mappingResult array]) {
+//                                               MBDebug(@"%@", opt.name);
+//                                           }
+                                       }
+                                       failure:[Utility failureBlockWithAlertMessage:@"Can't connect to the server"
+                                                                               block:^{MBError(@"Cannot load options");}]
+     ];
+    
+    
+    [self performSegueWithIdentifier:@"homeSegue" sender:nil];
+}
+
 - (void) ClientLoggedIn
 {
     //Set Badge number to 0
     ASYNC({
 //        [ClientManager sendBadgeNumber:0];
     });
-    [self performSegueWithIdentifier:@"homeSegue" sender:nil];
+    [self afterLoggedIn];
 }
 
 - (void) ClientLoggingInFailed
@@ -233,7 +254,8 @@
     ASYNC({
 //        [ClientManager sendBadgeNumber:0];
     });
-    [self performSegueWithIdentifier:@"homeSegue" sender:nil];
+    
+    [self afterLoggedIn];
 }
 
 #pragma mark - log out user method
