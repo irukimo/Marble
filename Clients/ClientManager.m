@@ -13,7 +13,7 @@
 
 static id<ClientLoginDelegate> delegate = nil;
 static AFHTTPClient *httpClient = nil;
-static  NSInteger *tryAgainButtonIndex = nil;
+static NSInteger tryAgainButtonIndex;
 
 @implementation ClientManager
 
@@ -49,7 +49,7 @@ static  NSInteger *tryAgainButtonIndex = nil;
                                                              forKey:@"fb_access_token"];
     MBDebug(@"asdasd");
     [ClientManager sharedClientManager];
-    NSLog(@"Before login: %@", params);
+    MBDebug(@"Before login: %@", params);
     
     [httpClient postPath:@"login" parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
         
@@ -60,6 +60,7 @@ static  NSInteger *tryAgainButtonIndex = nil;
         [self handleFailedToLogIn:error];
     }];
 }
+
 
 
 + (void)handleLoggedIn:(NSDictionary *)response
@@ -97,12 +98,32 @@ static  NSInteger *tryAgainButtonIndex = nil;
     MBError(@"Failed to log in");
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No network connection"
                                                     message:nil
-                                                   delegate:self
+                                                   delegate:[ClientManager sharedClientManager]
                                           cancelButtonTitle:@"OK"
                                           otherButtonTitles:nil];
     tryAgainButtonIndex = [alert addButtonWithTitle:@"Try again!"];
+    MBDebug(@"%ld", tryAgainButtonIndex);
     [alert show];
 }
+
+#pragma mark -
+#pragma mark UIAlertView Delegate Methods
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (buttonIndex == tryAgainButtonIndex) {
+        MBDebug(@"Try to log in again!");
+        [ClientManager login:[KeyChainWrapper FBAccessToken] delegate:delegate];
+    } else {
+        if (delegate && [delegate respondsToSelector:@selector(ClientLoggingInFailed)]) {
+            MBDebug(@"Tell delegate that logging in failed!");
+            [delegate ClientLoggingInFailed];
+        } else {
+            MBError(@"ClientLogging's delegation is not set!");
+        }
+    }
+}
+
+
 
 + (BOOL)logout
 {

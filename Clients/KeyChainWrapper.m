@@ -29,7 +29,7 @@ static NSData *deviceToken = nil;
 
 +(void)storeFBAccessToken:(NSString *)fbAccessToken
 {
-    if (FBAccessToken != nil) {
+    if (fbAccessToken != nil) {
         FBAccessToken = [NSString stringWithString:fbAccessToken];
     }
 }
