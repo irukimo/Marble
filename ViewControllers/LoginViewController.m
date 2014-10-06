@@ -211,15 +211,21 @@
                                           
                                           User *user;
                                           [User findOrCreateUserForName:friend.name withfbID:friend.id returnAsEntity:&user inManagedObjectContext:context];
-                                          
                                           dispatch_semaphore_wait(_mysemaphore, DISPATCH_TIME_FOREVER);
-                                          [Utility saveToPersistenceStore:context failureMessage:@"Failed to save friends."];
+                                          @try {
+                                              [Utility saveToPersistenceStore:context failureMessage:@"Failed to save friends."];
+                                          }
+                                          @catch(NSException *e) {
+                                              NSLog(@"got exception %@",e);
+                                          }
                                           dispatch_semaphore_signal(_mysemaphore);
                                           
                                           //                                      NSLog(@"%@", friend);
                                           //                                      NSLog(@"I have a friend named %@ with id %@", friend.name, friend.id);
                                       }
                                       
+                                  }else{
+                                      NSLog(@"error%@", error);
                                   }
                                   
                               });
