@@ -10,6 +10,7 @@
 
 @interface SelectPeopleViewCell()
 @property(strong, nonatomic) UILabel *nameLabel;
+@property(strong, nonatomic) UILabel *IDLabel;
 @end
 
 @implementation SelectPeopleViewCell
@@ -21,6 +22,8 @@
     if (self) {
         _nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 320, 50)];
         [self.contentView addSubview:_nameLabel];
+        _IDLabel = [[UILabel alloc] initWithFrame:CGRectMake(100, 0, 320, 50)];
+        [self.contentView addSubview:_IDLabel];
         // Initialization code
     }
     return self;
@@ -39,6 +42,11 @@
 -(void) setPersonName:(NSString *)personName{
     _personName = personName;
     [_nameLabel setText:personName];
+}
+
+-(void) setID:(NSString *)ID{
+    _ID = ID;
+    [_IDLabel setText:ID];
 }
 
 @end

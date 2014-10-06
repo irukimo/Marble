@@ -19,8 +19,7 @@
     [super viewDidLoad];
 //    NSManagedObjectContext *context = [[RKManagedObjectStore defaultStore].mainQueueManagedObjectContext];
     
-    _peopleArray = [NSArray arrayWithObjects:@"Peanut",@"Wen Shaw",  nil];
-    
+//    _peopleArray = [NSArray arrayWithObjects:@"Peanut",@"Wen Shaw",  nil];
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
@@ -46,6 +45,7 @@
         if([user isKindOfClass:[User class]]){
             User *thisUser = (User *)user;
             [_peopleArray addObject:thisUser.name];
+            NSLog(@"Time to display %@, %@", thisUser.name, thisUser.fbID);
         }
     }
     [self.tableView reloadData];

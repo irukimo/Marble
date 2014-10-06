@@ -10,12 +10,15 @@
 #import "KeyChainWrapper.h"
 #import "User.h"
 #import "User+MBUser.h"
+#import "dispatch/semaphore.h"
 
 @interface LoginViewController ()
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (strong, nonatomic) FBLoginView *loginView;
 @property (weak, nonatomic) IBOutlet UILabel *statusLabel;
 @property (strong, nonatomic) NSString *userName;
+@property dispatch_semaphore_t mysemaphore;
+
 @end
 
 @implementation LoginViewController
@@ -32,6 +35,7 @@
     // Align the button in the center horizontally
     _loginView.frame = CGRectOffset(_loginView.frame, (self.view.center.x - (_loginView.frame.size.width / 2)), 500);
     [self.view addSubview:_loginView];
+    _mysemaphore = dispatch_semaphore_create(1);
 }
 
 - (void)didReceiveMemoryWarning {
@@ -45,109 +49,14 @@
 - (void) loginViewFetchedUserInfo:(FBLoginView *)loginView user:(id<FBGraphUser>)user{
     _userName = [user.name copy];
     [_nameLabel setText:_userName];
-//    FBRequest* friendsRequest = [FBRequest requestForMyFriends];
+    
     NSMutableDictionary* chineseParams = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                   @"zh_TW",  @"locale", nil];
+                                          @"zh_TW",  @"locale", nil];
     NSMutableDictionary* englishParams = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                   @"en_US",  @"locale", nil];
-//    FBRequest *request = [[FBRequest alloc] initWithSession:FBSession.activeSession
-//                          graphPath:@"me/friends" parameters:params HTTPMethod:
-//    [FBRequest requestwith]
+                                          @"en_US",  @"locale", nil];
+    [self getFriendsNamesWithParams:chineseParams];
+    [self getFriendsNamesWithParams:englishParams];
 
-        NSLog(@"Hello? Im in async");
-        [FBRequestConnection startWithGraphPath:@"me/friends"
-                                     parameters: englishParams
-                                     HTTPMethod:nil
-                              completionHandler:^(FBRequestConnection *connection,
-                                                  id result,
-                                                  NSError *error) {
-                                 ASYNC({
-                                  if (!error) {
-                                      // Get the result
-                                      NSArray* friends = [result objectForKey:@"data"];
-                                      NSLog(@"Found: %lu friends", (unsigned long)friends.count);
-                                      NSManagedObjectContext *context = [[RKManagedObjectStore defaultStore] newChildManagedObjectContextWithConcurrencyType:NSPrivateQueueConcurrencyType tracksChanges:NO];
-                                      for (NSDictionary<FBGraphUser>* friend in friends) {
-                                          User *user;
-                                          [User findOrCreateUserForName:friend.name withfbID:friend.id returnAsEntity:&user inManagedObjectContext:context];
-
-                                          
-                                          
-                                          
-                                          //                                      NSLog(@"%@", friend);
-                                          //                                      NSLog(@"I have a friend named %@ with id %@", friend.name, friend.id);
-                                      }
-                                      [Utility saveToPersistenceStore:context failureMessage:@"Failed to save friends."];
-                                  } else{
-                                      NSLog(@"theres error");
-                                  }
-         
-                                     
-                                 });
-                              }];
-    
-    
-    
-        [FBRequestConnection startWithGraphPath:@"me/friends"
-                                     parameters: chineseParams
-                                     HTTPMethod:nil
-                              completionHandler:^(FBRequestConnection *connection,
-                                                  id result,
-                                                  NSError *error) {
-                            ASYNC({
-                                  if (!error) {
-                                      // Get the result
-                                      NSArray* friends = [result objectForKey:@"data"];
-                                      NSLog(@"Found: %lu friends", (unsigned long)friends.count);
-                                      NSManagedObjectContext *context = [[RKManagedObjectStore defaultStore] newChildManagedObjectContextWithConcurrencyType:NSPrivateQueueConcurrencyType tracksChanges:NO];
-                                      for (NSDictionary<FBGraphUser>* friend in friends) {
-                                          
-                                          User *user;
-                                          [User findOrCreateUserForName:friend.name withfbID:friend.id returnAsEntity:&user inManagedObjectContext:context];
-                                          
-                                          
-                                          
-                                          //                                      NSLog(@"%@", friend);
-                                          //                                      NSLog(@"I have a friend named %@ with id %@", friend.name, friend.id);
-                                      }
-                                      [Utility saveToPersistenceStore:context failureMessage:@"Failed to save friends."];
-                                  }                             
-                                
-                            });
-                              }];
-    
-
-    
-//    
-//    NSLocale *locale = [NSLocale currentLocale];
-//    NSString *countryCode = [locale objectForKey:NSLocaleCountryCode];
-//    NSString *language;
-//    if ([[NSLocale preferredLanguages] count] > 0)
-//    {
-//        language = [[NSLocale preferredLanguages] objectAtIndex:0];
-//        NSLog(@"language %@", language);
-//    }
-//    else
-//    {
-//        language = [locale objectForKey:NSLocaleLanguageCode];
-//        NSLog(@"language %@", language);
-//
-//    }
-//    [friendsRequest startWithCompletionHandler: ^(FBRequestConnection *connection,
-//                                                  NSDictionary* result,
-//                                                  
-//                                                  NSError *error) {
-//        NSArray* friends = [result objectForKey:@"data"];
-//        NSLog(@"Found: %lu friends", (unsigned long)friends.count);
-//        for (NSDictionary<FBGraphUser>* friend in friends) {
-//            NSLog(@"%@", friend);
-//            NSLog(@"I have a friend named %@ with id %@", friend.name, friend.id);
-//        }
-//    }];
-    
-    
-    
-    
 }
 
 - (void) loginViewShowingLoggedInUser:(FBLoginView *)loginView {
@@ -280,5 +189,42 @@
     // Pass the selected object to the new view controller.
 }
 */
+
+-(void) getFriendsNamesWithParams:(NSMutableDictionary *)params{
+
+    NSLog(@"executed get chinese names");
+    [FBRequestConnection startWithGraphPath:@"me/friends"
+                                 parameters: params
+                                 HTTPMethod:nil
+                          completionHandler:^(FBRequestConnection *connection,
+                                              id result,
+                                              NSError *error) {
+                              NSLog(@"never executed!");
+                              ASYNC({
+                                  if (!error) {
+                                      // Get the result
+                                      NSArray* friends = [result objectForKey:@"data"];
+                                      NSLog(@"Found: %lu friends", (unsigned long)friends.count);
+                                      NSManagedObjectContext *context = [[RKManagedObjectStore defaultStore] newChildManagedObjectContextWithConcurrencyType:NSPrivateQueueConcurrencyType tracksChanges:YES];
+//                                      NSManagedObjectContext *context = [RKManagedObjectStore defaultStore].mainQueueManagedObjectContext;
+                                      for (NSDictionary<FBGraphUser>* friend in friends) {
+                                          
+                                          User *user;
+                                          [User findOrCreateUserForName:friend.name withfbID:friend.id returnAsEntity:&user inManagedObjectContext:context];
+                                          
+                                          dispatch_semaphore_wait(_mysemaphore, DISPATCH_TIME_FOREVER);
+                                          [Utility saveToPersistenceStore:context failureMessage:@"Failed to save friends."];
+                                          dispatch_semaphore_signal(_mysemaphore);
+                                          
+                                          //                                      NSLog(@"%@", friend);
+                                          //                                      NSLog(@"I have a friend named %@ with id %@", friend.name, friend.id);
+                                      }
+                                      
+                                  }
+                                  
+                              });
+                          }];
+
+}
 
 @end

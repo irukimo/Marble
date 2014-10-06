@@ -50,19 +50,31 @@
         inManagedObjectContext:(NSManagedObjectContext *)context{
     NSError *error = nil;
     
-    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"User"];
-    request.predicate = [NSPredicate predicateWithFormat:@"name CONTAINS[c] %@", string];
-    NSArray *matches = [context
-                        executeFetchRequest:request error:&error];
-    if(!matches || error){
+    NSMutableArray *allMatches = [[NSMutableArray alloc] init];
+    [allMatches addObjectsFromArray:[User returnSearchArrayWithString:string inContext:context]];
+    
+    if([string containsString:@" "]){
+        NSArray* substrings = [string componentsSeparatedByString: @" "];
+        for(NSString * substr in substrings){
+            NSLog(@"%@", substr);
+            NSArray *matches = [User returnSearchArrayWithString:substr inContext:context];
+            for(id match in matches){
+                if(![allMatches containsObject:match]){
+                    [allMatches addObject:match];
+                }
+            }
+        }
+    }
+
+    if(!allMatches || error){
         NSLog(@"Errors in fetching entity");
         *usersToReturn = nil;
         return FALSE;
-    } else if([matches count]){
-        if([matches count] > num){
-            *usersToReturn = [matches subarrayWithRange:NSMakeRange(0, (int)num)];
+    } else if([allMatches count]){
+        if([allMatches count] > num){
+            *usersToReturn = [allMatches subarrayWithRange:NSMakeRange(0, (int)num)];
         } else{
-            *usersToReturn = matches;
+            *usersToReturn = allMatches;
         }
         return TRUE;
     }
@@ -79,6 +91,17 @@
     
 //    MBDebug(@"Created a user with name %@", name);
     return user;
+}
+
++(NSArray *)returnSearchArrayWithString:(NSString *)string inContext:(NSManagedObjectContext *)context{
+    NSError *error = nil;
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"User"];
+    request.predicate = [NSPredicate predicateWithFormat:@"name CONTAINS[c] %@", string];
+    
+    NSArray *matches = [context
+                        executeFetchRequest:request error:&error];
+    return matches;
+
 }
 
 @end
