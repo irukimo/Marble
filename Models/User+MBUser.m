@@ -53,7 +53,8 @@
     NSMutableArray *allMatches = [[NSMutableArray alloc] init];
     [allMatches addObjectsFromArray:[User returnSearchArrayWithString:string inContext:context]];
     
-    if([string containsString:@" "]){
+    
+    if([string rangeOfString:@" "].location != NSNotFound){
         NSArray* substrings = [string componentsSeparatedByString: @" "];
         for(NSString * substr in substrings){
             NSLog(@"%@", substr);
@@ -94,6 +95,10 @@
 }
 
 +(NSArray *)returnSearchArrayWithString:(NSString *)string inContext:(NSManagedObjectContext *)context{
+    if([string isEqualToString:@""]){
+        return [[NSArray alloc] initWithObjects: nil];
+    }
+    
     NSError *error = nil;
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"User"];
     request.predicate = [NSPredicate predicateWithFormat:@"name CONTAINS[c] %@", string];

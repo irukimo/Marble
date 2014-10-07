@@ -199,7 +199,6 @@
                           completionHandler:^(FBRequestConnection *connection,
                                               id result,
                                               NSError *error) {
-                              NSLog(@"never executed!");
                               ASYNC({
                                   if (!error) {
                                       // Get the result
@@ -213,7 +212,10 @@
                                           [User findOrCreateUserForName:friend.name withfbID:friend.id returnAsEntity:&user inManagedObjectContext:context];
                                           dispatch_semaphore_wait(_mysemaphore, DISPATCH_TIME_FOREVER);
                                           @try {
-                                              [Utility saveToPersistenceStore:context failureMessage:@"Failed to save friends."];
+//                                              [Utility saveToPersistenceStore:context failureMessage:@"Failed to save friends."];
+                                              if([context hasChanges]){
+                                                  [context save:nil];
+                                              }
                                           }
                                           @catch(NSException *e) {
                                               NSLog(@"got exception %@",e);
