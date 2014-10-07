@@ -36,7 +36,7 @@
 
 -(void) setNavbarTitle{
     UINavigationBar *myNavBar =[self.navigationController navigationBar];
-    [[myNavBar topItem] setTitle:@"YOUR PROFILE"];
+//    [[myNavBar topItem] setTitle:@"YOUR PROFILE"];
     [myNavBar setTranslucent:NO];
     [myNavBar setBarTintColor:[UIColor marbleBlue]];
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
@@ -53,7 +53,7 @@
 
 -(void) initiateCreateQuizViewController{
     _createQuizViewController = [[CreateQuizViewController alloc] init];
-    [_createQuizViewController.view setFrame:CGRectMake(0, 150, self.view.frame.size.width, 100)];
+    [_createQuizViewController.view setFrame:CGRectMake(0, 150, self.view.frame.size.width, 200)];
     [self.view addSubview:_createQuizViewController.view];
     [_createQuizViewController setDelegate:self];
 }

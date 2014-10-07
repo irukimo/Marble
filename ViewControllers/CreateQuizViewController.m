@@ -46,7 +46,7 @@
     [self.view addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedView)]];
     [self recordData];
     [self setCurrentUserValues];
-    [self setOption0Option1];
+//    [self setOption0Option1];
     // Do any additional setup after loading the view.
 }
 

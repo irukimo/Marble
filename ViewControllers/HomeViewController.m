@@ -31,6 +31,10 @@
     // Do any additional setup after loading the view.
 }
 
+-(void)viewWillAppear:(BOOL)animated{
+    [self setNavbarTitle];
+}
+
 -(void) setNavbarTitle{
     UINavigationBar *myNavBar =[self.navigationController navigationBar];
     [[myNavBar topItem] setTitle:@"MARBLES"];
@@ -42,7 +46,7 @@
     
 -(void) initiatePostsViewController{
     _postsViewController = [[PostsViewController alloc] init];
-    [_postsViewController.view setFrame:CGRectMake(0, 200, self.view.frame.size.width, 200)];
+    [_postsViewController.view setFrame:CGRectMake(0, 200, self.view.frame.size.width, 400)];
     [self.view addSubview:_postsViewController.view];
     _postsViewController.delegate = self;
 }
@@ -50,7 +54,7 @@
 
 -(void) initiateCreateQuizViewController{
     _createQuizViewController = [[CreateQuizViewController alloc] init];
-    [_createQuizViewController.view setFrame:CGRectMake(0, 65, self.view.frame.size.width, 100)];
+    [_createQuizViewController.view setFrame:CGRectMake(0, 65, self.view.frame.size.width, 200)];
     [self.view addSubview:_createQuizViewController.view];
     [_createQuizViewController setDelegate:self];
 }
