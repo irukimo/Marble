@@ -27,14 +27,11 @@
     [quizMapping addAttributeMappingsFromDictionary:@{@"uuid":              @"uuid",
                                                 @"author":             @"author",
                                                 @"author_name"   :      @"authorName",
-                                                @"autho_profile_URL":    @"authorProfileURL",
                                                 @"keyword":            @"keyword",
                                                 @"option0":            @"option0",
                                                 @"option0_name":        @"option0Name",
-                                                @"option0_profile_URL":  @"option0ProfileURL",
                                                 @"option1":            @"option1",
                                                 @"option1_name":        @"option1Name",
-                                                @"option1_profile_URL":  @"option1ProfileURL",
                                                 @"time":               @"time"}];
     
     /* We map the entity by uuid. If it is an existing entity on the server side, we updateUUID after object mapping
@@ -90,6 +87,7 @@
     
     
     
+    
     /* Set up routing
      *
      */
@@ -100,11 +98,13 @@
     
     //Thirdly, named routes
     RKRoute *sendDeviceTokenRoute = [RKRoute routeWithName:@"set_device_token" pathPattern:@"set_device_token" method:RKRequestMethodPOST];
-
+    
+    RKRoute *sendCommentRoute = [RKRoute routeWithName:@"send_comment" pathPattern:@"comments" method:RKRequestMethodPOST];
+    
     [objectManager.router.routeSet addRoutes:@[// class routes
                                                quizGETRoute, quizPOSTRoute,
                                                // named routes
-                                               sendDeviceTokenRoute]];
+                                               sendDeviceTokenRoute, sendCommentRoute]];
 
 
 }

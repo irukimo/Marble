@@ -38,11 +38,11 @@
     }
     
     //for permanent store
-    NSString *path = [RKApplicationDataDirectory() stringByAppendingPathComponent:@"Moose.sqlite"];
-    NSPersistentStore *persistentStore = [managedObjectStore addSQLitePersistentStoreAtPath:path fromSeedDatabaseAtPath:nil withConfiguration:nil options:nil error:&error];
+//    NSString *path = [RKApplicationDataDirectory() stringByAppendingPathComponent:@"Moose.sqlite"];
+//    NSPersistentStore *persistentStore = [managedObjectStore addSQLitePersistentStoreAtPath:path fromSeedDatabaseAtPath:nil withConfiguration:nil options:nil error:&error];
     
     //for in memory store
-    //NSPersistentStore *persistentStore = [managedObjectStore addInMemoryPersistentStore:&error];
+    NSPersistentStore *persistentStore = [managedObjectStore addInMemoryPersistentStore:&error];
     
     if (! persistentStore) {
         RKLogError(@"Failed adding in-memory persistent store: %@", error);

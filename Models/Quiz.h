@@ -2,7 +2,7 @@
 //  Quiz.h
 //  Marble
 //
-//  Created by Wen-Hsiang Shaw on 10/2/14.
+//  Created by Wen-Hsiang Shaw on 10/7/14.
 //  Copyright (c) 2014 Orrzs Inc. All rights reserved.
 //
 
@@ -23,6 +23,7 @@
 @property (nonatomic, retain) NSString * option1Name;
 @property (nonatomic, retain) NSDate * time;
 @property (nonatomic, retain) NSString * uuid;
+@property (nonatomic, retain) id comments;
 @property (nonatomic, retain) NSSet *authorship;
 @property (nonatomic, retain) User *options;
 @end

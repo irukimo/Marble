@@ -140,7 +140,8 @@
     }
 
     [cell setQuizWithAuthor:quiz.authorName andOption0:quiz.option0Name andOption1:quiz.option1Name andKeyword:quiz.keyword];
-    
+    cell.delegate = self;
+    cell.quizUUID = quiz.uuid;
     return cell;
 }
 
@@ -154,7 +155,46 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 60;
+    return 120;
+}
+
+#pragma mark -
+#pragma mark Quiz Table View Cell Delegate Methods
+- (void) commentQuiz:(id)sender withComment:(NSString *)comment
+{
+    CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.tableView];
+    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:buttonPosition];
+    Quiz *quiz = [_fetchedResultsController objectAtIndexPath:indexPath];
+
+    MBDebug(@"%@", comment);
+    MBDebug(@"%@", quiz.uuid);
+    
+    NSMutableDictionary *params = [NSMutableDictionary
+                                   dictionaryWithObjects:@[quiz.uuid, comment, [KeyChainWrapper getSessionTokenForUser]]
+                                   forKeys:@[@"quiz_uuid", @"comment", @"auth_token"]];
+    
+    NSMutableURLRequest *request = [[RKObjectManager sharedManager] requestWithPathForRouteNamed:@"send_comment"
+                                                                                          object:self
+                                                                                      parameters:params];
+    
+    RKHTTPRequestOperation *operation = [[RKHTTPRequestOperation alloc] initWithRequest:request];
+    [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+        MBDebug(@"Comment posted");
+        NSMutableArray *comments = [NSMutableArray arrayWithArray:quiz.comments];
+        [comments addObject:@[@"me", comment]];
+        quiz.comments = comments;
+        MBDebug(@"comments: %@", quiz.comments);
+    }
+                                 failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                         dispatch_async(dispatch_get_main_queue(), ^{
+                                             [Utility generateAlertWithMessage:@"Network problem"];
+                                         });
+                                         MBError(@"Cannot send comment!");
+                                     }];
+    
+    NSOperationQueue *operationQueue = [NSOperationQueue new];
+    [operationQueue addOperation:operation];
+
 }
 
 /*
@@ -167,7 +207,8 @@
 
 /*
 // Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableView
+ EditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         // Delete the row from the data source
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];

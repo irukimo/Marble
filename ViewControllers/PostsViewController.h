@@ -7,10 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "QuizTableViewCell.h"
 
 @protocol PostsViewControllerDelegate;
 
-@interface PostsViewController : UITableViewController <NSFetchedResultsControllerDelegate>
+@interface PostsViewController : UITableViewController <NSFetchedResultsControllerDelegate, QuizTableViewCellDelegate>
 @property (strong, nonatomic) NSArray *postArray;
 @property (nonatomic, weak) id<PostsViewControllerDelegate> delegate;
 

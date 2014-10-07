@@ -17,6 +17,10 @@
 @property(strong,nonatomic) UILabel *option1NameLabel;
 @property(strong,nonatomic) UILabel *authorNameLabel;
 @property(strong,nonatomic) UILabel *keywordLabel;
+
+// for temporary commenting use
+@property(strong, nonatomic) UITextField *commentField;
+@property(strong, nonatomic) UIButton *commentBtn;
 @end
 
 @implementation QuizTableViewCell
@@ -36,10 +40,19 @@
     _option0NameLabel = [[UILabel alloc] initWithFrame:CGRectMake(65, 15, 60, 50)];
     _option1NameLabel = [[UILabel alloc] initWithFrame:CGRectMake(115, 15, 60, 50)];
     _keywordLabel = [[UILabel alloc] initWithFrame:CGRectMake(255, 15, 60, 50)];
+    
+    _commentField = [[UITextField alloc] initWithFrame:CGRectMake(40, 70, 150, 30)];
+    [_commentField setBorderStyle:UITextBorderStyleLine];
+    _commentBtn = [[UIButton alloc] initWithFrame:CGRectMake(210, 70, 60, 30)];
+    [_commentBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [_commentBtn setTitle:@"send" forState:UIControlStateNormal];
+    [_commentBtn addTarget:self action:@selector(commentQuizClicked:) forControlEvents:UIControlEventTouchUpInside];
     [self.contentView addSubview:_authorNameLabel];
     [self.contentView addSubview:_option0NameLabel];
     [self.contentView addSubview:_option1NameLabel];
     [self.contentView addSubview:_keywordLabel];
+    [self.contentView addSubview:_commentField];
+    [self.contentView addSubview:_commentBtn];
 
 }
 
@@ -64,6 +77,13 @@
     [_option0NameLabel setText:_option0Name];
     [_option1NameLabel setText:_option1Name];
     [_keywordLabel setText:_keyword];
+}
+
+-(void) commentQuizClicked:(id)sender{
+    MBDebug(@"comment quiz clicked!");
+    if(_delegate && [_delegate respondsToSelector:@selector(commentQuiz:withComment:)]){
+        [_delegate commentQuiz:sender withComment:_commentField.text];
+    }
 }
 
 
