@@ -53,20 +53,11 @@
     _userName = [user.name copy];
     [_nameLabel setText:_userName];
     
-<<<<<<< HEAD
-    NSMutableDictionary* chineseParams = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                          @"zh_TW",  @"locale", nil];
-    NSMutableDictionary* englishParams = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                          @"en_US",  @"locale", nil];
-//    [self getFriendsNamesWithParams:chineseParams];
-//    [self getFriendsNamesWithParams:englishParams];
-
-=======
     _fbChUsers = nil;
     _fbEngUsers = nil;
     [self getFriendsNamesIsEngish:true];
     [self getFriendsNamesIsEngish:false];
->>>>>>> Fix bug in getting fb friends names
+
 }
 
 - (void) loginViewShowingLoggedInUser:(FBLoginView *)loginView {
