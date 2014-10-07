@@ -67,8 +67,8 @@
                                                inManagedObjectContext:[RKManagedObjectStore defaultStore].mainQueueManagedObjectContext];
     
     [quiz setKeyword:_keywordCurrentValue];
-    [quiz setOption0:_name1CurrentValue];
-    [quiz setOption1:_name2CurrentValue];
+    [quiz setOption0Name:_name1CurrentValue];
+    [quiz setOption1Name:_name2CurrentValue];
     [quiz setAnswer:_name1CurrentValue];
     NSString *sessionToken = [KeyChainWrapper getSessionTokenForUser];
     NSDictionary *params = [NSDictionary dictionaryWithObjects:@[sessionToken] forKeys:@[@"auth_token"]];
@@ -92,9 +92,12 @@
     _keywordTextField = [[UITextField alloc] initWithFrame:CGRectMake(100, 20, 50, 50)];
     _name1TextField = [[UITextField alloc] initWithFrame:CGRectMake(10, 20, 100, 50)];
     _name2TextField = [[UITextField alloc] initWithFrame:CGRectMake(200, 20, 100, 50)];
-    [_keywordTextField setText:@"yay"];
-    [_name1TextField setText:@"Albert"];
-    [_name2TextField setText:@"胖仔"];
+    _keywordCurrentValue = @"yay";
+    [_keywordTextField setText:_keywordCurrentValue];
+    _name1CurrentValue = @"Albert";
+    [_name1TextField setText:_name1CurrentValue];
+    _name2CurrentValue = @"胖仔";
+    [_name2TextField setText:_name2CurrentValue];
     [self.view addSubview:_keywordTextField];
     [self.view addSubview:_name1TextField];
     [self.view addSubview:_name2TextField];

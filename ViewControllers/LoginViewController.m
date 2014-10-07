@@ -54,8 +54,8 @@
                                           @"zh_TW",  @"locale", nil];
     NSMutableDictionary* englishParams = [NSMutableDictionary dictionaryWithObjectsAndKeys:
                                           @"en_US",  @"locale", nil];
-    [self getFriendsNamesWithParams:chineseParams];
-    [self getFriendsNamesWithParams:englishParams];
+//    [self getFriendsNamesWithParams:chineseParams];
+//    [self getFriendsNamesWithParams:englishParams];
 
 }
 

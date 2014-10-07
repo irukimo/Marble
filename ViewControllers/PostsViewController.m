@@ -139,17 +139,22 @@
         cell = [[QuizTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:quizTableViewCellIdentifier];
     }
     MBDebug(@"%@", quiz);
-    [cell setPersonName:quiz.keyword];
+    [cell setQuizWithAuthor:quiz.authorName andOption0:quiz.option0Name andOption1:quiz.option1Name andKeyword:quiz.keyword];
     
     return cell;
 }
 
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSString *personSelected = [_postArray objectAtIndex:indexPath.row];
+    Quiz *quiz = [_fetchedResultsController objectAtIndexPath:indexPath];
+    NSString *personSelected = quiz.authorName;
     if(_delegate && [_delegate respondsToSelector:@selector(postSelected:)]){
         [_delegate postSelected:personSelected];
     }
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return 60;
 }
 
 /*

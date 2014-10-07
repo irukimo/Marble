@@ -17,6 +17,8 @@
 		7A0E976F19DCBCBF003A9359 /* QuizTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A0E976E19DCBCBF003A9359 /* QuizTableViewCell.m */; };
 		7A0E977219DCD8BB003A9359 /* ProfileNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A0E977119DCD8BB003A9359 /* ProfileNavigationController.m */; };
 		7A0E977519DCDFBC003A9359 /* HomeNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A0E977419DCDFBC003A9359 /* HomeNavigationController.m */; };
+		7AB925B019E3730C00F8229F /* UIColor+MBColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AB925AF19E3730C00F8229F /* UIColor+MBColor.m */; };
+		7AB925B319E374E500F8229F /* ExploreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AB925B219E374E500F8229F /* ExploreViewController.m */; };
 		7AC934CD19DF37FC007EF4DB /* Quiz.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AC934CA19DF37FC007EF4DB /* Quiz.m */; };
 		7AC934CE19DF37FC007EF4DB /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AC934CC19DF37FC007EF4DB /* User.m */; };
 		7AD2A32E19DE1F9800B200E9 /* User+MBUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AD2A32D19DE1F9800B200E9 /* User+MBUser.m */; };
@@ -69,6 +71,10 @@
 		7A0E977119DCD8BB003A9359 /* ProfileNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ProfileNavigationController.m; path = NavigationControllers/ProfileNavigationController.m; sourceTree = "<group>"; };
 		7A0E977319DCDFBC003A9359 /* HomeNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HomeNavigationController.h; path = NavigationControllers/HomeNavigationController.h; sourceTree = "<group>"; };
 		7A0E977419DCDFBC003A9359 /* HomeNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HomeNavigationController.m; path = NavigationControllers/HomeNavigationController.m; sourceTree = "<group>"; };
+		7AB925AE19E3730C00F8229F /* UIColor+MBColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIColor+MBColor.h"; path = "Utilities/UIColor+MBColor.h"; sourceTree = "<group>"; };
+		7AB925AF19E3730C00F8229F /* UIColor+MBColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIColor+MBColor.m"; path = "Utilities/UIColor+MBColor.m"; sourceTree = "<group>"; };
+		7AB925B119E374E500F8229F /* ExploreViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExploreViewController.h; sourceTree = "<group>"; };
+		7AB925B219E374E500F8229F /* ExploreViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExploreViewController.m; sourceTree = "<group>"; };
 		7AC934C919DF37FC007EF4DB /* Quiz.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Quiz.h; sourceTree = "<group>"; };
 		7AC934CA19DF37FC007EF4DB /* Quiz.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Quiz.m; sourceTree = "<group>"; };
 		7AC934CB19DF37FC007EF4DB /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
@@ -140,10 +146,10 @@
 				7AC934C919DF37FC007EF4DB /* Quiz.h */,
 				7AC934CA19DF37FC007EF4DB /* Quiz.m */,
 				7AC934CB19DF37FC007EF4DB /* User.h */,
-				7AC934CC19DF37FC007EF4DB /* User.m */,
-				5152F8DD19DCAD86008E99DB /* Model.xcdatamodeld */,
 				7AD2A32C19DE1F9800B200E9 /* User+MBUser.h */,
 				7AD2A32D19DE1F9800B200E9 /* User+MBUser.m */,
+				7AC934CC19DF37FC007EF4DB /* User.m */,
+				5152F8DD19DCAD86008E99DB /* Model.xcdatamodeld */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -253,6 +259,8 @@
 				7AF4125719D9FFB800A470E1 /* HomeViewController.m */,
 				7A0E976A19DCB389003A9359 /* MarbleTabBarController.h */,
 				7A0E976B19DCB389003A9359 /* MarbleTabBarController.m */,
+				7AB925B119E374E500F8229F /* ExploreViewController.h */,
+				7AB925B219E374E500F8229F /* ExploreViewController.m */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -285,6 +293,8 @@
 				517C895119DB7E0C005A8407 /* Constants.h */,
 				7AF4127D19DB62C600A470E1 /* Utility.h */,
 				7AF4127E19DB62C600A470E1 /* Utility.m */,
+				7AB925AE19E3730C00F8229F /* UIColor+MBColor.h */,
+				7AB925AF19E3730C00F8229F /* UIColor+MBColor.m */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
@@ -436,6 +446,7 @@
 				517C894D19DB7129005A8407 /* KeyChainWrapper.m in Sources */,
 				7AF4127119DA6A8300A470E1 /* SelectPeopleViewCell.m in Sources */,
 				5152F8DF19DCAD86008E99DB /* Model.xcdatamodeld in Sources */,
+				7AB925B019E3730C00F8229F /* UIColor+MBColor.m in Sources */,
 				7AD2A32E19DE1F9800B200E9 /* User+MBUser.m in Sources */,
 				7AF4123319D9FB6C00A470E1 /* main.m in Sources */,
 				7A0E976919DCB194003A9359 /* ProfileViewController.m in Sources */,
@@ -453,6 +464,7 @@
 				7A0E977219DCD8BB003A9359 /* ProfileNavigationController.m in Sources */,
 				7AF4126119DA035400A470E1 /* CreateQuizViewController.m in Sources */,
 				517C894A19DB706C005A8407 /* ClientManager.m in Sources */,
+				7AB925B319E374E500F8229F /* ExploreViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

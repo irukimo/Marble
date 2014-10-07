@@ -25,8 +25,13 @@
     [self addProfileUI];
     [self initiateCreateQuizViewController];
     [self initiatePostsViewController];
+//    [self setNavigationAttributes];
     // Do any additional setup after loading the view.
 }
+
+//-(void)setNavigationAttributes{
+//    self.navigationController.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"yes" style:UIBarButtonItemStylePlain target:nil action:nil];
+//}
 
 -(void) initiatePostsViewController{
     _postsViewController = [[PostsViewController alloc] init];

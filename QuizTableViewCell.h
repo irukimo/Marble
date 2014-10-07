@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface QuizTableViewCell : UITableViewCell
-@property(strong,nonatomic) NSString *personName;
+
+-(void) setQuizWithAuthor:(NSString *)authorName andOption0:(NSString *)option0Name andOption1:(NSString *)option1Name andKeyword:(NSString *)keyword;
 
 @end

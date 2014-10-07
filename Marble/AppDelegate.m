@@ -36,8 +36,14 @@
     if (! success) {
         RKLogError(@"Failed to create Application Data Directory at path '%@': %@", RKApplicationDataDirectory(), error);
     }
-    //    NSString *path = [RKApplicationDataDirectory() stringByAppendingPathComponent:@"Moose.sqlite"];
-    NSPersistentStore *persistentStore = [managedObjectStore addInMemoryPersistentStore:&error];/*[managedObjectStore addSQLitePersistentStoreAtPath:path fromSeedDatabaseAtPath:nil withConfiguration:nil options:nil error:&error];*/
+    
+    //for permanent store
+    NSString *path = [RKApplicationDataDirectory() stringByAppendingPathComponent:@"Moose.sqlite"];
+    NSPersistentStore *persistentStore = [managedObjectStore addSQLitePersistentStoreAtPath:path fromSeedDatabaseAtPath:nil withConfiguration:nil options:nil error:&error];
+    
+    //for in memory store
+    //NSPersistentStore *persistentStore = [managedObjectStore addInMemoryPersistentStore:&error];
+    
     if (! persistentStore) {
         RKLogError(@"Failed adding in-memory persistent store: %@", error);
     }

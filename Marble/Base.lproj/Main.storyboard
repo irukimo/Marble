@@ -5,10 +5,10 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Explore View Controller-->
         <scene sceneID="ZWa-kF-fro">
             <objects>
-                <viewController id="JTT-ce-uWp" sceneMemberID="viewController">
+                <viewController id="JTT-ce-uWp" customClass="ExploreViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="MD9-8i-kjX"/>
                         <viewControllerLayoutGuide type="bottom" id="bJ8-fk-lBT"/>
@@ -53,7 +53,9 @@
                             </mask>
                         </variation>
                     </view>
-                    <navigationItem key="navigationItem" id="Jsi-Rb-qKG"/>
+                    <navigationItem key="navigationItem" id="Jsi-Rb-qKG">
+                        <barButtonItem key="backBarButtonItem" title=" " id="9d2-Gd-irb"/>
+                    </navigationItem>
                     <nil key="simulatedTopBarMetrics"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qcy-lo-s83" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -97,7 +99,9 @@
                             </mask>
                         </variation>
                     </view>
-                    <navigationItem key="navigationItem" id="xde-Bl-iCh"/>
+                    <navigationItem key="navigationItem" id="xde-Bl-iCh">
+                        <barButtonItem key="backBarButtonItem" title=" " id="eFG-Gj-nKn"/>
+                    </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Q5D-iB-V3V" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -156,7 +160,9 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" id="TUB-uc-mdq"/>
+                    <navigationItem key="navigationItem" id="TUB-uc-mdq">
+                        <barButtonItem key="backBarButtonItem" title=" " id="bAR-5C-YWk"/>
+                    </navigationItem>
                     <connections>
                         <segue destination="Hih-Ce-HV3" kind="show" identifier="ProfileViewControllerSegue" id="Qlt-us-aOr"/>
                     </connections>
@@ -315,6 +321,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="Qlt-us-aOr"/>
+        <segue reference="aow-3l-pCF"/>
     </inferredMetricsTieBreakers>
 </document>

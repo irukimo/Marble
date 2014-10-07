@@ -25,11 +25,16 @@
     [super viewDidLoad];
     [self initiatePostsViewController];
     [self initiateCreateQuizViewController];
+    [self setNavbarTitle];
     //    [self.view addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:_CreateQuizViewController.view action:@selector(endEditing:)]];
     //    self.navigationController.navigationBar.hidden = YES;
     // Do any additional setup after loading the view.
 }
 
+-(void) setNavbarTitle{
+    [[[self.navigationController navigationBar] topItem] setTitle:@"MARBLES"];
+}
+    
 -(void) initiatePostsViewController{
     _postsViewController = [[PostsViewController alloc] init];
     [_postsViewController.view setFrame:CGRectMake(0, 200, self.view.frame.size.width, 200)];
