@@ -11,6 +11,8 @@
 @interface Utility : NSObject
 + (void) generateAlertWithMessage:(NSString *)message;
 
++ (NSString *) generateUUID;
+
 typedef void (^RKFailureBlock)(RKObjectRequestOperation *, NSError *);
 typedef void (^RKSuccessBlock)(RKObjectRequestOperation *, RKMappingResult *);
 

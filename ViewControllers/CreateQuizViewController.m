@@ -99,8 +99,10 @@
 -(void)createQuizWithAnswer:(NSString *)answer{
     Quiz *quiz = [NSEntityDescription insertNewObjectForEntityForName:@"Quiz"
                                                inManagedObjectContext:[RKManagedObjectStore defaultStore].mainQueueManagedObjectContext];
+
     [quiz setAuthor:_currentUserfbID];
     [quiz setAuthorName:_currentUserName];
+    [quiz setUuid:[Utility generateUUID]];
     [quiz setKeyword:_keywordCurrentValue];
     [quiz setOption0Name:_option0.name];
     [quiz setOption0:_option0.fbID];

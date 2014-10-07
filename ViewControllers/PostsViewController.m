@@ -180,10 +180,16 @@
     RKHTTPRequestOperation *operation = [[RKHTTPRequestOperation alloc] initWithRequest:request];
     [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
         MBDebug(@"Comment posted");
-        NSMutableArray *comments = [NSMutableArray arrayWithArray:quiz.comments];
+        NSMutableArray *comments;
+        if (quiz.comments == nil) {
+            comments = [NSMutableArray arrayWithArray:quiz.comments];
+        } else {
+            comments = [[NSMutableArray alloc] init];
+        }
         [comments addObject:@[@"me", comment]];
         quiz.comments = comments;
-        MBDebug(@"comments: %@", quiz.comments);
+//        MBDebug(@"comments: %@", quiz.comments);
+        [self getCommentsForQuiz:quiz];
     }
                                  failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                          dispatch_async(dispatch_get_main_queue(), ^{
@@ -195,6 +201,24 @@
     NSOperationQueue *operationQueue = [NSOperationQueue new];
     [operationQueue addOperation:operation];
 
+}
+
+- (void)getCommentsForQuiz:(Quiz *)quiz
+{
+    NSString *sessionToken = [KeyChainWrapper getSessionTokenForUser];
+    NSDictionary *params = [NSDictionary dictionaryWithObjects:@[quiz.uuid, sessionToken] forKeys:@[@"quiz_uuid", @"auth_token"]];
+
+    [[RKObjectManager sharedManager] getObjectsAtPathForRouteNamed:@"get_comments" object:quiz parameters:params
+        success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+            MBDebug(@"Returned comments");
+            for (NSDictionary *cmt in quiz.comments) {
+                MBDebug(@"fb_id: %@, comment: %@", [cmt valueForKey:@"fb_id"], [cmt valueForKey:@"comment"]);
+            }
+        }
+        failure:^(RKObjectRequestOperation *operation, NSError *error) {
+            [Utility generateAlertWithMessage:@"Network problem"];
+            MBError(@"Cannot get comments!");
+    }];
 }
 
 /*

@@ -62,8 +62,22 @@
                                             statusCodes:successCode];
     
     
+    // comments mapping
+    RKEntityMapping *commentsMapping = [RKEntityMapping mappingForEntityForName:@"Quiz" inManagedObjectStore:managedObjectStore];
+    [commentsMapping addAttributeMappingsFromDictionary:@{@"comments": @"comments",
+                                                          @"uuid": @"uuid"}];
+    commentsMapping.identificationAttributes = @[@"uuid"];
+    RKResponseDescriptor *commentsGETResponseDescriptor =
+    [RKResponseDescriptor responseDescriptorWithMapping:commentsMapping
+                                                 method:RKRequestMethodGET
+                                            pathPattern:@"comments"
+                                                keyPath:nil
+                                            statusCodes:successCode];
+    
+
     // add response descriptors to object manager
-    [objectManager addResponseDescriptorsFromArray:@[quizGETResponseDescriptor, optionsGETResponseDescriptor]];
+    [objectManager addResponseDescriptorsFromArray:@[quizGETResponseDescriptor,
+                                                     optionsGETResponseDescriptor, commentsGETResponseDescriptor]];
 
     /* Set up request descriptor
      *
@@ -101,10 +115,12 @@
     
     RKRoute *sendCommentRoute = [RKRoute routeWithName:@"send_comment" pathPattern:@"comments" method:RKRequestMethodPOST];
     
+    RKRoute *getCommentsRoute = [RKRoute routeWithName:@"get_comments" pathPattern:@"comments" method:RKRequestMethodGET];
+    
     [objectManager.router.routeSet addRoutes:@[// class routes
                                                quizGETRoute, quizPOSTRoute,
                                                // named routes
-                                               sendDeviceTokenRoute, sendCommentRoute]];
+                                               sendDeviceTokenRoute, sendCommentRoute, getCommentsRoute]];
 
 
 }
