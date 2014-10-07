@@ -1,34 +1,38 @@
 //
-//  HomeNavigationController.m
+//  NotifViewController.m
 //  Marble
 //
-//  Created by Iru on 10/1/14.
+//  Created by Albert Shih on 10/7/14.
 //  Copyright (c) 2014 Orrzs Inc. All rights reserved.
 //
 
-#import "HomeNavigationController.h"
+#import "NotifViewController.h"
 
-@interface HomeNavigationController ()
+@interface NotifViewController ()
 
 @end
 
-@implementation HomeNavigationController
+@implementation NotifViewController
 
 - (void)viewDidLoad {
-[[UINavigationBar appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
-[super viewDidLoad];
+    [super viewDidLoad];
+    [self setNavbarTitle];
     // Do any additional setup after loading the view.
+}
+
+-(void) setNavbarTitle{
+    UINavigationBar *myNavBar =[self.navigationController navigationBar];
+    [[myNavBar topItem] setTitle:@"NOTIFICATIONS"];
+    [myNavBar setTranslucent:NO];
+    [myNavBar setBarTintColor:[UIColor marbleBlue]];
+    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
+    //    [[self.navigationController navigationBar] setBackgroundColor:[UIColor marbleBlue]];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
--(void)backToRoot{
-    [self popToRootViewControllerAnimated:NO];
-}
-
 
 /*
 #pragma mark - Navigation

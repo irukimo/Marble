@@ -7,6 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		50B568EF19E490590050C8EC /* NotifViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 50B568EE19E490590050C8EC /* NotifViewController.m */; };
+		50B5690119E497020050C8EC /* notif-selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B568F919E497020050C8EC /* notif-selected@2x.png */; };
+		50B5690219E497020050C8EC /* notif-unselected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B568FA19E497020050C8EC /* notif-unselected@2x.png */; };
+		50B5690319E497020050C8EC /* user-selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B568FB19E497020050C8EC /* user-selected@2x.png */; };
+		50B5690419E497020050C8EC /* user-unselected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B568FC19E497020050C8EC /* user-unselected@2x.png */; };
+		50B5690519E497020050C8EC /* home-selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B568FD19E497020050C8EC /* home-selected@2x.png */; };
+		50B5690619E497020050C8EC /* home-unselected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B568FE19E497020050C8EC /* home-unselected@2x.png */; };
+		50B5690719E497020050C8EC /* explore-unselected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B568FF19E497020050C8EC /* explore-unselected@2x.png */; };
+		50B5690819E497020050C8EC /* explore-selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B5690019E497020050C8EC /* explore-selected@2x.png */; };
 		5152F8DF19DCAD86008E99DB /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 5152F8DD19DCAD86008E99DB /* Model.xcdatamodeld */; };
 		517C894619DB67B0005A8407 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 517C894519DB67B0005A8407 /* FacebookSDK.framework */; };
 		517C894A19DB706C005A8407 /* ClientManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 517C894919DB706C005A8407 /* ClientManager.m */; };
@@ -51,6 +60,16 @@
 
 /* Begin PBXFileReference section */
 		3634F2606FB7FDA06677D4FC /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		50B568ED19E490590050C8EC /* NotifViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotifViewController.h; sourceTree = "<group>"; };
+		50B568EE19E490590050C8EC /* NotifViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotifViewController.m; sourceTree = "<group>"; };
+		50B568F919E497020050C8EC /* notif-selected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "notif-selected@2x.png"; path = "Icons/notif-selected@2x.png"; sourceTree = "<group>"; };
+		50B568FA19E497020050C8EC /* notif-unselected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "notif-unselected@2x.png"; path = "Icons/notif-unselected@2x.png"; sourceTree = "<group>"; };
+		50B568FB19E497020050C8EC /* user-selected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "user-selected@2x.png"; path = "Icons/user-selected@2x.png"; sourceTree = "<group>"; };
+		50B568FC19E497020050C8EC /* user-unselected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "user-unselected@2x.png"; path = "Icons/user-unselected@2x.png"; sourceTree = "<group>"; };
+		50B568FD19E497020050C8EC /* home-selected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "home-selected@2x.png"; path = "Icons/home-selected@2x.png"; sourceTree = "<group>"; };
+		50B568FE19E497020050C8EC /* home-unselected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "home-unselected@2x.png"; path = "Icons/home-unselected@2x.png"; sourceTree = "<group>"; };
+		50B568FF19E497020050C8EC /* explore-unselected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "explore-unselected@2x.png"; path = "Icons/explore-unselected@2x.png"; sourceTree = "<group>"; };
+		50B5690019E497020050C8EC /* explore-selected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "explore-selected@2x.png"; path = "Icons/explore-selected@2x.png"; sourceTree = "<group>"; };
 		511D9F1419DCDDC300FCCFB2 /* Model 3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Model 3.xcdatamodel"; sourceTree = "<group>"; };
 		5137168D19DCBF7B00571C9A /* Model 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Model 2.xcdatamodel"; sourceTree = "<group>"; };
 		5152F8DE19DCAD86008E99DB /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
@@ -144,6 +163,21 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		50B568F019E4949E0050C8EC /* Icons */ = {
+			isa = PBXGroup;
+			children = (
+				50B568F919E497020050C8EC /* notif-selected@2x.png */,
+				50B568FA19E497020050C8EC /* notif-unselected@2x.png */,
+				50B568FB19E497020050C8EC /* user-selected@2x.png */,
+				50B568FC19E497020050C8EC /* user-unselected@2x.png */,
+				50B568FD19E497020050C8EC /* home-selected@2x.png */,
+				50B568FE19E497020050C8EC /* home-unselected@2x.png */,
+				50B568FF19E497020050C8EC /* explore-unselected@2x.png */,
+				50B5690019E497020050C8EC /* explore-selected@2x.png */,
+			);
+			name = Icons;
+			sourceTree = "<group>";
+		};
 		5152F8DB19DCACA1008E99DB /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -184,6 +218,7 @@
 		7AF4122419D9FB6C00A470E1 = {
 			isa = PBXGroup;
 			children = (
+				50B568F019E4949E0050C8EC /* Icons */,
 				5152F8DB19DCACA1008E99DB /* Models */,
 				7AF4127619DB518900A470E1 /* Utilities */,
 				517C894419DB6793005A8407 /* Framework */,
@@ -253,6 +288,8 @@
 			children = (
 				7A0E976719DCB194003A9359 /* ProfileViewController.h */,
 				7A0E976819DCB194003A9359 /* ProfileViewController.m */,
+				50B568ED19E490590050C8EC /* NotifViewController.h */,
+				50B568EE19E490590050C8EC /* NotifViewController.m */,
 				7AF4127319DB392200A470E1 /* LoginViewController.h */,
 				7AF4127419DB392200A470E1 /* LoginViewController.m */,
 				7AF4126C19DA672500A470E1 /* SelectPeopleViewController.h */,
@@ -364,6 +401,7 @@
 				TargetAttributes = {
 					7AF4122C19D9FB6C00A470E1 = {
 						CreatedOnToolsVersion = 6.0.1;
+						DevelopmentTeam = 4AKZFCP9WW;
 					};
 					7AF4124519D9FB6C00A470E1 = {
 						CreatedOnToolsVersion = 6.0.1;
@@ -395,8 +433,16 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				50B5690519E497020050C8EC /* home-selected@2x.png in Resources */,
+				50B5690119E497020050C8EC /* notif-selected@2x.png in Resources */,
 				7AF4123C19D9FB6C00A470E1 /* Main.storyboard in Resources */,
+				50B5690219E497020050C8EC /* notif-unselected@2x.png in Resources */,
+				50B5690719E497020050C8EC /* explore-unselected@2x.png in Resources */,
 				7AF4124119D9FB6C00A470E1 /* LaunchScreen.xib in Resources */,
+				50B5690419E497020050C8EC /* user-unselected@2x.png in Resources */,
+				50B5690319E497020050C8EC /* user-selected@2x.png in Resources */,
+				50B5690619E497020050C8EC /* home-unselected@2x.png in Resources */,
+				50B5690819E497020050C8EC /* explore-selected@2x.png in Resources */,
 				7AF4123E19D9FB6C00A470E1 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -464,6 +510,7 @@
 				7AF4126B19DA2EC200A470E1 /* PostsViewController.m in Sources */,
 				7A0E976C19DCB389003A9359 /* MarbleTabBarController.m in Sources */,
 				7AF4127F19DB62C600A470E1 /* Utility.m in Sources */,
+				50B568EF19E490590050C8EC /* NotifViewController.m in Sources */,
 				7AF4126E19DA672500A470E1 /* SelectPeopleViewController.m in Sources */,
 				7A0E976F19DCBCBF003A9359 /* QuizTableViewCell.m in Sources */,
 				7AF4127519DB392200A470E1 /* LoginViewController.m in Sources */,

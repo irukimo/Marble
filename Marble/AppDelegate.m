@@ -28,6 +28,8 @@
     [lagFreeField resignFirstResponder];
     [lagFreeField removeFromSuperview];
     // Override point for customization after application launch.
+    [application setStatusBarHidden:NO];
+    [application setStatusBarStyle:UIStatusBarStyleLightContent];
     
     NSError *error = nil;
     NSManagedObjectModel *managedObjectModel = [NSManagedObjectModel mergedModelFromBundles:nil];

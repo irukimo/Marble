@@ -19,7 +19,37 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.delegate = self;
+    
+    //set tabbaritem image
+    [self setTabBarItemImages];
+    // set tabbaritem font
+    NSDictionary *selectedFont = [NSDictionary dictionaryWithObjectsAndKeys: [UIColor marbleBlue] ,NSForegroundColorAttributeName,nil];
+    NSDictionary *unSelectedFont = [NSDictionary dictionaryWithObjectsAndKeys: [UIColor unselected] ,NSForegroundColorAttributeName,nil];
+    for(UIViewController *v in self.customizableViewControllers){
+        [v.tabBarItem setTitleTextAttributes:unSelectedFont forState:UIControlStateNormal];
+        [v.tabBarItem setTitleTextAttributes:selectedFont forState:UIControlStateHighlighted];
+        v.tabBarItem.image = [v.tabBarItem.image imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+        v.tabBarItem.selectedImage = [v.tabBarItem.selectedImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+        
+    }
     // Do any additional setup after loading the view.
+}
+
+#pragma mark - UI methods
+-(void) setTabBarItemImages{
+    
+    UIViewController *firstVC = [self.customizableViewControllers objectAtIndex:0];
+    [firstVC.tabBarItem setImage:[UIImage imageNamed:@"home-unselected.png"]];
+    [firstVC.tabBarItem setSelectedImage:[UIImage imageNamed:@"home-selected.png"]];
+    UIViewController *secondVC = [self.customizableViewControllers objectAtIndex:1];
+    [secondVC.tabBarItem setImage:[UIImage imageNamed:@"explore-unselected.png"]];
+    [secondVC.tabBarItem setSelectedImage:[UIImage imageNamed:@"explore-selected.png"]];
+    UIViewController *thirdVC = [self.customizableViewControllers objectAtIndex:2];
+    [thirdVC.tabBarItem setImage:[UIImage imageNamed:@"user-unselected.png"]];
+    [thirdVC.tabBarItem setSelectedImage:[UIImage imageNamed:@"user-selected.png"]];
+    UIViewController *fourthVC = [self.customizableViewControllers objectAtIndex:3];
+    [fourthVC.tabBarItem setImage:[UIImage imageNamed:@"notif-unselected.png"]];
+    [fourthVC.tabBarItem setSelectedImage:[UIImage imageNamed:@"notif-selected.png"]];
 }
 
 - (void)didReceiveMemoryWarning {

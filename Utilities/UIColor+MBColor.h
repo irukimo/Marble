@@ -10,5 +10,5 @@
 
 @interface UIColor(MBColor)
 +(UIColor *) marbleBlue;
-
++(UIColor *) unselected;
 @end

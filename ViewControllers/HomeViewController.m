@@ -32,7 +32,12 @@
 }
 
 -(void) setNavbarTitle{
-    [[[self.navigationController navigationBar] topItem] setTitle:@"MARBLES"];
+    UINavigationBar *myNavBar =[self.navigationController navigationBar];
+    [[myNavBar topItem] setTitle:@"MARBLES"];
+    [myNavBar setTranslucent:NO];
+    [myNavBar setBarTintColor:[UIColor marbleBlue]];
+        self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
+//    [[self.navigationController navigationBar] setBackgroundColor:[UIColor marbleBlue]];
 }
     
 -(void) initiatePostsViewController{

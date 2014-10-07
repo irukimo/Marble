@@ -10,6 +10,7 @@
 
 @implementation UIColor(MBColor)
 +(UIColor *) marbleBlue{
-    return [UIColor colorWithRed:249.0/255.0 green:97.0/255.0 blue:59.0/255.0 alpha:1.0];
-}
+    return [UIColor colorWithRed:37.0/255.0 green:103.0/255.0 blue:147.0/255.0 alpha:1];}
++(UIColor *) unselected{
+    return [UIColor colorWithRed:133.0/255.0 green:131.0/255.0 blue:131.0/255.0 alpha:1];}
 @end

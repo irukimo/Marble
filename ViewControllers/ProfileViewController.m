@@ -25,6 +25,7 @@
     [self addProfileUI];
     [self initiateCreateQuizViewController];
     [self initiatePostsViewController];
+    [self setNavbarTitle];
 //    [self setNavigationAttributes];
     // Do any additional setup after loading the view.
 }
@@ -32,6 +33,15 @@
 //-(void)setNavigationAttributes{
 //    self.navigationController.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"yes" style:UIBarButtonItemStylePlain target:nil action:nil];
 //}
+
+-(void) setNavbarTitle{
+    UINavigationBar *myNavBar =[self.navigationController navigationBar];
+    [[myNavBar topItem] setTitle:@"YOUR PROFILE"];
+    [myNavBar setTranslucent:NO];
+    [myNavBar setBarTintColor:[UIColor marbleBlue]];
+    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
+    //    [[self.navigationController navigationBar] setBackgroundColor:[UIColor marbleBlue]];
+}
 
 -(void) initiatePostsViewController{
     _postsViewController = [[PostsViewController alloc] init];
