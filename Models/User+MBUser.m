@@ -145,6 +145,38 @@
     return FALSE;
 }
 
++ (BOOL)getRandomUsersThisMany:(int)num
+                   inThisArray:(NSArray **)usersToReturn
+        inManagedObjectContext:(NSManagedObjectContext *)context{
+    
+    NSMutableArray *randomUsers = [[NSMutableArray alloc] init];
+    while([randomUsers count]<num){
+        User *newUser;
+        do{
+            newUser = [User getOneRandomUserInManagedObjectContext:context];
+        } while([randomUsers containsObject:newUser]);
+        [randomUsers addObject:newUser];
+    }
+    *usersToReturn = randomUsers;
+    return TRUE;
+}
+
++(User *)getOneRandomUserInManagedObjectContext:(NSManagedObjectContext *)context{
+    NSFetchRequest *myRequest = [NSFetchRequest fetchRequestWithEntityName:@"User"];
+    NSError *error = nil;
+    NSUInteger myUserCount = [context countForFetchRequest:myRequest error:&error];
+    
+    int randomNumber = arc4random() % myUserCount;
+    
+    NSFetchRequest *myUserRequest = [NSFetchRequest fetchRequestWithEntityName:@"User"];
+    [myUserRequest setFetchOffset:randomNumber];
+    [myUserRequest setPredicate:NULL];
+    [myUserRequest setFetchLimit:1];
+    NSArray *users = [context executeFetchRequest:myUserRequest error:&error];
+    return [users firstObject];
+}
+
+
 +(User *)createNewUserWithName:(NSString *)name andfbID:(NSString *)fbID inManagedObjectContext:(NSManagedObjectContext *)context{
     
     // found nothing, create it!
@@ -171,5 +203,8 @@
     return matches;
 
 }
+
+
+
 
 @end

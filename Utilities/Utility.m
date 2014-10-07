@@ -51,5 +51,14 @@
     
 }
 
++(NSString *) getNameToDisplay:(NSString *)name{
+    if([name rangeOfString:@"("].location == NSNotFound){
+        return name;
+    }
+    NSRange start = [name rangeOfString:@"("];
+    NSRange end = [name rangeOfString:@")"];
+    return [name substringWithRange:NSMakeRange(start.location + 1, end.location - (start.location + 1))];
+}
+
 
 @end

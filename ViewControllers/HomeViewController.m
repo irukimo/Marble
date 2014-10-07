@@ -80,15 +80,15 @@
 
 #pragma mark -
 #pragma mark SelectPeopleViewController Delegate Methods
-- (void)selectedPerson:(NSString *)person{
-    [_createQuizViewController setPerson:person];
+- (void)selectedPerson:(User *)user{
+    [_createQuizViewController setUser:user];
 }
 
 #pragma mark -
 #pragma mark CreateQuizViewController Delegate Methods
 - (void)shouldDisplayPeople:(CreateQuizViewController *)viewController withPeople:(NSArray *)people{
     [self prepareSelectPeopleViewController];
-    [_selectPeopleViewController setPeopleArray:people];
+//    [_selectPeopleViewController setPeopleArray:people];
     [self.view addSubview:_selectPeopleViewController.view];
     _createQuizViewController.view.frame = CGRectMake(self.view.frame.origin.x, 50,
                                                 self.view.bounds.size.width, _createQuizViewController.view.frame.size.height);

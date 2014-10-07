@@ -18,17 +18,19 @@
 
 @interface CreateQuizViewController ()
 @property (strong, nonatomic) UITextField *keywordTextField;
-@property (strong, nonatomic) UITextField *name1TextField;
-@property (strong, nonatomic) UITextField *name2TextField;
+@property (strong, nonatomic) UITextField *option0NameTextField;
+@property (strong, nonatomic) UITextField *option1NameTextField;
 @property (strong, nonatomic) UIButton *shuffleKeywordBtn;
 @property (strong, nonatomic) UIButton *shufflePeopleBtn;
 @property (strong, nonatomic) UITextField *ongoingTextField;
-@property (strong, nonatomic) NSString *name1CurrentValue;
-@property (strong, nonatomic) NSString *name2CurrentValue;
 @property (strong, nonatomic) NSString *keywordCurrentValue;
 @property (strong, nonatomic) UIButton *chooseName1Btn;
 @property (strong, nonatomic) UIButton *chooseName2Btn;
 @property(nonatomic)CGPoint startPoint;
+@property (strong, nonatomic) NSString *currentUserName;
+@property (strong, nonatomic) NSString *currentUserfbID;
+@property (strong, nonatomic) User *option0;
+@property (strong, nonatomic) User *option1;
 
 @end
 
@@ -43,8 +45,34 @@
     
     [self.view addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedView)]];
     [self recordData];
-
+    [self setCurrentUserValues];
+    [self setOption0Option1];
     // Do any additional setup after loading the view.
+}
+
+-(void) setOption0Option1{
+    NSArray *randomUser;
+    [User getRandomUsersThisMany:2 inThisArray:&randomUser inManagedObjectContext:[RKManagedObjectStore defaultStore].mainQueueManagedObjectContext];
+    [self setOption0:[randomUser firstObject]];
+    [self setOption1:[randomUser objectAtIndex:1]];
+}
+                     
+-(void) setOption0:(User *)option0{
+    _option0 = option0;
+    [_option0NameTextField setText:[Utility getNameToDisplay:_option0.name]];
+}
+
+-(void) setOption1:(User *)option1{
+    _option1 = option1;
+    [_option1NameTextField setText:[Utility getNameToDisplay:_option1.name]];
+}
+
+-(void)setCurrentUserValues{
+    NSUserDefaults *standardUserDefaults = [NSUserDefaults standardUserDefaults];
+    if (standardUserDefaults){
+        _currentUserName = [standardUserDefaults objectForKey:@"userName"];
+        _currentUserfbID = [standardUserDefaults objectForKey:@"userFBID"];
+    }
 }
 
 -(void) addPeopleButtons{
@@ -61,15 +89,25 @@
 }
 
 -(void)chooseName1BtnClicked{
-    NSLog(@"author chose %@ over %@ for keyword: %@", _name1CurrentValue, _name2CurrentValue, _keywordCurrentValue);
-    
+    [self createQuizWithAnswer:(NSString *)_option0.name];
+}
+
+-(void)chooseName2BtnClicked{
+    [self createQuizWithAnswer:(NSString *)_option1.name];
+}
+
+-(void)createQuizWithAnswer:(NSString *)answer{
     Quiz *quiz = [NSEntityDescription insertNewObjectForEntityForName:@"Quiz"
                                                inManagedObjectContext:[RKManagedObjectStore defaultStore].mainQueueManagedObjectContext];
-    
+    [quiz setAuthor:_currentUserfbID];
+    [quiz setAuthorName:_currentUserName];
     [quiz setKeyword:_keywordCurrentValue];
-    [quiz setOption0Name:_name1CurrentValue];
-    [quiz setOption1Name:_name2CurrentValue];
-    [quiz setAnswer:_name1CurrentValue];
+    [quiz setOption0Name:_option0.name];
+    [quiz setOption0:_option0.fbID];
+    [quiz setOption1Name:_option1.name];
+    [quiz setOption1:_option1.fbID];
+    [quiz setAnswer:answer];
+    NSLog(@"%@",quiz);
     NSString *sessionToken = [KeyChainWrapper getSessionTokenForUser];
     NSDictionary *params = [NSDictionary dictionaryWithObjects:@[sessionToken] forKeys:@[@"auth_token"]];
     
@@ -82,39 +120,40 @@
      failure:^(RKObjectRequestOperation *operation, NSError *error) {
          [Utility generateAlertWithMessage:@"No network!"];
      }];
-}
 
--(void)chooseName2BtnClicked{
-    NSLog(@"author chose %@ over %@ for keyword: %@", _name2CurrentValue, _name1CurrentValue, _keywordCurrentValue);
 }
 
 -(void)addTextFields{
-    _keywordTextField = [[UITextField alloc] initWithFrame:CGRectMake(100, 20, 50, 50)];
-    _name1TextField = [[UITextField alloc] initWithFrame:CGRectMake(10, 20, 100, 50)];
-    _name2TextField = [[UITextField alloc] initWithFrame:CGRectMake(200, 20, 100, 50)];
+    _keywordTextField = [[UITextField alloc] initWithFrame:CGRectMake(130, 20, 50, 50)];
+    _option0NameTextField = [[UITextField alloc] initWithFrame:CGRectMake(10, 20, 120, 50)];
+    _option1NameTextField = [[UITextField alloc] initWithFrame:CGRectMake(200, 20, 120, 50)];
     _keywordCurrentValue = @"yay";
     [_keywordTextField setText:_keywordCurrentValue];
-    _name1CurrentValue = @"Albert";
-    [_name1TextField setText:_name1CurrentValue];
-    _name2CurrentValue = @"胖仔";
-    [_name2TextField setText:_name2CurrentValue];
+    
+    
+    
+//    _name1CurrentValue = @"Albert";
+//    [_option0NameTextField setText:_name1CurrentValue];
+//    
+//    _name2CurrentValue = @"胖仔";
+//    [_option1NameTextField setText:_name2CurrentValue];
     [self.view addSubview:_keywordTextField];
-    [self.view addSubview:_name1TextField];
-    [self.view addSubview:_name2TextField];
+    [self.view addSubview:_option0NameTextField];
+    [self.view addSubview:_option1NameTextField];
     [_keywordTextField setBorderStyle:UITextBorderStyleNone];
     [_keywordTextField setDelegate:self];
     [_keywordTextField setBackgroundColor:[UIColor yellowColor]];
     [_keywordTextField setTextAlignment:NSTextAlignmentCenter];
-    [_name1TextField setBorderStyle:UITextBorderStyleNone];
-    [_name2TextField setBorderStyle:UITextBorderStyleNone];
-    [_name1TextField setTextAlignment:NSTextAlignmentCenter];
-    [_name2TextField setTextAlignment:NSTextAlignmentCenter];
-    [_name1TextField setDelegate:self];
-    [_name2TextField setDelegate:self];
-    [_name1TextField addTarget:self
+    [_option0NameTextField setBorderStyle:UITextBorderStyleNone];
+    [_option1NameTextField setBorderStyle:UITextBorderStyleNone];
+    [_option0NameTextField setTextAlignment:NSTextAlignmentCenter];
+    [_option1NameTextField setTextAlignment:NSTextAlignmentCenter];
+    [_option0NameTextField setDelegate:self];
+    [_option1NameTextField setDelegate:self];
+    [_option0NameTextField addTarget:self
                         action:@selector(textFieldDidChange:)
               forControlEvents:UIControlEventEditingChanged];
-    [_name2TextField addTarget:self
+    [_option1NameTextField addTarget:self
                    action:@selector(textFieldDidChange:)
         forControlEvents:UIControlEventEditingChanged];
 }
@@ -145,10 +184,7 @@
 }
 
 - (void)shufflePeople:(id)sender {
-    [_name1TextField setText:@"王大明"];
-    [_name2TextField setText:@"范冰冰"];
-    _name1CurrentValue = [_name1TextField text];
-    _name2CurrentValue = [_name2TextField text];
+    [self setOption0Option1];
 }
 
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
@@ -167,8 +203,12 @@
  }
  */
 
--(void) setPerson:(NSString *)person{
-    [_ongoingTextField setText:person];
+-(void) setUser:(User *)user{
+    if(_ongoingTextField == _option0NameTextField){
+        [self setOption0:user];
+    } else if(_ongoingTextField == _option1NameTextField){
+        [self setOption1:user];
+    }
     [_ongoingTextField endEditing:YES];
     [self recordData];
 }
@@ -204,7 +244,7 @@
 }
 
 -(void)textFieldDidChange :(UITextField *)textField{
-    if(textField == _name2TextField || textField == _name1TextField){
+    if(textField == _option1NameTextField || textField == _option0NameTextField){
         NSArray *arrayOfUsers;
         [User searchUserThatContains:[textField text] returnThisManyUsers:10 inThisArray:&arrayOfUsers inManagedObjectContext:[RKManagedObjectStore defaultStore].mainQueueManagedObjectContext];
         if(_delegate && [_delegate respondsToSelector:@selector(gotSearchUsersResult:)]){
@@ -224,16 +264,16 @@
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField{
     [self presentAndEmptyData:textField];
-    if(textField == _name1TextField || textField == _name2TextField){
+    if(textField == _option0NameTextField || textField == _option1NameTextField){
         _ongoingTextField = textField;
         if(self.delegate && [_delegate respondsToSelector:@selector(shouldDisplayPeople:withPeople:)]){
-            NSArray* people = [NSArray arrayWithObjects:@"Iru",@"Wen",@"Henry",@"Albert",@"Sandy",nil];
-            [self.delegate shouldDisplayPeople:self withPeople:people];
+//            NSArray* people = [NSArray arrayWithObjects:@"Iru",@"Wen",@"Henry",@"Albert",@"Sandy",nil];
+            [self.delegate shouldDisplayPeople:self withPeople:nil];
         }
     } else{
         if(_delegate && [_delegate respondsToSelector:@selector(shouldDisplayKeywords:withKeywords:)]){
-            NSArray* keywords = [NSArray arrayWithObjects:@"Iru",@"Wen",@"Henry",@"Albert",@"Sandy",nil];
-            [_delegate shouldDisplayKeywords:self withKeywords:keywords];
+//            NSArray* keywords = [NSArray arrayWithObjects:@"Iru",@"Wen",@"Henry",@"Albert",@"Sandy",nil];
+            [_delegate shouldDisplayKeywords:self withKeywords:nil];
         }
     }
 }
@@ -244,14 +284,12 @@
 }
 
 -(void) recordData{
-    _name1CurrentValue = [_name1TextField text];
-    _name2CurrentValue = [_name2TextField text];
     _keywordCurrentValue = [_keywordTextField text];
 }
 
 -(void) presentData{
-    [_name1TextField setText:_name1CurrentValue];
-    [_name2TextField setText:_name2CurrentValue];
+    [_option0NameTextField setText:[Utility getNameToDisplay:_option0.name]];
+    [_option1NameTextField setText:[Utility getNameToDisplay:_option1.name]];
     [_keywordTextField setText:_keywordCurrentValue];
 }
 

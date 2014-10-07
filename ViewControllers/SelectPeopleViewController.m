@@ -17,6 +17,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    _peopleArray = [[NSMutableArray alloc] init];
 //    NSManagedObjectContext *context = [[RKManagedObjectStore defaultStore].mainQueueManagedObjectContext];
     
 //    _peopleArray = [NSArray arrayWithObjects:@"Peanut",@"Wen Shaw",  nil];
@@ -44,7 +45,7 @@
     for(id user in arrayOfUsers){
         if([user isKindOfClass:[User class]]){
             User *thisUser = (User *)user;
-            [_peopleArray addObject:thisUser.name];
+            [_peopleArray addObject:thisUser];
             NSLog(@"Time to display %@, %@", thisUser.name, thisUser.fbID);
         }
     }
@@ -64,7 +65,7 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSString *personSelected = [_peopleArray objectAtIndex:indexPath.row];
+    User *personSelected = [_peopleArray objectAtIndex:indexPath.row];
     if(_delegate && [_delegate respondsToSelector:@selector(selectedPerson:)]){
         [_delegate selectedPerson:personSelected];
     }
@@ -77,7 +78,8 @@
         cell = [[SelectPeopleViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:selectPeopleViewCellIdentifier];
     }
     
-    [cell setPersonName:[_peopleArray objectAtIndex:indexPath.row]];
+    User *user = [_peopleArray objectAtIndex:indexPath.row];
+    [cell setPersonName:user.name];
     
     return cell;
 }

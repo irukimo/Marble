@@ -57,6 +57,14 @@
     _fbEngUsers = nil;
     [self getFriendsNamesIsEngish:true];
     [self getFriendsNamesIsEngish:false];
+    
+    NSUserDefaults *standardUserDefaults = [NSUserDefaults standardUserDefaults];
+    
+    if (standardUserDefaults) {
+        [standardUserDefaults setObject:_userName forKey:@"userName"];
+        [standardUserDefaults setObject:user.id forKey:@"userFBID"];
+        [standardUserDefaults synchronize];
+    }
 
 }
 

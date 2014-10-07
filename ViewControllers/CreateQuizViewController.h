@@ -7,12 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "User+MBUser.h"
 
 @protocol CreateQuizViewControllerDelegate;
 
 @interface CreateQuizViewController : UIViewController <UITextFieldDelegate>
 @property (nonatomic, weak) id<CreateQuizViewControllerDelegate> delegate;
--(void) setPerson:(NSString *)person;
+-(void) setUser:(User *)user;
 @end
 
 @protocol CreateQuizViewControllerDelegate <NSObject>
