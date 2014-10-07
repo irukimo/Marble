@@ -10,6 +10,9 @@
 
 - (NSString *)profileURL;
 
++ (BOOL)createUsersInBatchForEng:(NSArray *)fbEngUsers
+                      andChinese:(NSArray *)fbChUsers
+          inManagedObjectContext:(NSManagedObjectContext *)context;
 
 + (BOOL)findOrCreateUserForName:(NSString *)name
                        withfbID:(NSString *)fbID

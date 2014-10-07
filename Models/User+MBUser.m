@@ -6,7 +6,11 @@
 //  Copyright (c) 2014 Orrzs Inc. All rights reserved.
 //
 
+#import <FacebookSDK/FacebookSDK.h>
+
 #import "User+MBUser.h"
+
+#import "Utility.h"
 
 @implementation User (MBUser)
 
@@ -14,6 +18,65 @@
 {
     return [NSString stringWithFormat:@"//graph.facebook.com/%@/picture?type=square", self.fbID];
 }
+
++ (BOOL)createUsersInBatchForEng:(NSArray *)fbEngUsers andChinese:(NSArray *)fbChUsers inManagedObjectContext:(NSManagedObjectContext *)context
+{
+    NSArray *fbIDs = [[fbEngUsers valueForKey:@"id"] sortedArrayUsingSelector: @selector(compare:)];
+//    MBDebug(@"fb ids: %@", fbIDs);
+    
+    // create the fetch request to get all Employees matching the IDs
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    [fetchRequest setEntity:
+     [NSEntityDescription entityForName:@"User" inManagedObjectContext:context]];
+    [fetchRequest setPredicate: [NSPredicate predicateWithFormat: @"(fbID IN %@)", fbIDs]];
+    
+    // Make sure the results are sorted as well.
+    [fetchRequest setSortDescriptors:
+     @[ [[NSSortDescriptor alloc] initWithKey: @"fbID" ascending:YES] ]];
+    // Execute the fetch.
+    NSError *error;
+    NSArray *usersMatchingFbIDs = [[[context executeFetchRequest:fetchRequest error:&error] valueForKey:@"fbID"] sortedArrayUsingSelector: @selector(compare:)];
+    
+//    MBDebug(@"Matching IDs: %@", usersMatchingFbIDs);
+    
+    [context setUndoManager:nil];
+    
+    //Set up the predicate for checking Chinese names
+    NSString *predicateString = [NSString stringWithFormat:@"id == $FB_ID"];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:predicateString];
+    
+    int count = 0;
+    for (NSDictionary<FBGraphUser>* user in fbEngUsers) {
+        NSPredicate *idPredicate = [NSPredicate predicateWithFormat:@"SELF = %@", user.id];
+        NSArray *matches = [usersMatchingFbIDs filteredArrayUsingPredicate:idPredicate];
+        if ([matches count] != 0) { continue; }
+        
+        NSString *name = nil;
+        NSPredicate *localPredicate = [predicate predicateWithSubstitutionVariables:@{ @"FB_ID" : user.id }];
+        NSArray *filteredArray = [fbChUsers filteredArrayUsingPredicate:localPredicate];
+        if ([filteredArray count] != 0) {
+            NSDictionary<FBGraphUser> *chUser = filteredArray[0];
+            
+            if ([chUser.name isEqualToString:user.name]) {
+                name = user.name;
+            } else {
+                name = [NSString stringWithFormat:@"%@ (%@)", user.name, chUser.name];
+            }
+        } else {
+            name = user.name;
+        }
+        
+        [User createNewUserWithName:name andfbID:user.id inManagedObjectContext:context];
+        count++;
+        if (count >= 200) {
+            count = 0;
+            [context save:nil];
+        }
+    }
+    [Utility saveToPersistenceStore:context failureMessage:@"Failed to create users in batch."];
+    return TRUE;
+}
+
 + (BOOL)findOrCreateUserForName:(NSString *)name
                        withfbID:(NSString *)fbID
                  returnAsEntity:(User **)userToReturn

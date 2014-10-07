@@ -138,7 +138,7 @@
     if (!cell){
         cell = [[QuizTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:quizTableViewCellIdentifier];
     }
-    MBDebug(@"%@", quiz);
+
     [cell setQuizWithAuthor:quiz.authorName andOption0:quiz.option0Name andOption1:quiz.option1Name andKeyword:quiz.keyword];
     
     return cell;

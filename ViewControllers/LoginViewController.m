@@ -18,6 +18,9 @@
 @property (weak, nonatomic) IBOutlet UILabel *statusLabel;
 @property (strong, nonatomic) NSString *userName;
 @property dispatch_semaphore_t mysemaphore;
+    
+@property (strong, nonatomic) NSArray *fbEngUsers;
+@property (strong, nonatomic) NSArray *fbChUsers;
 
 @end
 
@@ -50,6 +53,7 @@
     _userName = [user.name copy];
     [_nameLabel setText:_userName];
     
+<<<<<<< HEAD
     NSMutableDictionary* chineseParams = [NSMutableDictionary dictionaryWithObjectsAndKeys:
                                           @"zh_TW",  @"locale", nil];
     NSMutableDictionary* englishParams = [NSMutableDictionary dictionaryWithObjectsAndKeys:
@@ -57,6 +61,12 @@
 //    [self getFriendsNamesWithParams:chineseParams];
 //    [self getFriendsNamesWithParams:englishParams];
 
+=======
+    _fbChUsers = nil;
+    _fbEngUsers = nil;
+    [self getFriendsNamesIsEngish:true];
+    [self getFriendsNamesIsEngish:false];
+>>>>>>> Fix bug in getting fb friends names
 }
 
 - (void) loginViewShowingLoggedInUser:(FBLoginView *)loginView {
@@ -190,9 +200,16 @@
 }
 */
 
--(void) getFriendsNamesWithParams:(NSMutableDictionary *)params{
+-(void) getFriendsNamesIsEngish:(BOOL)isEnglish
+{
+    NSDictionary *params = nil;
+    if (isEnglish) {
+        params = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"en_US",  @"locale", nil];
+    } else {
+        params = [NSMutableDictionary dictionaryWithObjectsAndKeys: @"zh_TW",  @"locale", nil];
+    }
 
-    NSLog(@"executed get chinese names");
+    NSLog(@"executed get names");
     [FBRequestConnection startWithGraphPath:@"me/friends"
                                  parameters: params
                                  HTTPMethod:nil
@@ -204,32 +221,20 @@
                                       // Get the result
                                       NSArray* friends = [result objectForKey:@"data"];
                                       NSLog(@"Found: %lu friends", (unsigned long)friends.count);
-                                      NSManagedObjectContext *context = [[RKManagedObjectStore defaultStore] newChildManagedObjectContextWithConcurrencyType:NSPrivateQueueConcurrencyType tracksChanges:YES];
-//                                      NSManagedObjectContext *context = [RKManagedObjectStore defaultStore].mainQueueManagedObjectContext;
-                                      for (NSDictionary<FBGraphUser>* friend in friends) {
-                                          
-                                          User *user;
-                                          [User findOrCreateUserForName:friend.name withfbID:friend.id returnAsEntity:&user inManagedObjectContext:context];
-                                          dispatch_semaphore_wait(_mysemaphore, DISPATCH_TIME_FOREVER);
-                                          @try {
-//                                              [Utility saveToPersistenceStore:context failureMessage:@"Failed to save friends."];
-                                              if([context hasChanges]){
-                                                  [context save:nil];
-                                              }
-                                          }
-                                          @catch(NSException *e) {
-                                              NSLog(@"got exception %@",e);
-                                          }
-                                          dispatch_semaphore_signal(_mysemaphore);
-                                          
-                                          //                                      NSLog(@"%@", friend);
-                                          //                                      NSLog(@"I have a friend named %@ with id %@", friend.name, friend.id);
-                                      }
                                       
+                                      if(isEnglish) {
+                                          _fbEngUsers = friends;
+                                      } else {
+                                          _fbChUsers = friends;
+                                      }
+
+                                      if (_fbEngUsers != nil && _fbChUsers != nil) {
+                                          NSManagedObjectContext *context = [[RKManagedObjectStore defaultStore] newChildManagedObjectContextWithConcurrencyType:NSPrivateQueueConcurrencyType tracksChanges:YES];
+                                          [User createUsersInBatchForEng:_fbEngUsers andChinese:_fbChUsers inManagedObjectContext:context];
+                                      }
                                   }else{
                                       NSLog(@"error%@", error);
                                   }
-                                  
                               });
                           }];
 
