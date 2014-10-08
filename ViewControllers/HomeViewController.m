@@ -15,6 +15,7 @@
 @interface HomeViewController ()
 @property (strong, nonatomic) CreateQuizViewController *createQuizViewController;
 @property (strong, nonatomic) SelectPeopleViewController *selectPeopleViewController;
+@property (strong, nonatomic) SelectKeywordViewController *selectKeywordViewController;
 @property (strong, nonatomic) PostsViewController *postsViewController;
 
 @end
@@ -54,7 +55,7 @@
 
 -(void) initiateCreateQuizViewController{
     _createQuizViewController = [[CreateQuizViewController alloc] init];
-    [_createQuizViewController.view setFrame:CGRectMake(0, 65, self.view.frame.size.width, 200)];
+    [_createQuizViewController.view setFrame:CGRectMake(0, 20, self.view.frame.size.width, 200)];
     [self.view addSubview:_createQuizViewController.view];
     [_createQuizViewController setDelegate:self];
 }
@@ -81,6 +82,16 @@
     _selectPeopleViewController.view.frame = CGRectMake(0, 150, self.view.bounds.size.width, 200);
     _selectPeopleViewController.view.tag = 100;
     _selectPeopleViewController.delegate = self;
+    [self.view addSubview:_selectPeopleViewController.view];
+}
+
+-(void) prepareSelectKeywordViewController{
+    _selectKeywordViewController = [[SelectKeywordViewController alloc] init];
+    //    _selectPeopleViewController.view.frame = CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y + 200, self.view.bounds.size.width, 100);
+    _selectKeywordViewController.view.frame = CGRectMake(0, 150, self.view.bounds.size.width, 200);
+    _selectKeywordViewController.view.tag = 100;
+    _selectKeywordViewController.delegate = self;
+    [self.view addSubview:_selectKeywordViewController.view];
 }
 
 -(void) postSelected:(NSString *)name{
@@ -98,15 +109,15 @@
 - (void)shouldDisplayPeople:(CreateQuizViewController *)viewController withPeople:(NSArray *)people{
     [self prepareSelectPeopleViewController];
 //    [_selectPeopleViewController setPeopleArray:people];
-    [self.view addSubview:_selectPeopleViewController.view];
-    _createQuizViewController.view.frame = CGRectMake(self.view.frame.origin.x, 50,
-                                                self.view.bounds.size.width, _createQuizViewController.view.frame.size.height);
+//    _createQuizViewController.view.frame = CGRectMake(self.view.frame.origin.x, 50,
+//                                                self.view.bounds.size.width, _createQuizViewController.view.frame.size.height);
     
 }
 
 - (void)shouldDisplayKeywords:(CreateQuizViewController *)viewController withKeywords:(NSArray *)keywords{
-    _createQuizViewController.view.frame = CGRectMake(self.view.frame.origin.x, 50,
-                                                self.view.bounds.size.width, _createQuizViewController.view.frame.size.height);
+    [self prepareSelectKeywordViewController];
+//    _createQuizViewController.view.frame = CGRectMake(self.view.frame.origin.x, 50,
+//                                                self.view.bounds.size.width, _createQuizViewController.view.frame.size.height);
 }
 
 - (void)backToNormal:(CreateQuizViewController *)viewController{
@@ -116,8 +127,8 @@
         }
     }
     //    NSLog(@"backtonormal");
-    _createQuizViewController.view.frame = CGRectMake(self.view.frame.origin.x, 65,
-                                                self.view.bounds.size.width, _createQuizViewController.view.frame.size.height);
+//    _createQuizViewController.view.frame = CGRectMake(self.view.frame.origin.x, 65,
+//                                                self.view.bounds.size.width, _createQuizViewController.view.frame.size.height);
     
 }
 

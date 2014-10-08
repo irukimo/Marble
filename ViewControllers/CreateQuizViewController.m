@@ -46,11 +46,12 @@
     [self.view addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedView)]];
     [self recordData];
     [self setCurrentUserValues];
+    /*
     [NSTimer scheduledTimerWithTimeInterval:1.0
                                      target:self
                                    selector:@selector(setOption0Option1)
                                    userInfo:nil
-                                    repeats:NO];
+                                    repeats:NO];*/
     // Do any additional setup after loading the view.
 }
 
@@ -85,6 +86,7 @@
 -(void) addPeopleButtons{
     _chooseName1Btn = [[UIButton alloc] initWithFrame:CGRectMake(10, 0, 100, 20)];
     _chooseName2Btn =[[UIButton alloc] initWithFrame:CGRectMake(200, 0, 100, 20)];
+    [_chooseName1Btn setBackgroundColor:[UIColor grayColor]];
     [_chooseName1Btn setTitle:@"Choose" forState:UIControlStateNormal];
     [_chooseName2Btn setTitle:@"Choose" forState:UIControlStateNormal];
     [_chooseName1Btn addTarget:self action:@selector(chooseName1BtnClicked) forControlEvents:UIControlEventTouchUpInside];
@@ -96,10 +98,16 @@
 }
 
 -(void)chooseName1BtnClicked{
+    if(!_option0 || !_option1){
+        return;
+    }
     [self createQuizWithAnswer:(NSString *)_option0.name];
 }
 
 -(void)chooseName2BtnClicked{
+    if(!_option0 || !_option1){
+        return;
+    }
     [self createQuizWithAnswer:(NSString *)_option1.name];
 }
 

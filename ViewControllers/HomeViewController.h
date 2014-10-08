@@ -10,7 +10,9 @@
 #import "CreateQuizViewController.h"
 #import "SelectPeopleViewController.h"
 #import "PostsViewController.h"
+#import "SelectKeywordViewController.h"
 
-@interface HomeViewController : UIViewController <CreateQuizViewControllerDelegate, SelectPeopleViewControllerDelegate, PostsViewControllerDelegate>
+
+@interface HomeViewController : UIViewController <CreateQuizViewControllerDelegate, SelectPeopleViewControllerDelegate, PostsViewControllerDelegate, SelectKeywordViewControllerDelegate>
 
 @end
