@@ -8,7 +8,7 @@
 
 #import "PostsViewController.h"
 #import "QuizTableViewCell.h"
-
+#import "User+MBUser.h"
 #import "Quiz.h"
 
 #import "KeyChainWrapper.h"
@@ -138,9 +138,28 @@
     if (!cell){
         cell = [[QuizTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:quizTableViewCellIdentifier];
     }
-
-    [cell setQuizWithAuthor:quiz.authorName andOption0:quiz.option0Name andOption1:quiz.option1Name andKeyword:quiz.keyword];
-//    NSLog(@"%@", quiz);
+    
+    NSString *authorName;
+    NSString *option0Name;
+    NSString *option1Name;
+    if(quiz.authorName){
+        authorName = quiz.authorName;
+    }else{
+        [User getUserNameByFBID:quiz.author returnInName:&authorName inManagedObjectContext:[RKManagedObjectStore defaultStore].mainQueueManagedObjectContext];
+    }
+    if(quiz.option0Name){
+        option0Name = quiz.option0Name;
+    } else{
+        [User getUserNameByFBID:quiz.option0 returnInName:&option0Name inManagedObjectContext:[RKManagedObjectStore defaultStore].mainQueueManagedObjectContext];
+    }
+    if(quiz.option1Name){
+        option1Name = quiz.option1Name;
+    } else{
+        [User getUserNameByFBID:quiz.option1 returnInName:&option1Name inManagedObjectContext:[RKManagedObjectStore defaultStore].mainQueueManagedObjectContext];
+    }
+    
+    [cell setQuizWithAuthor:authorName andOption0:option0Name andOption1:option1Name andKeyword:quiz.keyword andAnswer:(NSString *)quiz.answer];
+    NSLog(@"%@", quiz);
     [cell.option0NameButton setTag:indexPath.row];
     [cell.option1NameButton setTag:indexPath.row];
     [cell.authorNameButton setTag:indexPath.row];

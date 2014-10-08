@@ -107,12 +107,41 @@
     return true;
 }
 
++(BOOL) getUserNameByFBID:(NSString *)fbid
+              returnInName:(NSString **)name
+    inManagedObjectContext:(NSManagedObjectContext *)context{
+    NSError *error = nil;
+    
+    
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"User"];
+    request.predicate = [NSPredicate predicateWithFormat:@"fbID = %@", fbid];
+    NSArray *matches = [context
+                        executeFetchRequest:request error:&error];
+    
+    //    NSLog(@"Let's compare %@ and %@", fbid, [[matches firstObject] fbUserID]);
+    
+    if(!matches || error){
+        NSLog(@"Errors in fetching entity");
+        *name = nil;
+        return FALSE;
+    } else if([matches count]){
+        User *user = [matches firstObject];
+        *name = user.name;
+        return TRUE;
+    } else {
+        *name = nil;
+        return FALSE;
+    }
+    
+    return false;
+
+}
+
 + (BOOL)searchUserThatContains:(NSString *)string
            returnThisManyUsers:(int)num
                    inThisArray:(NSArray **)usersToReturn
         inManagedObjectContext:(NSManagedObjectContext *)context{
     NSError *error = nil;
-    
     NSMutableArray *allMatches = [[NSMutableArray alloc] init];
     [allMatches addObjectsFromArray:[User returnSearchArrayWithString:string inContext:context]];
     

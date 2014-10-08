@@ -29,4 +29,7 @@
         inManagedObjectContext:(NSManagedObjectContext *)context
                  existingUsers:(NSArray *)existingUsers;
 
++(BOOL) getUserNameByFBID:(NSString *)fbid
+              returnInName:(NSString **)name
+    inManagedObjectContext:(NSManagedObjectContext *)context;
 @end
