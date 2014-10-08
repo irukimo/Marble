@@ -74,6 +74,10 @@
     } else{
         [_resultLabel setText:@"wrong"];
     }
+    MBDebug(@"choose option0 clicked! %@", _option0Name);
+    if(_delegate && [_delegate respondsToSelector:@selector(sendGuess:withAnswer:)]){
+        [_delegate sendGuess:sender withAnswer:_option1Name];
+    }
 }
 
 -(void) addResultLabel{
