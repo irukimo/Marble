@@ -31,6 +31,10 @@
     UILabel *kerker = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 50, 50)];
     [kerker setText:@"hello"];
     [self.view addSubview:kerker];
+    UIImageView *backgroundView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 568)];
+    [backgroundView setImage:[UIImage imageNamed:@"login.png"]];
+    [self.view addSubview:backgroundView];
+//    [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"login.png"]]];
     // Do any additional setup after loading the view.
     
     _loginView = [[FBLoginView alloc] initWithReadPermissions:@[@"public_profile", @"user_friends"]];
