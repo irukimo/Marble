@@ -46,7 +46,11 @@
     [self.view addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedView)]];
     [self recordData];
     [self setCurrentUserValues];
-//    [self setOption0Option1];
+    [NSTimer scheduledTimerWithTimeInterval:1.0
+                                     target:self
+                                   selector:@selector(setOption0Option1)
+                                   userInfo:nil
+                                    repeats:NO];
     // Do any additional setup after loading the view.
 }
 
