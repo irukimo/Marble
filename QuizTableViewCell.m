@@ -41,8 +41,8 @@
 }
 
 -(void) addChoiceButtons{
-    _chooseOption0Button = [[UIButton alloc] initWithFrame:CGRectMake(15, 45, 100, 50)];
-    _chooseOption1Button = [[UIButton alloc] initWithFrame:CGRectMake(115, 45, 100, 50)];
+    _chooseOption0Button = [[UIButton alloc] initWithFrame:CGRectMake(15, 45, 100, 20)];
+    _chooseOption1Button = [[UIButton alloc] initWithFrame:CGRectMake(115, 45, 100, 20)];
     [_chooseOption0Button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [_chooseOption0Button setTitle:@"choose" forState:UIControlStateNormal];
     [_chooseOption1Button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
@@ -87,15 +87,15 @@
 
 
 -(void)setLabels{
-    _authorNameButton = [[UIButton alloc] initWithFrame:CGRectMake(15, 0, 100, 50)];
-    _option0NameButton = [[UIButton alloc] initWithFrame:CGRectMake(15, 30, 100, 50)];
-    _option1NameButton = [[UIButton alloc] initWithFrame:CGRectMake(115, 30, 100, 50)];
+    _authorNameButton = [[UIButton alloc] initWithFrame:CGRectMake(15, 0, 100, 20)];
+    _option0NameButton = [[UIButton alloc] initWithFrame:CGRectMake(15, 30, 100, 20)];
+    _option1NameButton = [[UIButton alloc] initWithFrame:CGRectMake(115, 30, 100, 20)];
     
     [_authorNameButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [_option0NameButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [_option1NameButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
 
-    _keywordLabel = [[UILabel alloc] initWithFrame:CGRectMake(255, 15, 60, 50)];
+    _keywordLabel = [[UILabel alloc] initWithFrame:CGRectMake(255, 15, 60, 20)];
     
     _commentField = [[UITextField alloc] initWithFrame:CGRectMake(40, 80, 150, 30)];
     [_commentField setBorderStyle:UITextBorderStyleLine];

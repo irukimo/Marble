@@ -47,7 +47,7 @@
     
 -(void) initiatePostsViewController{
     _postsViewController = [[PostsViewController alloc] init];
-    [_postsViewController.view setFrame:CGRectMake(0, 200, self.view.frame.size.width, 400)];
+    [_postsViewController.view setFrame:CGRectMake(0, 150, self.view.frame.size.width, 400)];
     [self.view addSubview:_postsViewController.view];
     _postsViewController.delegate = self;
 }
