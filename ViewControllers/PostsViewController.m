@@ -140,19 +140,72 @@
     }
 
     [cell setQuizWithAuthor:quiz.authorName andOption0:quiz.option0Name andOption1:quiz.option1Name andKeyword:quiz.keyword];
+    NSLog(@"%@", quiz);
+    [cell.option0NameButton setTag:indexPath.row];
+    [cell.option1NameButton setTag:indexPath.row];
+    [cell.authorNameButton setTag:indexPath.row];
+    [cell.option0NameButton addTarget:self action:@selector(option0Clicked:) forControlEvents:UIControlEventTouchUpInside];
+    [cell.option1NameButton addTarget:self action:@selector(option1Clicked:) forControlEvents:UIControlEventTouchUpInside];
+    [cell.authorNameButton addTarget:self action:@selector(authorClicked:) forControlEvents:UIControlEventTouchUpInside];
     cell.delegate = self;
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.quizUUID = quiz.uuid;
     return cell;
 }
 
+-(void)option0Clicked:(id)sender{
+    NSLog(@"option0clicked");
+    NSIndexPath *path;
+    if ([sender tag]) {
+        path = [NSIndexPath indexPathForRow:[sender tag] inSection:0];
+    } else{
+        path = [NSIndexPath indexPathForRow:0 inSection:0];
+    }
+    Quiz *quiz = [_fetchedResultsController objectAtIndexPath:path];
+    NSString *personSelected = quiz.option0Name;
+    if(_delegate && [_delegate respondsToSelector:@selector(postSelected:)]){
+        [_delegate postSelected:personSelected];
+    }
+}
 
+-(void)option1Clicked:(id)sender{
+    NSLog(@"option1clicked");
+    NSIndexPath *path;
+    if ([sender tag]) {
+        path = [NSIndexPath indexPathForRow:[sender tag] inSection:0];
+    } else{
+        path = [NSIndexPath indexPathForRow:0 inSection:0];
+    }
+    Quiz *quiz = [_fetchedResultsController objectAtIndexPath:path];
+    NSString *personSelected = quiz.option1Name;
+    if(_delegate && [_delegate respondsToSelector:@selector(postSelected:)]){
+        [_delegate postSelected:personSelected];
+    }
+}
+
+-(void)authorClicked:(id)sender{
+    NSIndexPath *path;
+    if ([sender tag]) {
+        path = [NSIndexPath indexPathForRow:[sender tag] inSection:0];
+    } else{
+        path = [NSIndexPath indexPathForRow:0 inSection:0];
+    }
+    NSLog(@"tag %d",[sender tag]);
+    Quiz *quiz = [_fetchedResultsController objectAtIndexPath:path];
+    NSString *personSelected = quiz.authorName;
+    if(_delegate && [_delegate respondsToSelector:@selector(postSelected:)]){
+        [_delegate postSelected:personSelected];
+    }
+}
+
+/*
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     Quiz *quiz = [_fetchedResultsController objectAtIndexPath:indexPath];
     NSString *personSelected = quiz.authorName;
     if(_delegate && [_delegate respondsToSelector:@selector(postSelected:)]){
         [_delegate postSelected:personSelected];
     }
-}
+}*/
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return 120;

@@ -67,14 +67,14 @@
     _nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(50, 100, 100, 30)];
     [_nameLabel setText:@"Hello"];
     if(_name){
-        [_nameLabel setText:_name];
+        [_nameLabel setText:[Utility getNameToDisplay:_name]];
     }
     [self.view addSubview:_nameLabel];
 }
 
 -(void) setName:(NSString *)name{
     _name = [name copy];
-    [_nameLabel setText:name];
+    [_nameLabel setText:[Utility getNameToDisplay:name]];
 }
 
 -(void) postSelected:(NSString *)name{
