@@ -54,7 +54,8 @@
 }
 
 -(void) chooseOption0:(id)sender{
-    if(_option0Name == _answerName){
+    NSLog(@"answer is %@, chose %@",_answerName,_option0Name);
+    if([_option0Name isEqualToString:_answerName]){
         [_resultLabel setText:@"correct"];
     } else{
         [_resultLabel setText:@"wrong"];
@@ -62,7 +63,8 @@
 }
 
 -(void) chooseOption1:(id)sender{
-    if(_option1Name == _answerName){
+    NSLog(@"answer is %@, chose %@",_answerName,_option1Name);
+    if([_option1Name isEqualToString:_answerName]){
         [_resultLabel setText:@"correct"];
     } else{
         [_resultLabel setText:@"wrong"];
