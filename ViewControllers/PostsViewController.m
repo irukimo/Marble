@@ -232,6 +232,35 @@
 
 #pragma mark -
 #pragma mark Quiz Table View Cell Delegate Methods
+- (void) sendGuess:(id)sender withAnswer:(NSString *)answer
+{
+    CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.tableView];
+    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:buttonPosition];
+    Quiz *quiz = [_fetchedResultsController objectAtIndexPath:indexPath];
+    MBDebug(@"Answer to send with guess: %@", answer);
+    NSMutableDictionary *params = [NSMutableDictionary
+                                   dictionaryWithObjects:@[quiz.uuid, answer, [KeyChainWrapper getSessionTokenForUser]]
+                                   forKeys:@[@"quiz_uuid", @"answer", @"auth_token"]];
+    
+    NSMutableURLRequest *request = [[RKObjectManager sharedManager] requestWithPathForRouteNamed:@"send_guess"
+                                                                                          object:self
+                                                                                      parameters:params];
+    
+    RKHTTPRequestOperation *operation = [[RKHTTPRequestOperation alloc] initWithRequest:request];
+    [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+        MBDebug(@"Guess posted");
+    }
+                                     failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                         dispatch_async(dispatch_get_main_queue(), ^{
+                                             [Utility generateAlertWithMessage:@"Network problem"];
+                                         });
+                                         MBError(@"Cannot send guess!");
+                                     }];
+    
+    NSOperationQueue *operationQueue = [NSOperationQueue new];
+    [operationQueue addOperation:operation];
+}
+
 - (void) commentQuiz:(id)sender withComment:(NSString *)comment
 {
     CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.tableView];

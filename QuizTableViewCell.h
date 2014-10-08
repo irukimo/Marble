@@ -29,5 +29,6 @@
 @required
 
 - (void) commentQuiz:(id)sender withComment:(NSString *)comment;
+- (void) sendGuess:(id)sender withAnswer:(NSString *)answer;
 
 @end

@@ -19,7 +19,7 @@
 @property(strong,nonatomic) UILabel *resultLabel;
 
 
-// for temporary commenting use
+// for temporary use
 @property(strong, nonatomic) UITextField *commentField;
 @property(strong, nonatomic) UIButton *commentBtn;
 @property(strong, nonatomic) UIButton *chooseOption0Button;
@@ -60,6 +60,11 @@
     } else{
         [_resultLabel setText:@"wrong"];
     }
+    MBDebug(@"choose option0 clicked! %@", _option0Name);
+    if(_delegate && [_delegate respondsToSelector:@selector(sendGuess:withAnswer:)]){
+        [_delegate sendGuess:sender withAnswer:_option0Name];
+    }
+
 }
 
 -(void) chooseOption1:(id)sender{
@@ -90,10 +95,12 @@
     
     _commentField = [[UITextField alloc] initWithFrame:CGRectMake(40, 80, 150, 30)];
     [_commentField setBorderStyle:UITextBorderStyleLine];
-    _commentBtn = [[UIButton alloc] initWithFrame:CGRectMake(210, 80, 60, 30)];
+    _commentBtn = [[UIButton alloc] initWithFrame:CGRectMake(210, 70, 50, 30)];
+
     [_commentBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [_commentBtn setTitle:@"send" forState:UIControlStateNormal];
     [_commentBtn addTarget:self action:@selector(commentQuizClicked:) forControlEvents:UIControlEventTouchUpInside];
+
     [self.contentView addSubview:_authorNameButton];
     [self.contentView addSubview:_option0NameButton];
     [self.contentView addSubview:_option1NameButton];

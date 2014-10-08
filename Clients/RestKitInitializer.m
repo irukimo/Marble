@@ -120,10 +120,13 @@
     
     RKRoute *getCommentsRoute = [RKRoute routeWithName:@"get_comments" pathPattern:@"comments" method:RKRequestMethodGET];
     
+    RKRoute *sendGuessRoute = [RKRoute routeWithName:@"send_guess" pathPattern:@"guesses" method:RKRequestMethodPOST];
+    
+    
     [objectManager.router.routeSet addRoutes:@[// class routes
                                                quizGETRoute, quizPOSTRoute,
                                                // named routes
-                                               sendDeviceTokenRoute, sendCommentRoute, getCommentsRoute]];
+                                               sendDeviceTokenRoute, sendCommentRoute, getCommentsRoute, sendGuessRoute]];
 
 
 }
