@@ -253,7 +253,6 @@
     
     NSOperationQueue *operationQueue = [NSOperationQueue new];
     [operationQueue addOperation:operation];
-
 }
 
 - (void)getCommentsForQuiz:(Quiz *)quiz
@@ -264,6 +263,8 @@
     [[RKObjectManager sharedManager] getObjectsAtPathForRouteNamed:@"get_comments" object:quiz parameters:params
         success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
             MBDebug(@"Returned comments");
+            MBDebug(@"Quiz author: %@", quiz.author);
+            MBDebug(@"Quiz keyword: %@", quiz.keyword);
             for (NSDictionary *cmt in quiz.comments) {
                 MBDebug(@"fb_id: %@, comment: %@", [cmt valueForKey:@"fb_id"], [cmt valueForKey:@"comment"]);
             }

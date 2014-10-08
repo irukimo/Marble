@@ -12,15 +12,13 @@
         <attribute name="option1Name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="time" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="uuid" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="authorship" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="User" syncable="YES"/>
-        <relationship name="options" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" syncable="YES"/>
     </entity>
     <entity name="User" representedClassName="User" syncable="YES">
         <attribute name="fbID" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Quiz" positionX="-252" positionY="-151" width="128" height="240"/>
+        <element name="Quiz" positionX="-252" positionY="-151" width="128" height="210"/>
         <element name="User" positionX="-54" positionY="-9" width="128" height="75"/>
     </elements>
 </model>

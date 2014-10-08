@@ -26,6 +26,7 @@
 
 + (BOOL)getRandomUsersThisMany:(int)num
                    inThisArray:(NSArray **)usersToReturn
-        inManagedObjectContext:(NSManagedObjectContext *)context;
+        inManagedObjectContext:(NSManagedObjectContext *)context
+                 existingUsers:(NSArray *)existingUsers;
 
 @end

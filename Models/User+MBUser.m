@@ -70,7 +70,7 @@
         count++;
         if (count >= 200) {
             count = 0;
-            [context save:nil];
+            [Utility saveToPersistenceStore:context failureMessage:@"Failed to create users in batch."];
         }
     }
     [Utility saveToPersistenceStore:context failureMessage:@"Failed to create users in batch."];
@@ -147,35 +147,44 @@
 
 + (BOOL)getRandomUsersThisMany:(int)num
                    inThisArray:(NSArray **)usersToReturn
-        inManagedObjectContext:(NSManagedObjectContext *)context{
+        inManagedObjectContext:(NSManagedObjectContext *)context
+                 existingUsers:(NSArray *)existingUsers{
     
-    NSMutableArray *randomUsers = [[NSMutableArray alloc] init];
-    while([randomUsers count]<num){
-        User *newUser;
-        do{
-            newUser = [User getOneRandomUserInManagedObjectContext:context];
-        } while([randomUsers containsObject:newUser]);
-        [randomUsers addObject:newUser];
-    }
-    *usersToReturn = randomUsers;
+    NSFetchRequest *myRequest = [NSFetchRequest fetchRequestWithEntityName:@"User"];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"NOT (self IN %@)", existingUsers];
+    [myRequest setPredicate:predicate];
+    NSError *error = nil;
+    NSUInteger myUserCount = [context countForFetchRequest:myRequest error:&error];
+    [Utility saveToPersistenceStore:context failureMessage:@"Failed to save to persistent store in MBUser"];
+    
+    NSUInteger randomNumber = arc4random() % (myUserCount - [existingUsers count]-2);
+
+    NSFetchRequest *myUserRequest = [NSFetchRequest fetchRequestWithEntityName:@"User"];
+    
+    [myUserRequest setPredicate:predicate];
+    [myUserRequest setFetchLimit:(randomNumber + num - 1)];
+    [myUserRequest setFetchOffset:randomNumber];
+    NSArray *users = [context executeFetchRequest:myUserRequest error:&error];
+
+    *usersToReturn = users;
     return TRUE;
 }
 
-+(User *)getOneRandomUserInManagedObjectContext:(NSManagedObjectContext *)context{
-    NSFetchRequest *myRequest = [NSFetchRequest fetchRequestWithEntityName:@"User"];
-    NSError *error = nil;
-    NSUInteger myUserCount = [context countForFetchRequest:myRequest error:&error];
-    
-    int randomNumber = arc4random() % myUserCount;
-    
-    NSFetchRequest *myUserRequest = [NSFetchRequest fetchRequestWithEntityName:@"User"];
-    [myUserRequest setFetchOffset:randomNumber];
-    [myUserRequest setPredicate:NULL];
-    [myUserRequest setFetchLimit:1];
-    NSArray *users = [context executeFetchRequest:myUserRequest error:&error];
-    return [users firstObject];
-}
-
+//+(User *)getOneRandomUserInManagedObjectContext:(NSManagedObjectContext *)context{
+//    NSFetchRequest *myRequest = [NSFetchRequest fetchRequestWithEntityName:@"User"];
+//    NSError *error = nil;
+//    NSUInteger myUserCount = [context countForFetchRequest:myRequest error:&error];
+//    
+//    int randomNumber = arc4random() % myUserCount;
+//    
+//    NSFetchRequest *myUserRequest = [NSFetchRequest fetchRequestWithEntityName:@"User"];
+//    [myUserRequest setFetchOffset:randomNumber];
+//    [myUserRequest setPredicate:NULL];
+//    [myUserRequest setFetchLimit:1];
+//    NSArray *users = [context executeFetchRequest:myUserRequest error:&error];
+//    return [users firstObject];
+//}
+//
 
 +(User *)createNewUserWithName:(NSString *)name andfbID:(NSString *)fbID inManagedObjectContext:(NSManagedObjectContext *)context{
     

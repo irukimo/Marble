@@ -52,7 +52,10 @@
 
 -(void) setOption0Option1{
     NSArray *randomUser;
-    [User getRandomUsersThisMany:2 inThisArray:&randomUser inManagedObjectContext:[RKManagedObjectStore defaultStore].mainQueueManagedObjectContext];
+    NSMutableArray *existingUsers = [[NSMutableArray alloc] init];
+    if (_option0 != nil) [existingUsers addObject:_option0];
+    if (_option1 != nil) [existingUsers addObject:_option1];
+    [User getRandomUsersThisMany:2 inThisArray:&randomUser inManagedObjectContext:[RKManagedObjectStore defaultStore].mainQueueManagedObjectContext existingUsers:existingUsers];
     [self setOption0:[randomUser firstObject]];
     [self setOption1:[randomUser objectAtIndex:1]];
 }

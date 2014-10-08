@@ -7,7 +7,6 @@
 //
 
 #import "Quiz.h"
-#import "User.h"
 
 
 @implementation Quiz
@@ -15,6 +14,7 @@
 @dynamic answer;
 @dynamic author;
 @dynamic authorName;
+@dynamic comments;
 @dynamic keyword;
 @dynamic option0;
 @dynamic option0Name;
@@ -22,8 +22,5 @@
 @dynamic option1Name;
 @dynamic time;
 @dynamic uuid;
-@dynamic comments;
-@dynamic authorship;
-@dynamic options;
 
 @end

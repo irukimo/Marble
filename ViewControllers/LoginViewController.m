@@ -232,7 +232,8 @@
                                       }
 
                                       if (_fbEngUsers != nil && _fbChUsers != nil) {
-                                          NSManagedObjectContext *context = [[RKManagedObjectStore defaultStore] newChildManagedObjectContextWithConcurrencyType:NSPrivateQueueConcurrencyType tracksChanges:YES];
+//                                          NSManagedObjectContext *context = [[RKManagedObjectStore defaultStore] newChildManagedObjectContextWithConcurrencyType:NSPrivateQueueConcurrencyType tracksChanges:YES];
+                                          NSManagedObjectContext *context = [[RKManagedObjectStore defaultStore] mainQueueManagedObjectContext];
                                           [User createUsersInBatchForEng:_fbEngUsers andChinese:_fbChUsers inManagedObjectContext:context];
                                       }
                                   }else{
