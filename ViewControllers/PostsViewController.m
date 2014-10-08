@@ -140,7 +140,7 @@
     }
 
     [cell setQuizWithAuthor:quiz.authorName andOption0:quiz.option0Name andOption1:quiz.option1Name andKeyword:quiz.keyword];
-    NSLog(@"%@", quiz);
+//    NSLog(@"%@", quiz);
     [cell.option0NameButton setTag:indexPath.row];
     [cell.option1NameButton setTag:indexPath.row];
     [cell.authorNameButton setTag:indexPath.row];

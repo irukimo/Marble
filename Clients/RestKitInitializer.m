@@ -32,6 +32,7 @@
                                                 @"option0_name":        @"option0Name",
                                                 @"option1":            @"option1",
                                                 @"option1_name":        @"option1Name",
+                                                @"answer":             @"answer",
                                                 @"time":               @"time"}];
     
     /* We map the entity by uuid. If it is an existing entity on the server side, we updateUUID after object mapping
@@ -85,9 +86,11 @@
     
     RKObjectMapping *quizSerializationMapping = [RKObjectMapping requestMapping];
     [quizSerializationMapping addAttributeMappingsFromDictionary:@{@"author":     @"author",
+                                                             @"authorName":     @"author_name",
                                                              @"keyword":     @"keyword",
                                                              @"option0":     @"option0",
-                                                             @"option1":     @"option1",
+                                                             @"option0Name":     @"option0_name",
+                                                             @"option1Name":     @"option1_name",
                                                              @"answer":      @"answer",
                                                              @"uuid":        @"uuid"}];
     
