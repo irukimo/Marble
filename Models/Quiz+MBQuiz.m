@@ -16,4 +16,9 @@
     [self setCompareNum:[[self compareNum] increment]];
 }
 
+- (void)commmentsNum
+{
+    [self.commments count];
+}
+
 @end

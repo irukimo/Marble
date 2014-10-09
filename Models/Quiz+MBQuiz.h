@@ -11,5 +11,6 @@
 @interface Quiz (MBQuiz)
 
 - (void)incrementCompareNum;
+- (void)commmentsNum;
 
 @end
