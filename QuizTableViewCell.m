@@ -7,6 +7,7 @@
 //
 
 #import "QuizTableViewCell.h"
+#import "FacebookSDK/FacebookSDK.h"
 
 @interface QuizTableViewCell()
 @property(strong,nonatomic) NSString *option0Name;
@@ -24,6 +25,7 @@
 @property(strong, nonatomic) UIButton *commentBtn;
 @property(strong, nonatomic) UIButton *chooseOption0Button;
 @property(strong, nonatomic) UIButton *chooseOption1Button;
+
 @end
 
 @implementation QuizTableViewCell
@@ -35,14 +37,30 @@
         [self setLabels];
         [self addChoiceButtons];
         [self addResultLabel];
+        [self initFBPicViews];
         // Initialization code
     }
     return self;
 }
 
+-(void) initFBPicViews{
+    _option0PicView = [[UIImageView alloc] initWithFrame:CGRectMake(15, 45, 50, 50)];
+    _option1PicView = [[UIImageView alloc] initWithFrame:CGRectMake(115, 45, 50, 50)];
+    _authorPicView = [[UIImageView alloc] initWithFrame:CGRectMake(5, 5, 30, 30)];
+    _option0PicView.layer.cornerRadius = 5;
+    _option0PicView.layer.masksToBounds = YES;
+    _option1PicView.layer.cornerRadius = 5;
+    _option1PicView.layer.masksToBounds = YES;
+    _authorPicView.layer.cornerRadius = 15;
+    _authorPicView.layer.masksToBounds = YES;
+    [self.contentView addSubview:_option0PicView];
+    [self.contentView addSubview:_option1PicView];
+    [self.contentView addSubview:_authorPicView];
+}
+
 -(void) addChoiceButtons{
-    _chooseOption0Button = [[UIButton alloc] initWithFrame:CGRectMake(15, 45, 100, 20)];
-    _chooseOption1Button = [[UIButton alloc] initWithFrame:CGRectMake(115, 45, 100, 20)];
+    _chooseOption0Button = [[UIButton alloc] initWithFrame:CGRectMake(15, 100, 100, 20)];
+    _chooseOption1Button = [[UIButton alloc] initWithFrame:CGRectMake(115, 100, 100, 20)];
     [_chooseOption0Button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [_chooseOption0Button setTitle:@"choose" forState:UIControlStateNormal];
     [_chooseOption1Button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
@@ -87,7 +105,7 @@
 
 
 -(void)setLabels{
-    _authorNameButton = [[UIButton alloc] initWithFrame:CGRectMake(15, 0, 100, 20)];
+    _authorNameButton = [[UIButton alloc] initWithFrame:CGRectMake(60, 15, 100, 20)];
     _option0NameButton = [[UIButton alloc] initWithFrame:CGRectMake(15, 30, 100, 20)];
     _option1NameButton = [[UIButton alloc] initWithFrame:CGRectMake(115, 30, 100, 20)];
     
@@ -97,9 +115,9 @@
 
     _keywordLabel = [[UILabel alloc] initWithFrame:CGRectMake(255, 15, 60, 20)];
     
-    _commentField = [[UITextField alloc] initWithFrame:CGRectMake(40, 80, 150, 30)];
+    _commentField = [[UITextField alloc] initWithFrame:CGRectMake(40, 120, 150, 30)];
     [_commentField setBorderStyle:UITextBorderStyleLine];
-    _commentBtn = [[UIButton alloc] initWithFrame:CGRectMake(210, 70, 50, 30)];
+    _commentBtn = [[UIButton alloc] initWithFrame:CGRectMake(210, 120, 50, 30)];
 
     [_commentBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [_commentBtn setTitle:@"send" forState:UIControlStateNormal];
@@ -125,12 +143,21 @@
 }
 
 
--(void) setQuizWithAuthor:(NSString *)authorName andOption0:(NSString *)option0Name andOption1:(NSString *)option1Name andKeyword:(NSString *)keyword andAnswer:(NSString *)answer{
+-(void) setQuizWithAuthor:(NSString *)authorName withID:(NSString *)authorID andOption0:(NSString *)option0Name withID:(NSString *)option0ID andOption1:(NSString *)option1Name withID:(NSString *)option1ID andKeyword:(NSString *)keyword andAnswer:(NSString *)answer{
     _authorName = [authorName copy];
     _option0Name = [option0Name copy];
     _option1Name = [option1Name copy];
     _answerName = [answer copy];
     _keyword = [keyword copy];
+    
+    NSString *authorPictureUrl = [NSString stringWithFormat:@"https://graph.facebook.com/%@/picture", authorID];
+    NSString *option0PictureUrl = [NSString stringWithFormat:@"https://graph.facebook.com/%@/picture?width=100&height=100", option0ID];
+    NSString *option1PictureUrl = [NSString stringWithFormat:@"https://graph.facebook.com/%@/picture?width=100&height=100", option1ID];
+    
+    [_authorPicView setImageWithURL:[NSURL URLWithString:authorPictureUrl] placeholderImage:[UIImage imageNamed:@"login.png"]];
+    [_option0PicView setImageWithURL:[NSURL URLWithString:option0PictureUrl] placeholderImage:[UIImage imageNamed:@"login.png"]];
+    [_option1PicView setImageWithURL:[NSURL URLWithString:option1PictureUrl] placeholderImage:[UIImage imageNamed:@"login.png"]];
+    
 
     [_authorNameButton setTitle:[Utility getNameToDisplay:_authorName] forState:UIControlStateNormal];
     [_option0NameButton setTitle:[Utility getNameToDisplay:_option0Name] forState:UIControlStateNormal];

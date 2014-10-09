@@ -21,6 +21,7 @@
 
 + (BOOL)createUsersInBatchForEng:(NSArray *)fbEngUsers andChinese:(NSArray *)fbChUsers inManagedObjectContext:(NSManagedObjectContext *)context
 {
+    if (fbEngUsers == nil || fbChUsers == nil) return FALSE;
     NSArray *fbIDs = [[fbEngUsers valueForKey:@"id"] sortedArrayUsingSelector: @selector(compare:)];
 //    MBDebug(@"fb ids: %@", fbIDs);
     

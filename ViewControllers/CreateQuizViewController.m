@@ -8,10 +8,11 @@
 
 
 #import "CreateQuizViewController.h"
-
+#import "FacebookSDK/FacebookSDK.h"
 #import "KeyChainWrapper.h"
 #import "User+MBUser.h"
 #import "Quiz.h"
+#import <QuartzCore/QuartzCore.h>
 
 
 //#import "TouchTextField.h"
@@ -31,7 +32,8 @@
 @property (strong, nonatomic) NSString *currentUserfbID;
 @property (strong, nonatomic) User *option0;
 @property (strong, nonatomic) User *option1;
-
+@property (strong, nonatomic) FBProfilePictureView *option0PicView;
+@property (strong, nonatomic) FBProfilePictureView *option1PicView;
 @end
 
 @implementation CreateQuizViewController
@@ -41,11 +43,13 @@
     [self addTextFields];
     [self addShuffleButtons];
     [self addPeopleButtons];
+    [self initFBProfilePicViews];
     
     
     [self.view addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedView)]];
     [self recordData];
     [self setCurrentUserValues];
+    
     /*
     [NSTimer scheduledTimerWithTimeInterval:1.0
                                      target:self
@@ -53,6 +57,17 @@
                                    userInfo:nil
                                     repeats:NO];*/
     // Do any additional setup after loading the view.
+}
+
+-(void) initFBProfilePicViews{
+    _option0PicView = [[FBProfilePictureView alloc] initWithFrame:CGRectMake(10, 20, 50, 50)];
+    _option1PicView = [[FBProfilePictureView alloc] initWithFrame:CGRectMake(200, 20, 50, 50)];
+    _option0PicView.layer.cornerRadius = 25.0f;
+    _option0PicView.layer.masksToBounds = YES;
+    _option1PicView.layer.cornerRadius = 25.0f;
+    _option1PicView.layer.masksToBounds = YES;
+    [self.view addSubview:_option0PicView];
+    [self.view addSubview:_option1PicView];
 }
 
 -(void) setOption0Option1{
@@ -67,11 +82,13 @@
                      
 -(void) setOption0:(User *)option0{
     _option0 = option0;
+    _option0PicView.profileID = _option0.fbID;
     [_option0NameTextField setText:[Utility getNameToDisplay:_option0.name]];
 }
 
 -(void) setOption1:(User *)option1{
     _option1 = option1;
+    _option1PicView.profileID = _option1.fbID;
     [_option1NameTextField setText:[Utility getNameToDisplay:_option1.name]];
 }
 
@@ -86,7 +103,6 @@
 -(void) addPeopleButtons{
     _chooseName1Btn = [[UIButton alloc] initWithFrame:CGRectMake(10, 0, 100, 20)];
     _chooseName2Btn =[[UIButton alloc] initWithFrame:CGRectMake(200, 0, 100, 20)];
-    [_chooseName1Btn setBackgroundColor:[UIColor grayColor]];
     [_chooseName1Btn setTitle:@"Choose" forState:UIControlStateNormal];
     [_chooseName2Btn setTitle:@"Choose" forState:UIControlStateNormal];
     [_chooseName1Btn addTarget:self action:@selector(chooseName1BtnClicked) forControlEvents:UIControlEventTouchUpInside];
@@ -142,8 +158,8 @@
 
 -(void)addTextFields{
     _keywordTextField = [[UITextField alloc] initWithFrame:CGRectMake(130, 20, 50, 50)];
-    _option0NameTextField = [[UITextField alloc] initWithFrame:CGRectMake(10, 20, 120, 50)];
-    _option1NameTextField = [[UITextField alloc] initWithFrame:CGRectMake(200, 20, 120, 50)];
+    _option0NameTextField = [[UITextField alloc] initWithFrame:CGRectMake(10, 70, 120, 50)];
+    _option1NameTextField = [[UITextField alloc] initWithFrame:CGRectMake(200, 70, 120, 50)];
     _keywordCurrentValue = @"yay";
     [_keywordTextField setText:_keywordCurrentValue];
     
@@ -178,7 +194,7 @@
 
 
 -(void)addShuffleButtons{
-    _shuffleKeywordBtn = [[UIButton alloc] initWithFrame:CGRectMake(30, 60, 100, 50)];
+    _shuffleKeywordBtn = [[UIButton alloc] initWithFrame:CGRectMake(80, 60, 100, 50)];
     _shufflePeopleBtn = [[UIButton alloc] initWithFrame:CGRectMake(140, 60, 100, 50)];
     [_shuffleKeywordBtn setTitle:@"關鍵字" forState:UIControlStateNormal];
     [_shufflePeopleBtn setTitle:@"朋友" forState:UIControlStateNormal];
