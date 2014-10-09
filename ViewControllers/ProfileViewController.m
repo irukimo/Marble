@@ -33,11 +33,16 @@
     // Do any additional setup after loading the view.
     [_statusBtn addTarget:self action:@selector(sendStatusBtnClicked) forControlEvents:UIControlEventTouchUpInside];
     
-    // test for GET /status 
+    // test for GET /status
+    NSUserDefaults *standardUserDefaults = [NSUserDefaults standardUserDefaults];
+    NSString *name = nil;
+    if (standardUserDefaults){
+        name = [standardUserDefaults objectForKey:@"userName"];
+    }
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     [fetchRequest setEntity:
      [NSEntityDescription entityForName:@"User" inManagedObjectContext:[RKManagedObjectStore defaultStore].mainQueueManagedObjectContext]];
-    [fetchRequest setPredicate: [NSPredicate predicateWithFormat: @"name = %@", @"Wen Shaw"]];
+    [fetchRequest setPredicate: [NSPredicate predicateWithFormat: @"name = %@", name]];
     
     NSMutableDictionary *params = [NSMutableDictionary
                                    dictionaryWithObjects:@[[KeyChainWrapper getSessionTokenForUser]]
