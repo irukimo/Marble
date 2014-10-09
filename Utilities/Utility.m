@@ -7,6 +7,7 @@
 //
 
 #import "Utility.h"
+#import "KeyChainWrapper.h"
 #import <UIKit/UIKit.h>
 
 #define YEAR_SECOND 31556926
@@ -165,6 +166,33 @@
         default:
             return @"Dec";
     }
+}
+
+
++ (void) sendThroughRKRoute:(NSString *)routeName withParams:(NSDictionary *)params_
+{
+    NSMutableDictionary *params = [NSMutableDictionary
+                                   dictionaryWithObjects:@[[KeyChainWrapper getSessionTokenForUser]]
+                                   forKeys:@[@"auth_token"]];
+    [params addEntriesFromDictionary:params_];
+    
+    NSMutableURLRequest *request = [[RKObjectManager sharedManager] requestWithPathForRouteNamed:routeName
+                                                                          object:self
+                                                                      parameters:params];
+    
+    RKHTTPRequestOperation *operation = [[RKHTTPRequestOperation alloc] initWithRequest:request];
+    [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+        MBDebug(@"object posted via route %@", routeName);
+    }
+                                     failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                         dispatch_async(dispatch_get_main_queue(), ^{
+                                             [Utility generateAlertWithMessage:@"Network problem"];
+                                         });
+                                         MBError(@"Cannot send object via route %@!", routeName);
+                                     }];
+    
+    NSOperationQueue *operationQueue = [NSOperationQueue new];
+    [operationQueue addOperation:operation];
 }
 
 

@@ -14,6 +14,11 @@
 
 @implementation User (MBUser)
 
+- (void) getStatusWithCallback:(void (^)(void))callbackBlock
+{
+    
+}
+
 - (NSString *)profileURL
 {
     return [NSString stringWithFormat:@"//graph.facebook.com/%@/picture?type=square", self.fbID];

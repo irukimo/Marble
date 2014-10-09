@@ -8,6 +8,7 @@
 
 #import "RestKitInitializer.h"
 
+#import "User.h"
 #import "Quiz.h"
 
 @implementation RestKitInitializer
@@ -77,9 +78,26 @@
                                             statusCodes:successCode];
     
 
+    // status mapping
+    RKEntityMapping *statusMapping = [RKEntityMapping mappingForEntityForName:@"User" inManagedObjectStore:managedObjectStore];
+    [statusMapping addAttributeMappingsFromDictionary:@{@"status": @"status",
+                                                  @"fb_id": @"fbID"}];
+    statusMapping.identificationAttributes = @[@"fbID"];
+    RKResponseDescriptor *statusGETResponseDescriptor =
+    [RKResponseDescriptor responseDescriptorWithMapping:statusMapping
+                                                 method:RKRequestMethodGET
+                                            pathPattern:@"status"
+                                                keyPath:nil
+                                            statusCodes:successCode];
+
+    
+
+    
     // add response descriptors to object manager
     [objectManager addResponseDescriptorsFromArray:@[quizGETResponseDescriptor,
-                                                     optionsGETResponseDescriptor, commentsGETResponseDescriptor]];
+                                                     optionsGETResponseDescriptor,
+                                                     commentsGETResponseDescriptor,
+                                                     statusGETResponseDescriptor]];
 
     /* Set up request descriptor
      *
@@ -102,7 +120,19 @@
                                           rootKeyPath:nil
                                                method:RKRequestMethodPOST];
 
-    [objectManager addRequestDescriptorsFromArray:@[quizPOSTRequestDescriptor]];
+    
+    RKObjectMapping *statusSerializationMapping = [RKObjectMapping requestMapping];
+    [quizSerializationMapping addAttributeMappingsFromDictionary:@{@"status": @"status"}];
+    
+    RKRequestDescriptor *statusPOSTRequestDescriptor =
+    [RKRequestDescriptor requestDescriptorWithMapping:statusSerializationMapping
+                                          objectClass:[User class]
+                                          rootKeyPath:nil
+                                               method:RKRequestMethodPOST];
+
+    [objectManager addRequestDescriptorsFromArray:@[quizPOSTRequestDescriptor
+                                                    ,statusPOSTRequestDescriptor
+                                                    ]];
     
     
     
@@ -115,6 +145,9 @@
 
     RKRoute *quizPOSTRoute = [RKRoute routeWithClass:[Quiz class] pathPattern:@"quizzes" method:RKRequestMethodPOST];
     
+    RKRoute *statusPOSTRoute = [RKRoute routeWithClass:[User class] pathPattern:@"status" method:RKRequestMethodPOST];
+    
+    
     //Thirdly, named routes
     RKRoute *sendDeviceTokenRoute = [RKRoute routeWithName:@"set_device_token" pathPattern:@"set_device_token" method:RKRequestMethodPOST];
     
@@ -124,11 +157,12 @@
     
     RKRoute *sendGuessRoute = [RKRoute routeWithName:@"send_guess" pathPattern:@"guesses" method:RKRequestMethodPOST];
     
+    RKRoute *sendStatusRoute = [RKRoute routeWithName:@"send_status" pathPattern:@"status" method:RKRequestMethodPOST];
     
     [objectManager.router.routeSet addRoutes:@[// class routes
-                                               quizGETRoute, quizPOSTRoute,
+                                               quizGETRoute, quizPOSTRoute, statusPOSTRoute,
                                                // named routes
-                                               sendDeviceTokenRoute, sendCommentRoute, getCommentsRoute, sendGuessRoute]];
+                                               sendDeviceTokenRoute, sendCommentRoute, getCommentsRoute, sendGuessRoute, sendStatusRoute]];
 
 
 }

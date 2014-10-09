@@ -8,12 +8,15 @@
 
 #import "ProfileViewController.h"
 
+#import "KeyChainWrapper.h"
 
 @interface ProfileViewController ()
 @property (strong, nonatomic) UILabel *nameLabel;
 @property (strong, nonatomic) CreateQuizViewController *createQuizViewController;
 @property (strong, nonatomic) PostsViewController *postsViewController;
+@property (weak, nonatomic) IBOutlet UITextField *statusTextField;
 
+@property (weak, nonatomic) IBOutlet UIButton *statusBtn;
 @end
 
 @implementation ProfileViewController
@@ -28,6 +31,32 @@
     [self setNavbarTitle];
 //    [self setNavigationAttributes];
     // Do any additional setup after loading the view.
+    [_statusBtn addTarget:self action:@selector(sendStatusBtnClicked) forControlEvents:UIControlEventTouchUpInside];
+    
+    // test for GET /status 
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    [fetchRequest setEntity:
+     [NSEntityDescription entityForName:@"User" inManagedObjectContext:[RKManagedObjectStore defaultStore].mainQueueManagedObjectContext]];
+    [fetchRequest setPredicate: [NSPredicate predicateWithFormat: @"name = %@", @"Wen Shaw"]];
+    
+    NSMutableDictionary *params = [NSMutableDictionary
+                                   dictionaryWithObjects:@[[KeyChainWrapper getSessionTokenForUser]]
+                                   forKeys:@[@"auth_token"]];
+
+    // Execute the fetch.
+    NSError *error;
+    NSArray *matches = [[RKManagedObjectStore defaultStore].mainQueueManagedObjectContext executeFetchRequest:fetchRequest error:&error];
+    [[RKObjectManager sharedManager]
+     getObject:[matches firstObject]
+     path:@"status"
+     parameters:params
+     success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+         MBDebug(@"status result: %@", [mappingResult array]);
+        
+     } failure:^(RKObjectRequestOperation *operation, NSError *error) {
+         MBDebug(@"failed to get status");
+    }];
+
 }
 
 //-(void)setNavigationAttributes{
@@ -80,6 +109,16 @@
 -(void) postSelected:(NSString *)name{
     [self performSegueWithIdentifier:@"ProfileViewControllerSegue" sender:name];
 }
+
+-(void) sendStatusBtnClicked
+{
+    NSString *status = _statusTextField.text;
+    MBDebug(@"To send status: %@", status);
+    [Utility sendThroughRKRoute:@"send_status" withParams:@{@"status": status}];
+}
+
+
+
 /*
 #pragma mark - Navigation
 

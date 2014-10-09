@@ -23,4 +23,6 @@ typedef void (^RKSuccessBlock)(RKObjectRequestOperation *, RKMappingResult *);
 +(NSString *) getNameToDisplay:(NSString *)name;
 
 + (NSString *)getDateToShow:(NSDate *)date inWhole:(BOOL) inWhole;
+
++ (void) sendThroughRKRoute:(NSString *)routeName withParams:(NSDictionary *)params_;
 @end
