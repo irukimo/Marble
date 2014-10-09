@@ -37,7 +37,7 @@
     NSError *error;
     NSArray *usersMatchingFbIDs = [[[context executeFetchRequest:fetchRequest error:&error] valueForKey:@"fbID"] sortedArrayUsingSelector: @selector(compare:)];
     
-//    MBDebug(@"Matching IDs: %@", usersMatchingFbIDs);
+    MBDebug(@"Matching IDs: %@", usersMatchingFbIDs);
     
     [context setUndoManager:nil];
     
@@ -46,10 +46,14 @@
     NSPredicate *predicate = [NSPredicate predicateWithFormat:predicateString];
     
     int count = 0;
+    int total = 0;
     for (NSDictionary<FBGraphUser>* user in fbEngUsers) {
+//        MBDebug(@"Work on User %@", user.id);
         NSPredicate *idPredicate = [NSPredicate predicateWithFormat:@"SELF = %@", user.id];
         NSArray *matches = [usersMatchingFbIDs filteredArrayUsingPredicate:idPredicate];
-        if ([matches count] != 0) { continue; }
+        if ([matches count] != 0) {
+            MBDebug(@"User %@ exists.", [matches firstObject]);
+            continue; }
         
         NSString *name = nil;
         NSPredicate *localPredicate = [predicate predicateWithSubstitutionVariables:@{ @"FB_ID" : user.id }];
@@ -68,12 +72,23 @@
         
         [User createNewUserWithName:name andfbID:user.id inManagedObjectContext:context];
         count++;
+        total++;
         if (count >= 200) {
             count = 0;
             [Utility saveToPersistenceStore:context failureMessage:@"Failed to create users in batch."];
         }
     }
+    MBDebug(@"Created %d users", total);
+    
     [Utility saveToPersistenceStore:context failureMessage:@"Failed to create users in batch."];
+    
+//    NSFetchRequest *testfetchRequest = [[NSFetchRequest alloc] init];
+//    [testfetchRequest setEntity:
+//     [NSEntityDescription entityForName:@"User" inManagedObjectContext:context]];
+//    
+//    // Execute the fetch.
+//    NSArray *test = [context executeFetchRequest:fetchRequest error:&error];
+//    MBDebug(@"Number of users: %ld", [test count]);
     return TRUE;
 }
 
