@@ -40,6 +40,9 @@
                                            MBDebug(@"%ld quiz(zes) were loaded.", [[mappingResult array] count]);
                                            for (Quiz *quiz in [mappingResult array]) {
                                                MBDebug(@"quiz compare num: %@", quiz.compareNum);
+                                               MBDebug(@"quiz time: %@", quiz.time);
+                                               MBDebug(@"quiz show time: %@", [Utility getDateToShow:quiz.time inWhole:NO]);
+                                               MBDebug(@"quiz show time: %@", [Utility getDateToShow:quiz.time inWhole:YES]);
                                            }
                                        }
                                        failure:[Utility failureBlockWithAlertMessage:@"Can't connect to the server"

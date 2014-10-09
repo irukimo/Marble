@@ -33,7 +33,7 @@
                                                 @"option1":            @"option1",
                                                 @"option1_name":        @"option1Name",
                                                 @"answer":             @"answer",
-                                                @"time":               @"time",
+                                                @"created_at":               @"time",
                                                 @"compare_num":        @"compareNum"}];
     
     /* We map the entity by uuid. If it is an existing entity on the server side, we updateUUID after object mapping

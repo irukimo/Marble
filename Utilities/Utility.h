@@ -21,4 +21,6 @@ typedef void (^RKSuccessBlock)(RKObjectRequestOperation *, RKMappingResult *);
 
 + (void)saveToPersistenceStore:(NSManagedObjectContext *)context failureMessage:(NSString *)failureMessage;
 +(NSString *) getNameToDisplay:(NSString *)name;
+
++ (NSString *)getDateToShow:(NSDate *)date inWhole:(BOOL) inWhole;
 @end

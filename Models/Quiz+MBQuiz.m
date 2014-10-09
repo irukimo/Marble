@@ -18,7 +18,7 @@
 
 - (void)commmentsNum
 {
-    [self.commments count];
+    [self.comments count];
 }
 
 @end
