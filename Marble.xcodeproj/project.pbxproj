@@ -23,8 +23,10 @@
 		517C894D19DB7129005A8407 /* KeyChainWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 517C894C19DB7129005A8407 /* KeyChainWrapper.m */; };
 		517C895019DB7DB4005A8407 /* RestKitInitializer.m in Sources */ = {isa = PBXBuildFile; fileRef = 517C894F19DB7DB4005A8407 /* RestKitInitializer.m */; };
 		51C1F0DF19E4AF0200B56DD9 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 51C1F0DE19E4AF0200B56DD9 /* User.m */; };
-		51C1F0E419E4B0D800B56DD9 /* Quiz.m in Sources */ = {isa = PBXBuildFile; fileRef = 51C1F0E319E4B0D800B56DD9 /* Quiz.m */; };
 		51DF106E19E460E00021C3F9 /* ArrayToDataTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 51DF106D19E460E00021C3F9 /* ArrayToDataTransformer.m */; };
+		51F5A74819E60744006097EF /* Quiz.m in Sources */ = {isa = PBXBuildFile; fileRef = 51F5A74719E60744006097EF /* Quiz.m */; };
+		51F5A74B19E60827006097EF /* Quiz+MBQuiz.m in Sources */ = {isa = PBXBuildFile; fileRef = 51F5A74A19E60827006097EF /* Quiz+MBQuiz.m */; };
+		51F5A75119E6089D006097EF /* NSNumber+MBNumber.m in Sources */ = {isa = PBXBuildFile; fileRef = 51F5A75019E6089D006097EF /* NSNumber+MBNumber.m */; };
 		7A0E976919DCB194003A9359 /* ProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A0E976819DCB194003A9359 /* ProfileViewController.m */; };
 		7A0E976C19DCB389003A9359 /* MarbleTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A0E976B19DCB389003A9359 /* MarbleTabBarController.m */; };
 		7A0E976F19DCBCBF003A9359 /* QuizTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A0E976E19DCBCBF003A9359 /* QuizTableViewCell.m */; };
@@ -87,11 +89,16 @@
 		51C1F0DD19E4AF0200B56DD9 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
 		51C1F0DE19E4AF0200B56DD9 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
 		51C1F0E119E4B0AB00B56DD9 /* Model 5.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Model 5.xcdatamodel"; sourceTree = "<group>"; };
-		51C1F0E219E4B0D800B56DD9 /* Quiz.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Quiz.h; sourceTree = "<group>"; };
-		51C1F0E319E4B0D800B56DD9 /* Quiz.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Quiz.m; sourceTree = "<group>"; };
 		51DF106C19E460E00021C3F9 /* ArrayToDataTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArrayToDataTransformer.h; sourceTree = "<group>"; };
 		51DF106D19E460E00021C3F9 /* ArrayToDataTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ArrayToDataTransformer.m; sourceTree = "<group>"; };
 		51DF106F19E4615F0021C3F9 /* Model 4.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Model 4.xcdatamodel"; sourceTree = "<group>"; };
+		51F5A74519E60520006097EF /* Model 6.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Model 6.xcdatamodel"; sourceTree = "<group>"; };
+		51F5A74619E60744006097EF /* Quiz.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Quiz.h; sourceTree = "<group>"; };
+		51F5A74719E60744006097EF /* Quiz.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Quiz.m; sourceTree = "<group>"; };
+		51F5A74919E60827006097EF /* Quiz+MBQuiz.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Quiz+MBQuiz.h"; sourceTree = "<group>"; };
+		51F5A74A19E60827006097EF /* Quiz+MBQuiz.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Quiz+MBQuiz.m"; sourceTree = "<group>"; };
+		51F5A74F19E6089D006097EF /* NSNumber+MBNumber.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSNumber+MBNumber.h"; path = "Utilities/NSNumber+MBNumber.h"; sourceTree = "<group>"; };
+		51F5A75019E6089D006097EF /* NSNumber+MBNumber.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSNumber+MBNumber.m"; path = "Utilities/NSNumber+MBNumber.m"; sourceTree = "<group>"; };
 		7A0E976719DCB194003A9359 /* ProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileViewController.h; sourceTree = "<group>"; };
 		7A0E976819DCB194003A9359 /* ProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileViewController.m; sourceTree = "<group>"; };
 		7A0E976A19DCB389003A9359 /* MarbleTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MarbleTabBarController.h; sourceTree = "<group>"; };
@@ -195,8 +202,10 @@
 				7AD2A32C19DE1F9800B200E9 /* User+MBUser.h */,
 				7AD2A32D19DE1F9800B200E9 /* User+MBUser.m */,
 				5152F8DD19DCAD86008E99DB /* Model.xcdatamodeld */,
-				51C1F0E219E4B0D800B56DD9 /* Quiz.h */,
-				51C1F0E319E4B0D800B56DD9 /* Quiz.m */,
+				51F5A74619E60744006097EF /* Quiz.h */,
+				51F5A74919E60827006097EF /* Quiz+MBQuiz.h */,
+				51F5A74A19E60827006097EF /* Quiz+MBQuiz.m */,
+				51F5A74719E60744006097EF /* Quiz.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -342,6 +351,8 @@
 		7AF4127619DB518900A470E1 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				51F5A74F19E6089D006097EF /* NSNumber+MBNumber.h */,
+				51F5A75019E6089D006097EF /* NSNumber+MBNumber.m */,
 				517C895119DB7E0C005A8407 /* Constants.h */,
 				7AF4127D19DB62C600A470E1 /* Utility.h */,
 				7AF4127E19DB62C600A470E1 /* Utility.m */,
@@ -504,18 +515,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				51F5A74819E60744006097EF /* Quiz.m in Sources */,
 				7AF4123619D9FB6C00A470E1 /* AppDelegate.m in Sources */,
 				517C894D19DB7129005A8407 /* KeyChainWrapper.m in Sources */,
 				7AF4127119DA6A8300A470E1 /* SelectPeopleViewCell.m in Sources */,
 				5152F8DF19DCAD86008E99DB /* Model.xcdatamodeld in Sources */,
 				7AB925B019E3730C00F8229F /* UIColor+MBColor.m in Sources */,
+				51F5A74B19E60827006097EF /* Quiz+MBQuiz.m in Sources */,
+				51F5A75119E6089D006097EF /* NSNumber+MBNumber.m in Sources */,
 				7AD2A32E19DE1F9800B200E9 /* User+MBUser.m in Sources */,
 				7AF4123319D9FB6C00A470E1 /* main.m in Sources */,
 				7A0E976919DCB194003A9359 /* ProfileViewController.m in Sources */,
 				51C1F0DF19E4AF0200B56DD9 /* User.m in Sources */,
 				7AFF5BBE19E59AEA00CFD35D /* SelectKeywordViewController.m in Sources */,
 				7A0E977519DCDFBC003A9359 /* HomeNavigationController.m in Sources */,
-				51C1F0E419E4B0D800B56DD9 /* Quiz.m in Sources */,
 				51DF106E19E460E00021C3F9 /* ArrayToDataTransformer.m in Sources */,
 				517C895019DB7DB4005A8407 /* RestKitInitializer.m in Sources */,
 				7AF4126B19DA2EC200A470E1 /* PostsViewController.m in Sources */,
@@ -756,12 +769,13 @@
 			isa = XCVersionGroup;
 			children = (
 				51C1F0E119E4B0AB00B56DD9 /* Model 5.xcdatamodel */,
+				51F5A74519E60520006097EF /* Model 6.xcdatamodel */,
 				51DF106F19E4615F0021C3F9 /* Model 4.xcdatamodel */,
 				511D9F1419DCDDC300FCCFB2 /* Model 3.xcdatamodel */,
 				5137168D19DCBF7B00571C9A /* Model 2.xcdatamodel */,
 				5152F8DE19DCAD86008E99DB /* Model.xcdatamodel */,
 			);
-			currentVersion = 51C1F0E119E4B0AB00B56DD9 /* Model 5.xcdatamodel */;
+			currentVersion = 51F5A74519E60520006097EF /* Model 6.xcdatamodel */;
 			path = Model.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

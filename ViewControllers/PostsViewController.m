@@ -10,6 +10,7 @@
 #import "QuizTableViewCell.h"
 #import "User+MBUser.h"
 #import "Quiz.h"
+#import "Quiz+MBQuiz.h"
 
 #import "KeyChainWrapper.h"
 
@@ -37,6 +38,9 @@
                                        success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
                                            MBDebug(@"Successfully loadded quizzes");
                                            MBDebug(@"%ld quiz(zes) were loaded.", [[mappingResult array] count]);
+                                           for (Quiz *quiz in [mappingResult array]) {
+                                               MBDebug(@"quiz compare num: %@", quiz.compareNum);
+                                           }
                                        }
                                        failure:[Utility failureBlockWithAlertMessage:@"Can't connect to the server"
                                                                                block:^{MBError(@"Cannot load quizzes");}]
@@ -249,6 +253,8 @@
     RKHTTPRequestOperation *operation = [[RKHTTPRequestOperation alloc] initWithRequest:request];
     [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
         MBDebug(@"Guess posted");
+        [quiz incrementCompareNum];
+//        MBDebug(@"Quiz now: %@", quiz);
     }
                                      failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                          dispatch_async(dispatch_get_main_queue(), ^{
