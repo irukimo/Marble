@@ -122,7 +122,7 @@
 
     
     RKObjectMapping *statusSerializationMapping = [RKObjectMapping requestMapping];
-    [quizSerializationMapping addAttributeMappingsFromDictionary:@{@"status": @"status"}];
+    [statusSerializationMapping addAttributeMappingsFromDictionary:@{@"status": @"status"}];
     
     RKRequestDescriptor *statusPOSTRequestDescriptor =
     [RKRequestDescriptor requestDescriptorWithMapping:statusSerializationMapping
