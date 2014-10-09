@@ -8,6 +8,7 @@
 
 #import "QuizTableViewCell.h"
 #import "FacebookSDK/FacebookSDK.h"
+#import "KeyChainWrapper.h"
 
 @interface QuizTableViewCell()
 @property(strong,nonatomic) NSString *option0Name;
@@ -26,6 +27,9 @@
 @property(strong, nonatomic) UIButton *chooseOption0Button;
 @property(strong, nonatomic) UIButton *chooseOption1Button;
 
+@property(strong, nonatomic) UILabel *compareNumLabel;
+@property(strong, nonatomic) UILabel *commentNumLabel;
+
 @end
 
 @implementation QuizTableViewCell
@@ -34,7 +38,7 @@
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        [self setLabels];
+        [self addStaticLabels];
         [self addChoiceButtons];
         [self addResultLabel];
         [self initFBPicViews];
@@ -104,7 +108,10 @@
 }
 
 
--(void)setLabels{
+-(void)addStaticLabels{
+    _compareNumLabel = [[UILabel alloc] initWithFrame:CGRectMake(230, 130, 50, 20)];
+    _commentNumLabel = [[UILabel alloc] initWithFrame:CGRectMake(280, 130, 50, 20)];
+    
     _authorNameButton = [[UIButton alloc] initWithFrame:CGRectMake(60, 15, 100, 20)];
     _option0NameButton = [[UIButton alloc] initWithFrame:CGRectMake(15, 30, 100, 20)];
     _option1NameButton = [[UIButton alloc] initWithFrame:CGRectMake(115, 30, 100, 20)];
@@ -115,20 +122,22 @@
 
     _keywordLabel = [[UILabel alloc] initWithFrame:CGRectMake(255, 15, 60, 20)];
     
-    _commentField = [[UITextField alloc] initWithFrame:CGRectMake(40, 120, 150, 30)];
+    _commentField = [[UITextField alloc] initWithFrame:CGRectMake(10, 120, 150, 30)];
     [_commentField setBorderStyle:UITextBorderStyleLine];
-    _commentBtn = [[UIButton alloc] initWithFrame:CGRectMake(210, 120, 50, 30)];
+    _commentBtn = [[UIButton alloc] initWithFrame:CGRectMake(180, 120, 50, 30)];
 
     [_commentBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [_commentBtn setTitle:@"send" forState:UIControlStateNormal];
     [_commentBtn addTarget:self action:@selector(commentQuizClicked:) forControlEvents:UIControlEventTouchUpInside];
 
+    [self.contentView addSubview:_compareNumLabel];
     [self.contentView addSubview:_authorNameButton];
     [self.contentView addSubview:_option0NameButton];
     [self.contentView addSubview:_option1NameButton];
     [self.contentView addSubview:_keywordLabel];
     [self.contentView addSubview:_commentField];
     [self.contentView addSubview:_commentBtn];
+    [self.contentView addSubview:_commentNumLabel];
 
 }
 
@@ -143,16 +152,19 @@
 }
 
 
--(void) setQuizWithAuthor:(NSString *)authorName withID:(NSString *)authorID andOption0:(NSString *)option0Name withID:(NSString *)option0ID andOption1:(NSString *)option1Name withID:(NSString *)option1ID andKeyword:(NSString *)keyword andAnswer:(NSString *)answer{
-    _authorName = [authorName copy];
-    _option0Name = [option0Name copy];
-    _option1Name = [option1Name copy];
-    _answerName = [answer copy];
-    _keyword = [keyword copy];
+-(void) setQuiz:(Quiz *)quiz{
+    _authorName = [quiz.authorName copy];
+    _option0Name = [quiz.option0Name copy];
+    _option1Name = [quiz.option1Name copy];
+    _answerName = [quiz.answer copy];
+    _keyword = [quiz.keyword copy];
+    [_compareNumLabel setText:[NSString stringWithFormat:@"%@", quiz.compareNum]];
+    [self getCommentsNumForQuiz:quiz];
     
-    NSString *authorPictureUrl = [NSString stringWithFormat:@"https://graph.facebook.com/%@/picture", authorID];
-    NSString *option0PictureUrl = [NSString stringWithFormat:@"https://graph.facebook.com/%@/picture?width=100&height=100", option0ID];
-    NSString *option1PictureUrl = [NSString stringWithFormat:@"https://graph.facebook.com/%@/picture?width=100&height=100", option1ID];
+    
+    NSString *authorPictureUrl = [NSString stringWithFormat:@"https://graph.facebook.com/%@/picture", quiz.author];
+    NSString *option0PictureUrl = [NSString stringWithFormat:@"https://graph.facebook.com/%@/picture?width=100&height=100", quiz.option0];
+    NSString *option1PictureUrl = [NSString stringWithFormat:@"https://graph.facebook.com/%@/picture?width=100&height=100", quiz.option1];
     
     [_authorPicView setImageWithURL:[NSURL URLWithString:authorPictureUrl] placeholderImage:[UIImage imageNamed:@"login.png"]];
     [_option0PicView setImageWithURL:[NSURL URLWithString:option0PictureUrl] placeholderImage:[UIImage imageNamed:@"login.png"]];
@@ -172,5 +184,22 @@
     }
 }
 
+- (void)getCommentsNumForQuiz:(Quiz *)quiz
+{
+    NSString *sessionToken = [KeyChainWrapper getSessionTokenForUser];
+    NSDictionary *params = [NSDictionary dictionaryWithObjects:@[quiz.uuid, sessionToken] forKeys:@[@"quiz_uuid", @"auth_token"]];
+    
+    [[RKObjectManager sharedManager] getObjectsAtPathForRouteNamed:@"get_comments" object:quiz parameters:params
+                                                           success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+                                                               MBDebug(@"Returned comments");
+                                                               MBDebug(@"Quiz author: %@", quiz.author);
+                                                               MBDebug(@"Quiz keyword: %@", quiz.keyword);
+                                                               [_commentNumLabel setText:[NSString stringWithFormat:@"%lu", (unsigned long)[quiz.comments count]]];
+                                                           }
+                                                           failure:^(RKObjectRequestOperation *operation, NSError *error) {
+                                                               [Utility generateAlertWithMessage:@"Network problem"];
+                                                               MBError(@"Cannot get comments!");
+                                                           }];
+}
 
 @end

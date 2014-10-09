@@ -149,7 +149,7 @@
     
     
     
-    [cell setQuizWithAuthor:quiz.authorName withID:quiz.author andOption0:quiz.option0Name withID:quiz.option0 andOption1:quiz.option1Name withID:quiz.option1 andKeyword:quiz.keyword andAnswer:quiz.answer];
+    [cell setQuiz:(Quiz *)quiz];
     
     NSLog(@"%@", quiz);
     [cell.option0NameButton setTag:indexPath.row];

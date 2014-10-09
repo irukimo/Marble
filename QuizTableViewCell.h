@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Quiz.h"
 
 @protocol QuizTableViewCellDelegate;
 
@@ -23,7 +24,7 @@
 @property (nonatomic, weak) id<QuizTableViewCellDelegate> delegate;
 @property (nonatomic, strong) NSString *quizUUID;
 
--(void) setQuizWithAuthor:(NSString *)authorName withID:(NSString *)authorID andOption0:(NSString *)option0Name withID:(NSString *)option0ID andOption1:(NSString *)option1Name withID:(NSString *)option1ID andKeyword:(NSString *)keyword andAnswer:(NSString *)answer;
+-(void) setQuiz:(Quiz *)quiz;
 
 @end
 
