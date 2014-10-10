@@ -146,19 +146,13 @@
 //                                          rootKeyPath:nil
 //                                               method:RKRequestMethodPOST];
 //
-    RKObjectMapping *statusGETSerializationMapping = [RKObjectMapping requestMapping];
-    [statusGETSerializationMapping addAttributeMappingsFromDictionary:@{@"fbID": @"fb_id",
-                                                                        @"name":@"name"}];
-    
-    RKRequestDescriptor *statusGETRequestDescriptor =
-    [RKRequestDescriptor requestDescriptorWithMapping:statusGETSerializationMapping
-                                          objectClass:[User class]
-                                          rootKeyPath:@"test"
-                                               method:RKRequestMethodGET];
+    /*
+      * Note that Request Descriptors are never called for GET requests
+      */
+
 
     [objectManager addRequestDescriptorsFromArray:@[quizPOSTRequestDescriptor,
 //                                                    statusPOSTRequestDescriptor,
-                                                    statusGETRequestDescriptor
                                                     ]];
     
     
