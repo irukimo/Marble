@@ -115,9 +115,9 @@
     _compareNumLabel = [[UILabel alloc] initWithFrame:CGRectMake(230, 130, 50, 20)];
     _commentNumLabel = [[UILabel alloc] initWithFrame:CGRectMake(280, 130, 50, 20)];
     
-    _authorNameButton = [[UIButton alloc] initWithFrame:CGRectMake(60, 15, 100, 20)];
-    _option0NameButton = [[UIButton alloc] initWithFrame:CGRectMake(15, 30, 100, 20)];
-    _option1NameButton = [[UIButton alloc] initWithFrame:CGRectMake(115, 30, 100, 20)];
+    _authorNameButton = [[UIButton alloc] initWithFrame:CGRectMake(60, 15, 120, 20)];
+    _option0NameButton = [[UIButton alloc] initWithFrame:CGRectMake(15, 30, 120, 20)];
+    _option1NameButton = [[UIButton alloc] initWithFrame:CGRectMake(115, 30, 120, 20)];
     
     [_authorNameButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [_option0NameButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];

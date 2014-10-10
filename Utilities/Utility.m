@@ -80,9 +80,22 @@
 
 +(NSString *) shortenName:(NSString *)name{
     if([name length] > 10){
-        if([name rangeOfString:@" "].location != NSNotFound){
-            NSRange startSpace = [name rangeOfString:@" "];
-            NSString *concatString = [name substringWithRange:NSMakeRange(0, startSpace.location +2)];
+        NSRange firstSpace = [name rangeOfString:@" "];
+        if(firstSpace.location != NSNotFound){
+            /*
+            if(firstSpace.location < 10){
+                NSRange findRange;
+                findRange.location = firstSpace.location + firstSpace.length;
+                if(findRange.location < name.length){
+                    NSRange secondSpace = [name rangeOfString:@" " options:nil range:findRange];
+                    if(secondSpace.location != NSNotFound){
+                        NSString *concatString = [name substringWithRange:NSMakeRange(0, secondSpace.location +2)];
+                        return [concatString stringByAppendingString:@"."];
+                    }
+                }
+            }
+             */
+            NSString *concatString = [name substringWithRange:NSMakeRange(0, firstSpace.location +2)];
             return [concatString stringByAppendingString:@"."];
         }else{
             return name;
