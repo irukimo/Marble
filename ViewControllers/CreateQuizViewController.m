@@ -76,10 +76,12 @@
     if (_option0 != nil) [existingUsers addObject:_option0];
     if (_option1 != nil) [existingUsers addObject:_option1];
     [User getRandomUsersThisMany:2 inThisArray:&randomUser inManagedObjectContext:[RKManagedObjectStore defaultStore].mainQueueManagedObjectContext existingUsers:existingUsers];
-    [self setOption0:[randomUser firstObject]];
-    [self setOption1:[randomUser objectAtIndex:1]];
+    if([randomUser count] >= 2) {
+        [self setOption0:[randomUser firstObject]];
+        [self setOption1:[randomUser objectAtIndex:1]];
+    }
 }
-                     
+
 -(void) setOption0:(User *)option0{
     _option0 = option0;
     _option0PicView.profileID = _option0.fbID;
