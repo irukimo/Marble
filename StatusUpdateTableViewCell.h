@@ -10,4 +10,6 @@
 
 @interface StatusUpdateTableViewCell : UITableViewCell
 
+- (void) setName:(NSString *)name andStatus:(NSString *)status;
+
 @end

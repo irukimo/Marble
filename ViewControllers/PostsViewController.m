@@ -7,12 +7,17 @@
 //
 
 #import "PostsViewController.h"
+
 #import "QuizTableViewCell.h"
+#import "StatusUpdateTableViewCell.h"
+#import "KeywordUpdateTableViewCell.h"
+
 #import "User+MBUser.h"
 #import "Quiz.h"
 #import "Quiz+MBQuiz.h"
 #import "Post.h"
 #import "StatusUpdate.h"
+
 #import "KeyChainWrapper.h"
 
 @interface PostsViewController ()
@@ -71,9 +76,9 @@
 
     
     //set up fetched results controller
-    NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"Quiz"];
+    NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"Post"];
 //    if (predicate) request.predicate = predicate;
-    NSSortDescriptor *sort = [[NSSortDescriptor alloc] initWithKey:@"keyword" ascending:YES];
+    NSSortDescriptor *sort = [[NSSortDescriptor alloc] initWithKey:@"popularity" ascending:YES];
     request.sortDescriptors = @[sort];
     
     _fetchedResultsController =
@@ -159,30 +164,50 @@
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSString *quizTableViewCellIdentifier = @"quizTableViewCellIdentifier";
-    QuizTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:quizTableViewCellIdentifier];
-    Quiz *quiz = [_fetchedResultsController objectAtIndexPath:indexPath];
+    Post *post = [_fetchedResultsController objectAtIndexPath:indexPath];
     
-    if (!cell){
-        cell = [[QuizTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:quizTableViewCellIdentifier];
+    if ([post isKindOfClass:[Quiz class]]){
+        Quiz *quiz = (Quiz *)post;
+        QuizTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:quizTableViewCellIdentifier];
+        if (!cell){
+            cell = [[QuizTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:quizTableViewCellIdentifier];
+        }
+        
+        [cell setQuiz:(Quiz *)quiz];
+        
+        MBDebug(@"quiz: %@", quiz);
+        [cell.option0NameButton setTag:indexPath.row];
+        [cell.option1NameButton setTag:indexPath.row];
+        [cell.authorNameButton setTag:indexPath.row];
+        [cell.option0NameButton addTarget:self action:@selector(option0Clicked:) forControlEvents:UIControlEventTouchUpInside];
+        [cell.option1NameButton addTarget:self action:@selector(option1Clicked:) forControlEvents:UIControlEventTouchUpInside];
+        [cell.authorNameButton addTarget:self action:@selector(authorClicked:) forControlEvents:UIControlEventTouchUpInside];
+        cell.delegate = self;
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        cell.quizUUID = quiz.uuid;
+        return cell;
+    } else if ([post isKindOfClass:[StatusUpdate class]]) {
+        StatusUpdate *status = (StatusUpdate *)post;
+        StatusUpdateTableViewCell *cell =[self.tableView dequeueReusableCellWithIdentifier:statusTableViewCellIdentifier];
+        if (!cell){
+            cell = [[StatusUpdateTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:statusTableViewCellIdentifier];
+        }
+        
+        [cell setName:status.name andStatus:status.status];
+//        MBDebug(@"status cell: %@", cell);
+        MBDebug(@"status update: %@", status);
+        return cell;
+    } else {
+        KeywordUpdateTableViewCell *cell =[self.tableView dequeueReusableCellWithIdentifier:keywordTableViewCellIdentifier];
+        if (!cell){
+            cell = [[KeywordUpdateTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:keywordTableViewCellIdentifier];
+        }
+        
+        MBDebug(@"keyword cell: %@", cell);
+        return cell;
+
     }
-    
-    
-    
-    
-    [cell setQuiz:(Quiz *)quiz];
-    
-    NSLog(@"%@", quiz);
-    [cell.option0NameButton setTag:indexPath.row];
-    [cell.option1NameButton setTag:indexPath.row];
-    [cell.authorNameButton setTag:indexPath.row];
-    [cell.option0NameButton addTarget:self action:@selector(option0Clicked:) forControlEvents:UIControlEventTouchUpInside];
-    [cell.option1NameButton addTarget:self action:@selector(option1Clicked:) forControlEvents:UIControlEventTouchUpInside];
-    [cell.authorNameButton addTarget:self action:@selector(authorClicked:) forControlEvents:UIControlEventTouchUpInside];
-    cell.delegate = self;
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    cell.quizUUID = quiz.uuid;
-    return cell;
+
 }
 
 -(void)option0Clicked:(id)sender{

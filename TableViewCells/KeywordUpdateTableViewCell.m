@@ -8,6 +8,10 @@
 
 #import "KeywordUpdateTableViewCell.h"
 
+@interface KeywordUpdateTableViewCell()
+
+@end
+
 @implementation KeywordUpdateTableViewCell
 
 @end

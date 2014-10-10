@@ -20,4 +20,10 @@
 
 #define BASE_URL URLMake(PRODUCTION_SERVER)
 
+
+#define quizTableViewCellIdentifier    @"quizTableViewCellIdentifier"
+#define statusTableViewCellIdentifier  @"statusTableViewCellIdentifier"
+#define keywordTableViewCellIdentifier @"keywordTableViewCellIdentifier"
+
+
 #endif
