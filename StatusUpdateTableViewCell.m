@@ -48,7 +48,7 @@
 
 
 -(void) commentPostClicked:(id)sender{
-    MBDebug(@"comment quiz clicked!");
+    MBDebug(@"comment on status clicked!");
     if(_delegate && [_delegate respondsToSelector:@selector(commentPost:withComment:)]){
         [_delegate commentPost:sender withComment:_commentField.text];
     }

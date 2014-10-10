@@ -197,28 +197,37 @@
 
 + (void) sendThroughRKRoute:(NSString *)routeName withParams:(NSDictionary *)params_
 {
+    [Utility sendThroughRKRoute:routeName withParams:params_ successBlock:nil failureBlock:nil];
+}
+
++ (void) sendThroughRKRoute:(NSString *)routeName withParams:(NSDictionary *)params_
+               successBlock:(voidBlock)successBlock failureBlock:(voidBlock)failureBlock
+{
     NSMutableDictionary *params = [NSMutableDictionary
                                    dictionaryWithObjects:@[[KeyChainWrapper getSessionTokenForUser]]
                                    forKeys:@[@"auth_token"]];
     [params addEntriesFromDictionary:params_];
     
     NSMutableURLRequest *request = [[RKObjectManager sharedManager] requestWithPathForRouteNamed:routeName
-                                                                          object:self
-                                                                      parameters:params];
+                                                                                          object:self
+                                                                                      parameters:params];
     
     RKHTTPRequestOperation *operation = [[RKHTTPRequestOperation alloc] initWithRequest:request];
     [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
         MBDebug(@"object posted via route %@", routeName);
+        if (successBlock) {successBlock();}
     }
-                                     failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                         dispatch_async(dispatch_get_main_queue(), ^{
-                                             [Utility generateAlertWithMessage:@"Network problem"];
-                                         });
-                                         MBError(@"Cannot send object via route %@!", routeName);
-                                     }];
+     failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+         dispatch_async(dispatch_get_main_queue(), ^{
+             [Utility generateAlertWithMessage:@"Network problem"];
+         });
+         MBError(@"Cannot send object via route %@!", routeName);
+         if (failureBlock) {failureBlock();}
+     }];
     
     NSOperationQueue *operationQueue = [NSOperationQueue new];
     [operationQueue addOperation:operation];
+
 }
 
 

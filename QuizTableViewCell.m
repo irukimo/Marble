@@ -243,7 +243,7 @@
 - (void)getCommentsNumForQuiz:(Quiz *)quiz
 {
     NSString *sessionToken = [KeyChainWrapper getSessionTokenForUser];
-    NSDictionary *params = [NSDictionary dictionaryWithObjects:@[quiz.uuid, sessionToken] forKeys:@[@"quiz_uuid", @"auth_token"]];
+    NSDictionary *params = [NSDictionary dictionaryWithObjects:@[quiz.uuid, sessionToken] forKeys:@[@"post_uuid", @"auth_token"]];
     
     [[RKObjectManager sharedManager] getObjectsAtPathForRouteNamed:@"get_comments" object:quiz parameters:params
                                                            success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {

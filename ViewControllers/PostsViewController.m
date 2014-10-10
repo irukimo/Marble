@@ -318,59 +318,20 @@
     Post *post = [_fetchedResultsController objectAtIndexPath:indexPath];
 
     MBDebug(@"%@", comment);
-//    MBDebug(@"%@", post.uuid);
-    
-    if([post isKindOfClass:[Quiz class]]){
-        Quiz *quiz = (Quiz *)post;
-        NSMutableDictionary *params = [NSMutableDictionary
-                                       dictionaryWithObjects:@[quiz.uuid, comment, [KeyChainWrapper getSessionTokenForUser]]
-                                       forKeys:@[@"quiz_uuid", @"comment", @"auth_token"]];
-        
-        NSMutableURLRequest *request = [[RKObjectManager sharedManager] requestWithPathForRouteNamed:@"send_comment"
-                                                                                              object:self
-                                                                                          parameters:params];
-        
-        RKHTTPRequestOperation *operation = [[RKHTTPRequestOperation alloc] initWithRequest:request];
-        [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
-            MBDebug(@"Comment posted");
-            NSMutableArray *comments;
-            if (quiz.comments == nil) {
-                comments = [NSMutableArray arrayWithArray:quiz.comments];
-            } else {
-                comments = [[NSMutableArray alloc] init];
-            }
-            [comments addObject:@[@"me", comment]];
-            quiz.comments = comments;
-    //        MBDebug(@"comments: %@", quiz.comments);
-            [self getCommentsForQuiz:quiz];
-        }
-                                     failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                             dispatch_async(dispatch_get_main_queue(), ^{
-                                                 [Utility generateAlertWithMessage:@"Network problem"];
-                                             });
-                                             MBError(@"Cannot send comment!");
-                                         }];
-        
-        NSOperationQueue *operationQueue = [NSOperationQueue new];
-        [operationQueue addOperation:operation];
-    } else if([post isKindOfClass:[StatusUpdate class]]){
-        
-    } else{
-        
-    }
+    [Utility sendThroughRKRoute:@"send_comment" withParams:@{@"post_uuid": post.uuid, @"comment": comment}
+                   successBlock:^{ [self getCommentsForPost:post]; }
+                   failureBlock:nil];
 }
 
-- (void)getCommentsForQuiz:(Quiz *)quiz
+- (void)getCommentsForPost:(Post *)post
 {
     NSString *sessionToken = [KeyChainWrapper getSessionTokenForUser];
-    NSDictionary *params = [NSDictionary dictionaryWithObjects:@[quiz.uuid, sessionToken] forKeys:@[@"quiz_uuid", @"auth_token"]];
+    NSDictionary *params = [NSDictionary dictionaryWithObjects:@[post.uuid, sessionToken] forKeys:@[@"post_uuid", @"auth_token"]];
 
-    [[RKObjectManager sharedManager] getObjectsAtPathForRouteNamed:@"get_comments" object:quiz parameters:params
+    [[RKObjectManager sharedManager] getObjectsAtPathForRouteNamed:@"get_comments" object:post parameters:params
         success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
             MBDebug(@"Returned comments");
-            MBDebug(@"Quiz author: %@", quiz.author);
-            MBDebug(@"Quiz keyword: %@", quiz.keyword);
-            for (NSDictionary *cmt in quiz.comments) {
+            for (NSDictionary *cmt in post.comments) {
                 MBDebug(@"fb_id: %@, comment: %@", [cmt valueForKey:@"fb_id"], [cmt valueForKey:@"comment"]);
             }
         }

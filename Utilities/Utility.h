@@ -15,9 +15,10 @@
 
 typedef void (^RKFailureBlock)(RKObjectRequestOperation *, NSError *);
 typedef void (^RKSuccessBlock)(RKObjectRequestOperation *, RKMappingResult *);
+typedef void (^voidBlock)(void);
 
-+ (RKSuccessBlock) successBlockWithDebugMessage:(NSString *)message block:(void (^)(void))callbackBlock;
-+ (RKFailureBlock) failureBlockWithAlertMessage:(NSString *)message block:(void (^)(void))callbackBlock;
++ (RKSuccessBlock) successBlockWithDebugMessage:(NSString *)message block:(voidBlock)callbackBlock;
++ (RKFailureBlock) failureBlockWithAlertMessage:(NSString *)message block:(voidBlock)callbackBlock;
 
 + (void)saveToPersistenceStore:(NSManagedObjectContext *)context failureMessage:(NSString *)failureMessage;
 +(NSString *) getNameToDisplay:(NSString *)name;
@@ -25,4 +26,6 @@ typedef void (^RKSuccessBlock)(RKObjectRequestOperation *, RKMappingResult *);
 + (NSString *)getDateToShow:(NSDate *)date inWhole:(BOOL) inWhole;
 
 + (void) sendThroughRKRoute:(NSString *)routeName withParams:(NSDictionary *)params_;
++ (void) sendThroughRKRoute:(NSString *)routeName withParams:(NSDictionary *)params_
+               successBlock:(voidBlock)successBlock failureBlock:(voidBlock)failureBlock;
 @end

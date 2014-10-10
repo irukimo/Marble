@@ -68,7 +68,7 @@
     
     
     // comments mapping
-    RKEntityMapping *commentsMapping = [RKEntityMapping mappingForEntityForName:@"Quiz" inManagedObjectStore:managedObjectStore];
+    RKEntityMapping *commentsMapping = [RKEntityMapping mappingForEntityForName:@"Post" inManagedObjectStore:managedObjectStore];
     [commentsMapping addAttributeMappingsFromDictionary:@{@"comments": @"comments",
                                                           @"uuid": @"uuid"}];
     commentsMapping.identificationAttributes = @[@"uuid"];
