@@ -9,6 +9,9 @@
 #import "QuizTableViewCell.h"
 #import "FacebookSDK/FacebookSDK.h"
 #import "KeyChainWrapper.h"
+#import "User+MBUser.h"
+
+#define COMMENT_LABEL_TAG 456
 
 @interface QuizTableViewCell()
 @property(strong,nonatomic) NSString *option0Name;
@@ -34,6 +37,8 @@
 @property (strong, nonatomic) UIImageView *authorPicView;
 @property (strong, nonatomic) UIImageView *option0PicView;
 @property (strong, nonatomic) UIImageView *option1PicView;
+
+@property(strong, nonatomic) Quiz *quiz;
 @end
 
 @implementation QuizTableViewCell
@@ -50,6 +55,19 @@
         // Initialization code
     }
     return self;
+}
+
+-(void)prepareForReuse{
+    [super prepareForReuse];
+    [self removeAllComments];
+}
+
+-(void) removeAllComments{
+    for(UIView *view in self.subviews){
+        if([view tag] == COMMENT_LABEL_TAG){
+            [view removeFromSuperview];
+        }
+    }
 }
 
 -(void) initPicViews{
@@ -114,7 +132,7 @@
 
 
 -(void)addStaticLabels{
-    _timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, 150, 70, 20)];
+    _timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(285, 5, 70, 20)];
 
     _compareNumLabel = [[UILabel alloc] initWithFrame:CGRectMake(230, 130, 50, 20)];
     _commentNumLabel = [[UILabel alloc] initWithFrame:CGRectMake(280, 130, 50, 20)];
@@ -127,7 +145,7 @@
     [_option0NameButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [_option1NameButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
 
-    _keywordLabel = [[UILabel alloc] initWithFrame:CGRectMake(255, 15, 60, 20)];
+    _keywordLabel = [[UILabel alloc] initWithFrame:CGRectMake(205, 15, 100, 20)];
     
     _commentField = [[UITextField alloc] initWithFrame:CGRectMake(10, 120, 150, 30)];
     [_commentField setBorderStyle:UITextBorderStyleLine];
@@ -161,6 +179,7 @@
 
 
 -(void) setQuiz:(Quiz *)quiz{
+    _quiz = quiz;
     _authorName = [quiz.authorName copy];
     _option0Name = [quiz.option0Name copy];
     _option1Name = [quiz.option1Name copy];
@@ -193,6 +212,33 @@
     }
 }
 
+-(void) showComments{;
+    int y = 150;
+    int increment = 20;
+    int i = 0;
+    for (NSDictionary *cmt in _quiz.comments) {
+        if(i > 2){
+            return;
+        }
+        [self addCommentAtY:(y+i*increment) withID:[cmt valueForKey:@"fb_id"] andComment:[cmt valueForKey:@"comment"]];
+        i++;
+    }
+}
+
+-(void) addCommentAtY:(int)y withID:(NSString *)fbid andComment:(NSString *)comment{
+    NSLog(@"at comment at %d", y);
+    NSString *name;
+    [User getUserNameByFBID:fbid returnInName:&name inManagedObjectContext:[RKManagedObjectStore defaultStore].mainQueueManagedObjectContext];
+    UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, y, 100, 20)];
+    UILabel *commentLabel = [[UILabel alloc] initWithFrame:CGRectMake(100, y, 150, 20)];
+    [nameLabel setTag:COMMENT_LABEL_TAG];
+    [commentLabel setTag:COMMENT_LABEL_TAG];
+    [nameLabel setText:name];
+    [commentLabel setText:comment];
+    [self addSubview:nameLabel];
+    [self addSubview:commentLabel];
+}
+
 - (void)getCommentsNumForQuiz:(Quiz *)quiz
 {
     NSString *sessionToken = [KeyChainWrapper getSessionTokenForUser];
@@ -204,6 +250,7 @@
                                                                MBDebug(@"Quiz author: %@", quiz.author);
                                                                MBDebug(@"Quiz keyword: %@", quiz.keyword);
                                                                [_commentNumLabel setText:[NSString stringWithFormat:@"%lu", (unsigned long)[quiz.comments count]]];
+                                                               [self showComments];
                                                            }
                                                            failure:^(RKObjectRequestOperation *operation, NSError *error) {
                                                                [Utility generateAlertWithMessage:@"Network problem"];
