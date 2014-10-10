@@ -183,7 +183,7 @@
         [cell.option1NameButton addTarget:self action:@selector(option1Clicked:) forControlEvents:UIControlEventTouchUpInside];
         [cell.authorNameButton addTarget:self action:@selector(authorClicked:) forControlEvents:UIControlEventTouchUpInside];
         cell.delegate = self;
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+
         cell.quizUUID = quiz.uuid;
         return cell;
     } else if ([post isKindOfClass:[StatusUpdate class]]) {
@@ -192,8 +192,8 @@
         if (!cell){
             cell = [[StatusUpdateTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:statusTableViewCellIdentifier];
         }
-        
-        [cell setName:status.name andStatus:status.status];
+        cell.delegate = self;
+        [cell setName:status.name andID:status.fbID andStatus:status.status];
 //        MBDebug(@"status cell: %@", cell);
         MBDebug(@"status update: %@", status);
         return cell;
@@ -267,7 +267,15 @@
 }*/
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 170;
+    Post *post = [_fetchedResultsController objectAtIndexPath:indexPath];
+    
+    if ([post isKindOfClass:[Quiz class]]){
+        return QuizTableViewCellHeight;
+    } else if([post isKindOfClass:[StatusUpdate class]]){
+        return StatusUpdateTableViewCellHeight;
+    } else{
+        return KeywordUpdateTableViewCellHeight;
+    }
 }
 
 #pragma mark -
@@ -303,46 +311,53 @@
     [operationQueue addOperation:operation];
 }
 
-- (void) commentQuiz:(id)sender withComment:(NSString *)comment
+- (void) commentPost:(id)sender withComment:(NSString *)comment
 {
     CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.tableView];
     NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:buttonPosition];
-    Quiz *quiz = [_fetchedResultsController objectAtIndexPath:indexPath];
+    Post *post = [_fetchedResultsController objectAtIndexPath:indexPath];
 
     MBDebug(@"%@", comment);
-    MBDebug(@"%@", quiz.uuid);
+//    MBDebug(@"%@", post.uuid);
     
-    NSMutableDictionary *params = [NSMutableDictionary
-                                   dictionaryWithObjects:@[quiz.uuid, comment, [KeyChainWrapper getSessionTokenForUser]]
-                                   forKeys:@[@"quiz_uuid", @"comment", @"auth_token"]];
-    
-    NSMutableURLRequest *request = [[RKObjectManager sharedManager] requestWithPathForRouteNamed:@"send_comment"
-                                                                                          object:self
-                                                                                      parameters:params];
-    
-    RKHTTPRequestOperation *operation = [[RKHTTPRequestOperation alloc] initWithRequest:request];
-    [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
-        MBDebug(@"Comment posted");
-        NSMutableArray *comments;
-        if (quiz.comments == nil) {
-            comments = [NSMutableArray arrayWithArray:quiz.comments];
-        } else {
-            comments = [[NSMutableArray alloc] init];
+    if([post isKindOfClass:[Quiz class]]){
+        Quiz *quiz = (Quiz *)post;
+        NSMutableDictionary *params = [NSMutableDictionary
+                                       dictionaryWithObjects:@[quiz.uuid, comment, [KeyChainWrapper getSessionTokenForUser]]
+                                       forKeys:@[@"quiz_uuid", @"comment", @"auth_token"]];
+        
+        NSMutableURLRequest *request = [[RKObjectManager sharedManager] requestWithPathForRouteNamed:@"send_comment"
+                                                                                              object:self
+                                                                                          parameters:params];
+        
+        RKHTTPRequestOperation *operation = [[RKHTTPRequestOperation alloc] initWithRequest:request];
+        [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+            MBDebug(@"Comment posted");
+            NSMutableArray *comments;
+            if (quiz.comments == nil) {
+                comments = [NSMutableArray arrayWithArray:quiz.comments];
+            } else {
+                comments = [[NSMutableArray alloc] init];
+            }
+            [comments addObject:@[@"me", comment]];
+            quiz.comments = comments;
+    //        MBDebug(@"comments: %@", quiz.comments);
+            [self getCommentsForQuiz:quiz];
         }
-        [comments addObject:@[@"me", comment]];
-        quiz.comments = comments;
-//        MBDebug(@"comments: %@", quiz.comments);
-        [self getCommentsForQuiz:quiz];
+                                     failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                             dispatch_async(dispatch_get_main_queue(), ^{
+                                                 [Utility generateAlertWithMessage:@"Network problem"];
+                                             });
+                                             MBError(@"Cannot send comment!");
+                                         }];
+        
+        NSOperationQueue *operationQueue = [NSOperationQueue new];
+        [operationQueue addOperation:operation];
+    } else if([post isKindOfClass:[StatusUpdate class]]){
+        
+    } else{
+        
     }
-                                 failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                         dispatch_async(dispatch_get_main_queue(), ^{
-                                             [Utility generateAlertWithMessage:@"Network problem"];
-                                         });
-                                         MBError(@"Cannot send comment!");
-                                     }];
-    
-    NSOperationQueue *operationQueue = [NSOperationQueue new];
-    [operationQueue addOperation:operation];
 }
 
 - (void)getCommentsForQuiz:(Quiz *)quiz

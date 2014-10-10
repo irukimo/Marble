@@ -17,9 +17,7 @@
 @property(strong,nonatomic) UIButton *option0NameButton;
 @property(strong,nonatomic) UIButton *option1NameButton;
 @property(strong,nonatomic) UIButton *authorNameButton;
-@property (strong, nonatomic) UIImageView *authorPicView;
-@property (strong, nonatomic) UIImageView *option0PicView;
-@property (strong, nonatomic) UIImageView *option1PicView;
+
 
 @property (nonatomic, weak) id<QuizTableViewCellDelegate> delegate;
 @property (nonatomic, strong) NSString *quizUUID;
@@ -32,7 +30,7 @@
 
 @required
 
-- (void) commentQuiz:(id)sender withComment:(NSString *)comment;
+- (void) commentPost:(id)sender withComment:(NSString *)comment;
 - (void) sendGuess:(id)sender withAnswer:(NSString *)answer;
 
 @end

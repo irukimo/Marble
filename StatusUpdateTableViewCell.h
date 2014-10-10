@@ -8,8 +8,20 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol StatusUpdateTableViewCellDelegate;
+
+
 @interface StatusUpdateTableViewCell : UITableViewCell
 
-- (void) setName:(NSString *)name andStatus:(NSString *)status;
+- (void) setName:(NSString *)name andID:(NSString *)fbid andStatus:(NSString *)status;
+@property (nonatomic, weak) id<StatusUpdateTableViewCellDelegate> delegate;
+@end
+
+
+@protocol StatusUpdateTableViewCellDelegate <NSObject>
+
+@required
+
+- (void) commentPost:(id)sender withComment:(NSString *)comment;
 
 @end

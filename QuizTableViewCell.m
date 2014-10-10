@@ -31,6 +31,9 @@
 @property(strong, nonatomic) UILabel *commentNumLabel;
 @property(strong, nonatomic) UILabel *timeLabel;
 
+@property (strong, nonatomic) UIImageView *authorPicView;
+@property (strong, nonatomic) UIImageView *option0PicView;
+@property (strong, nonatomic) UIImageView *option1PicView;
 @end
 
 @implementation QuizTableViewCell
@@ -42,13 +45,14 @@
         [self addStaticLabels];
         [self addChoiceButtons];
         [self addResultLabel];
-        [self initFBPicViews];
+        [self initPicViews];
+        self.selectionStyle = UITableViewCellSelectionStyleNone;
         // Initialization code
     }
     return self;
 }
 
--(void) initFBPicViews{
+-(void) initPicViews{
     _option0PicView = [[UIImageView alloc] initWithFrame:CGRectMake(15, 45, 50, 50)];
     _option1PicView = [[UIImageView alloc] initWithFrame:CGRectMake(115, 45, 50, 50)];
     _authorPicView = [[UIImageView alloc] initWithFrame:CGRectMake(5, 5, 30, 30)];
@@ -184,8 +188,8 @@
 
 -(void) commentQuizClicked:(id)sender{
     MBDebug(@"comment quiz clicked!");
-    if(_delegate && [_delegate respondsToSelector:@selector(commentQuiz:withComment:)]){
-        [_delegate commentQuiz:sender withComment:_commentField.text];
+    if(_delegate && [_delegate respondsToSelector:@selector(commentPost:withComment:)]){
+        [_delegate commentPost:sender withComment:_commentField.text];
     }
 }
 

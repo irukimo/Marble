@@ -13,7 +13,7 @@
 
 @protocol PostsViewControllerDelegate;
 
-@interface PostsViewController : UITableViewController <NSFetchedResultsControllerDelegate, QuizTableViewCellDelegate>
+@interface PostsViewController : UITableViewController <NSFetchedResultsControllerDelegate, QuizTableViewCellDelegate,StatusUpdateTableViewCellDelegate >
 @property (strong, nonatomic) NSArray *postArray;
 @property (nonatomic, weak) id<PostsViewControllerDelegate> delegate;
 
