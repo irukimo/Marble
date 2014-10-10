@@ -37,6 +37,7 @@
 		7AB925B019E3730C00F8229F /* UIColor+MBColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AB925AF19E3730C00F8229F /* UIColor+MBColor.m */; };
 		7AB925B319E374E500F8229F /* ExploreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AB925B219E374E500F8229F /* ExploreViewController.m */; };
 		7AD2A32E19DE1F9800B200E9 /* User+MBUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AD2A32D19DE1F9800B200E9 /* User+MBUser.m */; };
+		7AEB9CF619E8572200409276 /* KeywordUpdateTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AEB9CF519E8572200409276 /* KeywordUpdateTableViewCell.m */; };
 		7AF4123319D9FB6C00A470E1 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AF4123219D9FB6C00A470E1 /* main.m */; };
 		7AF4123619D9FB6C00A470E1 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AF4123519D9FB6C00A470E1 /* AppDelegate.m */; };
 		7AF4123C19D9FB6C00A470E1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7AF4123A19D9FB6C00A470E1 /* Main.storyboard */; };
@@ -51,7 +52,7 @@
 		7AF4127519DB392200A470E1 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AF4127419DB392200A470E1 /* LoginViewController.m */; };
 		7AF4127F19DB62C600A470E1 /* Utility.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AF4127E19DB62C600A470E1 /* Utility.m */; };
 		7AFF5BBE19E59AEA00CFD35D /* SelectKeywordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AFF5BBD19E59AEA00CFD35D /* SelectKeywordViewController.m */; };
-		7AFF5BC119E7631F00CFD35D /* StatusTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AFF5BC019E7631F00CFD35D /* StatusTableViewCell.m */; };
+		7AFF5BC119E7631F00CFD35D /* StatusUpdateTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AFF5BC019E7631F00CFD35D /* StatusUpdateTableViewCell.m */; };
 		A37F7B3E875019E0B141F1BD /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3634F2606FB7FDA06677D4FC /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -124,6 +125,8 @@
 		7AB925B219E374E500F8229F /* ExploreViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExploreViewController.m; sourceTree = "<group>"; };
 		7AD2A32C19DE1F9800B200E9 /* User+MBUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "User+MBUser.h"; sourceTree = "<group>"; };
 		7AD2A32D19DE1F9800B200E9 /* User+MBUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "User+MBUser.m"; sourceTree = "<group>"; };
+		7AEB9CF419E8572200409276 /* KeywordUpdateTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KeywordUpdateTableViewCell.h; path = TableViewCells/KeywordUpdateTableViewCell.h; sourceTree = "<group>"; };
+		7AEB9CF519E8572200409276 /* KeywordUpdateTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KeywordUpdateTableViewCell.m; path = TableViewCells/KeywordUpdateTableViewCell.m; sourceTree = "<group>"; };
 		7AF4122D19D9FB6C00A470E1 /* Marble.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Marble.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7AF4123119D9FB6C00A470E1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7AF4123219D9FB6C00A470E1 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -152,8 +155,8 @@
 		7AF4128019DB653D00A470E1 /* Marble-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Marble-Prefix.pch"; sourceTree = "<group>"; };
 		7AFF5BBC19E59AEA00CFD35D /* SelectKeywordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelectKeywordViewController.h; sourceTree = "<group>"; };
 		7AFF5BBD19E59AEA00CFD35D /* SelectKeywordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelectKeywordViewController.m; sourceTree = "<group>"; };
-		7AFF5BBF19E7631F00CFD35D /* StatusTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StatusTableViewCell.h; sourceTree = "<group>"; };
-		7AFF5BC019E7631F00CFD35D /* StatusTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StatusTableViewCell.m; sourceTree = "<group>"; };
+		7AFF5BBF19E7631F00CFD35D /* StatusUpdateTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StatusUpdateTableViewCell.h; sourceTree = "<group>"; };
+		7AFF5BC019E7631F00CFD35D /* StatusUpdateTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StatusUpdateTableViewCell.m; sourceTree = "<group>"; };
 		B4D021A1ADB6A726F90326D9 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		D619E12F33A6253011BD463F /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -359,8 +362,10 @@
 				7AF4127019DA6A8300A470E1 /* SelectPeopleViewCell.m */,
 				7A0E976D19DCBCBF003A9359 /* QuizTableViewCell.h */,
 				7A0E976E19DCBCBF003A9359 /* QuizTableViewCell.m */,
-				7AFF5BBF19E7631F00CFD35D /* StatusTableViewCell.h */,
-				7AFF5BC019E7631F00CFD35D /* StatusTableViewCell.m */,
+				7AFF5BBF19E7631F00CFD35D /* StatusUpdateTableViewCell.h */,
+				7AFF5BC019E7631F00CFD35D /* StatusUpdateTableViewCell.m */,
+				7AEB9CF419E8572200409276 /* KeywordUpdateTableViewCell.h */,
+				7AEB9CF519E8572200409276 /* KeywordUpdateTableViewCell.m */,
 			);
 			name = TableViewCells;
 			sourceTree = "<group>";
@@ -534,6 +539,7 @@
 			files = (
 				51706D2819E75A8C005010E6 /* StatusUpdate.m in Sources */,
 				51F5A74819E60744006097EF /* Quiz.m in Sources */,
+				7AEB9CF619E8572200409276 /* KeywordUpdateTableViewCell.m in Sources */,
 				7AF4123619D9FB6C00A470E1 /* AppDelegate.m in Sources */,
 				517C894D19DB7129005A8407 /* KeyChainWrapper.m in Sources */,
 				7AF4127119DA6A8300A470E1 /* SelectPeopleViewCell.m in Sources */,
@@ -547,7 +553,7 @@
 				7A0E976919DCB194003A9359 /* ProfileViewController.m in Sources */,
 				7AFF5BBE19E59AEA00CFD35D /* SelectKeywordViewController.m in Sources */,
 				7A0E977519DCDFBC003A9359 /* HomeNavigationController.m in Sources */,
-				7AFF5BC119E7631F00CFD35D /* StatusTableViewCell.m in Sources */,
+				7AFF5BC119E7631F00CFD35D /* StatusUpdateTableViewCell.m in Sources */,
 				51DF106E19E460E00021C3F9 /* ArrayToDataTransformer.m in Sources */,
 				517C895019DB7DB4005A8407 /* RestKitInitializer.m in Sources */,
 				7AF4126B19DA2EC200A470E1 /* PostsViewController.m in Sources */,

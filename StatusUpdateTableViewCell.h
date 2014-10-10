@@ -1,5 +1,5 @@
 //
-//  StatusTableViewCell.h
+//  StatusUpdateTableViewCell.h
 //  Marble
 //
 //  Created by Iru on 10/9/14.
@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface StatusTableViewCell : UITableViewCell
+@interface StatusUpdateTableViewCell : UITableViewCell
 
 @end

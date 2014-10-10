@@ -29,6 +29,7 @@
 
 @property(strong, nonatomic) UILabel *compareNumLabel;
 @property(strong, nonatomic) UILabel *commentNumLabel;
+@property(strong, nonatomic) UILabel *timeLabel;
 
 @end
 
@@ -109,6 +110,8 @@
 
 
 -(void)addStaticLabels{
+    _timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, 150, 70, 20)];
+
     _compareNumLabel = [[UILabel alloc] initWithFrame:CGRectMake(230, 130, 50, 20)];
     _commentNumLabel = [[UILabel alloc] initWithFrame:CGRectMake(280, 130, 50, 20)];
     
@@ -138,6 +141,7 @@
     [self.contentView addSubview:_commentField];
     [self.contentView addSubview:_commentBtn];
     [self.contentView addSubview:_commentNumLabel];
+    [self.contentView addSubview:_timeLabel];
 
 }
 
@@ -175,6 +179,7 @@
     [_option0NameButton setTitle:[Utility getNameToDisplay:_option0Name] forState:UIControlStateNormal];
     [_option1NameButton setTitle:[Utility getNameToDisplay:_option1Name] forState:UIControlStateNormal];
     [_keywordLabel setText:_keyword];
+    [_timeLabel setText:[Utility getDateToShow:quiz.time inWhole:NO]];
 }
 
 -(void) commentQuizClicked:(id)sender{

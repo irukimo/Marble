@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "QuizTableViewCell.h"
+#import "StatusUpdateTableViewCell.h"
+#import "KeywordUpdateTableViewCell.h"
 
 @protocol PostsViewControllerDelegate;
 

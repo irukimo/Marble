@@ -8,6 +8,7 @@
 
 #import "ProfileViewController.h"
 #import "KeyChainWrapper.h"
+#import "FacebookSDK/FacebookSDK.h"
 
 #define SEND_BUTTON_TAG 116
 
@@ -20,6 +21,7 @@
 @property (strong,nonatomic) NSString *fbid;
 @property (strong, nonatomic) UIButton *statusBtn;
 @property ( nonatomic) BOOL isSelf;
+@property (strong, nonatomic) FBProfilePictureView *profilePicView;
 @end
 
 @implementation ProfileViewController
@@ -33,6 +35,9 @@
     [self initiatePostsViewController];
     [self setNavbarTitle];
     [self addTextFieldAndButtons];
+    if(!_profilePicView){
+        [self initFBProfilePicViews];
+    }
 //    [self setNavigationAttributes];
     // Do any additional setup after loading the view.
     
@@ -50,6 +55,14 @@
     [self.view addSubview:_statusTextField];
     [self.view addSubview:_statusBtn];
     [_statusBtn addTarget:self action:@selector(sendStatusBtnClicked) forControlEvents:UIControlEventTouchUpInside];
+}
+
+-(void) initFBProfilePicViews{
+    _profilePicView = [[FBProfilePictureView alloc] initWithFrame:CGRectMake(10, 20, 50, 50)];
+    _profilePicView.layer.cornerRadius = 25.0f;
+    _profilePicView.layer.masksToBounds = YES;
+    [self.view addSubview:_profilePicView];
+    _profilePicView.profileID = _fbid;
 }
 
 //-(void)setNavigationAttributes{
@@ -102,6 +115,10 @@
     }
     _name = [name copy];
     _fbid = [fbid copy];
+    if(!_profilePicView){
+        [self initFBProfilePicViews];
+    }
+    _profilePicView.profileID = _fbid;
     [_nameLabel setText:[Utility getNameToDisplay:name]];
     _isSelf = ([_fbid isEqualToString:selfFBID])? TRUE : FALSE;
     NSLog(@"personid %@, selfid %@", _fbid, selfFBID);

@@ -71,11 +71,24 @@
 
 +(NSString *) getNameToDisplay:(NSString *)name{
     if([name rangeOfString:@"("].location == NSNotFound){
-        return name;
+        return [Utility shortenName:name];
     }
     NSRange start = [name rangeOfString:@"("];
     NSRange end = [name rangeOfString:@")"];
-    return [name substringWithRange:NSMakeRange(start.location + 1, end.location - (start.location + 1))];
+    return [Utility shortenName:[name substringWithRange:NSMakeRange(start.location + 1, end.location - (start.location + 1))]];
+}
+
++(NSString *) shortenName:(NSString *)name{
+    if([name length] > 10){
+        if([name rangeOfString:@" "].location != NSNotFound){
+            NSRange startSpace = [name rangeOfString:@" "];
+            NSString *concatString = [name substringWithRange:NSMakeRange(0, startSpace.location +2)];
+            return [concatString stringByAppendingString:@"."];
+        }else{
+            return name;
+        }
+    }
+    return name;
 }
 
 
