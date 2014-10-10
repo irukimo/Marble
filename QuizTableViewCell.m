@@ -63,7 +63,7 @@
 }
 
 -(void) removeAllComments{
-    for(UIView *view in self.subviews){
+    for(id view in self.contentView.subviews){
         if([view tag] == COMMENT_LABEL_TAG){
             [view removeFromSuperview];
         }
@@ -94,8 +94,8 @@
     [_chooseOption1Button setTitle:@"choose" forState:UIControlStateNormal];
     [_chooseOption0Button addTarget:self action:@selector(chooseOption0:) forControlEvents:UIControlEventTouchUpInside];
     [_chooseOption1Button addTarget:self action:@selector(chooseOption1:) forControlEvents:UIControlEventTouchUpInside];
-    [self addSubview:_chooseOption0Button];
-    [self addSubview:_chooseOption1Button];
+    [self.contentView addSubview:_chooseOption0Button];
+    [self.contentView addSubview:_chooseOption1Button];
 }
 
 -(void) chooseOption0:(id)sender{
@@ -179,6 +179,7 @@
 
 
 -(void) setQuiz:(Quiz *)quiz{
+    [self removeAllComments];
     _quiz = quiz;
     _authorName = [quiz.authorName copy];
     _option0Name = [quiz.option0Name copy];
@@ -235,8 +236,8 @@
     [commentLabel setTag:COMMENT_LABEL_TAG];
     [nameLabel setText:name];
     [commentLabel setText:comment];
-    [self addSubview:nameLabel];
-    [self addSubview:commentLabel];
+    [self.contentView addSubview:nameLabel];
+    [self.contentView addSubview:commentLabel];
 }
 
 - (void)getCommentsNumForQuiz:(Quiz *)quiz
