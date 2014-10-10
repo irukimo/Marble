@@ -121,28 +121,29 @@
     [self getStatus];
 }
 
+//#TODO: Handle the case when the user has not been created yet
 -(void) getStatus{
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     [fetchRequest setEntity:
      [NSEntityDescription entityForName:@"User" inManagedObjectContext:[RKManagedObjectStore defaultStore].mainQueueManagedObjectContext]];
     [fetchRequest setPredicate: [NSPredicate predicateWithFormat: @"fbID = %@", _fbid]];
     
-    NSMutableDictionary *params = [NSMutableDictionary
-                                   dictionaryWithObjects:@[[KeyChainWrapper getSessionTokenForUser]]
-                                   forKeys:@[@"auth_token"]];
-    
     // Execute the fetch.
     NSError *error;
     NSArray *matches = [[RKManagedObjectStore defaultStore].mainQueueManagedObjectContext executeFetchRequest:fetchRequest error:&error];
+    User *user = [matches firstObject];
+    NSMutableDictionary *params = [NSMutableDictionary
+                                   dictionaryWithObjects:@[[KeyChainWrapper getSessionTokenForUser], user.fbID]
+                                   forKeys:@[@"auth_token", @"fb_id"]];
+
     [[RKObjectManager sharedManager]
-     getObject:[matches firstObject]
-     path:@"status"
+     getObject:user
+     path:nil //previously defined Class routes
      parameters:params
      success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
          MBDebug(@"status result: %@", [mappingResult array]);
-         if([[matches firstObject] isKindOfClass:[User class]]){
-             User *thisUser = [matches firstObject];
-             [_statusTextField setText:thisUser.status];
+         if([user isKindOfClass:[User class]]){
+             [_statusTextField setText:user.status];
          }
      } failure:^(RKObjectRequestOperation *operation, NSError *error) {
          MBDebug(@"failed to get status");

@@ -83,7 +83,7 @@
     // status mapping
     RKEntityMapping *statusMapping = [RKEntityMapping mappingForEntityForName:@"User" inManagedObjectStore:managedObjectStore];
     [statusMapping addAttributeMappingsFromDictionary:@{@"status": @"status",
-                                                  @"fb_id": @"fbID"}];
+                                                        @"fb_id": @"fbID"}];
     statusMapping.identificationAttributes = @[@"fbID"];
     RKResponseDescriptor *statusGETResponseDescriptor =
     [RKResponseDescriptor responseDescriptorWithMapping:statusMapping
@@ -137,17 +137,28 @@
                                                method:RKRequestMethodPOST];
 
     
-    RKObjectMapping *statusSerializationMapping = [RKObjectMapping requestMapping];
-    [statusSerializationMapping addAttributeMappingsFromDictionary:@{@"status": @"status"}];
+//    RKObjectMapping *statusSerializationMapping = [RKObjectMapping requestMapping];
+//    [statusSerializationMapping addAttributeMappingsFromDictionary:@{@"status": @"status"}];
+//    
+//    RKRequestDescriptor *statusPOSTRequestDescriptor =
+//    [RKRequestDescriptor requestDescriptorWithMapping:statusSerializationMapping
+//                                          objectClass:[User class]
+//                                          rootKeyPath:nil
+//                                               method:RKRequestMethodPOST];
+//
+    RKObjectMapping *statusGETSerializationMapping = [RKObjectMapping requestMapping];
+    [statusGETSerializationMapping addAttributeMappingsFromDictionary:@{@"fbID": @"fb_id",
+                                                                        @"name":@"name"}];
     
-    RKRequestDescriptor *statusPOSTRequestDescriptor =
-    [RKRequestDescriptor requestDescriptorWithMapping:statusSerializationMapping
+    RKRequestDescriptor *statusGETRequestDescriptor =
+    [RKRequestDescriptor requestDescriptorWithMapping:statusGETSerializationMapping
                                           objectClass:[User class]
-                                          rootKeyPath:nil
-                                               method:RKRequestMethodPOST];
+                                          rootKeyPath:@"test"
+                                               method:RKRequestMethodGET];
 
-    [objectManager addRequestDescriptorsFromArray:@[quizPOSTRequestDescriptor
-                                                    ,statusPOSTRequestDescriptor
+    [objectManager addRequestDescriptorsFromArray:@[quizPOSTRequestDescriptor,
+//                                                    statusPOSTRequestDescriptor,
+                                                    statusGETRequestDescriptor
                                                     ]];
     
     
@@ -161,7 +172,9 @@
 
     RKRoute *quizPOSTRoute = [RKRoute routeWithClass:[Quiz class] pathPattern:@"quizzes" method:RKRequestMethodPOST];
     
-    RKRoute *statusPOSTRoute = [RKRoute routeWithClass:[User class] pathPattern:@"status" method:RKRequestMethodPOST];
+//    RKRoute *statusPOSTRoute = [RKRoute routeWithClass:[User class] pathPattern:@"status" method:RKRequestMethodPOST];
+    
+    RKRoute *statusGETRoute = [RKRoute routeWithClass:[User class] pathPattern:@"status" method:RKRequestMethodGET];
     
     RKRoute *postGETRoute = [RKRoute routeWithClass:[Post class] pathPattern:@"updates" method:RKRequestMethodGET];
     
@@ -177,7 +190,7 @@
     RKRoute *sendStatusRoute = [RKRoute routeWithName:@"send_status" pathPattern:@"status" method:RKRequestMethodPOST];
     
     [objectManager.router.routeSet addRoutes:@[// class routes
-                                               quizGETRoute, quizPOSTRoute, statusPOSTRoute, postGETRoute,
+                                               quizGETRoute, quizPOSTRoute, /*statusPOSTRoute,*/ postGETRoute, statusGETRoute,
                                                // named routes
                                                sendDeviceTokenRoute, sendCommentRoute, getCommentsRoute, sendGuessRoute, sendStatusRoute]];
 
