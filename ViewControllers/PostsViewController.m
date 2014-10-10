@@ -11,7 +11,8 @@
 #import "User+MBUser.h"
 #import "Quiz.h"
 #import "Quiz+MBQuiz.h"
-
+#import "Post.h"
+#import "StatusUpdate.h"
 #import "KeyChainWrapper.h"
 
 @interface PostsViewController ()
@@ -48,6 +49,26 @@
                                        failure:[Utility failureBlockWithAlertMessage:@"Can't connect to the server"
                                                                                block:^{MBError(@"Cannot load quizzes");}]
      ];
+    
+    //Load updates from the server
+    [[RKObjectManager sharedManager] getObject:[Post alloc]
+                                          path:nil
+                                    parameters:params
+                                       success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+                                           MBDebug(@"Successfully loadded posts");
+                                           MBDebug(@"%ld post(s) were loaded.", [[mappingResult array] count]);
+                                           for (Post *post in [mappingResult array]) {
+                                               if ([post isKindOfClass:[StatusUpdate class]]){
+                                                   MBDebug(@"status update: %@", (StatusUpdate *)post);
+                                               } else {
+                                                  MBDebug(@"post: %@", post);
+                                               }
+                                           }
+                                       }
+                                       failure:[Utility failureBlockWithAlertMessage:@"Can't connect to the server"
+                                                                               block:^{MBError(@"Cannot load posts");}]
+     ];
+
     
     //set up fetched results controller
     NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"Quiz"];

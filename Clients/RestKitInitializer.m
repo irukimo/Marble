@@ -10,6 +10,8 @@
 
 #import "User.h"
 #import "Quiz.h"
+#import "Post.h"
+#import "StatusUpdate.h"
 
 @implementation RestKitInitializer
 
@@ -91,13 +93,27 @@
                                             statusCodes:successCode];
 
     
-
+    // status mapping
+    RKEntityMapping *statusUpdateMapping = [RKEntityMapping mappingForEntityForName:@"StatusUpdate" inManagedObjectStore:managedObjectStore];
+    [statusUpdateMapping addAttributeMappingsFromDictionary:@{@"status":    @"status",
+                                                        @"fb_id":     @"fbID",
+                                                        @"created_at": @"time",
+                                                        @"name":      @"name",
+                                                        @"uuid":      @"uuid"}];
+    statusUpdateMapping.identificationAttributes = @[@"uuid"];
+    RKResponseDescriptor *statusUpdateGETResponseDescriptor =
+    [RKResponseDescriptor responseDescriptorWithMapping:statusUpdateMapping
+                                                 method:RKRequestMethodGET
+                                            pathPattern:@"updates"
+                                                keyPath:@"Status"
+                                            statusCodes:successCode];
     
     // add response descriptors to object manager
     [objectManager addResponseDescriptorsFromArray:@[quizGETResponseDescriptor,
                                                      optionsGETResponseDescriptor,
                                                      commentsGETResponseDescriptor,
-                                                     statusGETResponseDescriptor]];
+                                                     statusGETResponseDescriptor,
+                                                     statusUpdateGETResponseDescriptor]];
 
     /* Set up request descriptor
      *
@@ -147,6 +163,7 @@
     
     RKRoute *statusPOSTRoute = [RKRoute routeWithClass:[User class] pathPattern:@"status" method:RKRequestMethodPOST];
     
+    RKRoute *postGETRoute = [RKRoute routeWithClass:[Post class] pathPattern:@"updates" method:RKRequestMethodGET];
     
     //Thirdly, named routes
     RKRoute *sendDeviceTokenRoute = [RKRoute routeWithName:@"set_device_token" pathPattern:@"set_device_token" method:RKRequestMethodPOST];
@@ -160,7 +177,7 @@
     RKRoute *sendStatusRoute = [RKRoute routeWithName:@"send_status" pathPattern:@"status" method:RKRequestMethodPOST];
     
     [objectManager.router.routeSet addRoutes:@[// class routes
-                                               quizGETRoute, quizPOSTRoute, statusPOSTRoute,
+                                               quizGETRoute, quizPOSTRoute, statusPOSTRoute, postGETRoute,
                                                // named routes
                                                sendDeviceTokenRoute, sendCommentRoute, getCommentsRoute, sendGuessRoute, sendStatusRoute]];
 
