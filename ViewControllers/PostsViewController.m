@@ -195,8 +195,9 @@
     }
     Quiz *quiz = [_fetchedResultsController objectAtIndexPath:path];
     NSString *personSelected = quiz.option0Name;
-    if(_delegate && [_delegate respondsToSelector:@selector(postSelected:)]){
-        [_delegate postSelected:personSelected];
+    NSString *personID = quiz.option0;
+    if(_delegate && [_delegate respondsToSelector:@selector(postSelected:andID:)]){
+        [_delegate postSelected:personSelected andID:personID];
     }
 }
 
@@ -210,8 +211,9 @@
     }
     Quiz *quiz = [_fetchedResultsController objectAtIndexPath:path];
     NSString *personSelected = quiz.option1Name;
-    if(_delegate && [_delegate respondsToSelector:@selector(postSelected:)]){
-        [_delegate postSelected:personSelected];
+    NSString *personID = quiz.option1;
+    if(_delegate && [_delegate respondsToSelector:@selector(postSelected:andID:)]){
+        [_delegate postSelected:personSelected andID:personID];
     }
 }
 
@@ -222,11 +224,11 @@
     } else{
         path = [NSIndexPath indexPathForRow:0 inSection:0];
     }
-    NSLog(@"tag %d",[sender tag]);
     Quiz *quiz = [_fetchedResultsController objectAtIndexPath:path];
     NSString *personSelected = quiz.authorName;
-    if(_delegate && [_delegate respondsToSelector:@selector(postSelected:)]){
-        [_delegate postSelected:personSelected];
+    NSString *personID = quiz.author;
+    if(_delegate && [_delegate respondsToSelector:@selector(postSelected:andID:)]){
+        [_delegate postSelected:personSelected andID:personID];
     }
 }
 

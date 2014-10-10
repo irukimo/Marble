@@ -66,7 +66,7 @@
     }
     if([viewController isKindOfClass:[ProfileNavigationController class]]){
         ProfileNavigationController *profileNavigationController = (ProfileNavigationController *)viewController;
-        [profileNavigationController setSelf:@"Iru Wang"];
+        [profileNavigationController setSelf];
         [profileNavigationController backToRoot];
         NSLog(@"sent Iru Wang");
     }

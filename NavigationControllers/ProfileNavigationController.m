@@ -25,11 +25,17 @@
     // Dispose of any resources that can be recreated.
 }
 
--(void)setSelf:(NSString *)name{
+-(void)setSelf{
     if([[self.viewControllers firstObject] isKindOfClass:[ProfileViewController class]]){
-        NSLog(@"Navigation Controller received %@", name);
+        NSUserDefaults *standardUserDefaults = [NSUserDefaults standardUserDefaults];
+        NSString *name;
+        NSString *fbid;
+        if (standardUserDefaults){
+            name = [standardUserDefaults objectForKey:@"userName"];
+            fbid = [standardUserDefaults objectForKey:@"userFBID"];
+        }
         ProfileViewController *profileViewController = [self.viewControllers firstObject];
-        [profileViewController setName:name];
+        [profileViewController setName:name andID:fbid];
     }
 }
 

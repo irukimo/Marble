@@ -94,8 +94,9 @@
     [self.view addSubview:_selectKeywordViewController.view];
 }
 
--(void) postSelected:(NSString *)name{
-    [self performSegueWithIdentifier:@"ProfileViewControllerSegue" sender:name];
+-(void) postSelected:(NSString *)name andID:(NSString *)fbid{
+    NSArray *infoBundle = [NSArray arrayWithObjects:name,fbid, nil];
+    [self performSegueWithIdentifier:@"ProfileViewControllerSegue" sender:infoBundle];
 }
 
 #pragma mark -
@@ -138,8 +139,10 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if([[segue destinationViewController] isKindOfClass:[ProfileViewController class]]){
-        ProfileViewController *viewController =[segue destinationViewController];
-        [viewController setName:(NSString *)sender];
+        if([sender isKindOfClass:[NSArray class]]){
+            ProfileViewController *viewController =[segue destinationViewController];
+            [viewController setName:(NSString *)[sender firstObject] andID:[sender objectAtIndex:1]];
+        }
     }
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.

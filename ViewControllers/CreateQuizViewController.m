@@ -153,6 +153,7 @@
      failure:^(RKObjectRequestOperation *operation, NSError *error) {
          [Utility generateAlertWithMessage:@"No network!"];
      }];
+    [self setOption0Option1];
 
 }
 

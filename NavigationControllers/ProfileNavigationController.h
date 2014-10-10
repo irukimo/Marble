@@ -9,6 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface ProfileNavigationController : UINavigationController
--(void) setSelf:(NSString *)name;
+-(void) setSelf;
 -(void)backToRoot;
 @end

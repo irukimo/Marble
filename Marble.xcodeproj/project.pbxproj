@@ -51,6 +51,7 @@
 		7AF4127519DB392200A470E1 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AF4127419DB392200A470E1 /* LoginViewController.m */; };
 		7AF4127F19DB62C600A470E1 /* Utility.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AF4127E19DB62C600A470E1 /* Utility.m */; };
 		7AFF5BBE19E59AEA00CFD35D /* SelectKeywordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AFF5BBD19E59AEA00CFD35D /* SelectKeywordViewController.m */; };
+		7AFF5BC119E7631F00CFD35D /* StatusTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AFF5BC019E7631F00CFD35D /* StatusTableViewCell.m */; };
 		A37F7B3E875019E0B141F1BD /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3634F2606FB7FDA06677D4FC /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -151,6 +152,8 @@
 		7AF4128019DB653D00A470E1 /* Marble-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Marble-Prefix.pch"; sourceTree = "<group>"; };
 		7AFF5BBC19E59AEA00CFD35D /* SelectKeywordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelectKeywordViewController.h; sourceTree = "<group>"; };
 		7AFF5BBD19E59AEA00CFD35D /* SelectKeywordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelectKeywordViewController.m; sourceTree = "<group>"; };
+		7AFF5BBF19E7631F00CFD35D /* StatusTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StatusTableViewCell.h; sourceTree = "<group>"; };
+		7AFF5BC019E7631F00CFD35D /* StatusTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StatusTableViewCell.m; sourceTree = "<group>"; };
 		B4D021A1ADB6A726F90326D9 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		D619E12F33A6253011BD463F /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -356,6 +359,8 @@
 				7AF4127019DA6A8300A470E1 /* SelectPeopleViewCell.m */,
 				7A0E976D19DCBCBF003A9359 /* QuizTableViewCell.h */,
 				7A0E976E19DCBCBF003A9359 /* QuizTableViewCell.m */,
+				7AFF5BBF19E7631F00CFD35D /* StatusTableViewCell.h */,
+				7AFF5BC019E7631F00CFD35D /* StatusTableViewCell.m */,
 			);
 			name = TableViewCells;
 			sourceTree = "<group>";
@@ -542,6 +547,7 @@
 				7A0E976919DCB194003A9359 /* ProfileViewController.m in Sources */,
 				7AFF5BBE19E59AEA00CFD35D /* SelectKeywordViewController.m in Sources */,
 				7A0E977519DCDFBC003A9359 /* HomeNavigationController.m in Sources */,
+				7AFF5BC119E7631F00CFD35D /* StatusTableViewCell.m in Sources */,
 				51DF106E19E460E00021C3F9 /* ArrayToDataTransformer.m in Sources */,
 				517C895019DB7DB4005A8407 /* RestKitInitializer.m in Sources */,
 				7AF4126B19DA2EC200A470E1 /* PostsViewController.m in Sources */,
