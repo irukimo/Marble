@@ -140,15 +140,23 @@
 
 //#TODO: Handle the case when the user has not been created yet
 -(void) getStatus{
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    [fetchRequest setEntity:
-     [NSEntityDescription entityForName:@"User" inManagedObjectContext:[RKManagedObjectStore defaultStore].mainQueueManagedObjectContext]];
-    [fetchRequest setPredicate: [NSPredicate predicateWithFormat: @"fbID = %@", _fbid]];
-    
-    // Execute the fetch.
-    NSError *error;
-    NSArray *matches = [[RKManagedObjectStore defaultStore].mainQueueManagedObjectContext executeFetchRequest:fetchRequest error:&error];
-    User *user = [matches firstObject];
+//    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+//    [fetchRequest setEntity:
+//     [NSEntityDescription entityForName:@"User" inManagedObjectContext:[RKManagedObjectStore defaultStore].mainQueueManagedObjectContext]];
+//    [fetchRequest setPredicate: [NSPredicate predicateWithFormat: @"fbID = %@", _fbid]];
+//    
+//    // Execute the fetch.
+//    NSError *error;
+//    NSArray *matches = [[RKManagedObjectStore defaultStore].mainQueueManagedObjectContext executeFetchRequest:fetchRequest error:&error];
+//    User *user = [matches firstObject];
+    User *user = nil;
+    if (![User findOrCreateUserForName:_name withfbID:_fbid returnAsEntity:&user
+           inManagedObjectContext:[RKManagedObjectStore defaultStore].mainQueueManagedObjectContext])
+    {
+        MBError(@"Cannot find or create the user (id: %@, name: %@)", _fbid, _name);
+        return;
+    }
+        
     NSMutableDictionary *params = [NSMutableDictionary
                                    dictionaryWithObjects:@[[KeyChainWrapper getSessionTokenForUser], user.fbID]
                                    forKeys:@[@"auth_token", @"fb_id"]];
