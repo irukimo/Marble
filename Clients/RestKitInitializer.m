@@ -105,7 +105,21 @@
     [RKResponseDescriptor responseDescriptorWithMapping:statusUpdateMapping
                                                  method:RKRequestMethodGET
                                             pathPattern:@"updates"
-                                                keyPath:@"Status"
+                                                keyPath:@"Status_Update"
+                                            statusCodes:successCode];
+    // keyword update mapping
+    RKEntityMapping *keywordUpdateMapping = [RKEntityMapping mappingForEntityForName:@"KeywordUpdate"
+                                                                inManagedObjectStore:managedObjectStore];
+    [keywordUpdateMapping addAttributeMappingsFromDictionary:@{@"name": @"name",
+                                                         @"fb_id": @"fbID",
+                                                         @"created_at": @"time",
+                                                         @"uuid": @"uuid",
+                                                         @"keywords": @"keywords"}];
+    RKResponseDescriptor *keywordUpdateGETResponseDescriptor =
+    [RKResponseDescriptor responseDescriptorWithMapping:keywordUpdateMapping
+                                                 method:RKRequestMethodGET
+                                            pathPattern:@"updates"
+                                                keyPath:@"Keyword_Update"
                                             statusCodes:successCode];
     
     // add response descriptors to object manager
@@ -113,7 +127,8 @@
                                                      optionsGETResponseDescriptor,
                                                      commentsGETResponseDescriptor,
                                                      statusGETResponseDescriptor,
-                                                     statusUpdateGETResponseDescriptor]];
+                                                     statusUpdateGETResponseDescriptor,
+                                                     keywordUpdateGETResponseDescriptor]];
 
     /* Set up request descriptor
      *

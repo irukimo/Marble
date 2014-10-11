@@ -17,6 +17,7 @@
 #import "Quiz+MBQuiz.h"
 #import "Post.h"
 #import "StatusUpdate.h"
+#import "KeywordUpdate.h"
 
 #import "KeyChainWrapper.h"
 
@@ -65,8 +66,8 @@
                                            for (Post *post in [mappingResult array]) {
                                                if ([post isKindOfClass:[StatusUpdate class]]){
                                                    MBDebug(@"status update: %@", (StatusUpdate *)post);
-                                               } else {
-                                                  MBDebug(@"post: %@", post);
+                                               } else if ([post isKindOfClass:[KeywordUpdate class]]) {
+                                                  MBDebug(@"keyword update: %@", (KeywordUpdate *)post);
                                                }
                                            }
                                        }

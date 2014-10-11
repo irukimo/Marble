@@ -226,6 +226,7 @@
     }
 }
 
+
 -(void) addCommentAtY:(int)y withName:(NSString *)name andID:(NSString *)fbid andComment:(NSString *)comment{
     UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, y, 100, 20)];
     UILabel *commentLabel = [[UILabel alloc] initWithFrame:CGRectMake(100, y, 150, 20)];
