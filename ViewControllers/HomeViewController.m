@@ -18,6 +18,7 @@
 @property (strong, nonatomic) SelectKeywordViewController *selectKeywordViewController;
 @property (strong, nonatomic) PostsViewController *postsViewController;
 @property (nonatomic) BOOL isCreatingMarble;
+@property (strong, nonatomic) UIView *marbleView;
 
 @end
 
@@ -26,15 +27,46 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 //    [self initiatePostsViewController];
-    [self initiateCreateQuizViewController];
+    [self initiateMarbleViewAndCreateQuizViewController];
     [self setNavbarTitle];
     [self addMarbleButton];
     _isCreatingMarble = FALSE;
     self.delegate = self;
     self.type = HOME_POSTS_TYPE;
+    
+
     //    [self.view addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:_CreateQuizViewController.view action:@selector(endEditing:)]];
     //    self.navigationController.navigationBar.hidden = YES;
     // Do any additional setup after loading the view.
+}
+
+#pragma mark - UIScrollViewDelegate
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    [self adjustFloatingViewFrame];
+}
+
+#pragma mark - KVO
+
+- (void)observeValueForKeyPath:(NSString *)keyPath
+                      ofObject:(id)object
+                        change:(NSDictionary *)change
+                       context:(void *)context {
+    if([keyPath isEqualToString:@"frame"]) {
+        [self adjustFloatingViewFrame];
+    }
+}
+
+- (void)adjustFloatingViewFrame
+{
+    CGRect newFrame = _marbleView.frame;
+    
+    newFrame.origin.x = 0;
+    newFrame.origin.y = self.tableView.contentOffset.y;
+    
+    _marbleView.frame = newFrame;
+    [self.tableView bringSubviewToFront:_marbleView];
 }
 
 -(void) addMarbleButton{
@@ -48,10 +80,12 @@
 
 -(void) marbleButtonClicked:(id)sender{
     if(_isCreatingMarble){
-        [_createQuizViewController.view removeFromSuperview];
+        [_marbleView removeFromSuperview];
+//        [self.tableView setUserInteractionEnabled:YES];
         _isCreatingMarble = FALSE;
     } else{
-        [self.view addSubview:_createQuizViewController.view];
+        [self.view addSubview:_marbleView];
+//        [self.tableView setUserInteractionEnabled:NO];
         _isCreatingMarble = TRUE;
     }
 }
@@ -77,11 +111,13 @@
 }
 
 
--(void) initiateCreateQuizViewController{
+-(void) initiateMarbleViewAndCreateQuizViewController{
+    _marbleView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
+    _marbleView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.5f];
     _createQuizViewController = [[CreateQuizViewController alloc] init];
-    [_createQuizViewController.view setFrame:CGRectMake(0, 0, self.view.frame.size.width, 110)];
-//    [self.view addSubview:_createQuizViewController.view];
+    _createQuizViewController.view.frame = CGRectMake(0, 0, self.view.frame.size.width, 200);
     [_createQuizViewController setDelegate:self];
+    [_marbleView addSubview:_createQuizViewController.view];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -106,7 +142,7 @@
     _selectPeopleViewController.view.frame = CGRectMake(0, 150, self.view.bounds.size.width, 200);
     _selectPeopleViewController.view.tag = 100;
     _selectPeopleViewController.delegate = self;
-    [self.view addSubview:_selectPeopleViewController.view];
+    [_marbleView addSubview:_selectPeopleViewController.view];
 }
 
 -(void) prepareSelectKeywordViewController{
@@ -115,7 +151,7 @@
     _selectKeywordViewController.view.frame = CGRectMake(0, 150, self.view.bounds.size.width, 200);
     _selectKeywordViewController.view.tag = 100;
     _selectKeywordViewController.delegate = self;
-    [self.view addSubview:_selectKeywordViewController.view];
+    [_marbleView addSubview:_selectKeywordViewController.view];
 }
 
 -(void) postSelected:(NSString *)name andID:(NSString *)fbid{
@@ -146,7 +182,7 @@
 }
 
 - (void)backToNormal:(CreateQuizViewController *)viewController{
-    for(id view in self.view.subviews){
+    for(id view in _marbleView.subviews){
         if([view tag] == 100){
             [view removeFromSuperview];
         }
