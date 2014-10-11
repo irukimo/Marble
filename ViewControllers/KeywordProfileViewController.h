@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "PostsViewController.h"
 
-@interface KeywordProfileViewController : UIViewController
+@interface KeywordProfileViewController :PostsViewController <PostsViewControllerDelegate>
 
 -(void) setKeyword:(NSString *)keyword;
 @end

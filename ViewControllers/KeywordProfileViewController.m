@@ -20,6 +20,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setNavbarTitle];
+    self.type = KEYWORD_POSTS_TYPE;
+    self.delegate = self;
     //    [self.view addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:_CreateQuizViewController.view action:@selector(endEditing:)]];
     //    self.navigationController.navigationBar.hidden = YES;
     // Do any additional setup after loading the view.

@@ -49,7 +49,7 @@
     [self.view addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedView)]];
     [self recordData];
     [self setCurrentUserValues];
-    
+    [self.view setBackgroundColor:[UIColor whiteColor]];
     /*
     [NSTimer scheduledTimerWithTimeInterval:1.0
                                      target:self

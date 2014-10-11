@@ -17,6 +17,7 @@
 @property (strong, nonatomic) SelectPeopleViewController *selectPeopleViewController;
 @property (strong, nonatomic) SelectKeywordViewController *selectKeywordViewController;
 @property (strong, nonatomic) PostsViewController *postsViewController;
+@property (nonatomic) BOOL isCreatingMarble;
 
 @end
 
@@ -24,12 +25,35 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self initiatePostsViewController];
+//    [self initiatePostsViewController];
     [self initiateCreateQuizViewController];
     [self setNavbarTitle];
+    [self addMarbleButton];
+    _isCreatingMarble = FALSE;
+    self.delegate = self;
+    self.type = HOME_POSTS_TYPE;
     //    [self.view addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:_CreateQuizViewController.view action:@selector(endEditing:)]];
     //    self.navigationController.navigationBar.hidden = YES;
     // Do any additional setup after loading the view.
+}
+
+-(void) addMarbleButton{
+    UIBarButtonItem *rightButton = [[UIBarButtonItem alloc]
+                                   initWithTitle: @"+"
+                                   style: UIBarButtonItemStyleBordered
+                                    target:self action: @selector(marbleButtonClicked:)];
+    
+    [self.navigationItem setRightBarButtonItem:rightButton];
+}
+
+-(void) marbleButtonClicked:(id)sender{
+    if(_isCreatingMarble){
+        [_createQuizViewController.view removeFromSuperview];
+        _isCreatingMarble = FALSE;
+    } else{
+        [self.view addSubview:_createQuizViewController.view];
+        _isCreatingMarble = TRUE;
+    }
 }
 
 -(void)viewWillAppear:(BOOL)animated{
@@ -47,7 +71,7 @@
     
 -(void) initiatePostsViewController{
     _postsViewController = [[PostsViewController alloc] init];
-    [_postsViewController.view setFrame:CGRectMake(0, 150, self.view.frame.size.width, 400)];
+    [_postsViewController.view setFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height - TABBAR_HEIGHT)];
     [self.view addSubview:_postsViewController.view];
     _postsViewController.delegate = self;
 }
@@ -55,8 +79,8 @@
 
 -(void) initiateCreateQuizViewController{
     _createQuizViewController = [[CreateQuizViewController alloc] init];
-    [_createQuizViewController.view setFrame:CGRectMake(0, 20, self.view.frame.size.width, 200)];
-    [self.view addSubview:_createQuizViewController.view];
+    [_createQuizViewController.view setFrame:CGRectMake(0, 0, self.view.frame.size.width, 110)];
+//    [self.view addSubview:_createQuizViewController.view];
     [_createQuizViewController setDelegate:self];
 }
 

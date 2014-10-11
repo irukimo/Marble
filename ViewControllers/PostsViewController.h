@@ -15,6 +15,7 @@
 
 @interface PostsViewController : UITableViewController <NSFetchedResultsControllerDelegate, QuizTableViewCellDelegate,StatusUpdateTableViewCellDelegate >
 @property (strong, nonatomic) NSArray *postArray;
+@property (strong, nonatomic) NSString *type;
 @property (nonatomic, weak) id<PostsViewControllerDelegate> delegate;
 
 @end

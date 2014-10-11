@@ -31,5 +31,11 @@
 #define KeywordUpdateTableViewCellHeight 50
 #define CommentIncrementHeight 20
 
+#define TABBAR_HEIGHT 49
+
+#define HOME_POSTS_TYPE @"home_posts_type"
+#define PROFILE_POSTS_TYPE @"profile_posts_type"
+#define KEYWORD_POSTS_TYPE @"keyword_posts_type"
+
 
 #endif

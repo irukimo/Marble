@@ -13,6 +13,6 @@
 #import "SelectKeywordViewController.h"
 
 
-@interface HomeViewController : UIViewController <CreateQuizViewControllerDelegate, SelectPeopleViewControllerDelegate, PostsViewControllerDelegate, SelectKeywordViewControllerDelegate>
+@interface HomeViewController : PostsViewController <CreateQuizViewControllerDelegate, SelectPeopleViewControllerDelegate, SelectKeywordViewControllerDelegate, PostsViewControllerDelegate>
 
 @end

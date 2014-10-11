@@ -23,6 +23,7 @@
 @property (strong, nonatomic) UIButton *viewKeywordBtn;
 @property ( nonatomic) BOOL isSelf;
 @property (strong, nonatomic) FBProfilePictureView *profilePicView;
+@property (strong, nonatomic) UIView *headerView;
 @end
 
 @implementation ProfileViewController
@@ -31,36 +32,20 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self addProfileUI];
-    [self initiateCreateQuizViewController];
-    [self initiatePostsViewController];
+    [self prepareHeaderView];
+//    [self initiateCreateQuizViewController];
     [self setNavbarTitle];
-    [self addTextFieldAndButtons];
     if(!_profilePicView){
         [self initFBProfilePicViews];
     }
-//    [self setNavigationAttributes];
-    // Do any additional setup after loading the view.
+    self.type = PROFILE_POSTS_TYPE;
+    self.delegate = self;
+    self.tableView.tableHeaderView = _headerView;
     
 }
 
 -(void)addTextFieldAndButtons{
-    _viewKeywordBtn = [[UIButton alloc] initWithFrame:CGRectMake(200, 120, 80, 20)];
-    [_viewKeywordBtn setTitle:@"view all" forState:UIControlStateNormal];
-    [_viewKeywordBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    _statusTextField = [[UITextField alloc] initWithFrame:CGRectMake(100, 70, 100, 20)];
-    [_statusTextField setText:@""];
-    _statusBtn = [[UIButton alloc] initWithFrame:CGRectMake(200, 70, 40, 20)];
-    [_statusTextField setDelegate:self];
-    [_statusBtn setTitle:@"send" forState:UIControlStateNormal];
-    [_statusBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [_statusBtn setTag:SEND_BUTTON_TAG];
-    [_statusTextField setBorderStyle:UITextBorderStyleLine];
-    [self.view addSubview:_statusTextField];
-    [self.view addSubview:_statusBtn];
-    [self.view addSubview:_viewKeywordBtn];
-    [_statusBtn addTarget:self action:@selector(sendStatusBtnClicked) forControlEvents:UIControlEventTouchUpInside];
-    [_viewKeywordBtn addTarget:self action:@selector(viewKeywordBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
+
 }
 
 -(void) viewKeywordBtnClicked:(id)sender{
@@ -109,13 +94,28 @@
     // Dispose of any resources that can be recreated.
 }
 
--(void) addProfileUI{
+-(void) prepareHeaderView{
+    _headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 200)];
     _nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(100, 20, 100, 30)];
-//    [_nameLabel setText:@"Hello"];
-//    if(_name){
-//        [_nameLabel setText:[Utility getNameToDisplay:_name]];
-//    }
-    [self.view addSubview:_nameLabel];
+    _viewKeywordBtn = [[UIButton alloc] initWithFrame:CGRectMake(200, 120, 80, 20)];
+    [_viewKeywordBtn setTitle:@"view all" forState:UIControlStateNormal];
+    [_viewKeywordBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    _statusTextField = [[UITextField alloc] initWithFrame:CGRectMake(100, 70, 100, 20)];
+    [_statusTextField setText:@""];
+    _statusBtn = [[UIButton alloc] initWithFrame:CGRectMake(200, 70, 40, 20)];
+    [_statusTextField setDelegate:self];
+    [_statusBtn setTitle:@"send" forState:UIControlStateNormal];
+    [_statusBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [_statusBtn setTag:SEND_BUTTON_TAG];
+    [_statusTextField setBorderStyle:UITextBorderStyleLine];
+    
+    [_statusBtn addTarget:self action:@selector(sendStatusBtnClicked) forControlEvents:UIControlEventTouchUpInside];
+    [_viewKeywordBtn addTarget:self action:@selector(viewKeywordBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
+    
+    [_headerView addSubview:_nameLabel];
+    [_headerView addSubview:_statusTextField];
+    [_headerView addSubview:_statusBtn];
+    [_headerView addSubview:_viewKeywordBtn];
 }
 
 -(void) setName:(NSString *)name andID:(NSString *)fbid{
@@ -130,7 +130,7 @@
         [self initFBProfilePicViews];
     }
     _profilePicView.profileID = _fbid;
-    [self setNavbarTitle];
+//    [self setNavbarTitle];
 //    [self setTitle:[Utility getNameToDisplay:name]];
 //    [_nameLabel setText:[Utility getNameToDisplay:name]];
     _isSelf = ([_fbid isEqualToString:selfFBID])? TRUE : FALSE;
@@ -138,6 +138,7 @@
     if(_isSelf){
         [_statusTextField setEnabled:YES];
     } else{
+        [self setTitle:[Utility getNameToDisplay:_name]];
         [_statusTextField setEnabled:NO];
         for(id view in self.view.subviews){
             if([view isKindOfClass:[UIButton class]]){

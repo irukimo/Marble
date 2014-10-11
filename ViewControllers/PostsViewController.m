@@ -98,10 +98,17 @@
         NSLog(@"Failed to fetch");
     }
     
+    [self setMyTableView];
     
+}
+
+
+-(void) setMyTableView{
     self.refreshControl = [UIRefreshControl new];
     [self.refreshControl addTarget:self action:@selector(startRefreshing) forControlEvents:UIControlEventValueChanged];
+    
 
+    
 }
 
 -(void) startRefreshing{
@@ -204,6 +211,8 @@
     // Return the number of sections.
     return 1;
 }
+
+
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     // Return the number of rows in the section.
