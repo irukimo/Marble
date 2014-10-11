@@ -257,12 +257,13 @@
         MBDebug(@"status update: %@", status);
         return cell;
     } else {
+        KeywordUpdate *keywordUpdate = (KeywordUpdate *)post;
         KeywordUpdateTableViewCell *cell =[self.tableView dequeueReusableCellWithIdentifier:keywordUpdateTableViewCellIdentifier];
         if (!cell){
             cell = [[KeywordUpdateTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:keywordUpdateTableViewCellIdentifier];
         }
-        
-        MBDebug(@"keyword cell: %@", cell);
+        [cell setName:keywordUpdate.name andID:keywordUpdate.fbID andDescription:[NSString stringWithFormat:@"\"%@\" is added to %@'s profile", keywordUpdate.keywords[0], keywordUpdate.name]];
+        MBDebug(@"keyword update: %@", keywordUpdate);
         return cell;
 
     }
@@ -271,12 +272,15 @@
 
 -(void)option0Clicked:(id)sender{
     NSLog(@"option0clicked");
-    NSIndexPath *path;
-    if ([sender tag]) {
-        path = [NSIndexPath indexPathForRow:[sender tag] inSection:0];
-    } else{
-        path = [NSIndexPath indexPathForRow:0 inSection:0];
-    }
+//    NSIndexPath *path;
+//    if ([sender tag]) {
+//        path = [NSIndexPath indexPathForRow:[sender tag] inSection:0];
+//    } else{
+//        path = [NSIndexPath indexPathForRow:0 inSection:0];
+//    }
+    CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.tableView];
+    NSIndexPath *path = [self.tableView indexPathForRowAtPoint:buttonPosition];
+
     Quiz *quiz = [_fetchedResultsController objectAtIndexPath:path];
     NSString *personSelected = quiz.option0Name;
     NSString *personID = quiz.option0;
@@ -287,12 +291,15 @@
 
 -(void)option1Clicked:(id)sender{
     NSLog(@"option1clicked");
-    NSIndexPath *path;
-    if ([sender tag]) {
-        path = [NSIndexPath indexPathForRow:[sender tag] inSection:0];
-    } else{
-        path = [NSIndexPath indexPathForRow:0 inSection:0];
-    }
+//    NSIndexPath *path;
+//    if ([sender tag]) {
+//        path = [NSIndexPath indexPathForRow:[sender tag] inSection:0];
+//    } else{
+//        path = [NSIndexPath indexPathForRow:0 inSection:0];
+//    }
+    CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.tableView];
+    NSIndexPath *path = [self.tableView indexPathForRowAtPoint:buttonPosition];
+
     Quiz *quiz = [_fetchedResultsController objectAtIndexPath:path];
     NSString *personSelected = quiz.option1Name;
     NSString *personID = quiz.option1;
@@ -302,12 +309,14 @@
 }
 
 -(void)authorClicked:(id)sender{
-    NSIndexPath *path;
-    if ([sender tag]) {
-        path = [NSIndexPath indexPathForRow:[sender tag] inSection:0];
-    } else{
-        path = [NSIndexPath indexPathForRow:0 inSection:0];
-    }
+//    if ([sender tag]) {
+//        path = [NSIndexPath indexPathForRow:[sender tag] inSection:0];
+//    } else{
+//        path = [NSIndexPath indexPathForRow:0 inSection:0];
+//    }
+    CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.tableView];
+    NSIndexPath *path = [self.tableView indexPathForRowAtPoint:buttonPosition];
+
     Quiz *quiz = [_fetchedResultsController objectAtIndexPath:path];
     NSString *personSelected = quiz.authorName;
     NSString *personID = quiz.author;

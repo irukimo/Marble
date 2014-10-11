@@ -10,6 +10,6 @@
 
 @interface KeywordUpdateTableViewCell : UITableViewCell
 
-
+- (void) setName:(NSString *)name andID:(NSString *)fbid andDescription:(NSString *)desc;
 
 @end

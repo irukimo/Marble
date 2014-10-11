@@ -47,12 +47,11 @@ static NSInteger tryAgainButtonIndex;
     
     NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObject:FBAccessToken
                                                              forKey:@"fb_access_token"];
-    MBDebug(@"asdasd");
     [ClientManager sharedClientManager];
     MBDebug(@"Before login: %@", params);
     
     [httpClient postPath:@"login" parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        
+
         [self handleLoggedIn:(NSDictionary *)[NSJSONSerialization JSONObjectWithData:responseObject
                                                                              options:NSJSONReadingMutableContainers
                                                                                error:nil]];

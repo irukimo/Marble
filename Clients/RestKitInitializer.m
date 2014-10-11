@@ -115,6 +115,7 @@
                                                          @"created_at": @"time",
                                                          @"uuid": @"uuid",
                                                          @"keywords": @"keywords"}];
+    keywordUpdateMapping.identificationAttributes = @[@"uuid"];
     RKResponseDescriptor *keywordUpdateGETResponseDescriptor =
     [RKResponseDescriptor responseDescriptorWithMapping:keywordUpdateMapping
                                                  method:RKRequestMethodGET
