@@ -221,15 +221,12 @@
         if(i > 2){
             return;
         }
-        [self addCommentAtY:(y+i*increment) withID:[cmt valueForKey:@"fb_id"] andComment:[cmt valueForKey:@"comment"]];
+        [self addCommentAtY:(y+i*increment) withName:[cmt valueForKey:@"name"] andID:[cmt valueForKey:@"fb_id"] andComment:[cmt valueForKey:@"comment"]];
         i++;
     }
 }
 
--(void) addCommentAtY:(int)y withID:(NSString *)fbid andComment:(NSString *)comment{
-    NSLog(@"at comment at %d", y);
-    NSString *name;
-    [User getUserNameByFBID:fbid returnInName:&name inManagedObjectContext:[RKManagedObjectStore defaultStore].mainQueueManagedObjectContext];
+-(void) addCommentAtY:(int)y withName:(NSString *)name andID:(NSString *)fbid andComment:(NSString *)comment{
     UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, y, 100, 20)];
     UILabel *commentLabel = [[UILabel alloc] initWithFrame:CGRectMake(100, y, 150, 20)];
     [nameLabel setTag:COMMENT_LABEL_TAG];
