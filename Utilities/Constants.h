@@ -23,11 +23,13 @@
 
 #define quizTableViewCellIdentifier    @"quizTableViewCellIdentifier"
 #define statusTableViewCellIdentifier  @"statusTableViewCellIdentifier"
-#define keywordTableViewCellIdentifier @"keywordTableViewCellIdentifier"
+#define keywordUpdateTableViewCellIdentifier @"keywordUpdateTableViewCellIdentifier"
+#define keywordListTableViewCellIdentifier @"keywordListTableViewCellIdentifier"
 
-#define QuizTableViewCellHeight 220
+#define QuizTableViewCellHeight 160
 #define StatusUpdateTableViewCellHeight 50
 #define KeywordUpdateTableViewCellHeight 50
+#define CommentIncrementHeight 20
 
 
 #endif

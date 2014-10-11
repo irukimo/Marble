@@ -41,6 +41,9 @@
 		7AB925B319E374E500F8229F /* ExploreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AB925B219E374E500F8229F /* ExploreViewController.m */; };
 		7AD2A32E19DE1F9800B200E9 /* User+MBUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AD2A32D19DE1F9800B200E9 /* User+MBUser.m */; };
 		7AEB9CF619E8572200409276 /* KeywordUpdateTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AEB9CF519E8572200409276 /* KeywordUpdateTableViewCell.m */; };
+		7AEB9CF919E9B37100409276 /* KeywordListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AEB9CF819E9B37100409276 /* KeywordListViewController.m */; };
+		7AEB9CFC19E9B3B500409276 /* KeywordProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AEB9CFB19E9B3B500409276 /* KeywordProfileViewController.m */; };
+		7AEB9CFF19E9B80E00409276 /* KeywordListTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AEB9CFE19E9B80E00409276 /* KeywordListTableViewCell.m */; };
 		7AF4123319D9FB6C00A470E1 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AF4123219D9FB6C00A470E1 /* main.m */; };
 		7AF4123619D9FB6C00A470E1 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AF4123519D9FB6C00A470E1 /* AppDelegate.m */; };
 		7AF4123C19D9FB6C00A470E1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7AF4123A19D9FB6C00A470E1 /* Main.storyboard */; };
@@ -131,6 +134,12 @@
 		7AD2A32D19DE1F9800B200E9 /* User+MBUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "User+MBUser.m"; sourceTree = "<group>"; };
 		7AEB9CF419E8572200409276 /* KeywordUpdateTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KeywordUpdateTableViewCell.h; path = TableViewCells/KeywordUpdateTableViewCell.h; sourceTree = "<group>"; };
 		7AEB9CF519E8572200409276 /* KeywordUpdateTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KeywordUpdateTableViewCell.m; path = TableViewCells/KeywordUpdateTableViewCell.m; sourceTree = "<group>"; };
+		7AEB9CF719E9B37100409276 /* KeywordListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeywordListViewController.h; sourceTree = "<group>"; };
+		7AEB9CF819E9B37100409276 /* KeywordListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeywordListViewController.m; sourceTree = "<group>"; };
+		7AEB9CFA19E9B3B500409276 /* KeywordProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeywordProfileViewController.h; sourceTree = "<group>"; };
+		7AEB9CFB19E9B3B500409276 /* KeywordProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeywordProfileViewController.m; sourceTree = "<group>"; };
+		7AEB9CFD19E9B80E00409276 /* KeywordListTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KeywordListTableViewCell.h; path = TableViewCells/KeywordListTableViewCell.h; sourceTree = "<group>"; };
+		7AEB9CFE19E9B80E00409276 /* KeywordListTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KeywordListTableViewCell.m; path = TableViewCells/KeywordListTableViewCell.m; sourceTree = "<group>"; };
 		7AF4122D19D9FB6C00A470E1 /* Marble.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Marble.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7AF4123119D9FB6C00A470E1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7AF4123219D9FB6C00A470E1 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -344,6 +353,10 @@
 				7AF4126D19DA672500A470E1 /* SelectPeopleViewController.m */,
 				7AFF5BBC19E59AEA00CFD35D /* SelectKeywordViewController.h */,
 				7AFF5BBD19E59AEA00CFD35D /* SelectKeywordViewController.m */,
+				7AEB9CF719E9B37100409276 /* KeywordListViewController.h */,
+				7AEB9CF819E9B37100409276 /* KeywordListViewController.m */,
+				7AEB9CFA19E9B3B500409276 /* KeywordProfileViewController.h */,
+				7AEB9CFB19E9B3B500409276 /* KeywordProfileViewController.m */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -370,6 +383,8 @@
 				7AFF5BC019E7631F00CFD35D /* StatusUpdateTableViewCell.m */,
 				7AEB9CF419E8572200409276 /* KeywordUpdateTableViewCell.h */,
 				7AEB9CF519E8572200409276 /* KeywordUpdateTableViewCell.m */,
+				7AEB9CFD19E9B80E00409276 /* KeywordListTableViewCell.h */,
+				7AEB9CFE19E9B80E00409276 /* KeywordListTableViewCell.m */,
 			);
 			name = TableViewCells;
 			sourceTree = "<group>";
@@ -546,6 +561,7 @@
 				51706D3019E88EF7005010E6 /* Post.h in Sources */,
 				51706D3119E88EF7005010E6 /* Post.m in Sources */,
 				51706D3219E88EF7005010E6 /* Quiz.h in Sources */,
+				7AEB9CFF19E9B80E00409276 /* KeywordListTableViewCell.m in Sources */,
 				51706D3319E88EF7005010E6 /* Quiz.m in Sources */,
 				7AEB9CF619E8572200409276 /* KeywordUpdateTableViewCell.m in Sources */,
 				7AF4123619D9FB6C00A470E1 /* AppDelegate.m in Sources */,
@@ -559,11 +575,13 @@
 				7AD2A32E19DE1F9800B200E9 /* User+MBUser.m in Sources */,
 				7AF4123319D9FB6C00A470E1 /* main.m in Sources */,
 				7A0E976919DCB194003A9359 /* ProfileViewController.m in Sources */,
+				7AEB9CF919E9B37100409276 /* KeywordListViewController.m in Sources */,
 				7AFF5BBE19E59AEA00CFD35D /* SelectKeywordViewController.m in Sources */,
 				7A0E977519DCDFBC003A9359 /* HomeNavigationController.m in Sources */,
 				7AFF5BC119E7631F00CFD35D /* StatusUpdateTableViewCell.m in Sources */,
 				51DF106E19E460E00021C3F9 /* ArrayToDataTransformer.m in Sources */,
 				517C895019DB7DB4005A8407 /* RestKitInitializer.m in Sources */,
+				7AEB9CFC19E9B3B500409276 /* KeywordProfileViewController.m in Sources */,
 				7AF4126B19DA2EC200A470E1 /* PostsViewController.m in Sources */,
 				7A0E976C19DCB389003A9359 /* MarbleTabBarController.m in Sources */,
 				7AF4127F19DB62C600A470E1 /* Utility.m in Sources */,

@@ -20,6 +20,7 @@
 @property (strong,nonatomic) NSString *name;
 @property (strong,nonatomic) NSString *fbid;
 @property (strong, nonatomic) UIButton *statusBtn;
+@property (strong, nonatomic) UIButton *viewKeywordBtn;
 @property ( nonatomic) BOOL isSelf;
 @property (strong, nonatomic) FBProfilePictureView *profilePicView;
 @end
@@ -44,9 +45,12 @@
 }
 
 -(void)addTextFieldAndButtons{
-    _statusTextField = [[UITextField alloc] initWithFrame:CGRectMake(100, 20, 100, 20)];
+    _viewKeywordBtn = [[UIButton alloc] initWithFrame:CGRectMake(200, 120, 80, 20)];
+    [_viewKeywordBtn setTitle:@"view all" forState:UIControlStateNormal];
+    [_viewKeywordBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    _statusTextField = [[UITextField alloc] initWithFrame:CGRectMake(100, 70, 100, 20)];
     [_statusTextField setText:@""];
-    _statusBtn = [[UIButton alloc] initWithFrame:CGRectMake(200, 20, 40, 20)];
+    _statusBtn = [[UIButton alloc] initWithFrame:CGRectMake(200, 70, 40, 20)];
     [_statusTextField setDelegate:self];
     [_statusBtn setTitle:@"send" forState:UIControlStateNormal];
     [_statusBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
@@ -54,7 +58,13 @@
     [_statusTextField setBorderStyle:UITextBorderStyleLine];
     [self.view addSubview:_statusTextField];
     [self.view addSubview:_statusBtn];
+    [self.view addSubview:_viewKeywordBtn];
     [_statusBtn addTarget:self action:@selector(sendStatusBtnClicked) forControlEvents:UIControlEventTouchUpInside];
+    [_viewKeywordBtn addTarget:self action:@selector(viewKeywordBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
+}
+
+-(void) viewKeywordBtnClicked:(id)sender{
+    [self performSegueWithIdentifier:@"KeywordListViewControllerSegue" sender:sender];
 }
 
 -(void) initFBProfilePicViews{
@@ -66,12 +76,13 @@
 }
 
 //-(void)setNavigationAttributes{
-//    self.navigationController.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"yes" style:UIBarButtonItemStylePlain target:nil action:nil];
+
 //}
 
 -(void) setNavbarTitle{
     UINavigationBar *myNavBar =[self.navigationController navigationBar];
-//    [[myNavBar topItem] setTitle:@"YOUR PROFILE"];
+    NSLog(@"set name%@", _name);
+    [[myNavBar topItem] setTitle:[Utility getNameToDisplay:_name]];
     [myNavBar setTranslucent:NO];
     [myNavBar setBarTintColor:[UIColor marbleBlue]];
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
@@ -99,11 +110,11 @@
 }
 
 -(void) addProfileUI{
-    _nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(50, 100, 100, 30)];
-    [_nameLabel setText:@"Hello"];
-    if(_name){
-        [_nameLabel setText:[Utility getNameToDisplay:_name]];
-    }
+    _nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(100, 20, 100, 30)];
+//    [_nameLabel setText:@"Hello"];
+//    if(_name){
+//        [_nameLabel setText:[Utility getNameToDisplay:_name]];
+//    }
     [self.view addSubview:_nameLabel];
 }
 
@@ -119,7 +130,9 @@
         [self initFBProfilePicViews];
     }
     _profilePicView.profileID = _fbid;
-    [_nameLabel setText:[Utility getNameToDisplay:name]];
+    [self setNavbarTitle];
+//    [self setTitle:[Utility getNameToDisplay:name]];
+//    [_nameLabel setText:[Utility getNameToDisplay:name]];
     _isSelf = ([_fbid isEqualToString:selfFBID])? TRUE : FALSE;
     NSLog(@"personid %@, selfid %@", _fbid, selfFBID);
     if(_isSelf){

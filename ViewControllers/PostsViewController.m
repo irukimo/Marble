@@ -98,8 +98,57 @@
         NSLog(@"Failed to fetch");
     }
     
+    
+    self.refreshControl = [UIRefreshControl new];
+    [self.refreshControl addTarget:self action:@selector(startRefreshing) forControlEvents:UIControlEventValueChanged];
 
 }
+
+-(void) startRefreshing{
+    [self startRefreshing:[self generateBasicParams]];
+}
+
+- (NSMutableDictionary *)generateBasicParams{
+    // check if seesion token is valid
+    if (![KeyChainWrapper isSessionTokenValid]) {
+        NSLog(@"User session token is not valid. Stop refreshing up");
+        [self.refreshControl endRefreshing];
+        return nil;
+    }
+    NSString *sessionToken = [KeyChainWrapper getSessionTokenForUser];
+    
+    return [NSMutableDictionary dictionaryWithObjects:@[sessionToken]
+                                              forKeys:@[@"auth_token"]];
+
+//    return [NSMutableDictionary dictionaryWithObjects:@[sessionToken, self.type]
+//                                              forKeys:@[@"auth_token", @"type"]];
+}
+
+- (void) startRefreshing:(NSDictionary *)params
+{
+    [[RKObjectManager sharedManager] getObject:[Post alloc]
+                                          path:nil
+                                    parameters:params
+                                       success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+                                           
+                                           /*
+                                           ASYNC({
+                                               NSArray *posts = [mappingResult array];
+                                               [Post setIndicesAsRefreshing:posts];
+                                               for (Post *post in posts) {
+                                                   [ClientManager loadPhotosForPost:post];
+                                               }
+                                           });
+                                            */
+                                           
+                                           [self.refreshControl endRefreshing];
+                                       }
+                                       failure:[Utility failureBlockWithAlertMessage:@"Can't connect to the server"
+                                                                               block:^{[self.refreshControl endRefreshing];}]
+     ];
+    
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -198,9 +247,9 @@
         MBDebug(@"status update: %@", status);
         return cell;
     } else {
-        KeywordUpdateTableViewCell *cell =[self.tableView dequeueReusableCellWithIdentifier:keywordTableViewCellIdentifier];
+        KeywordUpdateTableViewCell *cell =[self.tableView dequeueReusableCellWithIdentifier:keywordUpdateTableViewCellIdentifier];
         if (!cell){
-            cell = [[KeywordUpdateTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:keywordTableViewCellIdentifier];
+            cell = [[KeywordUpdateTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:keywordUpdateTableViewCellIdentifier];
         }
         
         MBDebug(@"keyword cell: %@", cell);
@@ -270,11 +319,29 @@
     Post *post = [_fetchedResultsController objectAtIndexPath:indexPath];
     
     if ([post isKindOfClass:[Quiz class]]){
-        return QuizTableViewCellHeight;
+        if(!post.comments){
+            return QuizTableViewCellHeight;
+        } else if([post.comments count] > 2){
+            return QuizTableViewCellHeight + 3*CommentIncrementHeight;
+        } else{
+            return QuizTableViewCellHeight + [post.comments count]*CommentIncrementHeight;
+        }
     } else if([post isKindOfClass:[StatusUpdate class]]){
-        return StatusUpdateTableViewCellHeight;
+        if(!post.comments){
+            return StatusUpdateTableViewCellHeight;
+        } else if([post.comments count] > 2){
+            return StatusUpdateTableViewCellHeight + 3*CommentIncrementHeight;
+        } else{
+            return StatusUpdateTableViewCellHeight + [post.comments count]*CommentIncrementHeight;
+        }
     } else{
-        return KeywordUpdateTableViewCellHeight;
+        if(!post.comments){
+            return KeywordUpdateTableViewCellHeight;
+        } else if([post.comments count] > 2){
+            return KeywordUpdateTableViewCellHeight + 3*CommentIncrementHeight;
+        } else{
+            return KeywordUpdateTableViewCellHeight + [post.comments count]*CommentIncrementHeight;
+        }
     }
 }
 
