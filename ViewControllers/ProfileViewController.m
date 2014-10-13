@@ -69,9 +69,9 @@
     NSLog(@"set name%@", _name);
     [[myNavBar topItem] setTitle:[Utility getNameToDisplay:_name]];
     [myNavBar setTranslucent:NO];
-    [myNavBar setBarTintColor:[UIColor marbleBlue]];
+    [myNavBar setBarTintColor:[UIColor marbleOrange]];
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
-    //    [[self.navigationController navigationBar] setBackgroundColor:[UIColor marbleBlue]];
+    //    [[self.navigationController navigationBar] setBackgroundColor:[UIColor marbleOrange]];
 }
 
 -(void) initiatePostsViewController{

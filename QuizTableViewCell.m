@@ -213,7 +213,6 @@
 
 
 -(void) setQuiz:(Quiz *)quiz{
-    [self removeAllComments];
     _quiz = quiz;
     _authorName = [quiz.authorName copy];
     _option0Name = [quiz.option0Name copy];
@@ -263,12 +262,18 @@
 
 
 -(void) addCommentAtY:(int)y withName:(NSString *)name andID:(NSString *)fbid andComment:(NSString *)comment{
-    UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, y, 100, 20)];
-    UILabel *commentLabel = [[UILabel alloc] initWithFrame:CGRectMake(100, y, 150, 20)];
+    UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(25, y, 100, 20)];
     [nameLabel setTag:COMMENT_LABEL_TAG];
+
+    NSAttributedString *nameString = [[NSAttributedString alloc] initWithString:[Utility getNameToDisplay:name] attributes:[Utility getPostsViewNameFontDictionary]];
+    CGSize nameSize = [nameString size];
+    
+    UILabel *commentLabel = [[UILabel alloc] initWithFrame:CGRectMake(25+3+nameSize.width, y, 150, 20)];
     [commentLabel setTag:COMMENT_LABEL_TAG];
-    [nameLabel setText:name];
-    [commentLabel setText:comment];
+    
+    NSAttributedString *commentString = [[NSAttributedString alloc] initWithString:comment attributes:[Utility getPostsViewCommentFontDictionary]];
+    [nameLabel setAttributedText:nameString];
+    [commentLabel setAttributedText:commentString];
     [self.contentView addSubview:nameLabel];
     [self.contentView addSubview:commentLabel];
 }

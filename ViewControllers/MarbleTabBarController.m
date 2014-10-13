@@ -23,7 +23,7 @@
     //set tabbaritem image
     [self setTabBarItemImages];
     // set tabbaritem font
-    NSDictionary *selectedFont = [NSDictionary dictionaryWithObjectsAndKeys: [UIColor marbleBlue] ,NSForegroundColorAttributeName,nil];
+    NSDictionary *selectedFont = [NSDictionary dictionaryWithObjectsAndKeys: [UIColor marbleOrange] ,NSForegroundColorAttributeName,nil];
     NSDictionary *unSelectedFont = [NSDictionary dictionaryWithObjectsAndKeys: [UIColor unselected] ,NSForegroundColorAttributeName,nil];
     for(UIViewController *v in self.customizableViewControllers){
         [v.tabBarItem setTitleTextAttributes:unSelectedFont forState:UIControlStateNormal];

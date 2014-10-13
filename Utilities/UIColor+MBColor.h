@@ -9,6 +9,6 @@
 #import <Foundation/Foundation.h>
 
 @interface UIColor(MBColor)
-+(UIColor *) marbleBlue;
 +(UIColor *) unselected;
++(UIColor *) marbleOrange;
 @end

@@ -37,6 +37,19 @@
     return self;
 }
 
+-(void)prepareForReuse{
+    [super prepareForReuse];
+    [self removeAllComments];
+}
+
+-(void) removeAllComments{
+    for(id view in self.contentView.subviews){
+        if([view tag] == COMMENT_LABEL_TAG){
+            [view removeFromSuperview];
+        }
+    }
+}
+
 -(void) addTextFields{
     _commentField = [[UITextField alloc] initWithFrame:CGRectMake(10, 30, 150, 20)];
     [_commentField setBorderStyle:UITextBorderStyleLine];
@@ -104,12 +117,17 @@
 }
 
 -(void) addCommentAtY:(int)y withName:(NSString *)name andID:(NSString *)fbid andComment:(NSString *)comment{
-    UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, y, 100, 20)];
-    UILabel *commentLabel = [[UILabel alloc] initWithFrame:CGRectMake(100, y, 150, 20)];
+    UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(25, y, 100, 20)];
     [nameLabel setTag:COMMENT_LABEL_TAG];
+    NSAttributedString *nameString = [[NSAttributedString alloc] initWithString:[Utility getNameToDisplay:name] attributes:[Utility getPostsViewNameFontDictionary]];
+    CGSize nameSize = [nameString size];
+    
+    UILabel *commentLabel = [[UILabel alloc] initWithFrame:CGRectMake(25+3+nameSize.width, y, 150, 20)];
     [commentLabel setTag:COMMENT_LABEL_TAG];
-    [nameLabel setText:name];
-    [commentLabel setText:comment];
+    
+    NSAttributedString *commentString = [[NSAttributedString alloc] initWithString:comment attributes:[Utility getPostsViewCommentFontDictionary]];
+    [nameLabel setAttributedText:nameString];
+    [commentLabel setAttributedText:commentString];
     [self.contentView addSubview:nameLabel];
     [self.contentView addSubview:commentLabel];
 }
