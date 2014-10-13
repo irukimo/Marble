@@ -18,6 +18,9 @@ static NSString *FBAccessToken = nil;
 // Device token
 static NSData *deviceToken = nil;
 
+// Keywords
+static NSArray *keywords = nil;
+
 @implementation KeyChainWrapper
 
 +(void)storeFBUserID:(NSString *)fbUserID
@@ -103,5 +106,16 @@ static NSData *deviceToken = nil;
     // FB credentials
     FBUserID = nil;
 }
+
++(void)storeKeywords:(NSArray *)theKeywords
+{
+    keywords = [NSArray arrayWithArray:theKeywords];
+}
+
++(NSArray *)keywords
+{
+    return keywords;
+}
+
 
 @end

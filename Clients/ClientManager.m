@@ -39,6 +39,25 @@ static NSInteger tryAgainButtonIndex;
     return ([KeyChainWrapper getSessionTokenForUser] != nil);
 }
 
++(void)getKeywords
+{
+    MBDebug(@"Going to get keywords");
+    NSString *sessionToken = [KeyChainWrapper getSessionTokenForUser];
+    NSDictionary *params = [NSDictionary dictionaryWithObjects:@[sessionToken] forKeys:@[@"auth_token"]];
+    [ClientManager sharedClientManager];
+    
+    [httpClient getPath:@"keywords" parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSArray *keywords = (NSArray *)[NSJSONSerialization JSONObjectWithData:responseObject
+                                                                             options:NSJSONReadingMutableContainers
+                                                                               error:nil];
+        [KeyChainWrapper storeKeywords:keywords];
+        MBDebug(@"Got keywords: %@", [KeyChainWrapper keywords]);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        MBError(@"Cannot get keywords");
+    }];
+
+}
 
 +(void)login:(NSString *)FBAccessToken delegate:(id<ClientLoginDelegate>)delegate_
 {

@@ -23,6 +23,9 @@
 +(void)storeDeviceToken:(NSData *)theDeviceToken;
 +(NSData *)deviceToken;
 
++(void)storeKeywords:(NSArray *)theKeywords;
++(NSArray *)keywords;
+
 +(void)cleanUpCredentials;
 //+(NSString *)getValueFromKeyChain:(NSString *)key;
 //+(void)storeValueInKeyChain:(NSString *)value forKey:(NSString *)key;

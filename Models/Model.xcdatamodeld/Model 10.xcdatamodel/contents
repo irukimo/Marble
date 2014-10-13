@@ -33,10 +33,10 @@
         <attribute name="status" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
+        <element name="KeywordUpdate" positionX="-126" positionY="-27" width="128" height="88"/>
         <element name="Post" positionX="-153" positionY="-54" width="128" height="103"/>
         <element name="Quiz" positionX="-252" positionY="-151" width="128" height="178"/>
         <element name="StatusUpdate" positionX="-135" positionY="-36" width="128" height="88"/>
         <element name="User" positionX="-54" positionY="-9" width="128" height="90"/>
-        <element name="KeywordUpdate" positionX="-126" positionY="-27" width="128" height="88"/>
     </elements>
 </model>

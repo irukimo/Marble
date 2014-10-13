@@ -17,6 +17,7 @@
 +(void)login:(NSString *)FBAccessToken delegate:(id<ClientLoginDelegate>)delegate;;
 +(BOOL)logout;
 
++(void)getKeywords;
 +(void)checkLetterPrompt;
 
 + (void)sendBadgeNumber:(NSInteger)number;

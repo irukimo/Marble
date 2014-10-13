@@ -135,6 +135,7 @@
 #pragma mark ClientClient Delegate methods
 - (void) afterLoggedIn
 {
+    [ClientManager getKeywords];
     NSString *sessionToken = [KeyChainWrapper getSessionTokenForUser];
     NSDictionary *params = [NSDictionary dictionaryWithObjects:@[sessionToken] forKeys:@[@"auth_token"]];
     MBDebug(@"Loading options...");
