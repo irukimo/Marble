@@ -14,14 +14,12 @@
 
 @interface QuizTableViewCell : UITableViewCell
 
-@property(strong,nonatomic) UIButton *option0NameButton;
-@property(strong,nonatomic) UIButton *option1NameButton;
-@property(strong,nonatomic) UIButton *authorNameButton;
+
 
 
 @property (nonatomic, weak) id<QuizTableViewCellDelegate> delegate;
 @property (nonatomic, strong) NSString *quizUUID;
-
+-(void)setComments:(NSArray *)comments;
 -(void) setQuiz:(Quiz *)quiz;
 
 @end
@@ -32,5 +30,6 @@
 
 - (void) commentPost:(id)sender withComment:(NSString *)comment;
 - (void) sendGuess:(id)sender withAnswer:(NSString *)answer;
+-(void) gotoProfileWithName:(NSString *)name andID:(NSString *)fbid;
 
 @end

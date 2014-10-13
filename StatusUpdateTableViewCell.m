@@ -8,13 +8,17 @@
 
 #import "StatusUpdateTableViewCell.h"
 
+#define COMMENT_LABEL_TAG 456
+
+
 @interface StatusUpdateTableViewCell()
 @property(strong, nonatomic) UILabel *statusLabel;
 @property(strong, nonatomic) UILabel *nameLabel;
 @property (strong, nonatomic) UIImageView *authorPicView;
 @property(strong, nonatomic) UITextField *commentField;
 @property(strong, nonatomic) UIButton *commentBtn;
-
+@property(strong, nonatomic) UILabel *commentNumLabel;
+@property(strong,nonatomic) NSArray *comments;
 
 @end
 
@@ -57,10 +61,12 @@
 
 
 -(void) addStaticLabels{
+    _commentNumLabel = [[UILabel alloc] initWithFrame:CGRectMake(280, 15, 50, 20)];
     _statusLabel = [[UILabel alloc] initWithFrame:CGRectMake(200, 5, 150, 30)];
     _nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(50, 5, 100, 30)];
     [self.contentView addSubview:_statusLabel];
     [self.contentView addSubview:_nameLabel];
+    [self.contentView addSubview:_commentNumLabel];
 }
 
 -(void) initPicView{
@@ -77,5 +83,36 @@
     NSString *authorPictureUrl = [NSString stringWithFormat:@"https://graph.facebook.com/%@/picture", fbid];
     [_authorPicView setImageWithURL:[NSURL URLWithString:authorPictureUrl] placeholderImage:[UIImage imageNamed:@"login.png"]];
 }
+
+-(void)setComments:(NSArray *)comments{
+    _comments = [comments copy];
+    [_commentNumLabel setText:[NSString stringWithFormat:@"%lu", (unsigned long)[_comments count]]];
+    [self showComments];
+}
+
+-(void) showComments{;
+    int y = 50;
+    int increment = 20;
+    int i = 0;
+    for (NSDictionary *cmt in _comments) {
+        if(i > 2){
+            return;
+        }
+        [self addCommentAtY:(y+i*increment) withName:[cmt valueForKey:@"name"] andID:[cmt valueForKey:@"fb_id"] andComment:[cmt valueForKey:@"comment"]];
+        i++;
+    }
+}
+
+-(void) addCommentAtY:(int)y withName:(NSString *)name andID:(NSString *)fbid andComment:(NSString *)comment{
+    UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, y, 100, 20)];
+    UILabel *commentLabel = [[UILabel alloc] initWithFrame:CGRectMake(100, y, 150, 20)];
+    [nameLabel setTag:COMMENT_LABEL_TAG];
+    [commentLabel setTag:COMMENT_LABEL_TAG];
+    [nameLabel setText:name];
+    [commentLabel setText:comment];
+    [self.contentView addSubview:nameLabel];
+    [self.contentView addSubview:commentLabel];
+}
+
 
 @end

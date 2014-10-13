@@ -7,6 +7,7 @@
 //
 
 #import "PostsViewController.h"
+#import "ProfileViewController.h"
 
 #import "QuizTableViewCell.h"
 #import "StatusUpdateTableViewCell.h"
@@ -224,6 +225,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     Post *post = [_fetchedResultsController objectAtIndexPath:indexPath];
+
     
     if ([post isKindOfClass:[Quiz class]]){
         Quiz *quiz = (Quiz *)post;
@@ -235,15 +237,11 @@
         [cell setQuiz:(Quiz *)quiz];
         
         MBDebug(@"quiz: %@", quiz);
-        [cell.option0NameButton setTag:indexPath.row];
-        [cell.option1NameButton setTag:indexPath.row];
-        [cell.authorNameButton setTag:indexPath.row];
-        [cell.option0NameButton addTarget:self action:@selector(option0Clicked:) forControlEvents:UIControlEventTouchUpInside];
-        [cell.option1NameButton addTarget:self action:@selector(option1Clicked:) forControlEvents:UIControlEventTouchUpInside];
-        [cell.authorNameButton addTarget:self action:@selector(authorClicked:) forControlEvents:UIControlEventTouchUpInside];
+
         cell.delegate = self;
 
         cell.quizUUID = quiz.uuid;
+        [self getCommentsForPost:post];
         return cell;
     } else if ([post isKindOfClass:[StatusUpdate class]]) {
         StatusUpdate *status = (StatusUpdate *)post;
@@ -255,6 +253,7 @@
         [cell setName:status.name andID:status.fbID andStatus:status.status];
 //        MBDebug(@"status cell: %@", cell);
         MBDebug(@"status update: %@", status);
+        [self getCommentsForPost:post];
         return cell;
     } else {
         KeywordUpdate *keywordUpdate = (KeywordUpdate *)post;
@@ -264,65 +263,18 @@
         }
         [cell setName:keywordUpdate.name andID:keywordUpdate.fbID andDescription:[NSString stringWithFormat:@"\"%@\" is added to %@'s profile", keywordUpdate.keywords[0], keywordUpdate.name]];
         MBDebug(@"keyword update: %@", keywordUpdate);
+        cell.delegate = self;
         return cell;
 
     }
 
 }
 
--(void)option0Clicked:(id)sender{
-    NSLog(@"option0clicked");
-//    NSIndexPath *path;
-//    if ([sender tag]) {
-//        path = [NSIndexPath indexPathForRow:[sender tag] inSection:0];
-//    } else{
-//        path = [NSIndexPath indexPathForRow:0 inSection:0];
-//    }
-    CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.tableView];
-    NSIndexPath *path = [self.tableView indexPathForRowAtPoint:buttonPosition];
 
-    Quiz *quiz = [_fetchedResultsController objectAtIndexPath:path];
-    NSString *personSelected = quiz.option0Name;
-    NSString *personID = quiz.option0;
-    if(_delegate && [_delegate respondsToSelector:@selector(postSelected:andID:)]){
-        [_delegate postSelected:personSelected andID:personID];
-    }
-}
 
--(void)option1Clicked:(id)sender{
-    NSLog(@"option1clicked");
-//    NSIndexPath *path;
-//    if ([sender tag]) {
-//        path = [NSIndexPath indexPathForRow:[sender tag] inSection:0];
-//    } else{
-//        path = [NSIndexPath indexPathForRow:0 inSection:0];
-//    }
-    CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.tableView];
-    NSIndexPath *path = [self.tableView indexPathForRowAtPoint:buttonPosition];
-
-    Quiz *quiz = [_fetchedResultsController objectAtIndexPath:path];
-    NSString *personSelected = quiz.option1Name;
-    NSString *personID = quiz.option1;
-    if(_delegate && [_delegate respondsToSelector:@selector(postSelected:andID:)]){
-        [_delegate postSelected:personSelected andID:personID];
-    }
-}
-
--(void)authorClicked:(id)sender{
-//    if ([sender tag]) {
-//        path = [NSIndexPath indexPathForRow:[sender tag] inSection:0];
-//    } else{
-//        path = [NSIndexPath indexPathForRow:0 inSection:0];
-//    }
-    CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.tableView];
-    NSIndexPath *path = [self.tableView indexPathForRowAtPoint:buttonPosition];
-
-    Quiz *quiz = [_fetchedResultsController objectAtIndexPath:path];
-    NSString *personSelected = quiz.authorName;
-    NSString *personID = quiz.author;
-    if(_delegate && [_delegate respondsToSelector:@selector(postSelected:andID:)]){
-        [_delegate postSelected:personSelected andID:personID];
-    }
+-(void) gotoProfileWithName:(NSString *)name andID:(NSString *)fbid{
+    NSArray *infoBundle = [NSArray arrayWithObjects:name,fbid, nil];
+    [self performSegueWithIdentifier:@"ProfileViewControllerSegue" sender:infoBundle];
 }
 
 /*
@@ -420,6 +372,13 @@
             for (NSDictionary *cmt in post.comments) {
                 MBDebug(@"fb_id: %@, comment: %@", [cmt valueForKey:@"fb_id"], [cmt valueForKey:@"comment"]);
             }
+            NSIndexPath *path = [_fetchedResultsController indexPathForObject:post];
+            id cell = [(UITableView *)self.view cellForRowAtIndexPath:path];
+            if ([cell isKindOfClass:[StatusUpdateTableViewCell class]]) {
+                [(StatusUpdateTableViewCell *)cell setComments:post.comments];
+            } else if([cell isKindOfClass:[QuizTableViewCell class]]){
+                [(QuizTableViewCell *)cell setComments:post.comments];
+            }
         }
         failure:^(RKObjectRequestOperation *operation, NSError *error) {
             [Utility generateAlertWithMessage:@"Network problem"];
@@ -462,14 +421,26 @@
 }
 */
 
-/*
+
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
+
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    UIBarButtonItem *backButton = [[UIBarButtonItem alloc]
+                                   initWithTitle: @" "
+                                   style: UIBarButtonItemStyleBordered
+                                   target: nil action: nil];
+    
+    [self.navigationItem setBackBarButtonItem: backButton];
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
+    if([[segue destinationViewController] isKindOfClass:[ProfileViewController class]]){
+        if([sender isKindOfClass:[NSArray class]]){
+            ProfileViewController *viewController =[segue destinationViewController];
+            [viewController setName:(NSString *)[sender firstObject] andID:[sender objectAtIndex:1]];
+        }
+    }
 }
-*/
 
 @end

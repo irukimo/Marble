@@ -136,6 +136,7 @@
     _isSelf = ([_fbid isEqualToString:selfFBID])? TRUE : FALSE;
     NSLog(@"personid %@, selfid %@", _fbid, selfFBID);
     if(_isSelf){
+        [self setTitle:[Utility getNameToDisplay:_name]];
         [_statusTextField setEnabled:YES];
     } else{
         [self setTitle:[Utility getNameToDisplay:_name]];

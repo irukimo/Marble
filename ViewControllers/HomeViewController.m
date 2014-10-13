@@ -155,8 +155,7 @@
 }
 
 -(void) postSelected:(NSString *)name andID:(NSString *)fbid{
-    NSArray *infoBundle = [NSArray arrayWithObjects:name,fbid, nil];
-    [self performSegueWithIdentifier:@"ProfileViewControllerSegue" sender:infoBundle];
+    
 }
 
 #pragma mark -
@@ -197,16 +196,6 @@
     [_selectPeopleViewController displaySearchResult:arrayOfUsers];
 }
 
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if([[segue destinationViewController] isKindOfClass:[ProfileViewController class]]){
-        if([sender isKindOfClass:[NSArray class]]){
-            ProfileViewController *viewController =[segue destinationViewController];
-            [viewController setName:(NSString *)[sender firstObject] andID:[sender objectAtIndex:1]];
-        }
-    }
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
 
 
 @end

@@ -15,6 +15,7 @@
 
 - (void) setName:(NSString *)name andID:(NSString *)fbid andStatus:(NSString *)status;
 @property (nonatomic, weak) id<StatusUpdateTableViewCellDelegate> delegate;
+-(void)setComments:(NSArray *)comments;
 @end
 
 
@@ -23,5 +24,6 @@
 @required
 
 - (void) commentPost:(id)sender withComment:(NSString *)comment;
+-(void) gotoProfileWithName:(NSString *)name andID:(NSString *)fbid;
 
 @end

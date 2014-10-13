@@ -19,6 +19,9 @@
 @property(strong,nonatomic) NSString *authorName;
 @property(strong,nonatomic) NSString *answerName;
 @property(strong,nonatomic) NSString *keyword;
+@property(strong,nonatomic) UIButton *option0NameButton;
+@property(strong,nonatomic) UIButton *option1NameButton;
+@property(strong,nonatomic) UIButton *authorNameButton;
 
 @property(strong,nonatomic) UILabel *keywordLabel;
 @property(strong,nonatomic) UILabel *resultLabel;
@@ -48,7 +51,7 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         [self addStaticLabels];
-        [self addChoiceButtons];
+//        [self addChoiceButtons];
         [self addResultLabel];
         [self initPicViews];
         self.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -71,20 +74,28 @@
 }
 
 -(void) initPicViews{
-    _option0PicView = [[UIImageView alloc] initWithFrame:CGRectMake(15, 45, 50, 50)];
-    _option1PicView = [[UIImageView alloc] initWithFrame:CGRectMake(115, 45, 50, 50)];
-    _authorPicView = [[UIImageView alloc] initWithFrame:CGRectMake(5, 5, 30, 30)];
-    _option0PicView.layer.cornerRadius = 5;
-    _option0PicView.layer.masksToBounds = YES;
-    _option1PicView.layer.cornerRadius = 5;
-    _option1PicView.layer.masksToBounds = YES;
-    _authorPicView.layer.cornerRadius = 15;
+    _option0PicView = [[UIImageView alloc] initWithFrame:CGRectMake(25, 45, 135, 135)];
+    _option1PicView = [[UIImageView alloc] initWithFrame:CGRectMake(160, 45, 135, 135)];
+    UIView *whiteView = [[UIView alloc] initWithFrame:CGRectMake(7, 7, 50, 50)];
+    [whiteView setBackgroundColor:[UIColor whiteColor]];
+    whiteView.layer.cornerRadius = 25;
+    whiteView.layer.masksToBounds = YES;
+    _authorPicView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 10, 44, 44)];
+    _authorPicView.layer.cornerRadius = 22;
     _authorPicView.layer.masksToBounds = YES;
     [self.contentView addSubview:_option0PicView];
     [self.contentView addSubview:_option1PicView];
+    [self.contentView addSubview:whiteView];
     [self.contentView addSubview:_authorPicView];
+    UITapGestureRecognizer *singleTap0 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(personClicked0)];
+    UITapGestureRecognizer *singleTap1 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(personClicked1)];
+    [_option0PicView setUserInteractionEnabled:YES];
+    [_option1PicView setUserInteractionEnabled:YES];
+    [_option0PicView addGestureRecognizer:singleTap0];
+    [_option1PicView addGestureRecognizer:singleTap1];
 }
 
+/*
 -(void) addChoiceButtons{
     _chooseOption0Button = [[UIButton alloc] initWithFrame:CGRectMake(15, 100, 100, 20)];
     _chooseOption1Button = [[UIButton alloc] initWithFrame:CGRectMake(115, 100, 100, 20)];
@@ -96,9 +107,10 @@
     [_chooseOption1Button addTarget:self action:@selector(chooseOption1:) forControlEvents:UIControlEventTouchUpInside];
     [self.contentView addSubview:_chooseOption0Button];
     [self.contentView addSubview:_chooseOption1Button];
-}
+}*/
 
--(void) chooseOption0:(id)sender{
+
+-(void)personClicked0{
     NSLog(@"answer is %@, chose %@",_answerName,_option0Name);
     if([_option0Name isEqualToString:_answerName]){
         [_resultLabel setText:@"correct"];
@@ -107,12 +119,12 @@
     }
     MBDebug(@"choose option0 clicked! %@", _option0Name);
     if(_delegate && [_delegate respondsToSelector:@selector(sendGuess:withAnswer:)]){
-        [_delegate sendGuess:sender withAnswer:_option0Name];
+        [_delegate sendGuess:_option0PicView withAnswer:_option0Name];
     }
 
 }
 
--(void) chooseOption1:(id)sender{
+-(void)personClicked1{
     NSLog(@"answer is %@, chose %@",_answerName,_option1Name);
     if([_option1Name isEqualToString:_answerName]){
         [_resultLabel setText:@"correct"];
@@ -121,12 +133,12 @@
     }
     MBDebug(@"choose option0 clicked! %@", _option0Name);
     if(_delegate && [_delegate respondsToSelector:@selector(sendGuess:withAnswer:)]){
-        [_delegate sendGuess:sender withAnswer:_option1Name];
+        [_delegate sendGuess:_option1PicView withAnswer:_option1Name];
     }
 }
 
 -(void) addResultLabel{
-    _resultLabel = [[UILabel alloc] initWithFrame:CGRectMake(230, 45, 100, 50)];
+    _resultLabel = [[UILabel alloc] initWithFrame:CGRectMake(230, 5, 100, 50)];
     [self addSubview:_resultLabel];
 }
 
@@ -134,8 +146,8 @@
 -(void)addStaticLabels{
     _timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(285, 5, 70, 20)];
 
-    _compareNumLabel = [[UILabel alloc] initWithFrame:CGRectMake(230, 130, 50, 20)];
-    _commentNumLabel = [[UILabel alloc] initWithFrame:CGRectMake(280, 130, 50, 20)];
+    _compareNumLabel = [[UILabel alloc] initWithFrame:CGRectMake(230, 180, 50, 20)];
+    _commentNumLabel = [[UILabel alloc] initWithFrame:CGRectMake(280, 180, 50, 20)];
     
     _authorNameButton = [[UIButton alloc] initWithFrame:CGRectMake(60, 15, 120, 20)];
     _option0NameButton = [[UIButton alloc] initWithFrame:CGRectMake(15, 30, 120, 20)];
@@ -144,12 +156,16 @@
     [_authorNameButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [_option0NameButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [_option1NameButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    
+    [_option0NameButton addTarget:self action:@selector(option0Clicked:) forControlEvents:UIControlEventTouchUpInside];
+    [_option1NameButton addTarget:self action:@selector(option1Clicked:) forControlEvents:UIControlEventTouchUpInside];
+    [_authorNameButton addTarget:self action:@selector(authorClicked:) forControlEvents:UIControlEventTouchUpInside];
 
     _keywordLabel = [[UILabel alloc] initWithFrame:CGRectMake(205, 15, 100, 20)];
     
-    _commentField = [[UITextField alloc] initWithFrame:CGRectMake(10, 120, 150, 30)];
+    _commentField = [[UITextField alloc] initWithFrame:CGRectMake(150, 160, 150, 30)];
     [_commentField setBorderStyle:UITextBorderStyleLine];
-    _commentBtn = [[UIButton alloc] initWithFrame:CGRectMake(180, 120, 50, 30)];
+    _commentBtn = [[UIButton alloc] initWithFrame:CGRectMake(300, 160, 50, 30)];
 
     [_commentBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [_commentBtn setTitle:@"send" forState:UIControlStateNormal];
@@ -166,6 +182,24 @@
     [self.contentView addSubview:_timeLabel];
 
 }
+
+-(void)option0Clicked:(id)sender{
+    if(_delegate && [_delegate respondsToSelector:@selector(gotoProfileWithName:andID:)]){
+        [_delegate gotoProfileWithName:_quiz.option0Name andID:_quiz.option0];
+    }
+}
+-(void)option1Clicked:(id)sender{
+    if(_delegate && [_delegate respondsToSelector:@selector(gotoProfileWithName:andID:)]){
+        [_delegate gotoProfileWithName:_quiz.option1Name andID:_quiz.option1];
+    }
+}
+
+-(void)authorClicked:(id)sender{
+    if(_delegate && [_delegate respondsToSelector:@selector(gotoProfileWithName:andID:)]){
+        [_delegate gotoProfileWithName:_quiz.authorName andID:_quiz.author];
+    }
+}
+
 
 - (void)awakeFromNib {
     // Initialization code
@@ -187,12 +221,11 @@
     _answerName = [quiz.answer copy];
     _keyword = [quiz.keyword copy];
     [_compareNumLabel setText:[NSString stringWithFormat:@"%@", quiz.compareNum]];
-    [self getCommentsNumForQuiz:quiz];
     
     
-    NSString *authorPictureUrl = [NSString stringWithFormat:@"https://graph.facebook.com/%@/picture", quiz.author];
-    NSString *option0PictureUrl = [NSString stringWithFormat:@"https://graph.facebook.com/%@/picture?width=100&height=100", quiz.option0];
-    NSString *option1PictureUrl = [NSString stringWithFormat:@"https://graph.facebook.com/%@/picture?width=100&height=100", quiz.option1];
+    NSString *authorPictureUrl = [NSString stringWithFormat:@"https://graph.facebook.com/%@/picture?width=60&height=60", quiz.author];
+    NSString *option0PictureUrl = [NSString stringWithFormat:@"https://graph.facebook.com/%@/picture?width=135&height=135", quiz.option0];
+    NSString *option1PictureUrl = [NSString stringWithFormat:@"https://graph.facebook.com/%@/picture?width=135&height=135", quiz.option1];
     
     [_authorPicView setImageWithURL:[NSURL URLWithString:authorPictureUrl] placeholderImage:[UIImage imageNamed:@"login.png"]];
     [_option0PicView setImageWithURL:[NSURL URLWithString:option0PictureUrl] placeholderImage:[UIImage imageNamed:@"login.png"]];
@@ -214,7 +247,7 @@
 }
 
 -(void) showComments{;
-    int y = 150;
+    int y = 180;
     int increment = 20;
     int i = 0;
     for (NSDictionary *cmt in _quiz.comments) {
@@ -238,23 +271,11 @@
     [self.contentView addSubview:commentLabel];
 }
 
-- (void)getCommentsNumForQuiz:(Quiz *)quiz
-{
-    NSString *sessionToken = [KeyChainWrapper getSessionTokenForUser];
-    NSDictionary *params = [NSDictionary dictionaryWithObjects:@[quiz.uuid, sessionToken] forKeys:@[@"post_uuid", @"auth_token"]];
-    
-    [[RKObjectManager sharedManager] getObjectsAtPathForRouteNamed:@"get_comments" object:quiz parameters:params
-                                                           success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
-                                                               MBDebug(@"Returned comments");
-                                                               MBDebug(@"Quiz author: %@", quiz.author);
-                                                               MBDebug(@"Quiz keyword: %@", quiz.keyword);
-                                                               [_commentNumLabel setText:[NSString stringWithFormat:@"%lu", (unsigned long)[quiz.comments count]]];
-                                                               [self showComments];
-                                                           }
-                                                           failure:^(RKObjectRequestOperation *operation, NSError *error) {
-                                                               [Utility generateAlertWithMessage:@"Network problem"];
-                                                               MBError(@"Cannot get comments!");
-                                                           }];
+-(void)setComments:(NSArray *)comments{
+    _quiz.comments = [comments copy];
+    [_commentNumLabel setText:[NSString stringWithFormat:@"%lu", (unsigned long)[_quiz.comments count]]];
+    [self showComments];
 }
+
 
 @end
