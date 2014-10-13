@@ -24,6 +24,7 @@ typedef void (^voidBlock)(void);
 +(NSString *) getNameToDisplay:(NSString *)name;
 
 + (NSString *)getDateToShow:(NSDate *)date inWhole:(BOOL) inWhole;
++ (NSDictionary *)getPostsViewNameFontDictionary;
 
 + (void) sendThroughRKRoute:(NSString *)routeName withParams:(NSDictionary *)params_;
 + (void) sendThroughRKRoute:(NSString *)routeName withParams:(NSDictionary *)params_

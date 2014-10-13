@@ -38,6 +38,8 @@
 		7A0E976F19DCBCBF003A9359 /* QuizTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A0E976E19DCBCBF003A9359 /* QuizTableViewCell.m */; };
 		7A0E977219DCD8BB003A9359 /* ProfileNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A0E977119DCD8BB003A9359 /* ProfileNavigationController.m */; };
 		7A0E977519DCDFBC003A9359 /* HomeNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A0E977419DCDFBC003A9359 /* HomeNavigationController.m */; };
+		7A48343A19EC56E80029D092 /* OpenSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7A48343819EC56E80029D092 /* OpenSans-Regular.ttf */; };
+		7A48343B19EC56E80029D092 /* OpenSans-Semibold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7A48343919EC56E80029D092 /* OpenSans-Semibold.ttf */; };
 		7AB925B019E3730C00F8229F /* UIColor+MBColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AB925AF19E3730C00F8229F /* UIColor+MBColor.m */; };
 		7AB925B319E374E500F8229F /* ExploreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AB925B219E374E500F8229F /* ExploreViewController.m */; };
 		7AD2A32E19DE1F9800B200E9 /* User+MBUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AD2A32D19DE1F9800B200E9 /* User+MBUser.m */; };
@@ -130,6 +132,8 @@
 		7A0E977119DCD8BB003A9359 /* ProfileNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ProfileNavigationController.m; path = NavigationControllers/ProfileNavigationController.m; sourceTree = "<group>"; };
 		7A0E977319DCDFBC003A9359 /* HomeNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HomeNavigationController.h; path = NavigationControllers/HomeNavigationController.h; sourceTree = "<group>"; };
 		7A0E977419DCDFBC003A9359 /* HomeNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HomeNavigationController.m; path = NavigationControllers/HomeNavigationController.m; sourceTree = "<group>"; };
+		7A48343819EC56E80029D092 /* OpenSans-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "OpenSans-Regular.ttf"; path = "Resources/Fonts/OpenSans-Regular.ttf"; sourceTree = "<group>"; };
+		7A48343919EC56E80029D092 /* OpenSans-Semibold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "OpenSans-Semibold.ttf"; path = "Resources/Fonts/OpenSans-Semibold.ttf"; sourceTree = "<group>"; };
 		7AB925AE19E3730C00F8229F /* UIColor+MBColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIColor+MBColor.h"; path = "Utilities/UIColor+MBColor.h"; sourceTree = "<group>"; };
 		7AB925AF19E3730C00F8229F /* UIColor+MBColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIColor+MBColor.m"; path = "Utilities/UIColor+MBColor.m"; sourceTree = "<group>"; };
 		7AB925B119E374E500F8229F /* ExploreViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExploreViewController.h; sourceTree = "<group>"; };
@@ -268,9 +272,27 @@
 			name = Framework;
 			sourceTree = "<group>";
 		};
+		7A48343719EC56D60029D092 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				7A48343D19EC576C0029D092 /* Fonts */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		7A48343D19EC576C0029D092 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				7A48343919EC56E80029D092 /* OpenSans-Semibold.ttf */,
+				7A48343819EC56E80029D092 /* OpenSans-Regular.ttf */,
+			);
+			name = Fonts;
+			sourceTree = "<group>";
+		};
 		7AF4122419D9FB6C00A470E1 = {
 			isa = PBXGroup;
 			children = (
+				7A48343719EC56D60029D092 /* Resources */,
 				50B568F019E4949E0050C8EC /* Icons */,
 				5152F8DB19DCACA1008E99DB /* Models */,
 				7AF4127619DB518900A470E1 /* Utilities */,
@@ -511,6 +533,8 @@
 				50B5690619E497020050C8EC /* home-unselected@2x.png in Resources */,
 				50B5690C19E4AA260050C8EC /* login.png in Resources */,
 				50B5690819E497020050C8EC /* explore-selected@2x.png in Resources */,
+				7A48343A19EC56E80029D092 /* OpenSans-Regular.ttf in Resources */,
+				7A48343B19EC56E80029D092 /* OpenSans-Semibold.ttf in Resources */,
 				7AF4123E19D9FB6C00A470E1 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

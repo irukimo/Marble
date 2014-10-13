@@ -14,9 +14,9 @@
 @interface KeywordUpdateTableViewCell : UITableViewCell
 
 @property(strong, nonatomic) UIButton *nameButton;
-- (void) setName:(NSString *)name andID:(NSString *)fbid andDescription:(NSString *)desc;
 @property (nonatomic, weak) id<KeywordUpdateTableViewCellDelegate> delegate;
-
+-(void)setComments:(NSArray *)comments;
+- (void) setName:(NSString *)name andID:(NSString *)fbid andDescription:(NSString *)desc;
 @end
 
 
@@ -25,5 +25,5 @@
 @required
 
 -(void) gotoProfileWithName:(NSString *)name andID:(NSString *)fbid;
-
+-(void) commentPost:(id)sender withComment:(NSString *)comment;
 @end
