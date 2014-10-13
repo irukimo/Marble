@@ -265,7 +265,7 @@
         MBDebug(@"keyword update: %@", keywordUpdate);
         cell.delegate = self;
         //if keyword comment ready, uncomment
-        //[self getCommentsForPost:post];
+        [self getCommentsForPost:post];
         return cell;
 
     }
@@ -381,8 +381,8 @@
             } else if([cell isKindOfClass:[QuizTableViewCell class]]){
                 [(QuizTableViewCell *)cell setComments:post.comments];
             } else{
-                //if keyword comment ready, uncomment
-                //[(KeywordUpdateTableViewCell *)cell setComments:post.comments];
+//                if keyword comment ready, uncomment
+                [(KeywordUpdateTableViewCell *)cell setComments:post.comments];
             }
         }
         failure:^(RKObjectRequestOperation *operation, NSError *error) {
