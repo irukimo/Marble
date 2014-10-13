@@ -35,7 +35,7 @@
             fbid = [standardUserDefaults objectForKey:@"userFBID"];
         }
         ProfileViewController *profileViewController = [self.viewControllers firstObject];
-        [profileViewController setName:name andID:fbid];
+        [profileViewController setName:name andID:fbid sentFromTabbar:YES];
     }
 }
 

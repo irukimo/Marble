@@ -13,5 +13,5 @@
 @interface ProfileViewController : PostsViewController <CreateQuizViewControllerDelegate, UITextFieldDelegate, PostsViewControllerDelegate>
 
 
--(void) setName:(NSString *)name andID:(NSString *)fbid;
+-(void) setName:(NSString *)name andID:(NSString *)fbid sentFromTabbar:(BOOL)isSentFromTabbar;
 @end

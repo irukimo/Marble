@@ -118,7 +118,7 @@
     [_headerView addSubview:_viewKeywordBtn];
 }
 
--(void) setName:(NSString *)name andID:(NSString *)fbid{
+-(void) setName:(NSString *)name andID:(NSString *)fbid sentFromTabbar:(BOOL) isSentFromTabbar{
     NSUserDefaults *standardUserDefaults = [NSUserDefaults standardUserDefaults];
     NSString *selfFBID = nil;
     if (standardUserDefaults){
@@ -139,9 +139,11 @@
         [self setTitle:[Utility getNameToDisplay:_name]];
         [_statusTextField setEnabled:YES];
     } else{
-        [self setTitle:[Utility getNameToDisplay:_name]];
+        if(!isSentFromTabbar){
+            [self setTitle:[Utility getNameToDisplay:_name]];
+        }
         [_statusTextField setEnabled:NO];
-        for(id view in self.view.subviews){
+        for(id view in _headerView.subviews){
             if([view isKindOfClass:[UIButton class]]){
                 UIButton *btn = view;
                 if([btn tag] == SEND_BUTTON_TAG){
@@ -252,16 +254,16 @@
 //}
 
 
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if([[segue destinationViewController] isKindOfClass:[ProfileViewController class]]){
-        if([sender isKindOfClass:[NSArray class]]){
-            ProfileViewController *viewController =[segue destinationViewController];
-            [viewController setName:(NSString *)[sender firstObject] andID:[sender objectAtIndex:1]];
-        }
-    }
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
+//- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+//    if([[segue destinationViewController] isKindOfClass:[ProfileViewController class]]){
+//        if([sender isKindOfClass:[NSArray class]]){
+//            ProfileViewController *viewController =[segue destinationViewController];
+//            [viewController setName:(NSString *)[sender firstObject] andID:[sender objectAtIndex:1]];
+//        }
+//    }
+//    // Get the new view controller using [segue destinationViewController].
+//    // Pass the selected object to the new view controller.
+//}
 
 #pragma mark -
 #pragma mark PostViewController Delegate Methods

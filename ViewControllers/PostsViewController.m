@@ -438,7 +438,7 @@
     if([[segue destinationViewController] isKindOfClass:[ProfileViewController class]]){
         if([sender isKindOfClass:[NSArray class]]){
             ProfileViewController *viewController =[segue destinationViewController];
-            [viewController setName:(NSString *)[sender firstObject] andID:[sender objectAtIndex:1]];
+            [viewController setName:(NSString *)[sender firstObject] andID:[sender objectAtIndex:1] sentFromTabbar:NO];
         }
     }
 }
