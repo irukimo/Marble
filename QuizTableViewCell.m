@@ -149,9 +149,9 @@
     _compareNumLabel = [[UILabel alloc] initWithFrame:CGRectMake(230, 180, 50, 20)];
     _commentNumLabel = [[UILabel alloc] initWithFrame:CGRectMake(280, 180, 50, 20)];
     
-    _authorNameButton = [[UIButton alloc] initWithFrame:CGRectMake(60, 15, 120, 20)];
-    _option0NameButton = [[UIButton alloc] initWithFrame:CGRectMake(15, 30, 120, 20)];
-    _option1NameButton = [[UIButton alloc] initWithFrame:CGRectMake(115, 30, 120, 20)];
+    _authorNameButton = [[UIButton alloc] initWithFrame:CGRectMake(35, 8, 120, 20)];
+    _option0NameButton = [[UIButton alloc] initWithFrame:CGRectMake(50, 25, 120, 20)];
+    _option1NameButton = [[UIButton alloc] initWithFrame:CGRectMake(160, 25, 120, 20)];
     
     [_authorNameButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [_option0NameButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
@@ -231,10 +231,12 @@
     [_option0PicView setImageWithURL:[NSURL URLWithString:option0PictureUrl] placeholderImage:[UIImage imageNamed:@"login.png"]];
     [_option1PicView setImageWithURL:[NSURL URLWithString:option1PictureUrl] placeholderImage:[UIImage imageNamed:@"login.png"]];
     
-
-    [_authorNameButton setTitle:[Utility getNameToDisplay:_authorName] forState:UIControlStateNormal];
-    [_option0NameButton setTitle:[Utility getNameToDisplay:_option0Name] forState:UIControlStateNormal];
-    [_option1NameButton setTitle:[Utility getNameToDisplay:_option1Name] forState:UIControlStateNormal];
+    NSAttributedString *authorNameString = [[NSAttributedString alloc] initWithString:[Utility getNameToDisplay:_authorName] attributes:[Utility getPostsViewNameFontDictionary]];
+    NSAttributedString *option0NameString = [[NSAttributedString alloc] initWithString:[Utility getNameToDisplay:_option0Name] attributes:[Utility getPostsViewNameFontDictionary]];
+    NSAttributedString *option1NameString = [[NSAttributedString alloc] initWithString:[Utility getNameToDisplay:_option1Name] attributes:[Utility getPostsViewNameFontDictionary]];
+    [_authorNameButton setAttributedTitle:authorNameString forState:UIControlStateNormal];
+    [_option0NameButton setAttributedTitle:option0NameString forState:UIControlStateNormal];
+    [_option1NameButton setAttributedTitle:option1NameString forState:UIControlStateNormal];
     [_keywordLabel setText:_keyword];
     [_timeLabel setText:[Utility getDateToShow:quiz.time inWhole:NO]];
 }

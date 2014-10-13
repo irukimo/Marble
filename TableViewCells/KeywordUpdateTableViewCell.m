@@ -89,7 +89,7 @@
 {
     _name = [name copy];
     _fbid = [fbid copy];
-    NSAttributedString *nameString = [[NSAttributedString alloc] initWithString:_name attributes:[Utility getPostsViewNameFontDictionary]];
+    NSAttributedString *nameString = [[NSAttributedString alloc] initWithString:[Utility getNameToDisplay:_name] attributes:[Utility getPostsViewNameFontDictionary]];
     [_nameButton setAttributedTitle:nameString forState:UIControlStateNormal];
     [_descriptionLabel setText:[desc copy]];
     NSString *authorPictureUrl = [NSString stringWithFormat:@"https://graph.facebook.com/%@/picture", fbid];

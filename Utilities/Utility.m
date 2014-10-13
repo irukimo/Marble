@@ -164,7 +164,7 @@
 }
 
 + (NSDictionary *)getPostsViewNameFontDictionary{
-    return [NSDictionary dictionaryWithObjectsAndKeys: [UIFont fontWithName:@"OpenSans-Semibold" size:15],NSFontAttributeName, [UIColor blackColor] ,NSForegroundColorAttributeName,nil];
+    return [NSDictionary dictionaryWithObjectsAndKeys: [UIFont fontWithName:@"OpenSans-Semibold" size:15],NSFontAttributeName, [UIColor blackColor] ,NSForegroundColorAttributeName, @(-0.5), NSKernAttributeName, nil];
 }
 
 + (NSString *)getMonthName:(NSInteger)month{
