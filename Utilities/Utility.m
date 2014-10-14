@@ -171,6 +171,10 @@
     return [NSDictionary dictionaryWithObjectsAndKeys: [UIFont fontWithName:@"OpenSans" size:15],NSFontAttributeName, [UIColor grayColor] ,NSForegroundColorAttributeName, @(-0.5), NSKernAttributeName, nil];
 }
 
++ (NSDictionary *)getNavigationBarTitleFontDictionary{
+    return [NSDictionary dictionaryWithObjectsAndKeys: [UIFont fontWithName:@"OpenSans" size:20],NSFontAttributeName, [UIColor whiteColor] ,NSForegroundColorAttributeName, nil];
+}
+
 + (NSString *)getMonthName:(NSInteger)month{
     switch ((int)month) {
         case 1:
