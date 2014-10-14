@@ -7,15 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "PostsTableViewSuperCell.h"
+
 
 @protocol KeywordUpdateTableViewCellDelegate;
 
 
-@interface KeywordUpdateTableViewCell : UITableViewCell
+@interface KeywordUpdateTableViewCell : PostsTableViewSuperCell
 
 @property(strong, nonatomic) UIButton *nameButton;
 @property (nonatomic, weak) id<KeywordUpdateTableViewCellDelegate> delegate;
--(void)setComments:(NSArray *)comments;
 - (void) setName:(NSString *)name andID:(NSString *)fbid andDescription:(NSString *)desc;
 @end
 

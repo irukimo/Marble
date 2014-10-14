@@ -7,19 +7,19 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "PostsTableViewSuperCell.h"
 #import "Quiz.h"
 
 @protocol QuizTableViewCellDelegate;
 
 
-@interface QuizTableViewCell : UITableViewCell
+@interface QuizTableViewCell : PostsTableViewSuperCell
 
 
 
 
 @property (nonatomic, weak) id<QuizTableViewCellDelegate> delegate;
 @property (nonatomic, strong) NSString *quizUUID;
--(void)setComments:(NSArray *)comments;
 -(void) setQuiz:(Quiz *)quiz;
 
 @end

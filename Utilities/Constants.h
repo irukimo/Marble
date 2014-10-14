@@ -26,8 +26,8 @@
 #define keywordUpdateTableViewCellIdentifier @"keywordUpdateTableViewCellIdentifier"
 #define keywordListTableViewCellIdentifier @"keywordListTableViewCellIdentifier"
 
-#define QuizTableViewCellHeight 190
-#define StatusUpdateTableViewCellHeight 50
+#define QuizTableViewCellHeight 200
+#define StatusUpdateTableViewCellHeight 80
 #define KeywordUpdateTableViewCellHeight 80
 #define CommentIncrementHeight 20
 
@@ -36,6 +36,10 @@
 #define HOME_POSTS_TYPE @"home_posts_type"
 #define PROFILE_POSTS_TYPE @"profile_posts_type"
 #define KEYWORD_POSTS_TYPE @"keyword_posts_type"
+
+#define QUIZ_CELL_TYPE @"quiz_cell_type"
+#define STATUS_UPDATE_CELL_TYPE @"status_update_cell_type"
+#define KEYWORD_UPDATE_CELL_TYPE @"keyword_update_cell_type"
 
 
 #endif

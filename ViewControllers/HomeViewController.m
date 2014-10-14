@@ -96,7 +96,7 @@
 
 -(void) setNavbarTitle{
     UINavigationBar *myNavBar =[self.navigationController navigationBar];
-    [[myNavBar topItem] setTitle:@"MARBLES"];
+    [[myNavBar topItem] setTitle:@"Marbles"];
     [myNavBar setTranslucent:NO];
     [myNavBar setBarTintColor:[UIColor marbleOrange]];
         self.navigationController.navigationBar.tintColor = [UIColor whiteColor];

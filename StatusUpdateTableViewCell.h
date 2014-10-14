@@ -7,15 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "PostsTableViewSuperCell.h"
 
 @protocol StatusUpdateTableViewCellDelegate;
 
 
-@interface StatusUpdateTableViewCell : UITableViewCell
+@interface StatusUpdateTableViewCell : PostsTableViewSuperCell
 
 - (void) setName:(NSString *)name andID:(NSString *)fbid andStatus:(NSString *)status;
 @property (nonatomic, weak) id<StatusUpdateTableViewCellDelegate> delegate;
--(void)setComments:(NSArray *)comments;
 @end
 
 

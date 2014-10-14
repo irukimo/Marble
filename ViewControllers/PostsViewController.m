@@ -22,6 +22,8 @@
 
 #import "KeyChainWrapper.h"
 
+#import "PostsTableViewSuperCell.h"
+
 @interface PostsViewController ()
     @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
 @end
@@ -376,14 +378,23 @@
             }
             NSIndexPath *path = [_fetchedResultsController indexPathForObject:post];
             id cell = [(UITableView *)self.view cellForRowAtIndexPath:path];
-            if ([cell isKindOfClass:[StatusUpdateTableViewCell class]]) {
-                [(StatusUpdateTableViewCell *)cell setComments:post.comments];
-            } else if([cell isKindOfClass:[QuizTableViewCell class]]){
-                [(QuizTableViewCell *)cell setComments:post.comments];
-            } else{
-//                if keyword comment ready, uncomment
-                [(KeywordUpdateTableViewCell *)cell setComments:post.comments];
-            }
+            
+            NSLog(@"what kind of class? %@", [cell class]);
+            PostsTableViewSuperCell *superCell = (PostsTableViewSuperCell *)cell;
+            [superCell setCommentsForPostSuperCell:post.comments];
+            
+//            if ([cell isKindOfClass:[StatusUpdateTableViewCell class]]) {
+//                NSLog(@"kind of status update");
+//                [(StatusUpdateTableViewCell *)cell setComments:post.comments];
+//            } else if([cell isKindOfClass:[QuizTableViewCell class]]){
+//                NSLog(@"kind of quiz");
+//                [(QuizTableViewCell *)cell setComments:post.comments];
+//            } else{
+//                NSLog(@"kind of keyword update");
+//                [(KeywordUpdateTableViewCell *)cell setComments:post.comments];
+//            }
+            
+            
         }
         failure:^(RKObjectRequestOperation *operation, NSError *error) {
             [Utility generateAlertWithMessage:@"Network problem"];

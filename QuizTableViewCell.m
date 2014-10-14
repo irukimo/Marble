@@ -11,7 +11,7 @@
 #import "KeyChainWrapper.h"
 #import "User+MBUser.h"
 
-#define COMMENT_LABEL_TAG 456
+
 
 @interface QuizTableViewCell()
 @property(strong,nonatomic) NSString *option0Name;
@@ -34,7 +34,7 @@
 @property(strong, nonatomic) UIButton *chooseOption1Button;
 
 @property(strong, nonatomic) UILabel *compareNumLabel;
-@property(strong, nonatomic) UILabel *commentNumLabel;
+
 @property(strong, nonatomic) UILabel *timeLabel;
 
 @property (strong, nonatomic) UIImageView *authorPicView;
@@ -54,24 +54,13 @@
 //        [self addChoiceButtons];
         [self addResultLabel];
         [self initPicViews];
-        self.selectionStyle = UITableViewCellSelectionStyleNone;
+        self.cellType = QUIZ_CELL_TYPE;
+        [super addStatsLabels];
         // Initialization code
     }
     return self;
 }
 
--(void)prepareForReuse{
-    [super prepareForReuse];
-    [self removeAllComments];
-}
-
--(void) removeAllComments{
-    for(id view in self.contentView.subviews){
-        if([view tag] == COMMENT_LABEL_TAG){
-            [view removeFromSuperview];
-        }
-    }
-}
 
 -(void) initPicViews{
     _option0PicView = [[UIImageView alloc] initWithFrame:CGRectMake(25, 45, 135, 135)];
@@ -147,7 +136,7 @@
     _timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(285, 5, 70, 20)];
 
     _compareNumLabel = [[UILabel alloc] initWithFrame:CGRectMake(230, 180, 50, 20)];
-    _commentNumLabel = [[UILabel alloc] initWithFrame:CGRectMake(280, 180, 50, 20)];
+
     
     _authorNameButton = [[UIButton alloc] initWithFrame:CGRectMake(35, 8, 120, 20)];
     _option0NameButton = [[UIButton alloc] initWithFrame:CGRectMake(50, 25, 120, 20)];
@@ -178,7 +167,6 @@
     [self.contentView addSubview:_keywordLabel];
     [self.contentView addSubview:_commentField];
     [self.contentView addSubview:_commentBtn];
-    [self.contentView addSubview:_commentNumLabel];
     [self.contentView addSubview:_timeLabel];
 
 }
@@ -247,42 +235,6 @@
     }
 }
 
--(void) showComments{;
-    int y = 180;
-    int increment = 20;
-    int i = 0;
-    for (NSDictionary *cmt in _quiz.comments) {
-        if(i > 2){
-            return;
-        }
-        [self addCommentAtY:(y+i*increment) withName:[cmt valueForKey:@"name"] andID:[cmt valueForKey:@"fb_id"] andComment:[cmt valueForKey:@"comment"]];
-        i++;
-    }
-}
-
-
--(void) addCommentAtY:(int)y withName:(NSString *)name andID:(NSString *)fbid andComment:(NSString *)comment{
-    UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(25, y, 100, 20)];
-    [nameLabel setTag:COMMENT_LABEL_TAG];
-
-    NSAttributedString *nameString = [[NSAttributedString alloc] initWithString:[Utility getNameToDisplay:name] attributes:[Utility getPostsViewNameFontDictionary]];
-    CGSize nameSize = [nameString size];
-    
-    UILabel *commentLabel = [[UILabel alloc] initWithFrame:CGRectMake(25+3+nameSize.width, y, 150, 20)];
-    [commentLabel setTag:COMMENT_LABEL_TAG];
-    
-    NSAttributedString *commentString = [[NSAttributedString alloc] initWithString:comment attributes:[Utility getPostsViewCommentFontDictionary]];
-    [nameLabel setAttributedText:nameString];
-    [commentLabel setAttributedText:commentString];
-    [self.contentView addSubview:nameLabel];
-    [self.contentView addSubview:commentLabel];
-}
-
--(void)setComments:(NSArray *)comments{
-    _quiz.comments = [comments copy];
-    [_commentNumLabel setText:[NSString stringWithFormat:@"%lu", (unsigned long)[_quiz.comments count]]];
-    [self showComments];
-}
 
 
 @end

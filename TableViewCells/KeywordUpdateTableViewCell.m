@@ -7,7 +7,7 @@
 //
 
 #import "KeywordUpdateTableViewCell.h"
-#define COMMENT_LABEL_TAG 456
+
 
 @interface KeywordUpdateTableViewCell()
 @property(strong, nonatomic) UILabel *descriptionLabel;
@@ -15,7 +15,6 @@
 @property (strong, nonatomic) NSString *name;
 @property (strong, nonatomic) NSString *fbid;
 @property (strong,nonatomic) NSArray *comments;
-@property(strong, nonatomic) UILabel *commentNumLabel;
 @property(strong, nonatomic) UIButton *commentBtn;
 @property(strong, nonatomic) UITextField *commentField;
 @end
@@ -25,38 +24,25 @@
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        self.selectionStyle = UITableViewCellSelectionStyleNone;
         [self initStaticButtonsAndLabels];
         [self addTextFields];
 
         [self initProfilePic];
+        self.cellType = KEYWORD_UPDATE_CELL_TYPE;
+        [super addStatsLabels];
         // Initialization code
     }
     return self;
 }
 
--(void)prepareForReuse{
-    [super prepareForReuse];
-    [self removeAllComments];
-}
-
--(void) removeAllComments{
-    for(id view in self.contentView.subviews){
-        if([view tag] == COMMENT_LABEL_TAG){
-            [view removeFromSuperview];
-        }
-    }
-}
 
 -(void)initStaticButtonsAndLabels{
-    _commentNumLabel = [[UILabel alloc] initWithFrame:CGRectMake(280, 15, 50, 20)];
     _descriptionLabel = [[UILabel alloc] initWithFrame:CGRectMake(40, 20, 300, 30)];
     _nameButton = [[UIButton alloc] initWithFrame:CGRectMake(50, 5, 100, 30)];
     [_nameButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [_nameButton addTarget:self action:@selector(nameClicked:) forControlEvents:UIControlEventTouchUpInside];
     [self.contentView addSubview:_descriptionLabel];
     [self.contentView addSubview:_nameButton];
-    [self.contentView addSubview:_commentNumLabel];
 }
 
 -(void) addTextFields{
@@ -95,42 +81,6 @@
     NSString *authorPictureUrl = [NSString stringWithFormat:@"https://graph.facebook.com/%@/picture", fbid];
     [_authorPicView setImageWithURL:[NSURL URLWithString:authorPictureUrl] placeholderImage:[UIImage imageNamed:@"login.png"]];
 }
-
--(void)setComments:(NSArray *)comments{
-    _comments = [comments copy];
-    [_commentNumLabel setText:[NSString stringWithFormat:@"%lu", (unsigned long)[_comments count]]];
-    [self showComments];
-}
-
--(void) showComments{;
-    int y = 60;
-    int increment = 20;
-    int i = 0;
-    for (NSDictionary *cmt in _comments) {
-        if(i > 2){
-            return;
-        }
-        [self addCommentAtY:(y+i*increment) withName:[cmt valueForKey:@"name"] andID:[cmt valueForKey:@"fb_id"] andComment:[cmt valueForKey:@"comment"]];
-        i++;
-    }
-}
-
--(void) addCommentAtY:(int)y withName:(NSString *)name andID:(NSString *)fbid andComment:(NSString *)comment{
-    UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(25, y, 100, 20)];
-    [nameLabel setTag:COMMENT_LABEL_TAG];
-    NSAttributedString *nameString = [[NSAttributedString alloc] initWithString:[Utility getNameToDisplay:name] attributes:[Utility getPostsViewNameFontDictionary]];
-    CGSize nameSize = [nameString size];
-    
-    UILabel *commentLabel = [[UILabel alloc] initWithFrame:CGRectMake(25+3+nameSize.width, y, 150, 20)];
-    [commentLabel setTag:COMMENT_LABEL_TAG];
-    
-    NSAttributedString *commentString = [[NSAttributedString alloc] initWithString:comment attributes:[Utility getPostsViewCommentFontDictionary]];
-    [nameLabel setAttributedText:nameString];
-    [commentLabel setAttributedText:commentString];
-    [self.contentView addSubview:nameLabel];
-    [self.contentView addSubview:commentLabel];
-}
-
 
 -(void) initProfilePic{
     _authorPicView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 10, 44, 44)];

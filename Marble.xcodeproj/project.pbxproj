@@ -40,6 +40,7 @@
 		7A0E977519DCDFBC003A9359 /* HomeNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A0E977419DCDFBC003A9359 /* HomeNavigationController.m */; };
 		7A48343A19EC56E80029D092 /* OpenSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7A48343819EC56E80029D092 /* OpenSans-Regular.ttf */; };
 		7A48343B19EC56E80029D092 /* OpenSans-Semibold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7A48343919EC56E80029D092 /* OpenSans-Semibold.ttf */; };
+		7A48344019EC9B940029D092 /* PostsTableViewSuperCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A48343F19EC9B940029D092 /* PostsTableViewSuperCell.m */; };
 		7AB925B019E3730C00F8229F /* UIColor+MBColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AB925AF19E3730C00F8229F /* UIColor+MBColor.m */; };
 		7AB925B319E374E500F8229F /* ExploreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AB925B219E374E500F8229F /* ExploreViewController.m */; };
 		7AD2A32E19DE1F9800B200E9 /* User+MBUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AD2A32D19DE1F9800B200E9 /* User+MBUser.m */; };
@@ -134,6 +135,8 @@
 		7A0E977419DCDFBC003A9359 /* HomeNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HomeNavigationController.m; path = NavigationControllers/HomeNavigationController.m; sourceTree = "<group>"; };
 		7A48343819EC56E80029D092 /* OpenSans-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "OpenSans-Regular.ttf"; path = "Resources/Fonts/OpenSans-Regular.ttf"; sourceTree = "<group>"; };
 		7A48343919EC56E80029D092 /* OpenSans-Semibold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "OpenSans-Semibold.ttf"; path = "Resources/Fonts/OpenSans-Semibold.ttf"; sourceTree = "<group>"; };
+		7A48343E19EC9B940029D092 /* PostsTableViewSuperCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PostsTableViewSuperCell.h; path = TableViewCells/PostsTableViewSuperCell.h; sourceTree = "<group>"; };
+		7A48343F19EC9B940029D092 /* PostsTableViewSuperCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PostsTableViewSuperCell.m; path = TableViewCells/PostsTableViewSuperCell.m; sourceTree = "<group>"; };
 		7AB925AE19E3730C00F8229F /* UIColor+MBColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIColor+MBColor.h"; path = "Utilities/UIColor+MBColor.h"; sourceTree = "<group>"; };
 		7AB925AF19E3730C00F8229F /* UIColor+MBColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIColor+MBColor.m"; path = "Utilities/UIColor+MBColor.m"; sourceTree = "<group>"; };
 		7AB925B119E374E500F8229F /* ExploreViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExploreViewController.h; sourceTree = "<group>"; };
@@ -413,6 +416,8 @@
 				7AEB9CF519E8572200409276 /* KeywordUpdateTableViewCell.m */,
 				7AEB9CFD19E9B80E00409276 /* KeywordListTableViewCell.h */,
 				7AEB9CFE19E9B80E00409276 /* KeywordListTableViewCell.m */,
+				7A48343E19EC9B940029D092 /* PostsTableViewSuperCell.h */,
+				7A48343F19EC9B940029D092 /* PostsTableViewSuperCell.m */,
 			);
 			name = TableViewCells;
 			sourceTree = "<group>";
@@ -617,6 +622,7 @@
 				7A0E976C19DCB389003A9359 /* MarbleTabBarController.m in Sources */,
 				7AF4127F19DB62C600A470E1 /* Utility.m in Sources */,
 				50B568EF19E490590050C8EC /* NotifViewController.m in Sources */,
+				7A48344019EC9B940029D092 /* PostsTableViewSuperCell.m in Sources */,
 				7AF4126E19DA672500A470E1 /* SelectPeopleViewController.m in Sources */,
 				7A0E976F19DCBCBF003A9359 /* QuizTableViewCell.m in Sources */,
 				7AF4127519DB392200A470E1 /* LoginViewController.m in Sources */,
