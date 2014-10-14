@@ -45,12 +45,17 @@
     [self addShuffleButtons];
     [self addPeopleButtons];
     [self initFBProfilePicViews];
+//    [self.view setAlpha:0.5f];
+    [self.view setBackgroundColor:[UIColor marbleOrange]];
     
     
     [self.view addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedView)]];
     [self recordData];
     [self setCurrentUserValues];
-    [self.view setBackgroundColor:[UIColor whiteColor]];
+//    UIView *grayView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
+//    [grayView setBackgroundColor:[UIColor blackColor]];
+//    [grayView setAlpha:0.5];
+//    [self.view addSubview:grayView];
     /*
     [NSTimer scheduledTimerWithTimeInterval:1.0
                                      target:self

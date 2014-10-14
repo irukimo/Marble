@@ -32,6 +32,7 @@
 #define CommentIncrementHeight 20
 
 #define TABBAR_HEIGHT 49
+#define NAVBAR_HEIGHT 64
 
 #define HOME_POSTS_TYPE @"home_posts_type"
 #define PROFILE_POSTS_TYPE @"profile_posts_type"

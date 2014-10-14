@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CreateQuizViewController.h"
+#import "SelectKeywordViewController.h"
+#import "SelectPeopleViewController.h"
 
-@interface MarbleTabBarController : UITabBarController <UITabBarControllerDelegate>
-
+@interface MarbleTabBarController : UITabBarController <UITabBarControllerDelegate, CreateQuizViewControllerDelegate, SelectKeywordViewControllerDelegate, SelectPeopleViewControllerDelegate>
+-(void) marbleButtonClicked;
 @end

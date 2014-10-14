@@ -10,15 +10,23 @@
 #import "ProfileNavigationController.h"
 #import "HomeNavigationController.h"
 
-@interface MarbleTabBarController ()
+#define AUTO_COMPLETE_SELECT_VIEW_TAG 999
 
+@interface MarbleTabBarController ()
+@property (strong, nonatomic) CreateQuizViewController *createQuizViewController;
+@property (strong, nonatomic) SelectPeopleViewController *selectPeopleViewController;
+@property (strong, nonatomic) SelectKeywordViewController *selectKeywordViewController;
+@property (strong, nonatomic) UIView *createQuizWholeView;
+@property (nonatomic) BOOL isCreatingMarble;
 @end
 
 @implementation MarbleTabBarController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self initCreateQuizView];
     self.delegate = self;
+    _isCreatingMarble = FALSE;
     
     //set tabbaritem image
     [self setTabBarItemImages];
@@ -80,6 +88,92 @@
     //        [self.navigationController.navigationBar setFrame:CGRectMake(0, 0, NAVIGATION_BAR_CUT_DOWN_HEIGHT, NAVIGATION_BAR_CUT_DOWN_HEIGHT)];
     //    }
 }
+
+-(void) marbleButtonClicked{
+    if(_isCreatingMarble){
+        [_createQuizWholeView removeFromSuperview];
+        _isCreatingMarble = FALSE;
+    } else{
+        [self.view addSubview:_createQuizWholeView];
+        _isCreatingMarble = TRUE;
+    }
+    
+}
+
+
+-(void)initCreateQuizView{
+    UIView *blackBGView = [[UIView alloc] initWithFrame:CGRectMake(0, NAVBAR_HEIGHT, self.view.frame.size.width, self.view.frame.size.height)];
+    [blackBGView setBackgroundColor:[UIColor colorWithWhite:0 alpha:0.8f]];
+    UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(marbleButtonClicked)];
+    [blackBGView addGestureRecognizer:singleTap];
+    
+    _createQuizViewController = [[CreateQuizViewController alloc] init];
+    _createQuizViewController.delegate = self;
+    _createQuizViewController.view.frame = CGRectMake(0, 0, self.view.frame.size.width, 200);
+    _createQuizWholeView = [[UIView alloc] initWithFrame:CGRectMake(0, NAVBAR_HEIGHT, self.view.frame.size.width, self.view.frame.size.height)];
+    [_createQuizWholeView addSubview:blackBGView];
+    [_createQuizWholeView addSubview:_createQuizViewController.view];
+
+}
+
+-(void) prepareSelectPeopleViewController{
+    _selectPeopleViewController = [[SelectPeopleViewController alloc] init];
+    //    _selectPeopleViewController.view.frame = CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y + 200, self.view.bounds.size.width, 100);
+    _selectPeopleViewController.view.frame = CGRectMake(0, 150, self.view.bounds.size.width, 200);
+    _selectPeopleViewController.view.tag = AUTO_COMPLETE_SELECT_VIEW_TAG;
+    _selectPeopleViewController.delegate = self;
+    [_createQuizWholeView addSubview:_selectPeopleViewController.view];
+}
+
+-(void) prepareSelectKeywordViewController{
+    _selectKeywordViewController = [[SelectKeywordViewController alloc] init];
+    //    _selectPeopleViewController.view.frame = CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y + 200, self.view.bounds.size.width, 100);
+    _selectKeywordViewController.view.frame = CGRectMake(0, 150, self.view.bounds.size.width, 200);
+    _selectKeywordViewController.view.tag = AUTO_COMPLETE_SELECT_VIEW_TAG;
+    _selectKeywordViewController.delegate = self;
+    [_createQuizWholeView addSubview:_selectKeywordViewController.view];
+}
+
+
+#pragma mark -
+#pragma mark CreateQuizViewController Delegate Methods
+- (void)shouldDisplayPeople:(CreateQuizViewController *)viewController withPeople:(NSArray *)people{
+    [self prepareSelectPeopleViewController];
+    //    [_selectPeopleViewController setPeopleArray:people];
+    //    _createQuizViewController.view.frame = CGRectMake(self.view.frame.origin.x, 50,
+    //                                                self.view.bounds.size.width, _createQuizViewController.view.frame.size.height);
+    
+}
+
+- (void)shouldDisplayKeywords:(CreateQuizViewController *)viewController withKeywords:(NSArray *)keywords{
+    [self prepareSelectKeywordViewController];
+    //    _createQuizViewController.view.frame = CGRectMake(self.view.frame.origin.x, 50,
+    //                                                self.view.bounds.size.width, _createQuizViewController.view.frame.size.height);
+}
+
+- (void)backToNormal:(CreateQuizViewController *)viewController{
+    for(id view in _createQuizWholeView.subviews){
+        if([view tag] == AUTO_COMPLETE_SELECT_VIEW_TAG){
+            [view removeFromSuperview];
+        }
+    }
+    //    NSLog(@"backtonormal");
+    //    _createQuizViewController.view.frame = CGRectMake(self.view.frame.origin.x, 65,
+    //                                                self.view.bounds.size.width, _createQuizViewController.view.frame.size.height);
+    
+}
+
+- (void)gotSearchUsersResult:(NSArray *)arrayOfUsers{
+    [_selectPeopleViewController displaySearchResult:arrayOfUsers];
+}
+
+#pragma mark -
+#pragma mark SelectPeopleViewController Delegate Methods
+- (void)selectedPerson:(User *)user{
+    [_createQuizViewController setUser:user];
+}
+
+
 
 /*
 #pragma mark - Navigation

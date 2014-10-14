@@ -7,12 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "CreateQuizViewController.h"
-#import "SelectPeopleViewController.h"
 #import "PostsViewController.h"
-#import "SelectKeywordViewController.h"
 
 
-@interface HomeViewController : PostsViewController <CreateQuizViewControllerDelegate, SelectPeopleViewControllerDelegate, SelectKeywordViewControllerDelegate, PostsViewControllerDelegate>
+@interface HomeViewController : PostsViewController <PostsViewControllerDelegate>
 
 @end

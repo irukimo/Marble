@@ -25,7 +25,6 @@
 
 @protocol PostsViewControllerDelegate <NSObject>
 
-- (void)postSelected:(NSString *)name andID:(NSString *)fbid;
 
 
 @end

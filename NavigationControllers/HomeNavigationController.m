@@ -15,8 +15,8 @@
 @implementation HomeNavigationController
 
 - (void)viewDidLoad {
-[[UINavigationBar appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
-[super viewDidLoad];
+    [super viewDidLoad];
+
     // Do any additional setup after loading the view.
 }
 
