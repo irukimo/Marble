@@ -21,4 +21,15 @@
     [self.comments count];
 }
 
+- (void)initFBIDs
+{
+    if (self.author != nil) {
+        [self setFbID1:[NSString stringWithString:self.author]];
+        MBDebug(@"fb ID1: %@", self.fbID1);
+    }
+    if (self.option0 != nil) [self setFbID2:[NSString stringWithString:self.option0]];
+    if (self.option1 != nil) [self setFbID3:[NSString stringWithString:self.option1]];
+    
+}
+
 @end

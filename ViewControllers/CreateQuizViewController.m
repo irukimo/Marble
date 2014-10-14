@@ -12,6 +12,7 @@
 #import "KeyChainWrapper.h"
 #import "User+MBUser.h"
 #import "Quiz.h"
+#import "Quiz+MBQuiz.h"
 #import <QuartzCore/QuartzCore.h>
 
 
@@ -142,6 +143,7 @@
     [quiz setOption1Name:_option1.name];
     [quiz setOption1:_option1.fbID];
     [quiz setAnswer:answer];
+    [quiz initFBIDs];
     NSLog(@"%@",quiz);
     NSString *sessionToken = [KeyChainWrapper getSessionTokenForUser];
     NSDictionary *params = [NSDictionary dictionaryWithObjects:@[sessionToken] forKeys:@[@"auth_token"]];

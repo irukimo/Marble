@@ -12,5 +12,6 @@
 
 - (void)incrementCompareNum;
 - (void)commmentsNum;
+- (void) initFBIDs;
 
 @end

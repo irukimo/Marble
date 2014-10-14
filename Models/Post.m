@@ -2,7 +2,7 @@
 //  Post.m
 //  Marble
 //
-//  Created by Wen-Hsiang Shaw on 10/10/14.
+//  Created by Wen-Hsiang Shaw on 10/13/14.
 //  Copyright (c) 2014 Orrzs Inc. All rights reserved.
 //
 
@@ -11,9 +11,14 @@
 
 @implementation Post
 
-@dynamic popularity;
 @dynamic comments;
-@dynamic uuid;
+@dynamic popularity;
 @dynamic time;
+@dynamic uuid;
+@dynamic fbID1;
+@dynamic fbID2;
+@dynamic fbID3;
+
+
 
 @end

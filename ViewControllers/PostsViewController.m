@@ -17,6 +17,7 @@
 #import "Quiz.h"
 #import "Quiz+MBQuiz.h"
 #import "Post.h"
+#import "Post+MBPost.h"
 #import "StatusUpdate.h"
 #import "KeywordUpdate.h"
 
@@ -49,11 +50,13 @@
                                            MBDebug(@"Successfully loadded quizzes");
                                            MBDebug(@"%ld quiz(zes) were loaded.", [[mappingResult array] count]);
                                            for (Quiz *quiz in [mappingResult array]) {
+                                               [quiz initFBIDs];
                                                MBDebug(@"quiz compare num: %@", quiz.compareNum);
                                                MBDebug(@"quiz time: %@", quiz.time);
                                                MBDebug(@"quiz show time: %@", [Utility getDateToShow:quiz.time inWhole:NO]);
                                                MBDebug(@"quiz show time: %@", [Utility getDateToShow:quiz.time inWhole:YES]);
                                            }
+                                           [Utility saveToPersistenceStore:[RKManagedObjectStore defaultStore].mainQueueManagedObjectContext failureMessage:@"failed to save."];
                                        }
                                        failure:[Utility failureBlockWithAlertMessage:@"Can't connect to the server"
                                                                                block:^{MBError(@"Cannot load quizzes");}]
@@ -66,13 +69,16 @@
                                        success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
                                            MBDebug(@"Successfully loadded posts");
                                            MBDebug(@"%ld post(s) were loaded.", [[mappingResult array] count]);
+                                           
                                            for (Post *post in [mappingResult array]) {
-                                               if ([post isKindOfClass:[StatusUpdate class]]){
-                                                   MBDebug(@"status update: %@", (StatusUpdate *)post);
-                                               } else if ([post isKindOfClass:[KeywordUpdate class]]) {
-                                                  MBDebug(@"keyword update: %@", (KeywordUpdate *)post);
-                                               }
+                                               [post initFBIDs];
+//                                               if ([post isKindOfClass:[StatusUpdate class]]){
+//                                                   MBDebug(@"status update: %@", (StatusUpdate *)post);
+//                                               } else if ([post isKindOfClass:[KeywordUpdate class]]) {
+//                                                  MBDebug(@"keyword update: %@", (KeywordUpdate *)post);
+//                                               }
                                            }
+                                           [Utility saveToPersistenceStore:[RKManagedObjectStore defaultStore].mainQueueManagedObjectContext failureMessage:@"failed to save."];
                                        }
                                        failure:[Utility failureBlockWithAlertMessage:@"Can't connect to the server"
                                                                                block:^{MBError(@"Cannot load posts");}]
@@ -81,7 +87,11 @@
     
     //set up fetched results controller
     NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"Post"];
-//    if (predicate) request.predicate = predicate;
+    if(_predicate != nil) {
+        [request setPredicate:_predicate];
+        
+    }
+    MBDebug(@"predicate: %@", _predicate);
     NSSortDescriptor *sort = [[NSSortDescriptor alloc] initWithKey:@"popularity" ascending:YES];
     request.sortDescriptors = @[sort];
     
@@ -141,6 +151,10 @@
                                           path:nil
                                     parameters:params
                                        success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+                                           for (Post *post in [mappingResult array]) {
+                                               [post initFBIDs];
+                                           }
+                                           [Utility saveToPersistenceStore:[RKManagedObjectStore defaultStore].mainQueueManagedObjectContext failureMessage:@"failed to save."];
                                            
                                            /*
                                            ASYNC({
