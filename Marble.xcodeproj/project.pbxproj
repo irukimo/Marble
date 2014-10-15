@@ -164,7 +164,7 @@
 		7AEB9CFB19E9B3B500409276 /* KeywordProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeywordProfileViewController.m; sourceTree = "<group>"; };
 		7AEB9CFD19E9B80E00409276 /* KeywordListTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KeywordListTableViewCell.h; path = TableViewCells/KeywordListTableViewCell.h; sourceTree = "<group>"; };
 		7AEB9CFE19E9B80E00409276 /* KeywordListTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KeywordListTableViewCell.m; path = TableViewCells/KeywordListTableViewCell.m; sourceTree = "<group>"; };
-		7AF4122D19D9FB6C00A470E1 /* Marble.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Marble.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		7AF4122D19D9FB6C00A470E1 /* Marbles.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Marbles.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7AF4123119D9FB6C00A470E1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7AF4123219D9FB6C00A470E1 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		7AF4123419D9FB6C00A470E1 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -334,7 +334,7 @@
 		7AF4122E19D9FB6C00A470E1 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				7AF4122D19D9FB6C00A470E1 /* Marble.app */,
+				7AF4122D19D9FB6C00A470E1 /* Marbles.app */,
 				7AF4124619D9FB6C00A470E1 /* MarbleTests.xctest */,
 			);
 			name = Products;
@@ -484,7 +484,7 @@
 			);
 			name = Marble;
 			productName = Marble;
-			productReference = 7AF4122D19D9FB6C00A470E1 /* Marble.app */;
+			productReference = 7AF4122D19D9FB6C00A470E1 /* Marbles.app */;
 			productType = "com.apple.product-type.application";
 		};
 		7AF4124519D9FB6C00A470E1 /* MarbleTests */ = {
@@ -734,6 +734,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = Marbles;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -769,6 +770,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_NAME = Marbles;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -789,7 +791,7 @@
 				INFOPLIST_FILE = Marble/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = Marbles;
 			};
 			name = Debug;
 		};
@@ -807,7 +809,7 @@
 				INFOPLIST_FILE = Marble/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = Marbles;
 			};
 			name = Release;
 		};

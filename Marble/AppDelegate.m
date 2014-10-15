@@ -76,7 +76,22 @@
     // make sure that the FBLoginView class is loaded before the login view is shown.
     [FBLoginView class];
 
+    // Register for PUSH NOTIFICATION
+    [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeAlert |
+                                                                           UIRemoteNotificationTypeBadge |
+                                                                           UIRemoteNotificationTypeSound)];
     
+    
+    NSDictionary *userInfo = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
+    if (userInfo) {
+        NSDictionary *apsInfo = [userInfo objectForKey:@"aps"];
+        NSString *alertMsg = @"";
+        if( [apsInfo objectForKey:@"alert"] != NULL)
+        {
+            alertMsg = [apsInfo objectForKey:@"alert"];
+        }
+    }
+
     return YES;
 }
 
@@ -116,6 +131,62 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
     // and let ClientManager to check if both are ready. If yes, ClientManager sends to device token to moose server.
     [ClientManager sendDeviceToken];
 }
+
+
+- (void)application:(UIApplication *)application
+didFailToRegisterForRemoteNotificationsWithError:(NSError *)error
+{
+    MBError(@"Error in registering remote notification: %@", error);
+}
+
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
+{
+    NSString * postID = [userInfo objectForKey:@"post_id"];
+    
+    UIApplicationState state = [application applicationState];
+    if (state == UIApplicationStateActive) {
+//        [Flurry logEvent:@"Receive_Notification_In_Foreground"];
+//        AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
+//        AudioServicesPlaySystemSound (1003);
+//        NSDictionary *apsInfo = [userInfo objectForKey:@"aps"];
+//        NSString *alertMsg = @"";
+//        if( [apsInfo objectForKey:@"alert"] != NULL)
+//        {
+//            alertMsg = [apsInfo objectForKey:@"alert"];
+//        }
+//        _notifButton = [[UIButton alloc] initWithFrame:CGRectMake(0, -50, WIDTH, 50)];
+//        [_notifButton setTag:NOTIF_BUTTON_TAG];
+//        [_notifButton setBackgroundColor:[UIColor colorForYoursWhite]];
+//        [_notifButton setTitle:alertMsg forState:UIControlStateNormal];
+//        [_notifButton setTitleColor:[UIColor colorForYoursOrange] forState:UIControlStateNormal];
+//        _notifButton.titleLabel.font = [UIFont fontWithName:@"HelveticaNeueLTStd-Cn" size:16.0];
+//        
+//        [_notifButton addTarget:self action:@selector(notifButtonPressed) forControlEvents:UIControlEventTouchUpInside];
+//        [self.window addSubview:_notifButton];
+//        [[UIApplication sharedApplication] setStatusBarHidden:YES];
+//        [UIView animateWithDuration:ANIMATION_KEYBOARD_DURATION
+//                              delay:ANIMATION_DELAY
+//                            options: (UIViewAnimationOptions)UIViewAnimationOptionCurveEaseInOut
+//                         animations:^{
+//                             _notifButton.frame =
+//                             CGRectMake(0,
+//                                        0,
+//                                        WIDTH,
+//                                        _notifButton.frame.size.height);
+//                         }
+//                         completion:^(BOOL finished){
+//                             [NSTimer scheduledTimerWithTimeInterval:4 target:self selector:@selector(dismissNotifButton) userInfo:nil   repeats:NO];
+//                         }];
+    } else {
+//        [Flurry logEvent:@"Open_Notification" withParameters:@{@"Status": @"App running in background"}];
+//        [self displayRemoteNotifPost];
+    }
+    
+//    ASYNC({
+//        [ClientManager sendBadgeNumber:0];
+//    });
+}
+
 
 
 #pragma mark - Facebook SDK methods
