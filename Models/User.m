@@ -2,7 +2,7 @@
 //  User.m
 //  Marble
 //
-//  Created by Wen-Hsiang Shaw on 10/9/14.
+//  Created by Wen-Hsiang Shaw on 10/15/14.
 //  Copyright (c) 2014 Orrzs Inc. All rights reserved.
 //
 
@@ -14,5 +14,6 @@
 @dynamic fbID;
 @dynamic name;
 @dynamic status;
+@dynamic keywords;
 
 @end

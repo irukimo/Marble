@@ -87,11 +87,11 @@
     
     //set up fetched results controller
     NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"Post"];
-    if(_predicate != nil) {
-        [request setPredicate:_predicate];
-        
-    }
-    MBDebug(@"predicate: %@", _predicate);
+//    if(_predicate != nil) {
+//        [request setPredicate:_predicate];
+//        
+//    }
+//    MBDebug(@"predicate: %@", _predicate);
     NSSortDescriptor *sort = [[NSSortDescriptor alloc] initWithKey:@"popularity" ascending:YES];
     request.sortDescriptors = @[sort];
     

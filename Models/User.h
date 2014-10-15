@@ -2,7 +2,7 @@
 //  User.h
 //  Marble
 //
-//  Created by Wen-Hsiang Shaw on 10/9/14.
+//  Created by Wen-Hsiang Shaw on 10/15/14.
 //  Copyright (c) 2014 Orrzs Inc. All rights reserved.
 //
 
@@ -14,6 +14,7 @@
 
 @property (nonatomic, retain) NSString * fbID;
 @property (nonatomic, retain) NSString * name;
-    @property (nonatomic, retain) NSString * status;
+@property (nonatomic, retain) NSString * status;
+@property (nonatomic, retain) id keywords;
 
 @end
