@@ -55,7 +55,8 @@
     // options mapping
     RKEntityMapping *optionsMapping = [RKEntityMapping mappingForEntityForName:@"User" inManagedObjectStore:managedObjectStore];
     [optionsMapping addAttributeMappingsFromDictionary:@{@"name": @"name",
-                                                         @"fb_id": @"fbID"}];
+                                                         @"fb_id": @"fbID",
+                                                         @"first_keyword": @"keywords"}];
     
     optionsMapping.identificationAttributes = @[@"fbID"];
     
