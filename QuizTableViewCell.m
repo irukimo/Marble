@@ -28,8 +28,7 @@
 
 
 // for temporary use
-@property(strong, nonatomic) UITextField *commentField;
-@property(strong, nonatomic) UIButton *commentBtn;
+
 @property(strong, nonatomic) UIButton *chooseOption0Button;
 @property(strong, nonatomic) UIButton *chooseOption1Button;
 
@@ -55,7 +54,7 @@
         [self addResultLabel];
         [self initPicViews];
         self.cellType = QUIZ_CELL_TYPE;
-        [super addStatsLabels];
+        [super initializeAccordingToType];
         // Initialization code
     }
     return self;
@@ -107,8 +106,8 @@
         [_resultLabel setText:@"wrong"];
     }
     MBDebug(@"choose option0 clicked! %@", _option0Name);
-    if(_delegate && [_delegate respondsToSelector:@selector(sendGuess:withAnswer:)]){
-        [_delegate sendGuess:_option0PicView withAnswer:_option0Name];
+    if(self.delegate && [self.delegate respondsToSelector:@selector(sendGuess:withAnswer:)]){
+        [self.delegate sendGuess:_option0PicView withAnswer:_option0Name];
     }
 
 }
@@ -121,8 +120,8 @@
         [_resultLabel setText:@"wrong"];
     }
     MBDebug(@"choose option0 clicked! %@", _option0Name);
-    if(_delegate && [_delegate respondsToSelector:@selector(sendGuess:withAnswer:)]){
-        [_delegate sendGuess:_option1PicView withAnswer:_option1Name];
+    if(self.delegate && [self.delegate respondsToSelector:@selector(sendGuess:withAnswer:)]){
+        [self.delegate sendGuess:_option1PicView withAnswer:_option1Name];
     }
 }
 
@@ -152,39 +151,33 @@
 
     _keywordLabel = [[UILabel alloc] initWithFrame:CGRectMake(205, 15, 100, 20)];
     
-    _commentField = [[UITextField alloc] initWithFrame:CGRectMake(150, 160, 150, 30)];
-    [_commentField setBorderStyle:UITextBorderStyleLine];
-    _commentBtn = [[UIButton alloc] initWithFrame:CGRectMake(300, 160, 50, 30)];
 
-    [_commentBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [_commentBtn setTitle:@"send" forState:UIControlStateNormal];
-    [_commentBtn addTarget:self action:@selector(commentQuizClicked:) forControlEvents:UIControlEventTouchUpInside];
+
 
     [self.contentView addSubview:_compareNumLabel];
     [self.contentView addSubview:_authorNameButton];
     [self.contentView addSubview:_option0NameButton];
     [self.contentView addSubview:_option1NameButton];
     [self.contentView addSubview:_keywordLabel];
-    [self.contentView addSubview:_commentField];
-    [self.contentView addSubview:_commentBtn];
+
     [self.contentView addSubview:_timeLabel];
 
 }
 
 -(void)option0Clicked:(id)sender{
-    if(_delegate && [_delegate respondsToSelector:@selector(gotoProfileWithName:andID:)]){
-        [_delegate gotoProfileWithName:_quiz.option0Name andID:_quiz.option0];
+    if(self.delegate && [self.delegate respondsToSelector:@selector(gotoProfileWithName:andID:)]){
+        [self.delegate gotoProfileWithName:_quiz.option0Name andID:_quiz.option0];
     }
 }
 -(void)option1Clicked:(id)sender{
-    if(_delegate && [_delegate respondsToSelector:@selector(gotoProfileWithName:andID:)]){
-        [_delegate gotoProfileWithName:_quiz.option1Name andID:_quiz.option1];
+    if(self.delegate && [self.delegate respondsToSelector:@selector(gotoProfileWithName:andID:)]){
+        [self.delegate gotoProfileWithName:_quiz.option1Name andID:_quiz.option1];
     }
 }
 
 -(void)authorClicked:(id)sender{
-    if(_delegate && [_delegate respondsToSelector:@selector(gotoProfileWithName:andID:)]){
-        [_delegate gotoProfileWithName:_quiz.authorName andID:_quiz.author];
+    if(self.delegate && [self.delegate respondsToSelector:@selector(gotoProfileWithName:andID:)]){
+        [self.delegate gotoProfileWithName:_quiz.authorName andID:_quiz.author];
     }
 }
 
@@ -228,12 +221,7 @@
     [_timeLabel setText:[Utility getDateToShow:quiz.time inWhole:NO]];
 }
 
--(void) commentQuizClicked:(id)sender{
-    MBDebug(@"comment quiz clicked!");
-    if(_delegate && [_delegate respondsToSelector:@selector(commentPost:withComment:)]){
-        [_delegate commentPost:sender withComment:_commentField.text];
-    }
-}
+
 
 
 

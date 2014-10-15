@@ -9,21 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "PostsTableViewSuperCell.h"
 
-@protocol StatusUpdateTableViewCellDelegate;
-
-
 @interface StatusUpdateTableViewCell : PostsTableViewSuperCell
-
 - (void) setName:(NSString *)name andID:(NSString *)fbid andStatus:(NSString *)status;
-@property (nonatomic, weak) id<StatusUpdateTableViewCellDelegate> delegate;
 @end
 
-
-@protocol StatusUpdateTableViewCellDelegate <NSObject>
-
-@required
-
-- (void) commentPost:(id)sender withComment:(NSString *)comment;
--(void) gotoProfileWithName:(NSString *)name andID:(NSString *)fbid;
-
-@end

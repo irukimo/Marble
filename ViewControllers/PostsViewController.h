@@ -10,10 +10,11 @@
 #import "QuizTableViewCell.h"
 #import "StatusUpdateTableViewCell.h"
 #import "KeywordUpdateTableViewCell.h"
+#import "PostsTableViewSuperCell.h"
 
 @protocol PostsViewControllerDelegate;
 
-@interface PostsViewController : UITableViewController <NSFetchedResultsControllerDelegate, QuizTableViewCellDelegate,StatusUpdateTableViewCellDelegate, KeywordUpdateTableViewCellDelegate >
+@interface PostsViewController : UITableViewController <NSFetchedResultsControllerDelegate, PostsViewControllerDelegate >
 
 @property (strong, nonatomic) NSArray *postArray;
 @property (strong, nonatomic) NSString *type;

@@ -15,8 +15,7 @@
 @property(strong, nonatomic) UILabel *statusLabel;
 @property(strong, nonatomic) UILabel *nameLabel;
 @property (strong, nonatomic) UIImageView *authorPicView;
-@property(strong, nonatomic) UITextField *commentField;
-@property(strong, nonatomic) UIButton *commentBtn;
+
 @property(strong,nonatomic) NSArray *comments;
 
 @end
@@ -28,36 +27,15 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         [self addStaticLabels];
-        [self addTextFields];
         [self initPicView];
         self.cellType = STATUS_UPDATE_CELL_TYPE;
-        [super addStatsLabels];
+        [super initializeAccordingToType];
         // Initialization code
     }
     return self;
 }
 
 
--(void) addTextFields{
-    _commentField = [[UITextField alloc] initWithFrame:CGRectMake(10, 30, 150, 20)];
-    [_commentField setBorderStyle:UITextBorderStyleLine];
-    _commentBtn = [[UIButton alloc] initWithFrame:CGRectMake(180, 30, 50, 20)];
-    
-    [_commentBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [_commentBtn setTitle:@"send" forState:UIControlStateNormal];
-    [_commentBtn addTarget:self action:@selector(commentPostClicked:) forControlEvents:UIControlEventTouchUpInside];
-    [self.contentView addSubview:_commentBtn];
-    [self.contentView addSubview:_commentField];
-
-}
-
-
--(void) commentPostClicked:(id)sender{
-    MBDebug(@"comment on status clicked!");
-    if(_delegate && [_delegate respondsToSelector:@selector(commentPost:withComment:)]){
-        [_delegate commentPost:sender withComment:_commentField.text];
-    }
-}
 
 
 

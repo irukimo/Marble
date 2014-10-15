@@ -27,6 +27,7 @@ typedef void (^voidBlock)(void);
 + (NSDictionary *)getPostsViewNameFontDictionary;
 + (NSDictionary *)getPostsViewCommentFontDictionary;
 + (NSDictionary *)getNavigationBarTitleFontDictionary;
++ (NSDictionary *)getWriteACommentFontDictionary;
 
 + (void) sendThroughRKRoute:(NSString *)routeName withParams:(NSDictionary *)params_;
 + (void) sendThroughRKRoute:(NSString *)routeName withParams:(NSDictionary *)params_

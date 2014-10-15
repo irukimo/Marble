@@ -15,8 +15,6 @@
 @property (strong, nonatomic) NSString *name;
 @property (strong, nonatomic) NSString *fbid;
 @property (strong,nonatomic) NSArray *comments;
-@property(strong, nonatomic) UIButton *commentBtn;
-@property(strong, nonatomic) UITextField *commentField;
 @end
 
 @implementation KeywordUpdateTableViewCell
@@ -25,11 +23,10 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         [self initStaticButtonsAndLabels];
-        [self addTextFields];
 
         [self initProfilePic];
         self.cellType = KEYWORD_UPDATE_CELL_TYPE;
-        [super addStatsLabels];
+        [super initializeAccordingToType];
         // Initialization code
     }
     return self;
@@ -45,29 +42,9 @@
     [self.contentView addSubview:_nameButton];
 }
 
--(void) addTextFields{
-    _commentField = [[UITextField alloc] initWithFrame:CGRectMake(10, 30, 150, 20)];
-    [_commentField setBorderStyle:UITextBorderStyleLine];
-    _commentBtn = [[UIButton alloc] initWithFrame:CGRectMake(180, 30, 50, 20)];
-    
-    [_commentBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [_commentBtn setTitle:@"send" forState:UIControlStateNormal];
-    [_commentBtn addTarget:self action:@selector(commentPostClicked:) forControlEvents:UIControlEventTouchUpInside];
-    [self.contentView addSubview:_commentBtn];
-    [self.contentView addSubview:_commentField];
-    
-}
-
--(void) commentPostClicked:(id)sender{
-    MBDebug(@"comment on status clicked!");
-    if(_delegate && [_delegate respondsToSelector:@selector(commentPost:withComment:)]){
-        [_delegate commentPost:sender withComment:_commentField.text];
-    }
-}
-
 -(void)nameClicked:(id)sender{
-    if(_delegate && [_delegate respondsToSelector:@selector(gotoProfileWithName:andID:)]){
-        [_delegate gotoProfileWithName:_name andID:_fbid];
+    if(self.delegate && [self.delegate respondsToSelector:@selector(gotoProfileWithName:andID:)]){
+        [self.delegate gotoProfileWithName:_name andID:_fbid];
     }
 }
 

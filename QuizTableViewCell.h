@@ -10,26 +10,11 @@
 #import "PostsTableViewSuperCell.h"
 #import "Quiz.h"
 
-@protocol QuizTableViewCellDelegate;
+
 
 
 @interface QuizTableViewCell : PostsTableViewSuperCell
-
-
-
-
-@property (nonatomic, weak) id<QuizTableViewCellDelegate> delegate;
 @property (nonatomic, strong) NSString *quizUUID;
 -(void) setQuiz:(Quiz *)quiz;
-
-@end
-
-@protocol QuizTableViewCellDelegate <NSObject>
-
-@required
-
-- (void) commentPost:(id)sender withComment:(NSString *)comment;
-- (void) sendGuess:(id)sender withAnswer:(NSString *)answer;
--(void) gotoProfileWithName:(NSString *)name andID:(NSString *)fbid;
 
 @end

@@ -8,11 +8,24 @@
 
 #import <UIKit/UIKit.h>
 
-@interface PostsTableViewSuperCell : UITableViewCell
+@protocol PostsViewControllerDelegate;
 
+@interface PostsTableViewSuperCell : UITableViewCell <UITextFieldDelegate>
+@property (nonatomic, weak) id delegate;
 @property (strong, nonatomic) NSString *cellType;
 -(void)setCommentsForPostSuperCell:(NSArray *)comments;
--(void) addStatsLabels;
+-(void) initializeAccordingToType;
 -(void) addCommentAtY:(int)y withName:(NSString *)name andID:(NSString *)fbid andComment:(NSString *)comment;
+
+@end
+
+
+@protocol PostsViewControllerDelegate <NSObject>
+
+@required
+
+- (void) commentPost:(id)sender withComment:(NSString *)comment;
+- (void) sendGuess:(id)sender withAnswer:(NSString *)answer;
+-(void) gotoProfileWithName:(NSString *)name andID:(NSString *)fbid;
 
 @end

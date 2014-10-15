@@ -10,21 +10,10 @@
 #import "PostsTableViewSuperCell.h"
 
 
-@protocol KeywordUpdateTableViewCellDelegate;
 
 
 @interface KeywordUpdateTableViewCell : PostsTableViewSuperCell
-
 @property(strong, nonatomic) UIButton *nameButton;
-@property (nonatomic, weak) id<KeywordUpdateTableViewCellDelegate> delegate;
 - (void) setName:(NSString *)name andID:(NSString *)fbid andDescription:(NSString *)desc;
 @end
 
-
-@protocol KeywordUpdateTableViewCellDelegate <NSObject>
-
-@required
-
--(void) gotoProfileWithName:(NSString *)name andID:(NSString *)fbid;
--(void) commentPost:(id)sender withComment:(NSString *)comment;
-@end
