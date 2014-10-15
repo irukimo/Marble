@@ -354,6 +354,7 @@
     [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
         MBDebug(@"Guess posted");
         [quiz incrementCompareNum];
+        [quiz setGuessed:answer];
 //        MBDebug(@"Quiz now: %@", quiz);
     }
                                      failure:^(AFHTTPRequestOperation *operation, NSError *error) {

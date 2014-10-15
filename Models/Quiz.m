@@ -2,7 +2,7 @@
 //  Quiz.m
 //  Marble
 //
-//  Created by Wen-Hsiang Shaw on 10/10/14.
+//  Created by Wen-Hsiang Shaw on 10/15/14.
 //  Copyright (c) 2014 Orrzs Inc. All rights reserved.
 //
 
@@ -20,6 +20,6 @@
 @dynamic option0Name;
 @dynamic option1;
 @dynamic option1Name;
-
+@dynamic guessed;
 
 @end

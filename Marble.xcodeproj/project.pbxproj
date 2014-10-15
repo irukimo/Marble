@@ -24,8 +24,6 @@
 		516937AB19ECD56500EE0C0D /* Post+MBPost.m in Sources */ = {isa = PBXBuildFile; fileRef = 516937AA19ECD56500EE0C0D /* Post+MBPost.m */; };
 		516937AE19EF07BF00EE0C0D /* User.h in Sources */ = {isa = PBXBuildFile; fileRef = 516937AC19EF070D00EE0C0D /* User.h */; };
 		516937AF19EF07BF00EE0C0D /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 516937AD19EF070D00EE0C0D /* User.m */; };
-		51706D3219E88EF7005010E6 /* Quiz.h in Sources */ = {isa = PBXBuildFile; fileRef = 51706D2C19E88E42005010E6 /* Quiz.h */; };
-		51706D3319E88EF7005010E6 /* Quiz.m in Sources */ = {isa = PBXBuildFile; fileRef = 51706D2D19E88E42005010E6 /* Quiz.m */; };
 		51706D3419E88F0B005010E6 /* StatusUpdate.h in Sources */ = {isa = PBXBuildFile; fileRef = 51706D2A19E88E42005010E6 /* StatusUpdate.h */; };
 		51706D3519E88F0B005010E6 /* StatusUpdate.m in Sources */ = {isa = PBXBuildFile; fileRef = 51706D2B19E88E42005010E6 /* StatusUpdate.m */; };
 		51706D3919E9E50D005010E6 /* KeywordUpdate.m in Sources */ = {isa = PBXBuildFile; fileRef = 51706D3819E9E50D005010E6 /* KeywordUpdate.m */; };
@@ -33,6 +31,8 @@
 		517C894A19DB706C005A8407 /* ClientManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 517C894919DB706C005A8407 /* ClientManager.m */; };
 		517C894D19DB7129005A8407 /* KeyChainWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 517C894C19DB7129005A8407 /* KeyChainWrapper.m */; };
 		517C895019DB7DB4005A8407 /* RestKitInitializer.m in Sources */ = {isa = PBXBuildFile; fileRef = 517C894F19DB7DB4005A8407 /* RestKitInitializer.m */; };
+		51BB7CB419EF221A00D10F0D /* Quiz.h in Sources */ = {isa = PBXBuildFile; fileRef = 51BB7CB219EF21FB00D10F0D /* Quiz.h */; };
+		51BB7CB519EF221A00D10F0D /* Quiz.m in Sources */ = {isa = PBXBuildFile; fileRef = 51BB7CB319EF21FB00D10F0D /* Quiz.m */; };
 		51DF106E19E460E00021C3F9 /* ArrayToDataTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 51DF106D19E460E00021C3F9 /* ArrayToDataTransformer.m */; };
 		51F5A74B19E60827006097EF /* Quiz+MBQuiz.m in Sources */ = {isa = PBXBuildFile; fileRef = 51F5A74A19E60827006097EF /* Quiz+MBQuiz.m */; };
 		51F5A75119E6089D006097EF /* NSNumber+MBNumber.m in Sources */ = {isa = PBXBuildFile; fileRef = 51F5A75019E6089D006097EF /* NSNumber+MBNumber.m */; };
@@ -112,8 +112,6 @@
 		51706D2919E88DBA005010E6 /* Model 9.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Model 9.xcdatamodel"; sourceTree = "<group>"; };
 		51706D2A19E88E42005010E6 /* StatusUpdate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StatusUpdate.h; sourceTree = "<group>"; };
 		51706D2B19E88E42005010E6 /* StatusUpdate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = StatusUpdate.m; sourceTree = "<group>"; };
-		51706D2C19E88E42005010E6 /* Quiz.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Quiz.h; sourceTree = "<group>"; };
-		51706D2D19E88E42005010E6 /* Quiz.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Quiz.m; sourceTree = "<group>"; };
 		51706D3619E9E478005010E6 /* Model 10.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Model 10.xcdatamodel"; sourceTree = "<group>"; };
 		51706D3719E9E50D005010E6 /* KeywordUpdate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeywordUpdate.h; sourceTree = "<group>"; };
 		51706D3819E9E50D005010E6 /* KeywordUpdate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeywordUpdate.m; sourceTree = "<group>"; };
@@ -125,6 +123,8 @@
 		517C894E19DB7DB4005A8407 /* RestKitInitializer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RestKitInitializer.h; path = Clients/RestKitInitializer.h; sourceTree = "<group>"; };
 		517C894F19DB7DB4005A8407 /* RestKitInitializer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RestKitInitializer.m; path = Clients/RestKitInitializer.m; sourceTree = "<group>"; };
 		517C895119DB7E0C005A8407 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Constants.h; path = Utilities/Constants.h; sourceTree = "<group>"; };
+		51BB7CB219EF21FB00D10F0D /* Quiz.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Quiz.h; sourceTree = "<group>"; };
+		51BB7CB319EF21FB00D10F0D /* Quiz.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Quiz.m; sourceTree = "<group>"; };
 		51C1F0E119E4B0AB00B56DD9 /* Model 5.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Model 5.xcdatamodel"; sourceTree = "<group>"; };
 		51DF106C19E460E00021C3F9 /* ArrayToDataTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArrayToDataTransformer.h; sourceTree = "<group>"; };
 		51DF106D19E460E00021C3F9 /* ArrayToDataTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ArrayToDataTransformer.m; sourceTree = "<group>"; };
@@ -246,10 +246,10 @@
 		5152F8DB19DCACA1008E99DB /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				51BB7CB219EF21FB00D10F0D /* Quiz.h */,
+				51BB7CB319EF21FB00D10F0D /* Quiz.m */,
 				516937AC19EF070D00EE0C0D /* User.h */,
 				516937AD19EF070D00EE0C0D /* User.m */,
-				51706D2C19E88E42005010E6 /* Quiz.h */,
-				51706D2D19E88E42005010E6 /* Quiz.m */,
 				51706D2A19E88E42005010E6 /* StatusUpdate.h */,
 				51706D2B19E88E42005010E6 /* StatusUpdate.m */,
 				516937A619ECD38300EE0C0D /* StatusUpdate+MBStatusUpdate.h */,
@@ -612,13 +612,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				51BB7CB419EF221A00D10F0D /* Quiz.h in Sources */,
+				51BB7CB519EF221A00D10F0D /* Quiz.m in Sources */,
 				516937AE19EF07BF00EE0C0D /* User.h in Sources */,
 				516937AF19EF07BF00EE0C0D /* User.m in Sources */,
 				51706D3419E88F0B005010E6 /* StatusUpdate.h in Sources */,
 				51706D3519E88F0B005010E6 /* StatusUpdate.m in Sources */,
-				51706D3219E88EF7005010E6 /* Quiz.h in Sources */,
 				7AEB9CFF19E9B80E00409276 /* KeywordListTableViewCell.m in Sources */,
-				51706D3319E88EF7005010E6 /* Quiz.m in Sources */,
 				51706D3919E9E50D005010E6 /* KeywordUpdate.m in Sources */,
 				7AEB9CF619E8572200409276 /* KeywordUpdateTableViewCell.m in Sources */,
 				7AF4123619D9FB6C00A470E1 /* AppDelegate.m in Sources */,
