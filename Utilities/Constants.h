@@ -26,6 +26,9 @@
 #define keywordUpdateTableViewCellIdentifier @"keywordUpdateTableViewCellIdentifier"
 #define keywordListTableViewCellIdentifier @"keywordListTableViewCellIdentifier"
 
+#define selectKeywordViewCellIdentifier @"selectKeywordViewCellIdentifier"
+#define selectPeopleViewCellIdentifier @"selectPeopleViewCellIdentifier"
+
 #define QuizTableViewCellHeight 200
 #define StatusUpdateTableViewCellHeight 80
 #define KeywordUpdateTableViewCellHeight 80

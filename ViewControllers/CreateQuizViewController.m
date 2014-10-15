@@ -14,6 +14,7 @@
 #import "Quiz.h"
 #import "Quiz+MBQuiz.h"
 #import <QuartzCore/QuartzCore.h>
+#import "KeyChainWrapper.h"
 
 
 //#import "TouchTextField.h"
@@ -68,9 +69,9 @@
 -(void) initFBProfilePicViews{
     _option0PicView = [[FBProfilePictureView alloc] initWithFrame:CGRectMake(10, 20, 50, 50)];
     _option1PicView = [[FBProfilePictureView alloc] initWithFrame:CGRectMake(200, 20, 50, 50)];
-    _option0PicView.layer.cornerRadius = 25.0f;
+    _option0PicView.layer.cornerRadius = _option0PicView.frame.size.width/2.0;
     _option0PicView.layer.masksToBounds = YES;
-    _option1PicView.layer.cornerRadius = 25.0f;
+    _option1PicView.layer.cornerRadius = _option1PicView.frame.size.width/2.0;
     _option1PicView.layer.masksToBounds = YES;
     [self.view addSubview:_option0PicView];
     [self.view addSubview:_option1PicView];
@@ -199,6 +200,10 @@
     [_option1NameTextField addTarget:self
                    action:@selector(textFieldDidChange:)
         forControlEvents:UIControlEventEditingChanged];
+    [_keywordTextField addTarget:self
+                              action:@selector(textFieldDidChange:)
+                    forControlEvents:UIControlEventEditingChanged];
+
 }
 
 
@@ -256,6 +261,14 @@
     [self recordData];
 }
 
+-(void) setKeyword:(NSString *)keyword{
+    NSLog(@"keyword set");
+    _keywordCurrentValue = [keyword copy];
+    [_ongoingTextField setText:_keywordCurrentValue];
+    [_ongoingTextField endEditing:YES];
+    [self recordData];
+}
+
 -(void) tappedView{
     [self.view endEditing:YES];
     [self presentData];
@@ -293,6 +306,11 @@
         if(_delegate && [_delegate respondsToSelector:@selector(gotSearchUsersResult:)]){
             [_delegate gotSearchUsersResult:arrayOfUsers];
         }
+    } else{
+        NSArray *arrayOfKeywords = [KeyChainWrapper searchKeywordThatContains:[textField text] returnThisManyKeywords:10];
+        if(_delegate && [_delegate respondsToSelector:@selector(gotSearchKeywordsResult:)]){
+            [_delegate gotSearchKeywordsResult:arrayOfKeywords];
+        }
     }
 }
 
@@ -307,15 +325,13 @@
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField{
     [self presentAndEmptyData:textField];
+    _ongoingTextField = textField;
     if(textField == _option0NameTextField || textField == _option1NameTextField){
-        _ongoingTextField = textField;
         if(self.delegate && [_delegate respondsToSelector:@selector(shouldDisplayPeople:withPeople:)]){
-//            NSArray* people = [NSArray arrayWithObjects:@"Iru",@"Wen",@"Henry",@"Albert",@"Sandy",nil];
             [self.delegate shouldDisplayPeople:self withPeople:nil];
         }
     } else{
         if(_delegate && [_delegate respondsToSelector:@selector(shouldDisplayKeywords:withKeywords:)]){
-//            NSArray* keywords = [NSArray arrayWithObjects:@"Iru",@"Wen",@"Henry",@"Albert",@"Sandy",nil];
             [_delegate shouldDisplayKeywords:self withKeywords:nil];
         }
     }

@@ -12,6 +12,7 @@
 
 @interface SelectKeywordViewController : UITableViewController
 @property (nonatomic, weak) id<SelectKeywordViewControllerDelegate> delegate;
+-(void) displaySearchResult:(NSArray *)arrayOfKeywords;
 @end
 
 

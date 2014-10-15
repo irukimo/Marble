@@ -167,10 +167,22 @@
     [_selectPeopleViewController displaySearchResult:arrayOfUsers];
 }
 
+- (void)gotSearchKeywordsResult:(NSArray *)arrayOfKeywords{
+    [_selectKeywordViewController displaySearchResult:arrayOfKeywords];
+}
+
 #pragma mark -
 #pragma mark SelectPeopleViewController Delegate Methods
 - (void)selectedPerson:(User *)user{
     [_createQuizViewController setUser:user];
+}
+
+
+#pragma mark -
+#pragma mark SelectKeywordViewController Delegate Methods
+- (void)selectedKeyword:(NSString *)keyword{
+    NSLog(@"tabbar got selected");
+    [_createQuizViewController setKeyword:keyword];
 }
 
 

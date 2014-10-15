@@ -117,5 +117,20 @@ static NSArray *keywords = nil;
     return keywords;
 }
 
++(NSArray *)searchKeywordThatContains:(NSString *)text returnThisManyKeywords:(int)num{
+    int i = 0;
+    NSMutableArray *arrayOfKeywords = [[NSMutableArray alloc] init];
+    for(NSString *keyword in self.keywords){
+        if([keyword rangeOfString:text].location!=NSNotFound){
+            [arrayOfKeywords addObject:keyword];
+            i++;
+        }
+        if(i > num){
+            break;
+        }
+    }
+    return arrayOfKeywords;
+}
+
 
 @end

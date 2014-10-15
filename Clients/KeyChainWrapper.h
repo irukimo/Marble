@@ -25,6 +25,7 @@
 
 +(void)storeKeywords:(NSArray *)theKeywords;
 +(NSArray *)keywords;
++(NSArray *)searchKeywordThatContains:(NSString *)text returnThisManyKeywords:(int)num;
 
 +(void)cleanUpCredentials;
 //+(NSString *)getValueFromKeyChain:(NSString *)key;

@@ -72,7 +72,6 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSString *selectPeopleViewCellIdentifier = @"selectPeopleCell";
     SelectPeopleViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:selectPeopleViewCellIdentifier];
     if (!cell){
         cell = [[SelectPeopleViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:selectPeopleViewCellIdentifier];

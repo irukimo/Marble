@@ -14,6 +14,7 @@
 @interface CreateQuizViewController : UIViewController <UITextFieldDelegate>
 @property (nonatomic, weak) id<CreateQuizViewControllerDelegate> delegate;
 -(void) setUser:(User *)user;
+-(void) setKeyword:(NSString *)keyword;
 @end
 
 @protocol CreateQuizViewControllerDelegate <NSObject>
@@ -22,5 +23,6 @@
 - (void)backToNormal:(CreateQuizViewController*)viewController;
 - (void)shouldDisplayKeywords:(CreateQuizViewController*)viewController withKeywords:(NSArray *)keywords;
 - (void)gotSearchUsersResult:(NSArray *)arrayOfUsers;
+- (void)gotSearchKeywordsResult:(NSArray *)arrayOfKeywords;
 
 @end
