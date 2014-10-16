@@ -76,11 +76,16 @@
     // make sure that the FBLoginView class is loaded before the login view is shown.
     [FBLoginView class];
 
-    // Register for PUSH NOTIFICATION
-    [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeAlert |
-                                                                           UIRemoteNotificationTypeBadge |
-                                                                           UIRemoteNotificationTypeSound)];
-    
+    //register to receive notifications
+    if ([[UIApplication sharedApplication] respondsToSelector:@selector(registerForRemoteNotifications)]){
+        MBDebug(@"iOS 8");
+        [[UIApplication sharedApplication] registerForRemoteNotifications];
+    } else {
+        MBDebug(@"iOS 7");
+        [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeAlert |
+                                                                               UIRemoteNotificationTypeBadge |
+                                                                               UIRemoteNotificationTypeSound)];
+    }
     
     NSDictionary *userInfo = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
     if (userInfo) {
