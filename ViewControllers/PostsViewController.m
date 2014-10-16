@@ -22,7 +22,6 @@
 #import "StatusUpdate.h"
 #import "KeywordUpdate.h"
 
-#import "KeyChainWrapper.h"
 
 #import "PostsTableViewSuperCell.h"
 

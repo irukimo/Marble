@@ -7,7 +7,6 @@
 //
 
 #import "ProfileViewController.h"
-#import "KeyChainWrapper.h"
 #import "FacebookSDK/FacebookSDK.h"
 
 #define SEND_BUTTON_TAG 116
@@ -120,11 +119,8 @@
 }
 
 -(void) setName:(NSString *)name andID:(NSString *)fbid sentFromTabbar:(BOOL) isSentFromTabbar{
-    NSUserDefaults *standardUserDefaults = [NSUserDefaults standardUserDefaults];
-    NSString *selfFBID = nil;
-    if (standardUserDefaults){
-        selfFBID = [standardUserDefaults objectForKey:@"userFBID"];
-    }
+    NSString *selfFBID = [KeyChainWrapper getSelfFBID];
+    
     _name = [name copy];
     _fbid = [fbid copy];
     if(!_profilePicView){

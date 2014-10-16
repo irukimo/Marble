@@ -44,11 +44,8 @@
 
 
 -(void) fetchNotifcations{
-    NSUserDefaults *standardUserDefaults = [NSUserDefaults standardUserDefaults];
-    if (standardUserDefaults){
-        _userName = [standardUserDefaults objectForKey:@"userName"];
-        _userFBID = [standardUserDefaults objectForKey:@"userFBID"];
-    }
+    _userName = [KeyChainWrapper getSelfName];
+    _userFBID = [KeyChainWrapper getSelfFBID];
     
     NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"KeywordUpdate"];
     [request setPredicate:[NSPredicate predicateWithFormat:@"fbID == %@", _userFBID]];

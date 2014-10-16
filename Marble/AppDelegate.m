@@ -10,7 +10,6 @@
 
 #import "AppDelegate.h"
 #import "RestKitInitializer.h"
-#import "KeyChainWrapper.h"
 #import "ClientManager.h"
 
 @interface AppDelegate ()

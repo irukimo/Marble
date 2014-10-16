@@ -27,15 +27,8 @@
 
 -(void)setSelf{
     if([[self.viewControllers firstObject] isKindOfClass:[ProfileViewController class]]){
-        NSUserDefaults *standardUserDefaults = [NSUserDefaults standardUserDefaults];
-        NSString *name;
-        NSString *fbid;
-        if (standardUserDefaults){
-            name = [standardUserDefaults objectForKey:@"userName"];
-            fbid = [standardUserDefaults objectForKey:@"userFBID"];
-        }
         ProfileViewController *profileViewController = [self.viewControllers firstObject];
-        [profileViewController setName:name andID:fbid sentFromTabbar:YES];
+        [profileViewController setName:[KeyChainWrapper getSelfName] andID:[KeyChainWrapper getSelfFBID] sentFromTabbar:YES];
     }
 }
 

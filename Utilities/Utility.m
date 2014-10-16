@@ -7,7 +7,6 @@
 //
 
 #import "Utility.h"
-#import "KeyChainWrapper.h"
 #import <UIKit/UIKit.h>
 
 #define YEAR_SECOND 31556926

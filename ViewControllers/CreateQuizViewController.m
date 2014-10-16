@@ -9,12 +9,10 @@
 
 #import "CreateQuizViewController.h"
 #import "FacebookSDK/FacebookSDK.h"
-#import "KeyChainWrapper.h"
 #import "User+MBUser.h"
 #import "Quiz.h"
 #import "Quiz+MBQuiz.h"
 #import <QuartzCore/QuartzCore.h>
-#import "KeyChainWrapper.h"
 
 
 //#import "TouchTextField.h"
@@ -102,11 +100,8 @@
 }
 
 -(void)setCurrentUserValues{
-    NSUserDefaults *standardUserDefaults = [NSUserDefaults standardUserDefaults];
-    if (standardUserDefaults){
-        _currentUserName = [standardUserDefaults objectForKey:@"userName"];
-        _currentUserfbID = [standardUserDefaults objectForKey:@"userFBID"];
-    }
+    _currentUserName = [KeyChainWrapper getSelfName];
+    _currentUserfbID = [KeyChainWrapper getSelfFBID];
 }
 
 -(void) addPeopleButtons{

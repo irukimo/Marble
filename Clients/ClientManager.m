@@ -9,7 +9,6 @@
 #import <Foundation/Foundation.h>
 
 #import "ClientManager.h"
-#import "KeyChainWrapper.h"
 
 static id<ClientLoginDelegate> delegate = nil;
 static AFHTTPClient *httpClient = nil;

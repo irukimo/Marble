@@ -7,7 +7,6 @@
 //
 
 #import "LoginViewController.h"
-#import "KeyChainWrapper.h"
 #import "User.h"
 #import "User+MBUser.h"
 #import "dispatch/semaphore.h"
@@ -62,15 +61,7 @@
     [self getFriendsNamesIsEngish:true];
     [self getFriendsNamesIsEngish:false];
     
-//    [KeyChainWrapper ]
-    
-    NSUserDefaults *standardUserDefaults = [NSUserDefaults standardUserDefaults];
-    
-    if (standardUserDefaults) {
-        [standardUserDefaults setObject:_userName forKey:@"userName"];
-        [standardUserDefaults setObject:user.id forKey:@"userFBID"];
-        [standardUserDefaults synchronize];
-    }
+    [KeyChainWrapper storeSelfName:_userName andID:user.id];
 
 }
 

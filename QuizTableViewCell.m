@@ -8,7 +8,6 @@
 
 #import "QuizTableViewCell.h"
 #import "FacebookSDK/FacebookSDK.h"
-#import "KeyChainWrapper.h"
 #import "User+MBUser.h"
 #define CORRECT_WRONG_ICON_TAG 768
 
