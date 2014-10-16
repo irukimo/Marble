@@ -10,7 +10,7 @@
 #import "FacebookSDK/FacebookSDK.h"
 #import "KeyChainWrapper.h"
 #import "User+MBUser.h"
-
+#define CORRECT_WRONG_ICON_TAG 768
 
 
 @interface QuizTableViewCell()
@@ -22,9 +22,16 @@
 @property(strong,nonatomic) UIButton *option0NameButton;
 @property(strong,nonatomic) UIButton *option1NameButton;
 @property(strong,nonatomic) UIButton *authorNameButton;
+@property(strong, nonatomic) UIView *option0Mask;
+@property(strong, nonatomic) UIView *option1Mask;
+@property(strong, nonatomic) UILabel *option0CorrectIcon;
+@property(strong, nonatomic) UILabel *option0WrongIcon;
+@property(strong, nonatomic) UILabel *option1CorrectIcon;
+@property(strong, nonatomic) UILabel *option1WrongIcon;
+
+
 
 @property(strong,nonatomic) UILabel *keywordLabel;
-@property(strong,nonatomic) UILabel *resultLabel;
 
 
 // for temporary use
@@ -49,10 +56,8 @@
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        [self addStaticLabels];
-//        [self addChoiceButtons];
-        [self addResultLabel];
         [self initPicViews];
+        [self addStaticLabels];
         self.cellType = QUIZ_CELL_TYPE;
         [super initializeAccordingToType];
         // Initialization code
@@ -71,17 +76,56 @@
     _authorPicView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 10, 44, 44)];
     _authorPicView.layer.cornerRadius = 22;
     _authorPicView.layer.masksToBounds = YES;
+    
+    _option0Mask = [[UIView alloc] initWithFrame:_option0PicView.frame];
+    _option1Mask = [[UIView alloc] initWithFrame:_option1PicView.frame];
+    UITapGestureRecognizer *singleTap0 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(chooseOption0)];
+    UITapGestureRecognizer *singleTap1 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(chooseOption1)];
+    [_option0Mask setUserInteractionEnabled:YES];
+    [_option1Mask setUserInteractionEnabled:YES];
+    [_option0Mask addGestureRecognizer:singleTap0];
+    [_option1Mask addGestureRecognizer:singleTap1];
+    [self initCorrectWrongIcons];
+    
     [self.contentView addSubview:_option0PicView];
     [self.contentView addSubview:_option1PicView];
+    [self.contentView addSubview:_option0Mask];
+    [self.contentView addSubview:_option1Mask];
+    [self.contentView addSubview:_option0WrongIcon];
+    [self.contentView addSubview:_option0CorrectIcon];
+    [self.contentView addSubview:_option1WrongIcon];
+    [self.contentView addSubview:_option1CorrectIcon];
     [self.contentView addSubview:whiteView];
     [self.contentView addSubview:_authorPicView];
-    UITapGestureRecognizer *singleTap0 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(personClicked0)];
-    UITapGestureRecognizer *singleTap1 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(personClicked1)];
-    [_option0PicView setUserInteractionEnabled:YES];
-    [_option1PicView setUserInteractionEnabled:YES];
-    [_option0PicView addGestureRecognizer:singleTap0];
-    [_option1PicView addGestureRecognizer:singleTap1];
+
 }
+-(void) initCorrectWrongIcons{
+    _option0CorrectIcon = [[UILabel alloc] initWithFrame:_option0PicView.frame];
+    _option0WrongIcon =[[UILabel alloc] initWithFrame:_option0PicView.frame];
+    _option1CorrectIcon = [[UILabel alloc] initWithFrame:_option1PicView.frame];
+    _option1WrongIcon =[[UILabel alloc] initWithFrame:_option1PicView.frame];
+    [_option0CorrectIcon setText:@"correct"];
+    [_option1CorrectIcon setText:@"correct"];
+    [_option0WrongIcon setText:@"wrong"];
+    [_option1WrongIcon setText:@"wrong"];
+    [_option0CorrectIcon setTag:CORRECT_WRONG_ICON_TAG];
+    [_option1CorrectIcon setTag:CORRECT_WRONG_ICON_TAG];
+    [_option0WrongIcon setTag:CORRECT_WRONG_ICON_TAG];
+    [_option1WrongIcon setTag:CORRECT_WRONG_ICON_TAG];
+    [_option0CorrectIcon setTextColor:[UIColor whiteColor]];
+    [_option1CorrectIcon setTextColor:[UIColor whiteColor]];
+    [_option0WrongIcon setTextColor:[UIColor whiteColor]];
+    [_option1WrongIcon setTextColor:[UIColor whiteColor]];
+}
+
+-(void) removeAllCorrectWrongIcons{
+    for(UIView *view in self.contentView.subviews){
+        if([view tag] == CORRECT_WRONG_ICON_TAG){
+            [view removeFromSuperview];
+        }
+    }
+}
+
 
 /*
 -(void) addChoiceButtons{
@@ -98,36 +142,19 @@
 }*/
 
 
--(void)personClicked0{
-    NSLog(@"answer is %@, chose %@",_answerName,_option0Name);
-    if([_option0Name isEqualToString:_answerName]){
-        [_resultLabel setText:@"correct"];
-    } else{
-        [_resultLabel setText:@"wrong"];
-    }
-    MBDebug(@"choose option0 clicked! %@", _option0Name);
+-(void)chooseOption0{
+    [self displayAlreadyGuessed:_option0Name];
     if(self.delegate && [self.delegate respondsToSelector:@selector(sendGuess:withAnswer:)]){
         [self.delegate sendGuess:_option0PicView withAnswer:_option0Name];
     }
 
 }
 
--(void)personClicked1{
-    NSLog(@"answer is %@, chose %@",_answerName,_option1Name);
-    if([_option1Name isEqualToString:_answerName]){
-        [_resultLabel setText:@"correct"];
-    } else{
-        [_resultLabel setText:@"wrong"];
-    }
-    MBDebug(@"choose option0 clicked! %@", _option0Name);
+-(void)chooseOption1{
+    [self displayAlreadyGuessed:_option1Name];
     if(self.delegate && [self.delegate respondsToSelector:@selector(sendGuess:withAnswer:)]){
         [self.delegate sendGuess:_option1PicView withAnswer:_option1Name];
     }
-}
-
--(void) addResultLabel{
-    _resultLabel = [[UILabel alloc] initWithFrame:CGRectMake(230, 5, 100, 50)];
-    [self addSubview:_resultLabel];
 }
 
 
@@ -149,7 +176,8 @@
     [_option1NameButton addTarget:self action:@selector(option1Clicked:) forControlEvents:UIControlEventTouchUpInside];
     [_authorNameButton addTarget:self action:@selector(authorClicked:) forControlEvents:UIControlEventTouchUpInside];
 
-    _keywordLabel = [[UILabel alloc] initWithFrame:CGRectMake(205, 15, 100, 20)];
+    _keywordLabel = [[UILabel alloc] initWithFrame:CGRectMake(140, 120, 100, 20)];
+    [_keywordLabel setTextColor:[UIColor whiteColor]];
     
 
 
@@ -194,6 +222,7 @@
 
 
 -(void) setQuiz:(Quiz *)quiz{
+    [self removeAllCorrectWrongIcons];
     _quiz = quiz;
     _authorName = [quiz.authorName copy];
     _option0Name = [quiz.option0Name copy];
@@ -202,23 +231,73 @@
     _keyword = [quiz.keyword copy];
     [_compareNumLabel setText:[NSString stringWithFormat:@"%@", quiz.compareNum]];
     
+    [self setupProfileViews];
+    [self setupNameButtons];
+    [_keywordLabel setText:_keyword];
+    [_timeLabel setText:[Utility getDateToShow:quiz.time inWhole:NO]];
     
-    NSString *authorPictureUrl = [NSString stringWithFormat:@"https://graph.facebook.com/%@/picture?width=60&height=60", quiz.author];
-    NSString *option0PictureUrl = [NSString stringWithFormat:@"https://graph.facebook.com/%@/picture?width=135&height=135", quiz.option0];
-    NSString *option1PictureUrl = [NSString stringWithFormat:@"https://graph.facebook.com/%@/picture?width=135&height=135", quiz.option1];
+    if(_quiz.guessed){
+        [self displayAlreadyGuessed:_quiz.guessed];
+    } else{
+        [self setUnselectAll];
+    }
+}
+
+-(void) displayAlreadyGuessed:(NSString *)personGuessed{
+    if([personGuessed isEqualToString:_quiz.option0Name]){
+        [self setSelectedView:_option0Mask];
+        [self setDidNotselectedView:_option1Mask];
+        if([personGuessed isEqualToString:_quiz.answer]){
+            [self.contentView addSubview:_option0CorrectIcon];
+        }else{
+            [self.contentView addSubview:_option0WrongIcon];
+        }
+    } else{
+        [self setSelectedView:_option1Mask];
+        [self setDidNotselectedView:_option0Mask];
+        if([personGuessed isEqualToString:_quiz.answer]){
+            [self.contentView addSubview:_option1CorrectIcon];
+        }else{
+            [self.contentView addSubview:_option1WrongIcon];
+        }
+    }
+}
+
+-(void) setSelectedView:(UIView *)view{
+    [view setBackgroundColor:[UIColor clearColor]];
+    [view setUserInteractionEnabled:NO];
+}
+
+-(void) setDidNotselectedView:(UIView *)view{
+    [view setBackgroundColor:[UIColor colorWithWhite:0 alpha:0.8]];
+    [view setUserInteractionEnabled:NO];
+}
+
+-(void)setUnselectAll{
+    [_option0Mask setBackgroundColor:[UIColor clearColor]];
+    [_option1Mask setBackgroundColor:[UIColor clearColor]];
+    [_option0Mask setUserInteractionEnabled:YES];
+    [_option1Mask setUserInteractionEnabled:YES];
+}
+
+-(void) setupProfileViews{
+    NSString *authorPictureUrl = [NSString stringWithFormat:@"https://graph.facebook.com/%@/picture?width=60&height=60", _quiz.author];
+    NSString *option0PictureUrl = [NSString stringWithFormat:@"https://graph.facebook.com/%@/picture?width=135&height=135", _quiz.option0];
+    NSString *option1PictureUrl = [NSString stringWithFormat:@"https://graph.facebook.com/%@/picture?width=135&height=135", _quiz.option1];
     
     [_authorPicView setImageWithURL:[NSURL URLWithString:authorPictureUrl] placeholderImage:[UIImage imageNamed:@"login.png"]];
     [_option0PicView setImageWithURL:[NSURL URLWithString:option0PictureUrl] placeholderImage:[UIImage imageNamed:@"login.png"]];
     [_option1PicView setImageWithURL:[NSURL URLWithString:option1PictureUrl] placeholderImage:[UIImage imageNamed:@"login.png"]];
-    
+}
+
+-(void)setupNameButtons{
     NSAttributedString *authorNameString = [[NSAttributedString alloc] initWithString:[Utility getNameToDisplay:_authorName] attributes:[Utility getPostsViewNameFontDictionary]];
     NSAttributedString *option0NameString = [[NSAttributedString alloc] initWithString:[Utility getNameToDisplay:_option0Name] attributes:[Utility getPostsViewNameFontDictionary]];
     NSAttributedString *option1NameString = [[NSAttributedString alloc] initWithString:[Utility getNameToDisplay:_option1Name] attributes:[Utility getPostsViewNameFontDictionary]];
     [_authorNameButton setAttributedTitle:authorNameString forState:UIControlStateNormal];
     [_option0NameButton setAttributedTitle:option0NameString forState:UIControlStateNormal];
     [_option1NameButton setAttributedTitle:option1NameString forState:UIControlStateNormal];
-    [_keywordLabel setText:_keyword];
-    [_timeLabel setText:[Utility getDateToShow:quiz.time inWhole:NO]];
+
 }
 
 
