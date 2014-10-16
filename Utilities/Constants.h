@@ -15,7 +15,6 @@
 
 //#define PRODUCTION_SERVER @"192.168.0.105"
 //#define PRODUCTION_SERVER @"172.20.10.3"
->>>>>>> Add notification cells/table
 #define PRODUCTION_SERVER @"localhost"
 
 #define ASYNC(...) dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{ __VA_ARGS__ })
