@@ -21,6 +21,10 @@ static NSData *deviceToken = nil;
 // Keywords
 static NSArray *keywords = nil;
 
+// Self Name and ID
+static NSString *selfName = nil;
+static NSString *selfFBID = nil;
+
 @implementation KeyChainWrapper
 
 +(void)storeFBUserID:(NSString *)fbUserID
@@ -115,6 +119,19 @@ static NSArray *keywords = nil;
 +(NSArray *)keywords
 {
     return keywords;
+}
+
++(void)storeSelfName:(NSString *)name andID:(NSString *)fbid{
+    selfName = name;
+    selfFBID = fbid;
+}
+
++(NSString *)getSelfName{
+    return selfName;
+}
+
++(NSString *)getSelfFBID{
+    return selfFBID;
 }
 
 +(NSArray *)searchKeywordThatContains:(NSString *)text returnThisManyKeywords:(int)num{

@@ -7,9 +7,6 @@
 //
 
 #import "NotifViewController.h"
-#import "KeywordUpdate.h"
-#import "Quiz.h"
-#import "CommentNotification.h"
 #import "NotificationTableViewCell.h"
 
 @interface NotifViewController ()
@@ -66,7 +63,7 @@
     request = [[NSFetchRequest alloc] initWithEntityName:@"CommentNotification"];
 
     [self fetch:request andAddToNotifications:_notifications];
-    [@"Fetched Notfication coming: %@", _notifications];
+    MBDebug(@"Fetched Notfication coming: %@", _notifications);
     [self.tableView reloadData];
 }
 
@@ -100,18 +97,11 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     NotificationTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:notificationCellIdentifier];
-    id post = [_notifications objectAtIndex:indexPath.row];
-    if([post isKindOfClass:[KeywordUpdate class]]){
-        cell.type = MBKeyword;
-    } else if ([post isKindOfClass:[Quiz class]]) {
-        cell.type = MBQuiz;
-    } else if ([post isKindOfClass:[CommentNotification class]]) {
-        cell.type = MBCommentNotification;
-    } else {
-        MBError(@"Error here");
+    if (!cell){
+        cell = [[NotificationTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:notificationCellIdentifier];
     }
-    
-    MBDebug(@"cell type: %lu", cell.type);
+    id post = [_notifications objectAtIndex:indexPath.row];
+    [cell setCellPost:post];
     return cell;
 }
 

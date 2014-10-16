@@ -442,9 +442,9 @@
 			isa = PBXGroup;
 			children = (
 				7A0E976D19DCBCBF003A9359 /* QuizTableViewCell.h */,
+				7A0E976E19DCBCBF003A9359 /* QuizTableViewCell.m */,
 				51BB7CBD19F0617300D10F0D /* NotificationTableViewCell.h */,
 				51BB7CBE19F0617300D10F0D /* NotificationTableViewCell.m */,
-				7A0E976E19DCBCBF003A9359 /* QuizTableViewCell.m */,
 				7AFF5BBF19E7631F00CFD35D /* StatusUpdateTableViewCell.h */,
 				7AFF5BC019E7631F00CFD35D /* StatusUpdateTableViewCell.m */,
 				7AEB9CF419E8572200409276 /* KeywordUpdateTableViewCell.h */,
@@ -807,6 +807,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Libraries/FacebookSDK",
@@ -816,6 +818,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = Marbles;
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -825,6 +828,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Libraries/FacebookSDK",
@@ -834,6 +839,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = Marbles;
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};

@@ -62,6 +62,8 @@
     [self getFriendsNamesIsEngish:true];
     [self getFriendsNamesIsEngish:false];
     
+//    [KeyChainWrapper ]
+    
     NSUserDefaults *standardUserDefaults = [NSUserDefaults standardUserDefaults];
     
     if (standardUserDefaults) {

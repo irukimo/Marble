@@ -27,6 +27,10 @@
 +(NSArray *)keywords;
 +(NSArray *)searchKeywordThatContains:(NSString *)text returnThisManyKeywords:(int)num;
 
++(void)storeSelfName:(NSString *)name andID:(NSString *)fbid;
++(NSString *)getSelfName;
++(NSString *)getSelfFBID;
+    
 +(void)cleanUpCredentials;
 //+(NSString *)getValueFromKeyChain:(NSString *)key;
 //+(void)storeValueInKeyChain:(NSString *)value forKey:(NSString *)key;

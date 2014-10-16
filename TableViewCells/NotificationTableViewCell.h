@@ -7,11 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Post.h"
 
 @interface NotificationTableViewCell : UITableViewCell
 
-@property (strong, nonatomic) NSString *fbID;
-@property (strong, nonatomic) NSString *fbName;
-@property (assign, nonatomic) NotificationType type;
 
+-(void)setCellPost:(id)post;
 @end
