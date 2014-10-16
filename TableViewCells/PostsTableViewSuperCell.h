@@ -27,5 +27,7 @@
 - (void) commentPost:(id)sender withComment:(NSString *)comment;
 - (void) sendGuess:(id)sender withAnswer:(NSString *)answer;
 -(void) gotoProfileWithName:(NSString *)name andID:(NSString *)fbid;
-
+-(void) presentCellWithKeywordOn:(id) sender;
+-(void) endPresentingCellWithKeywordOn;
+-(void) viewMoreComments:(id)sender;
 @end

@@ -26,6 +26,7 @@ typedef void (^voidBlock)(void);
 + (NSString *)getDateToShow:(NSDate *)date inWhole:(BOOL) inWhole;
 + (NSDictionary *)getPostsViewNameFontDictionary;
 + (NSDictionary *)getPostsViewCommentFontDictionary;
++ (NSDictionary *)getWhiteCommentFontDictionary;
 + (NSDictionary *)getNavigationBarTitleFontDictionary;
 + (NSDictionary *)getWriteACommentFontDictionary;
 

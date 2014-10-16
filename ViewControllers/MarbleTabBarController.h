@@ -11,6 +11,7 @@
 #import "SelectKeywordViewController.h"
 #import "SelectPeopleViewController.h"
 
-@interface MarbleTabBarController : UITabBarController <UITabBarControllerDelegate, CreateQuizViewControllerDelegate, SelectKeywordViewControllerDelegate, SelectPeopleViewControllerDelegate>
+@interface MarbleTabBarController : UITabBarController <UITabBarControllerDelegate, CreateQuizViewControllerDelegate, SelectKeywordViewControllerDelegate, SelectPeopleViewControllerDelegate, UITextFieldDelegate>
 -(void) marbleButtonClicked;
+-(void) viewMoreComments:(NSArray *)commentArray;
 @end

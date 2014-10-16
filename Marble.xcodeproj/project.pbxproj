@@ -41,6 +41,8 @@
 		7A0E976F19DCBCBF003A9359 /* QuizTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A0E976E19DCBCBF003A9359 /* QuizTableViewCell.m */; };
 		7A0E977219DCD8BB003A9359 /* ProfileNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A0E977119DCD8BB003A9359 /* ProfileNavigationController.m */; };
 		7A0E977519DCDFBC003A9359 /* HomeNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A0E977419DCDFBC003A9359 /* HomeNavigationController.m */; };
+		7A10A56A19EF23BB006A2CED /* CommentsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A10A56919EF23BB006A2CED /* CommentsTableViewController.m */; };
+		7A10A56D19EF241C006A2CED /* CommentsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A10A56C19EF241C006A2CED /* CommentsTableViewCell.m */; };
 		7A48343A19EC56E80029D092 /* OpenSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7A48343819EC56E80029D092 /* OpenSans-Regular.ttf */; };
 		7A48343B19EC56E80029D092 /* OpenSans-Semibold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7A48343919EC56E80029D092 /* OpenSans-Semibold.ttf */; };
 		7A48344019EC9B940029D092 /* PostsTableViewSuperCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A48343F19EC9B940029D092 /* PostsTableViewSuperCell.m */; };
@@ -144,6 +146,10 @@
 		7A0E977119DCD8BB003A9359 /* ProfileNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ProfileNavigationController.m; path = NavigationControllers/ProfileNavigationController.m; sourceTree = "<group>"; };
 		7A0E977319DCDFBC003A9359 /* HomeNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HomeNavigationController.h; path = NavigationControllers/HomeNavigationController.h; sourceTree = "<group>"; };
 		7A0E977419DCDFBC003A9359 /* HomeNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HomeNavigationController.m; path = NavigationControllers/HomeNavigationController.m; sourceTree = "<group>"; };
+		7A10A56819EF23BB006A2CED /* CommentsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentsTableViewController.h; sourceTree = "<group>"; };
+		7A10A56919EF23BB006A2CED /* CommentsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentsTableViewController.m; sourceTree = "<group>"; };
+		7A10A56B19EF241C006A2CED /* CommentsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentsTableViewCell.h; sourceTree = "<group>"; };
+		7A10A56C19EF241C006A2CED /* CommentsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentsTableViewCell.m; sourceTree = "<group>"; };
 		7A48343819EC56E80029D092 /* OpenSans-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "OpenSans-Regular.ttf"; path = "Resources/Fonts/OpenSans-Regular.ttf"; sourceTree = "<group>"; };
 		7A48343919EC56E80029D092 /* OpenSans-Semibold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "OpenSans-Semibold.ttf"; path = "Resources/Fonts/OpenSans-Semibold.ttf"; sourceTree = "<group>"; };
 		7A48343E19EC9B940029D092 /* PostsTableViewSuperCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PostsTableViewSuperCell.h; path = TableViewCells/PostsTableViewSuperCell.h; sourceTree = "<group>"; };
@@ -407,6 +413,8 @@
 				7AEB9CF819E9B37100409276 /* KeywordListViewController.m */,
 				7AEB9CFA19E9B3B500409276 /* KeywordProfileViewController.h */,
 				7AEB9CFB19E9B3B500409276 /* KeywordProfileViewController.m */,
+				7A10A56819EF23BB006A2CED /* CommentsTableViewController.h */,
+				7A10A56919EF23BB006A2CED /* CommentsTableViewController.m */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -439,6 +447,8 @@
 				7A48344219EDEFB50029D092 /* SelectKeywordViewCell.m */,
 				7AF4126F19DA6A8300A470E1 /* SelectPeopleViewCell.h */,
 				7AF4127019DA6A8300A470E1 /* SelectPeopleViewCell.m */,
+				7A10A56B19EF241C006A2CED /* CommentsTableViewCell.h */,
+				7A10A56C19EF241C006A2CED /* CommentsTableViewCell.m */,
 			);
 			name = TableViewCells;
 			sourceTree = "<group>";
@@ -638,6 +648,7 @@
 				7AFF5BBE19E59AEA00CFD35D /* SelectKeywordViewController.m in Sources */,
 				7A0E977519DCDFBC003A9359 /* HomeNavigationController.m in Sources */,
 				7AFF5BC119E7631F00CFD35D /* StatusUpdateTableViewCell.m in Sources */,
+				7A10A56A19EF23BB006A2CED /* CommentsTableViewController.m in Sources */,
 				51DF106E19E460E00021C3F9 /* ArrayToDataTransformer.m in Sources */,
 				517C895019DB7DB4005A8407 /* RestKitInitializer.m in Sources */,
 				7AEB9CFC19E9B3B500409276 /* KeywordProfileViewController.m in Sources */,
@@ -652,6 +663,7 @@
 				7A0E976F19DCBCBF003A9359 /* QuizTableViewCell.m in Sources */,
 				7AF4127519DB392200A470E1 /* LoginViewController.m in Sources */,
 				7AF4125819D9FFB800A470E1 /* HomeViewController.m in Sources */,
+				7A10A56D19EF241C006A2CED /* CommentsTableViewCell.m in Sources */,
 				7A0E977219DCD8BB003A9359 /* ProfileNavigationController.m in Sources */,
 				7AF4126119DA035400A470E1 /* CreateQuizViewController.m in Sources */,
 				517C894A19DB706C005A8407 /* ClientManager.m in Sources */,

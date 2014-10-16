@@ -12,6 +12,7 @@
 #import "QuizTableViewCell.h"
 #import "StatusUpdateTableViewCell.h"
 #import "KeywordUpdateTableViewCell.h"
+#import "MarbleTabBarController.h"
 
 #import "User+MBUser.h"
 #import "Quiz.h"
@@ -335,7 +336,30 @@
 }
 
 #pragma mark -
-#pragma mark Quiz Table View Cell Delegate Methods
+#pragma mark Posts Table View Super Cell Delegate Methods
+
+-(void) viewMoreComments:(id)sender{
+    CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.tableView];
+    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:buttonPosition];
+    Post *post = [_fetchedResultsController objectAtIndexPath:indexPath];
+    if([self.tabBarController isKindOfClass:[MarbleTabBarController class]]){
+        MarbleTabBarController *tabbarcontroller = (MarbleTabBarController *)self.tabBarController;
+        [tabbarcontroller viewMoreComments:post.comments];
+        
+    }
+}
+
+-(void) presentCellWithKeywordOn:(id) sender{
+    CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.tableView];
+    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:buttonPosition];
+    self.tableView.contentInset =  UIEdgeInsetsMake(0, 0, KEYBOARD_HEIGHT, 0);
+    [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:indexPath.row inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:YES];
+}
+-(void) endPresentingCellWithKeywordOn{
+    self.tableView.contentInset = UIEdgeInsetsMake(0, 0, TABBAR_HEIGHT, 0);
+}
+
+
 - (void) sendGuess:(id)sender withAnswer:(NSString *)answer
 {
     CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.tableView];

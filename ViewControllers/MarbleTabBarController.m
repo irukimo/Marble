@@ -9,24 +9,40 @@
 #import "MarbleTabBarController.h"
 #import "ProfileNavigationController.h"
 #import "HomeNavigationController.h"
+#import "CommentsTableViewController.h"
 
 #define AUTO_COMPLETE_SELECT_VIEW_TAG 999
+#define COMMENT_TEXT @"write a comment..."
 
 @interface MarbleTabBarController ()
 @property (strong, nonatomic) CreateQuizViewController *createQuizViewController;
 @property (strong, nonatomic) SelectPeopleViewController *selectPeopleViewController;
 @property (strong, nonatomic) SelectKeywordViewController *selectKeywordViewController;
+@property (strong, nonatomic) CommentsTableViewController *commentsTableViewController;
+@property (strong, nonatomic) UIButton *cancelButton;
 @property (strong, nonatomic) UIView *createQuizWholeView;
+@property (strong, nonatomic) UIScrollView *commentsWholeView;
+@property(strong, nonatomic) UITextField *commentField;
+@property(strong, nonatomic) UIButton *commentBtn;
+@property (strong, nonatomic) UIView *commentFieldView;
 @property (nonatomic) BOOL isCreatingMarble;
+@property (nonatomic) CGSize keyboardSize;
+@property (nonatomic) UIViewAnimationCurve keyboardCurve;
+@property ( nonatomic) CGRect commentsTableViewFrame;
+@property (nonatomic) CGRect commentFieldViewFrame;
 @end
 
 @implementation MarbleTabBarController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self setViewFrames];
     [self initCreateQuizView];
+    [self initCommentsTableView];
+    [self registerForKeyboardNotifications];
     self.delegate = self;
     _isCreatingMarble = FALSE;
+
     
     //set tabbaritem image
     [self setTabBarItemImages];
@@ -42,6 +58,73 @@
     }
     // Do any additional setup after loading the view.
 }
+
+
+-(void) setViewFrames{
+    _commentsTableViewFrame = CGRectMake(0, 50, self.view.frame.size.width, self.view.frame.size.height - NAVBAR_HEIGHT - TABBAR_HEIGHT - 50);
+    _commentFieldViewFrame = CGRectMake(0, 10 + self.view.frame.size.height - TABBAR_HEIGHT - NAVBAR_HEIGHT, self.view.frame.size.width, 100);
+}
+
+
+
+// Call this method somewhere in your view controller setup code.
+- (void)registerForKeyboardNotifications
+{
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillShow:)
+                                                 name:UIKeyboardWillShowNotification object:nil];
+
+    
+//    [[NSNotificationCenter defaultCenter] addObserver:self
+//                                             selector:@selector(keyboardWillBeHidden:)
+//                                                 name:UIKeyboardWillHideNotification object:nil];
+    
+}
+
+
+// Called when the UIKeyboardDidShowNotification is sent.
+- (void)keyboardWillShow:(NSNotification*)aNotification
+{
+    NSLog(@"keyboard was shown");
+    NSDictionary* info = [aNotification userInfo];
+    _keyboardSize = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
+    _keyboardCurve = [info[UIKeyboardAnimationCurveUserInfoKey] integerValue];
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationDuration:0.25];
+    [UIView setAnimationCurve:_keyboardCurve];
+    _commentFieldView.frame = CGRectMake(_commentFieldViewFrame.origin.x, _commentFieldViewFrame.origin.y - _keyboardSize.height,  _commentFieldViewFrame.size.width ,  _commentFieldViewFrame.size.height);
+    _commentsTableViewController.view.frame = CGRectMake(_commentsTableViewFrame.origin.x, _commentsTableViewFrame.origin.y, _commentsTableViewFrame.size.width, _commentsTableViewFrame.size.height - _keyboardSize.height);
+    [UIView commitAnimations];
+    
+    /*
+    UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, kbSize.height, 0.0);
+    _commentsWholeView.contentInset = contentInsets;
+    _commentsWholeView.scrollIndicatorInsets = contentInsets;
+    
+    // If active text field is hidden by keyboard, scroll it so it's visible
+    // Your app might not need or want this behavior.
+    CGRect aRect = self.view.frame;
+    aRect.size.height -= kbSize.height;
+    if (!CGRectContainsPoint(aRect, _commentField.frame.origin) ) {
+        [_commentsWholeView scrollRectToVisible:_commentField.frame animated:YES];
+    }*/
+}
+
+
+
+/*
+// Called when the UIKeyboardWillHideNotification is sent
+- (void)keyboardWillBeHidden:(NSNotification*)aNotification
+{
+    NSDictionary* info = [aNotification userInfo];
+    _keyboardSize = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
+    UIViewAnimationCurve animationCurve = [info[UIKeyboardAnimationCurveUserInfoKey] integerValue];
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationDuration:0.25];
+    [UIView setAnimationCurve:animationCurve];
+    _commentFieldView.frame = CGRectMake(0, self.view.frame.size.height - NAVBAR_HEIGHT - _keyboardSize.height - 40,  _commentFieldView.frame.size.width ,  _commentFieldView.frame.size.height);
+    [UIView commitAnimations];
+}*/
 
 #pragma mark - UI methods
 -(void) setTabBarItemImages{
@@ -97,7 +180,13 @@
         [self.view addSubview:_createQuizWholeView];
         _isCreatingMarble = TRUE;
     }
-    
+}
+
+-(void) viewMoreComments:(NSArray *)commentArray{
+    _commentFieldView.frame = _commentFieldViewFrame;
+    _commentsTableViewController.view.frame = _commentsTableViewFrame;
+    [_commentsTableViewController setCommentArray:commentArray];
+    [self.view addSubview:_commentsWholeView];
 }
 
 
@@ -114,6 +203,56 @@
     [_createQuizWholeView addSubview:blackBGView];
     [_createQuizWholeView addSubview:_createQuizViewController.view];
 
+}
+
+
+-(void) initCommentFieldView{
+    _commentFieldView = [[UIView alloc] initWithFrame:CGRectMake(0, 10 + self.view.frame.size.height - TABBAR_HEIGHT - NAVBAR_HEIGHT, self.view.frame.size.width, 100)];
+    _commentBtn = [[UIButton alloc] initWithFrame:CGRectMake(260 , 0, 60, 30)];
+    
+    [_commentBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [_commentBtn setTitle:@"send" forState:UIControlStateNormal];
+    [_commentBtn addTarget:self action:@selector(commentPostClicked:) forControlEvents:UIControlEventTouchUpInside];
+    
+    _commentField = [[UITextField alloc] initWithFrame:CGRectMake(10, 0, 250, 30)];
+    _commentField.delegate = self;
+    [_commentField setBorderStyle:UITextBorderStyleRoundedRect];
+    NSAttributedString *defaultText = [[NSAttributedString alloc] initWithString:COMMENT_TEXT attributes:[Utility getWriteACommentFontDictionary]];
+    [_commentField setAttributedText:defaultText];
+    [_commentFieldView addSubview:_commentField];
+    [_commentFieldView addSubview:_commentBtn];
+    
+}
+
+-(void)initCommentsTableView{
+    [self initCommentFieldView];
+    
+    
+    UIView *blackBGView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height + KEYBOARD_HEIGHT)];
+    [blackBGView setBackgroundColor:[UIColor colorWithWhite:0 alpha:0.8f]];
+    _cancelButton = [[UIButton alloc] initWithFrame:CGRectMake(270, 10, 50, 50)];
+    [_cancelButton setTitle:@"X" forState:UIControlStateNormal];
+    [_cancelButton addTarget:self action:@selector(cancelCommentsTableView) forControlEvents:UIControlEventTouchUpInside];
+    _commentsTableViewController = [[CommentsTableViewController alloc] init];
+//    _commentsTableViewController.delegate = self;
+    _commentsTableViewController.view.frame = CGRectMake(0, 50, self.view.frame.size.width, self.view.frame.size.height - NAVBAR_HEIGHT - TABBAR_HEIGHT - 50);
+    _commentsWholeView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, NAVBAR_HEIGHT, self.view.frame.size.width, self.view.frame.size.height + KEYBOARD_HEIGHT)];
+    [_commentsWholeView addSubview:blackBGView];
+    [_commentsWholeView addSubview:_cancelButton];
+    [_commentsWholeView addSubview:_commentsTableViewController.view];
+    [_commentsWholeView addSubview:_commentFieldView];
+}
+
+-(void) commentPostClicked:(id)sender{
+//    MBDebug(@"comment quiz clicked!");
+//    if(_delegate && [_delegate respondsToSelector:@selector(commentPost:withComment:)]){
+//        [_delegate commentPost:sender withComment:_commentField.text];
+//    }
+}
+
+
+-(void)cancelCommentsTableView{
+    [_commentsWholeView removeFromSuperview];
 }
 
 -(void) prepareSelectPeopleViewController{
@@ -185,6 +324,37 @@
     [_createQuizViewController setKeyword:keyword];
 }
 
+#pragma mark -
+#pragma mark UITextField Delegate Methods
+
+
+
+- (void)textFieldDidBeginEditing:(UITextField *)textField{
+    [textField setText:@""];
+    
+//    if(_delegate && [_delegate respondsToSelector:@selector(presentCellWithKeywordOn:)]){
+//        [_delegate presentCellWithKeywordOn:textField];
+//    }
+}
+- (void)textFieldDidEndEditing:(UITextField *)textField{
+//    [textField setText:COMMENT_TEXT];
+//    if(_delegate && [_delegate respondsToSelector:@selector(endPresentingCellWithKeywordOn)]){
+//        [_delegate endPresentingCellWithKeywordOn];
+//    }
+    
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [self.view endEditing:YES];
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationDuration:0.25];
+    [UIView setAnimationCurve:_keyboardCurve];
+    _commentFieldView.frame = _commentFieldViewFrame;
+    _commentsTableViewController.view.frame = _commentsTableViewFrame;
+    [UIView commitAnimations];
+    return YES;
+}
+ 
 
 
 /*
