@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface NotifViewController : UIViewController
+@interface NotifViewController : UITableViewController
 
 @end

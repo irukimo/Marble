@@ -33,6 +33,8 @@
 		517C895019DB7DB4005A8407 /* RestKitInitializer.m in Sources */ = {isa = PBXBuildFile; fileRef = 517C894F19DB7DB4005A8407 /* RestKitInitializer.m */; };
 		51BB7CB419EF221A00D10F0D /* Quiz.h in Sources */ = {isa = PBXBuildFile; fileRef = 51BB7CB219EF21FB00D10F0D /* Quiz.h */; };
 		51BB7CB519EF221A00D10F0D /* Quiz.m in Sources */ = {isa = PBXBuildFile; fileRef = 51BB7CB319EF21FB00D10F0D /* Quiz.m */; };
+		51BB7CB819F04E6F00D10F0D /* CommentNotification.m in Sources */ = {isa = PBXBuildFile; fileRef = 51BB7CB719F04E6F00D10F0D /* CommentNotification.m */; };
+		51BB7CBF19F0617300D10F0D /* NotificationTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 51BB7CBE19F0617300D10F0D /* NotificationTableViewCell.m */; };
 		51DF106E19E460E00021C3F9 /* ArrayToDataTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 51DF106D19E460E00021C3F9 /* ArrayToDataTransformer.m */; };
 		51F5A74B19E60827006097EF /* Quiz+MBQuiz.m in Sources */ = {isa = PBXBuildFile; fileRef = 51F5A74A19E60827006097EF /* Quiz+MBQuiz.m */; };
 		51F5A75119E6089D006097EF /* NSNumber+MBNumber.m in Sources */ = {isa = PBXBuildFile; fileRef = 51F5A75019E6089D006097EF /* NSNumber+MBNumber.m */; };
@@ -127,6 +129,10 @@
 		517C895119DB7E0C005A8407 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Constants.h; path = Utilities/Constants.h; sourceTree = "<group>"; };
 		51BB7CB219EF21FB00D10F0D /* Quiz.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Quiz.h; sourceTree = "<group>"; };
 		51BB7CB319EF21FB00D10F0D /* Quiz.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Quiz.m; sourceTree = "<group>"; };
+		51BB7CB619F04E6F00D10F0D /* CommentNotification.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentNotification.h; sourceTree = "<group>"; };
+		51BB7CB719F04E6F00D10F0D /* CommentNotification.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentNotification.m; sourceTree = "<group>"; };
+		51BB7CBD19F0617300D10F0D /* NotificationTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NotificationTableViewCell.h; path = TableViewCells/NotificationTableViewCell.h; sourceTree = "<group>"; };
+		51BB7CBE19F0617300D10F0D /* NotificationTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NotificationTableViewCell.m; path = TableViewCells/NotificationTableViewCell.m; sourceTree = "<group>"; };
 		51C1F0E119E4B0AB00B56DD9 /* Model 5.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Model 5.xcdatamodel"; sourceTree = "<group>"; };
 		51DF106C19E460E00021C3F9 /* ArrayToDataTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArrayToDataTransformer.h; sourceTree = "<group>"; };
 		51DF106D19E460E00021C3F9 /* ArrayToDataTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ArrayToDataTransformer.m; sourceTree = "<group>"; };
@@ -265,6 +271,8 @@
 				7AD2A32C19DE1F9800B200E9 /* User+MBUser.h */,
 				7AD2A32D19DE1F9800B200E9 /* User+MBUser.m */,
 				5152F8DD19DCAD86008E99DB /* Model.xcdatamodeld */,
+				51BB7CB619F04E6F00D10F0D /* CommentNotification.h */,
+				51BB7CB719F04E6F00D10F0D /* CommentNotification.m */,
 				516937A019ECCD5600EE0C0D /* Post.h */,
 				516937A119ECCD5600EE0C0D /* Post.m */,
 				516937A919ECD56500EE0C0D /* Post+MBPost.h */,
@@ -434,6 +442,8 @@
 			isa = PBXGroup;
 			children = (
 				7A0E976D19DCBCBF003A9359 /* QuizTableViewCell.h */,
+				51BB7CBD19F0617300D10F0D /* NotificationTableViewCell.h */,
+				51BB7CBE19F0617300D10F0D /* NotificationTableViewCell.m */,
 				7A0E976E19DCBCBF003A9359 /* QuizTableViewCell.m */,
 				7AFF5BBF19E7631F00CFD35D /* StatusUpdateTableViewCell.h */,
 				7AFF5BC019E7631F00CFD35D /* StatusUpdateTableViewCell.m */,
@@ -635,6 +645,8 @@
 				517C894D19DB7129005A8407 /* KeyChainWrapper.m in Sources */,
 				7AF4127119DA6A8300A470E1 /* SelectPeopleViewCell.m in Sources */,
 				5152F8DF19DCAD86008E99DB /* Model.xcdatamodeld in Sources */,
+				51BB7CB819F04E6F00D10F0D /* CommentNotification.m in Sources */,
+				51BB7CBF19F0617300D10F0D /* NotificationTableViewCell.m in Sources */,
 				7AB925B019E3730C00F8229F /* UIColor+MBColor.m in Sources */,
 				516937AB19ECD56500EE0C0D /* Post+MBPost.m in Sources */,
 				51F5A74B19E60827006097EF /* Quiz+MBQuiz.m in Sources */,

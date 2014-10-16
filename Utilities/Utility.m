@@ -66,7 +66,6 @@
     } else {
         NSLog(@"%@", failureMessage);
     }
-    
 }
 
 +(NSString *) getNameToDisplay:(NSString *)name{
