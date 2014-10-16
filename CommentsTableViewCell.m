@@ -23,6 +23,7 @@
         [self addStaticLabels];
         [self initPicView];
         [self setBackgroundColor:[UIColor clearColor]];
+        self.selectionStyle = UITableViewCellSelectionStyleNone;
         // Initialization code
     }
     return self;
@@ -33,7 +34,7 @@
 
 
 -(void) addStaticLabels{
-    _timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(290, 5, 30, 30)];
+    _timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(260, 5, 80, 30)];
     _commentLabel = [[UILabel alloc] initWithFrame:CGRectMake(LEFT_ALIGNMENT + 50, 22, 150, 30)];
     _nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(LEFT_ALIGNMENT + 50, 5, 100, 30)];
     [self.contentView addSubview:_commentLabel];
@@ -49,11 +50,10 @@
 }
 
 - (void) setName:(NSString *)name andID:(NSString *)fbid andComment:(NSString *)comment andTime:(NSString *)time{
-    NSLog(@"%@", time);
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
-    NSDate *date = [dateFormatter dateFromString:time];
-    [_timeLabel setText:[Utility getDateToShow:date inWhole:NO]];
+    NSDate *date = [Utility DateForRFC3339DateTimeString:time];
+    NSAttributedString *dateString = [[NSAttributedString alloc] initWithString:[Utility getDateToShow:date inWhole:NO] attributes:[Utility getWhiteCommentFontDictionary]];
+    [_timeLabel setAttributedText:dateString];
+    
     NSAttributedString *nameString = [[NSAttributedString alloc] initWithString:[Utility getNameToDisplay:name] attributes:[Utility getPostsViewNameFontDictionary]];
     [_nameLabel setAttributedText:nameString];
     NSAttributedString *commentString = [[NSAttributedString alloc] initWithString:comment attributes:[Utility getWhiteCommentFontDictionary]];

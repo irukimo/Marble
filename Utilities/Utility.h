@@ -23,6 +23,7 @@ typedef void (^voidBlock)(void);
 + (void)saveToPersistenceStore:(NSManagedObjectContext *)context failureMessage:(NSString *)failureMessage;
 +(NSString *) getNameToDisplay:(NSString *)name;
 
++ (NSDate *)DateForRFC3339DateTimeString:(NSString *)rfc3339datestring;
 + (NSString *)getDateToShow:(NSDate *)date inWhole:(BOOL) inWhole;
 + (NSDictionary *)getPostsViewNameFontDictionary;
 + (NSDictionary *)getPostsViewCommentFontDictionary;

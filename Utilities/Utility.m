@@ -104,6 +104,17 @@
     return name;
 }
 
++ (NSDate *)DateForRFC3339DateTimeString:(NSString *)rfc3339datestring
+{
+    NSDateFormatter *rfc3339DateFormatter = [[NSDateFormatter alloc] init];
+    [rfc3339DateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ"];
+    [rfc3339DateFormatter setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
+    
+    NSDate *date = [rfc3339DateFormatter dateFromString:rfc3339datestring];
+    
+    return date;
+}
+
 
 + (NSString *)getDateToShow:(NSDate *)date inWhole:(BOOL) inWhole;{
     if (inWhole) {
