@@ -344,8 +344,7 @@
     Post *post = [_fetchedResultsController objectAtIndexPath:indexPath];
     if([self.tabBarController isKindOfClass:[MarbleTabBarController class]]){
         MarbleTabBarController *tabbarcontroller = (MarbleTabBarController *)self.tabBarController;
-        [tabbarcontroller viewMoreComments:post.comments];
-        
+        [tabbarcontroller viewMoreComments:post.comments atIndexPath:indexPath calledBy:self];
     }
 }
 
@@ -404,6 +403,15 @@
                    failureBlock:nil];
 }
 
+- (void) commentPostAtIndexPath:(NSIndexPath *)indexPath withComment:(NSString *)comment{
+    Post *post = [_fetchedResultsController objectAtIndexPath:indexPath];
+    
+    MBDebug(@"%@", comment);
+    [Utility sendThroughRKRoute:@"send_comment" withParams:@{@"post_uuid": post.uuid, @"comment": comment}
+                   successBlock:^{ [self getCommentsForPost:post]; }
+                   failureBlock:nil];
+}
+
 - (void)getCommentsForPost:(Post *)post
 {
     NSString *sessionToken = [KeyChainWrapper getSessionTokenForUser];
@@ -418,20 +426,13 @@
             NSIndexPath *path = [_fetchedResultsController indexPathForObject:post];
             id cell = [(UITableView *)self.view cellForRowAtIndexPath:path];
             
-            NSLog(@"what kind of class? %@", [cell class]);
             PostsTableViewSuperCell *superCell = (PostsTableViewSuperCell *)cell;
             [superCell setCommentsForPostSuperCell:post.comments];
             
-//            if ([cell isKindOfClass:[StatusUpdateTableViewCell class]]) {
-//                NSLog(@"kind of status update");
-//                [(StatusUpdateTableViewCell *)cell setComments:post.comments];
-//            } else if([cell isKindOfClass:[QuizTableViewCell class]]){
-//                NSLog(@"kind of quiz");
-//                [(QuizTableViewCell *)cell setComments:post.comments];
-//            } else{
-//                NSLog(@"kind of keyword update");
-//                [(KeywordUpdateTableViewCell *)cell setComments:post.comments];
-//            }
+            if([self.tabBarController isKindOfClass:[MarbleTabBarController class]]){
+                MarbleTabBarController *tabbarcontroller = (MarbleTabBarController *)self.tabBarController;
+                [tabbarcontroller updateComments:post.comments];
+            }
             
             
         }

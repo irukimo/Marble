@@ -25,6 +25,18 @@
 -(void)setCommentArray:(NSArray *)commentArray{
     _commentsArray = [commentArray copy];
     [self.tableView reloadData];
+    [self scrollTableViewToBottom];
+}
+
+- (void)scrollTableViewToBottom
+{
+    CGFloat yOffset = 0;
+    
+    if (self.tableView.contentSize.height > self.tableView.bounds.size.height) {
+        yOffset = self.tableView.contentSize.height - self.tableView.bounds.size.height;
+    }
+    
+    [self.tableView setContentOffset:CGPointMake(0, yOffset) animated:NO];
 }
 
 #pragma mark - Table view data source
@@ -46,7 +58,7 @@
         cell = [[CommentsTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:commentsTableViewCellIdentifier];
     }
     NSDictionary *comment = [_commentsArray objectAtIndex:indexPath.row];
-    [cell setName:[comment valueForKey:@"name"] andID:[comment valueForKey:@"fb_id"] andComment:[comment valueForKey:@"comment"]];
+    [cell setName:[comment valueForKey:@"name"] andID:[comment valueForKey:@"fb_id"] andComment:[comment valueForKey:@"comment"] andTime:[comment valueForKey:@"time"]];
     return cell;
 }
 

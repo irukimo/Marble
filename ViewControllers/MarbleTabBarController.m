@@ -10,6 +10,7 @@
 #import "ProfileNavigationController.h"
 #import "HomeNavigationController.h"
 #import "CommentsTableViewController.h"
+#import "PostsViewController.h"
 
 #define AUTO_COMPLETE_SELECT_VIEW_TAG 999
 #define COMMENT_TEXT @"write a comment..."
@@ -30,6 +31,9 @@
 @property (nonatomic) UIViewAnimationCurve keyboardCurve;
 @property ( nonatomic) CGRect commentsTableViewFrame;
 @property (nonatomic) CGRect commentFieldViewFrame;
+@property (weak, nonatomic) id callerViewController;
+@property (strong, nonatomic) NSIndexPath *commentIndexPath;
+@property (nonatomic) NSUInteger commentNum;
 @end
 
 @implementation MarbleTabBarController
@@ -182,13 +186,18 @@
     }
 }
 
--(void) viewMoreComments:(NSArray *)commentArray{
+-(void) viewMoreComments:(NSArray *)commentArray atIndexPath:(NSIndexPath *)indexPath calledBy:(id)viewController{
+    _commentIndexPath = indexPath;
+    _callerViewController = viewController;
     _commentFieldView.frame = _commentFieldViewFrame;
     _commentsTableViewController.view.frame = _commentsTableViewFrame;
     [_commentsTableViewController setCommentArray:commentArray];
     [self.view addSubview:_commentsWholeView];
 }
 
+-(void) updateComments:(NSArray *)commentArray{
+    [_commentsTableViewController setCommentArray:commentArray];
+}
 
 -(void)initCreateQuizView{
     UIView *blackBGView = [[UIView alloc] initWithFrame:CGRectMake(0, NAVBAR_HEIGHT, self.view.frame.size.width, self.view.frame.size.height)];
@@ -227,7 +236,6 @@
 -(void)initCommentsTableView{
     [self initCommentFieldView];
     
-    
     UIView *blackBGView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height + KEYBOARD_HEIGHT)];
     [blackBGView setBackgroundColor:[UIColor colorWithWhite:0 alpha:0.8f]];
     _cancelButton = [[UIButton alloc] initWithFrame:CGRectMake(270, 10, 50, 50)];
@@ -244,10 +252,10 @@
 }
 
 -(void) commentPostClicked:(id)sender{
-//    MBDebug(@"comment quiz clicked!");
-//    if(_delegate && [_delegate respondsToSelector:@selector(commentPost:withComment:)]){
-//        [_delegate commentPost:sender withComment:_commentField.text];
-//    }
+    if([_callerViewController isKindOfClass:[PostsViewController class]]){
+        PostsViewController *postsViewController = _callerViewController;
+        [postsViewController commentPostAtIndexPath:_commentIndexPath withComment:[_commentField text]];
+    }
 }
 
 

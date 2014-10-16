@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface CommentsTableViewCell : UITableViewCell
-- (void) setName:(NSString *)name andID:(NSString *)fbid andComment:(NSString *)comment;
+- (void) setName:(NSString *)name andID:(NSString *)fbid andComment:(NSString *)comment andTime:(NSString *)time;
 @end

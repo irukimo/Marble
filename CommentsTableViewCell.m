@@ -12,7 +12,7 @@
 @property (strong, nonatomic) UIImageView *authorPicView;
 @property (strong, nonatomic) UILabel *nameLabel;
 @property (strong, nonatomic) UILabel *commentLabel;
-
+@property (strong, nonatomic) UILabel *timeLabel;
 @end
 
 @implementation CommentsTableViewCell
@@ -33,11 +33,12 @@
 
 
 -(void) addStaticLabels{
-    
+    _timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(290, 5, 30, 30)];
     _commentLabel = [[UILabel alloc] initWithFrame:CGRectMake(LEFT_ALIGNMENT + 50, 22, 150, 30)];
     _nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(LEFT_ALIGNMENT + 50, 5, 100, 30)];
     [self.contentView addSubview:_commentLabel];
     [self.contentView addSubview:_nameLabel];
+    [self.contentView addSubview:_timeLabel];
 }
 
 -(void) initPicView{
@@ -47,9 +48,12 @@
     [self.contentView addSubview:_authorPicView];
 }
 
-- (void) setName:(NSString *)name andID:(NSString *)fbid andComment:(NSString *)comment
-{
-    
+- (void) setName:(NSString *)name andID:(NSString *)fbid andComment:(NSString *)comment andTime:(NSString *)time{
+    NSLog(@"%@", time);
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    NSDate *date = [dateFormatter dateFromString:time];
+    [_timeLabel setText:[Utility getDateToShow:date inWhole:NO]];
     NSAttributedString *nameString = [[NSAttributedString alloc] initWithString:[Utility getNameToDisplay:name] attributes:[Utility getPostsViewNameFontDictionary]];
     [_nameLabel setAttributedText:nameString];
     NSAttributedString *commentString = [[NSAttributedString alloc] initWithString:comment attributes:[Utility getWhiteCommentFontDictionary]];
