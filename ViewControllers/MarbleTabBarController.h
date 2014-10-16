@@ -10,8 +10,10 @@
 #import "CreateQuizViewController.h"
 #import "SelectKeywordViewController.h"
 #import "SelectPeopleViewController.h"
+#import "CommentsTableViewController.h"
 
-@interface MarbleTabBarController : UITabBarController <UITabBarControllerDelegate, CreateQuizViewControllerDelegate, SelectKeywordViewControllerDelegate, SelectPeopleViewControllerDelegate, UITextFieldDelegate>
+
+@interface MarbleTabBarController : UITabBarController <UITabBarControllerDelegate, CreateQuizViewControllerDelegate, SelectKeywordViewControllerDelegate, SelectPeopleViewControllerDelegate, UITextFieldDelegate, CommentsTableViewControllerDelegate>
 -(void) marbleButtonClicked;
 -(void) viewMoreComments:(NSArray *)commentArray atIndexPath:(NSIndexPath *)indexPath calledBy:(id)viewController;
 -(void) updateComments:(NSArray *)commentArray;

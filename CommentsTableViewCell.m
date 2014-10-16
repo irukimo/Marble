@@ -10,7 +10,7 @@
 
 @interface CommentsTableViewCell()
 @property (strong, nonatomic) UIImageView *authorPicView;
-@property (strong, nonatomic) UILabel *nameLabel;
+@property (strong, nonatomic) UIButton *nameButton;
 @property (strong, nonatomic) UILabel *commentLabel;
 @property (strong, nonatomic) UILabel *timeLabel;
 @end
@@ -36,9 +36,11 @@
 -(void) addStaticLabels{
     _timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(260, 5, 80, 30)];
     _commentLabel = [[UILabel alloc] initWithFrame:CGRectMake(LEFT_ALIGNMENT + 50, 22, 150, 30)];
-    _nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(LEFT_ALIGNMENT + 50, 5, 100, 30)];
+    _nameButton = [[UIButton alloc] initWithFrame:CGRectMake(LEFT_ALIGNMENT + 50, 5, 100, 30)];
+    [_nameButton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
+    [_nameButton addTarget:_delegate action:@selector(gotoProfile:) forControlEvents:UIControlEventTouchUpInside];
     [self.contentView addSubview:_commentLabel];
-    [self.contentView addSubview:_nameLabel];
+    [self.contentView addSubview:_nameButton];
     [self.contentView addSubview:_timeLabel];
 }
 
@@ -55,7 +57,7 @@
     [_timeLabel setAttributedText:dateString];
     
     NSAttributedString *nameString = [[NSAttributedString alloc] initWithString:[Utility getNameToDisplay:name] attributes:[Utility getPostsViewNameFontDictionary]];
-    [_nameLabel setAttributedText:nameString];
+    [_nameButton setAttributedTitle:nameString forState:UIControlStateNormal];
     NSAttributedString *commentString = [[NSAttributedString alloc] initWithString:comment attributes:[Utility getWhiteCommentFontDictionary]];
     [_commentLabel setAttributedText:commentString];
     NSString *authorPictureUrl = [NSString stringWithFormat:@"https://graph.facebook.com/%@/picture", fbid];

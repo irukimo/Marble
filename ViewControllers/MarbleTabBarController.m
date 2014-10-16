@@ -244,6 +244,7 @@
     _commentsTableViewController = [[CommentsTableViewController alloc] init];
 //    _commentsTableViewController.delegate = self;
     _commentsTableViewController.view.frame = CGRectMake(0, 50, self.view.frame.size.width, self.view.frame.size.height - NAVBAR_HEIGHT - TABBAR_HEIGHT - 50);
+    _commentsTableViewController.delegate = self;
     _commentsWholeView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, NAVBAR_HEIGHT, self.view.frame.size.width, self.view.frame.size.height + KEYBOARD_HEIGHT)];
     [_commentsWholeView addSubview:blackBGView];
     [_commentsWholeView addSubview:_cancelButton];
@@ -363,6 +364,16 @@
     return YES;
 }
  
+#pragma mark -
+#pragma mark CommentsTableView Delegate Methods
+-(void) gotoProfileWithName:(NSString *)name andID:(NSString *)fbid{
+    [_commentsWholeView removeFromSuperview];
+    if([_callerViewController isKindOfClass:[PostsViewController class]]){
+        PostsViewController *postsViewController = _callerViewController;
+        [postsViewController gotoProfileWithName:name andID:fbid];
+    }
+
+}
 
 
 /*

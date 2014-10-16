@@ -7,7 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CommentsTableViewCell.h"
 
-@interface CommentsTableViewController : UITableViewController
+@protocol CommentsTableViewControllerDelegate;
+
+@interface CommentsTableViewController : UITableViewController <CommentsTableViewCellDelegate>
 -(void)setCommentArray:(NSArray *)commentArray;
+@property (nonatomic, weak) id<CommentsTableViewControllerDelegate> delegate;
+@end
+
+@protocol CommentsTableViewControllerDelegate <NSObject>
+-(void) gotoProfileWithName:(NSString *)name andID:(NSString *)fbid;
+
 @end

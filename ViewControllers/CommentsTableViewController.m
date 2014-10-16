@@ -7,7 +7,6 @@
 //
 
 #import "CommentsTableViewController.h"
-#import "CommentsTableViewCell.h"
 
 @interface CommentsTableViewController()
 @property (strong, nonatomic) NSMutableArray *commentsArray;
@@ -36,7 +35,7 @@
         yOffset = self.tableView.contentSize.height - self.tableView.bounds.size.height;
     }
     
-    [self.tableView setContentOffset:CGPointMake(0, yOffset) animated:NO];
+    [self.tableView setContentOffset:CGPointMake(0, yOffset) animated:YES];
 }
 
 #pragma mark - Table view data source
@@ -59,11 +58,24 @@
     }
     NSDictionary *comment = [_commentsArray objectAtIndex:indexPath.row];
     [cell setName:[comment valueForKey:@"name"] andID:[comment valueForKey:@"fb_id"] andComment:[comment valueForKey:@"comment"] andTime:[comment valueForKey:@"time"]];
+    cell.delegate = self;
     return cell;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return 50;
+}
+
+
+
+#pragma mark - CommentsTableViewCell Delegate Method
+-(void) gotoProfile:(id)sender{
+    CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.tableView];
+    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:buttonPosition];
+    NSDictionary *comment = [_commentsArray objectAtIndex:indexPath.row];
+    if(_delegate && [_delegate respondsToSelector:@selector(gotoProfileWithName:andID:)]){
+        [_delegate gotoProfileWithName:[comment valueForKey:@"name"] andID:[comment valueForKey:@"fb_id"]];
+    }
 }
 
 @end

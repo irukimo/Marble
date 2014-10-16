@@ -140,27 +140,44 @@
         if(i > 2){
             return;
         }
-        [self addCommentAtY:(y+i*CommentIncrementHeight) withName:[cmt valueForKey:@"name"] andID:[cmt valueForKey:@"fb_id"] andComment:[cmt valueForKey:@"comment"]];
+        [self addCommentAtY:(y+i*CommentIncrementHeight) withName:[cmt valueForKey:@"name"] andID:[cmt valueForKey:@"fb_id"] andComment:[cmt valueForKey:@"comment"] atCommentIndex:[_comments indexOfObject:cmt]];
         i++;
     }
 }
 
 
--(void) addCommentAtY:(int)y withName:(NSString *)name andID:(NSString *)fbid andComment:(NSString *)comment{
-    UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(LEFT_ALIGNMENT, y, 100, 20)];
-    [nameLabel setTag:COMMENT_RELATED_TAG];
+-(void) addCommentAtY:(int)y withName:(NSString *)name andID:(NSString *)fbid andComment:(NSString *)comment atCommentIndex:(NSUInteger)index{
+    UIView *commentContainer = [[UIView alloc] initWithFrame:CGRectMake(LEFT_ALIGNMENT, y, self.contentView.frame.size.width, 20)];
+    [commentContainer setTag:COMMENT_RELATED_TAG];
+    
+    UIButton *nameButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 100, 20)];
+    [nameButton setTag:index];
+    [nameButton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
+    
+    [nameButton addTarget:self action:@selector(commentNameClicked:) forControlEvents:UIControlEventTouchUpInside];
     
     NSAttributedString *nameString = [[NSAttributedString alloc] initWithString:[Utility getNameToDisplay:name] attributes:[Utility getPostsViewNameFontDictionary]];
     CGSize nameSize = [nameString size];
     
-    UILabel *commentLabel = [[UILabel alloc] initWithFrame:CGRectMake(25+3+nameSize.width, y, 150, 20)];
-    [commentLabel setTag:COMMENT_RELATED_TAG];
+    UILabel *commentLabel = [[UILabel alloc] initWithFrame:CGRectMake(3+nameSize.width, 0, 150, 20)];
     
     NSAttributedString *commentString = [[NSAttributedString alloc] initWithString:comment attributes:[Utility getPostsViewCommentFontDictionary]];
-    [nameLabel setAttributedText:nameString];
+    [nameButton setAttributedTitle:nameString forState:UIControlStateNormal];
     [commentLabel setAttributedText:commentString];
-    [self.contentView addSubview:nameLabel];
-    [self.contentView addSubview:commentLabel];
+    
+    [commentContainer addSubview:nameButton];
+    [commentContainer addSubview:commentLabel];
+    [self.contentView addSubview:commentContainer];
+}
+
+-(void)commentNameClicked:(id)sender{
+    if(!_comments || ([_comments count] - 1) < [sender tag]){
+        return;
+    }
+    NSDictionary *comment = [_comments objectAtIndex:[sender tag]];
+    if(self.delegate && [self.delegate respondsToSelector:@selector(gotoProfileWithName:andID:)]){
+        [self.delegate gotoProfileWithName:[comment valueForKey:@"name"] andID:[comment valueForKey:@"fb_id"]];
+    }
 }
 
 -(void) commentPostClicked:(id)sender{
