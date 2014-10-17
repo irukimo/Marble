@@ -27,7 +27,9 @@
 + (BOOL)createUsersInBatchForEng:(NSArray *)fbEngUsers andChinese:(NSArray *)fbChUsers inManagedObjectContext:(NSManagedObjectContext *)context
 {
     if (fbEngUsers == nil || fbChUsers == nil) return FALSE;
-    NSArray *fbIDs = [[fbEngUsers valueForKey:@"id"] sortedArrayUsingSelector: @selector(compare:)];
+    MBDebug(@"fbEngUsers: %@, fbChUsers: %@", fbEngUsers, fbChUsers);
+    NSArray *fbIDs = [fbEngUsers valueForKey:@"id"];
+    if (fbIDs != nil) [fbIDs sortedArrayUsingSelector: @selector(compare:)];
 //    MBDebug(@"fb ids: %@", fbIDs);
     
     // create the fetch request to get all Employees matching the IDs

@@ -145,10 +145,20 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)error
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
 {
-    NSString * postID = [userInfo objectForKey:@"post_id"];
+    NSString * postUUID = [userInfo objectForKey:@"post_uuid"];
     
     UIApplicationState state = [application applicationState];
     if (state == UIApplicationStateActive) {
+        UITabBarController *myTabBarController = (UITabBarController *)[self.window.rootViewController presentedViewController];
+        MBDebug(@"tab bar controller: %@", myTabBarController);
+        
+        NSInteger badgeNumber = [UIApplication sharedApplication].applicationIconBadgeNumber;
+        badgeNumber = badgeNumber + 1;
+        [UIApplication sharedApplication].applicationIconBadgeNumber = badgeNumber;
+        [[[[myTabBarController tabBar] items] lastObject] setBadgeValue:[NSString stringWithFormat:@"%d", badgeNumber]];
+        MBDebug(@"Received notification while being active, set badge num from %d to %d", (badgeNumber - 1), badgeNumber);
+
+        
 //        [Flurry logEvent:@"Receive_Notification_In_Foreground"];
 //        AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
 //        AudioServicesPlaySystemSound (1003);

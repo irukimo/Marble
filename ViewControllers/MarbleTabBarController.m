@@ -61,7 +61,10 @@
         v.tabBarItem.selectedImage = [v.tabBarItem.selectedImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
         
     }
+    
     // Do any additional setup after loading the view.
+    NSString *badgeValue = [NSString stringWithFormat:@"%ld", (long)[UIApplication sharedApplication].applicationIconBadgeNumber];
+    [[[[self tabBar] items] lastObject] setBadgeValue:badgeValue];
 }
 
 

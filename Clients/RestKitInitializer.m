@@ -238,11 +238,13 @@
     
     RKRoute *getNotificationsRoute = [RKRoute routeWithName:@"get_notifications" pathPattern:@"notifications" method:RKRequestMethodGET];
     
+    RKRoute *setBadgeRoute = [RKRoute routeWithName:@"set_badge" pathPattern:@"set_badge_number" method:RKRequestMethodPOST];
+    
     [objectManager.router.routeSet addRoutes:@[// class routes
                                                quizGETRoute, quizPOSTRoute, /*statusPOSTRoute,*/ postGETRoute, userGETRoute,
                                                // named routes
                                                sendDeviceTokenRoute, sendCommentRoute, getCommentsRoute,
-                                               sendGuessRoute, sendStatusRoute, getNotificationsRoute]];
+                                               sendGuessRoute, sendStatusRoute, getNotificationsRoute, setBadgeRoute]];
 
 
 }

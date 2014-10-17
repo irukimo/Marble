@@ -9,6 +9,7 @@
 #import "NotifViewController.h"
 #import "NotificationTableViewCell.h"
 #import "KeyChainWrapper.h"
+#import "ClientManager.h"
 
 @interface NotifViewController ()
 
@@ -20,25 +21,31 @@
 
 @implementation NotifViewController
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    [self setNavbarTitle];
-    _notifications = [[NSMutableArray alloc] init];
+- (void)viewWillAppear:(BOOL)animated
+{
     NSMutableDictionary *params = [NSMutableDictionary
                                    dictionaryWithObjects:@[[KeyChainWrapper getSessionTokenForUser]]
                                    forKeys:@[@"auth_token"]];
     
-    [[RKObjectManager sharedManager] getObjectsAtPathForRouteNamed:@"get_notifications" object:self parameters:params
-       success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
-           MBDebug(@"GET notification: %@", mappingResult);
-           [self fetchNotifcations];
-       }
-       failure:^(RKObjectRequestOperation *operation, NSError *error) {
-           [Utility generateAlertWithMessage:@"Network problem"];
-           MBError(@"Cannot get notifications!");
-       }];
+    [[RKObjectManager sharedManager] getObjectsAtPathForRouteNamed:@"get_notifications"
+                                                            object:self
+                                                        parameters:params
+           success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+               MBDebug(@"GET notification: %@", mappingResult);
+               [self fetchNotifcations];
+               [ClientManager sendBadgeNumber:0];
+               [[[[self.tabBarController tabBar] items] lastObject] setBadgeValue:[NSString stringWithFormat:@"%d", 0]];
+           }
+           failure:^(RKObjectRequestOperation *operation, NSError *error) {
+               [Utility generateAlertWithMessage:@"Network problem"];
+               MBError(@"Cannot get notifications!");
+           }];
+}
 
-    
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    [self setNavbarTitle];
+    _notifications = [[NSMutableArray alloc] init];
     
     // Do any additional setup after loading the view.
 }

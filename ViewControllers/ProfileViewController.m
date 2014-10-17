@@ -27,8 +27,6 @@
 
 @implementation ProfileViewController
 
-
-
 - (void)viewDidLoad {
     self.predicate = [NSPredicate predicateWithFormat:@"fbID1 == %@ OR fbID2 == %@ OR fbID3 == %@", _fbid, _fbid, _fbid];
     [super viewDidLoad];

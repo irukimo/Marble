@@ -123,6 +123,18 @@ static NSInteger tryAgainButtonIndex;
     [alert show];
 }
 
++ (void)sendBadgeNumber:(NSInteger)number
+{
+    [Utility sendThroughRKRoute:@"set_badge" withParams:@{@"badge_number": [NSNumber numberWithInteger:number]}
+                   successBlock:^{
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [UIApplication sharedApplication].applicationIconBadgeNumber = number;
+        });
+    }
+                   failureBlock:^{MBError(@"Cannot set badge number!");}];
+}
+
+
 #pragma mark -
 #pragma mark UIAlertView Delegate Methods
 
@@ -219,41 +231,6 @@ static NSInteger tryAgainButtonIndex;
                                              [Utility generateAlertWithMessage:@"Network problem"];
                                          });
                                          MBError(@"Cannot set device token!");
-                                     }];
-    
-    NSOperationQueue *operationQueue = [NSOperationQueue new];
-    [operationQueue addOperation:operation];
-}
-
-+ (void)sendBadgeNumber:(NSInteger)number
-{
-    if (![KeyChainWrapper isSessionTokenValid]) {
-        MBError(@"User session token is not valid.");
-        return;
-    }
-    
-    NSString *sessionToken = [KeyChainWrapper getSessionTokenForUser];
-    
-    MBDebug(@"badge number: %i", number);
-    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjects:@[sessionToken, [NSNumber numberWithInteger:number]]
-                                                                     forKeys:@[@"auth_token", @"badge_number"]];
-    
-    
-    NSMutableURLRequest *request = [[RKObjectManager sharedManager] requestWithPathForRouteNamed:@"set_badge"
-                                                                                          object:self
-                                                                                      parameters:params];
-    
-    RKHTTPRequestOperation *operation = [[RKHTTPRequestOperation alloc] initWithRequest:request];
-    [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [UIApplication sharedApplication].applicationIconBadgeNumber = number;
-        });
-    }
-                                     failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                         dispatch_async(dispatch_get_main_queue(), ^{
-                                             [Utility generateAlertWithMessage:@"Network problem"];
-                                         });
-                                         MBError(@"Cannot set badge number!");
                                      }];
     
     NSOperationQueue *operationQueue = [NSOperationQueue new];
