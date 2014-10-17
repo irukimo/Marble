@@ -45,6 +45,9 @@
 		7A0E977519DCDFBC003A9359 /* HomeNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A0E977419DCDFBC003A9359 /* HomeNavigationController.m */; };
 		7A10A56A19EF23BB006A2CED /* CommentsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A10A56919EF23BB006A2CED /* CommentsTableViewController.m */; };
 		7A10A56D19EF241C006A2CED /* CommentsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A10A56C19EF241C006A2CED /* CommentsTableViewCell.m */; };
+		7A261F3019F0AB4B00D1E91D /* ExploreCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A261F2F19F0AB4B00D1E91D /* ExploreCollectionViewController.m */; };
+		7A261F3419F0AC0200D1E91D /* ExploreCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A261F3319F0AC0200D1E91D /* ExploreCollectionViewCell.m */; };
+		7A261F3719F1A8FB00D1E91D /* ExploreNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A261F3619F1A8FB00D1E91D /* ExploreNavigationController.m */; };
 		7A48343A19EC56E80029D092 /* OpenSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7A48343819EC56E80029D092 /* OpenSans-Regular.ttf */; };
 		7A48343B19EC56E80029D092 /* OpenSans-Semibold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7A48343919EC56E80029D092 /* OpenSans-Semibold.ttf */; };
 		7A48344019EC9B940029D092 /* PostsTableViewSuperCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A48343F19EC9B940029D092 /* PostsTableViewSuperCell.m */; };
@@ -156,6 +159,12 @@
 		7A10A56919EF23BB006A2CED /* CommentsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentsTableViewController.m; sourceTree = "<group>"; };
 		7A10A56B19EF241C006A2CED /* CommentsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentsTableViewCell.h; sourceTree = "<group>"; };
 		7A10A56C19EF241C006A2CED /* CommentsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentsTableViewCell.m; sourceTree = "<group>"; };
+		7A261F2E19F0AB4B00D1E91D /* ExploreCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExploreCollectionViewController.h; sourceTree = "<group>"; };
+		7A261F2F19F0AB4B00D1E91D /* ExploreCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExploreCollectionViewController.m; sourceTree = "<group>"; };
+		7A261F3219F0AC0200D1E91D /* ExploreCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ExploreCollectionViewCell.h; path = CollectionViewCells/ExploreCollectionViewCell.h; sourceTree = "<group>"; };
+		7A261F3319F0AC0200D1E91D /* ExploreCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ExploreCollectionViewCell.m; path = CollectionViewCells/ExploreCollectionViewCell.m; sourceTree = "<group>"; };
+		7A261F3519F1A8FB00D1E91D /* ExploreNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ExploreNavigationController.h; path = NavigationControllers/ExploreNavigationController.h; sourceTree = "<group>"; };
+		7A261F3619F1A8FB00D1E91D /* ExploreNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ExploreNavigationController.m; path = NavigationControllers/ExploreNavigationController.m; sourceTree = "<group>"; };
 		7A48343819EC56E80029D092 /* OpenSans-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "OpenSans-Regular.ttf"; path = "Resources/Fonts/OpenSans-Regular.ttf"; sourceTree = "<group>"; };
 		7A48343919EC56E80029D092 /* OpenSans-Semibold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "OpenSans-Semibold.ttf"; path = "Resources/Fonts/OpenSans-Semibold.ttf"; sourceTree = "<group>"; };
 		7A48343E19EC9B940029D092 /* PostsTableViewSuperCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PostsTableViewSuperCell.h; path = TableViewCells/PostsTableViewSuperCell.h; sourceTree = "<group>"; };
@@ -308,6 +317,15 @@
 			name = Framework;
 			sourceTree = "<group>";
 		};
+		7A261F3119F0ABD500D1E91D /* CollectionViewCells */ = {
+			isa = PBXGroup;
+			children = (
+				7A261F3219F0AC0200D1E91D /* ExploreCollectionViewCell.h */,
+				7A261F3319F0AC0200D1E91D /* ExploreCollectionViewCell.m */,
+			);
+			name = CollectionViewCells;
+			sourceTree = "<group>";
+		};
 		7A48343719EC56D60029D092 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -328,6 +346,7 @@
 		7AF4122419D9FB6C00A470E1 = {
 			isa = PBXGroup;
 			children = (
+				7A261F3119F0ABD500D1E91D /* CollectionViewCells */,
 				7A48343719EC56D60029D092 /* Resources */,
 				50B568F019E4949E0050C8EC /* Icons */,
 				5152F8DB19DCACA1008E99DB /* Models */,
@@ -423,6 +442,8 @@
 				7AEB9CFB19E9B3B500409276 /* KeywordProfileViewController.m */,
 				7A10A56819EF23BB006A2CED /* CommentsTableViewController.h */,
 				7A10A56919EF23BB006A2CED /* CommentsTableViewController.m */,
+				7A261F2E19F0AB4B00D1E91D /* ExploreCollectionViewController.h */,
+				7A261F2F19F0AB4B00D1E91D /* ExploreCollectionViewController.m */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -434,6 +455,8 @@
 				7A0E977119DCD8BB003A9359 /* ProfileNavigationController.m */,
 				7A0E977319DCDFBC003A9359 /* HomeNavigationController.h */,
 				7A0E977419DCDFBC003A9359 /* HomeNavigationController.m */,
+				7A261F3519F1A8FB00D1E91D /* ExploreNavigationController.h */,
+				7A261F3619F1A8FB00D1E91D /* ExploreNavigationController.m */,
 			);
 			name = NavigationControllers;
 			sourceTree = "<group>";
@@ -656,12 +679,15 @@
 				7AD2A32E19DE1F9800B200E9 /* User+MBUser.m in Sources */,
 				7AF4123319D9FB6C00A470E1 /* main.m in Sources */,
 				7A0E976919DCB194003A9359 /* ProfileViewController.m in Sources */,
+				7A261F3419F0AC0200D1E91D /* ExploreCollectionViewCell.m in Sources */,
 				7AEB9CF919E9B37100409276 /* KeywordListViewController.m in Sources */,
 				7AFF5BBE19E59AEA00CFD35D /* SelectKeywordViewController.m in Sources */,
 				7A0E977519DCDFBC003A9359 /* HomeNavigationController.m in Sources */,
+				7A261F3719F1A8FB00D1E91D /* ExploreNavigationController.m in Sources */,
 				7AFF5BC119E7631F00CFD35D /* StatusUpdateTableViewCell.m in Sources */,
 				7A10A56A19EF23BB006A2CED /* CommentsTableViewController.m in Sources */,
 				51DF106E19E460E00021C3F9 /* ArrayToDataTransformer.m in Sources */,
+				7A261F3019F0AB4B00D1E91D /* ExploreCollectionViewController.m in Sources */,
 				517C895019DB7DB4005A8407 /* RestKitInitializer.m in Sources */,
 				7AEB9CFC19E9B3B500409276 /* KeywordProfileViewController.m in Sources */,
 				516937A219ECCD5600EE0C0D /* Post.m in Sources */,

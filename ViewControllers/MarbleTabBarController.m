@@ -7,6 +7,7 @@
 //
 
 #import "MarbleTabBarController.h"
+#import "ExploreNavigationController.h"
 #import "ProfileNavigationController.h"
 #import "HomeNavigationController.h"
 #import "CommentsTableViewController.h"
@@ -158,11 +159,14 @@
     if([viewController isKindOfClass:[HomeNavigationController class]]){
         HomeNavigationController *homeNavigationController = (HomeNavigationController *)viewController;
         [homeNavigationController backToRoot];
-    }
-    if([viewController isKindOfClass:[ProfileNavigationController class]]){
+    } else if([viewController isKindOfClass:[ProfileNavigationController class]]){
         ProfileNavigationController *profileNavigationController = (ProfileNavigationController *)viewController;
         [profileNavigationController setSelf];
         [profileNavigationController backToRoot];
+        NSLog(@"sent Iru Wang");
+    } else if([viewController isKindOfClass:[ExploreNavigationController class]]){
+        ExploreNavigationController *exploreNavigationController = (ExploreNavigationController *)viewController;
+        [exploreNavigationController backToRoot];
         NSLog(@"sent Iru Wang");
     }
     //    if([viewController isKindOfClass:MyPostsViewController.class]){

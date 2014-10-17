@@ -31,6 +31,8 @@
 #define selectPeopleViewCellIdentifier @"selectPeopleViewCellIdentifier"
 #define commentsTableViewCellIdentifier @"commentsTableViewCellIdentifier"
 
+#define exploreCollectionViewCellIdentifier @"exploreCollectionViewCellIdentifier"
+
 #define QuizTableViewCellHeight 230
 #define StatusUpdateTableViewCellHeight 90
 #define KeywordUpdateTableViewCellHeight 90

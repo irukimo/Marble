@@ -5,59 +5,42 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
     </dependencies>
     <scenes>
-        <!--Explore View Controller-->
-        <scene sceneID="ZWa-kF-fro">
+        <!--Explore Collection View Controller-->
+        <scene sceneID="N4P-dZ-Foi">
             <objects>
-                <viewController id="JTT-ce-uWp" customClass="ExploreViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="MD9-8i-kjX"/>
-                        <viewControllerLayoutGuide type="bottom" id="bJ8-fk-lBT"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="31N-2V-ieX">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                <collectionViewController id="vCU-SK-Mbh" customClass="ExploreCollectionViewController" sceneMemberID="viewController">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="Oph-c2-SO3">
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Explore" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wIi-ai-AAL">
-                                <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                                <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="196" y="432" width="58" height="21"/>
-                                </variation>
-                            </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ClK-6m-yVm">
-                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
-                                <state key="normal" title="Goto">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="106" y="323" width="34" height="30"/>
-                                </variation>
-                            </button>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <variation key="default">
-                            <mask key="subviews">
-                                <exclude reference="wIi-ai-AAL"/>
-                                <exclude reference="ClK-6m-yVm"/>
-                            </mask>
-                        </variation>
-                        <variation key="heightClass=regular-widthClass=compact">
-                            <mask key="subviews">
-                                <include reference="wIi-ai-AAL"/>
-                                <include reference="ClK-6m-yVm"/>
-                            </mask>
-                        </variation>
-                    </view>
-                    <navigationItem key="navigationItem" id="Jsi-Rb-qKG">
-                        <barButtonItem key="backBarButtonItem" title=" " id="9d2-Gd-irb"/>
-                    </navigationItem>
-                    <nil key="simulatedTopBarMetrics"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="qcy-lo-s83" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="lqR-qC-5Ru">
+                            <size key="itemSize" width="50" height="50"/>
+                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        </collectionViewFlowLayout>
+                        <cells>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="v3e-ep-ucv">
+                                <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                    <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                </view>
+                            </collectionViewCell>
+                        </cells>
+                        <connections>
+                            <outlet property="dataSource" destination="vCU-SK-Mbh" id="1AD-xl-dvm"/>
+                            <outlet property="delegate" destination="vCU-SK-Mbh" id="Nr0-1B-cQM"/>
+                        </connections>
+                    </collectionView>
+                    <navigationItem key="navigationItem" id="6aJ-dd-FbO"/>
+                    <connections>
+                        <segue destination="yrV-Hg-Gjs" kind="show" identifier="ProfileViewControllerSegue" id="rLd-DA-xPh"/>
+                    </connections>
+                </collectionViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="oDq-dA-78P" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3723" y="-601.5"/>
+            <point key="canvasLocation" x="3732" y="-601.5"/>
         </scene>
         <!--Keyword List View Controller-->
         <scene sceneID="oLo-mf-deL">
@@ -119,6 +102,7 @@
             <objects>
                 <tableViewController id="sHQ-Bk-AgM" customClass="NotifViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="fbY-V0-B8I">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
@@ -234,7 +218,7 @@
         <!--探索-->
         <scene sceneID="8ng-Hf-2ON">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="ySs-3s-vSM" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="ySs-3s-vSM" customClass="ExploreNavigationController" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="探索" id="afi-Mb-oOR"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="ZMd-xi-hiZ">
@@ -243,7 +227,7 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="JTT-ce-uWp" kind="relationship" relationship="rootViewController" id="Vaq-G0-ZeM"/>
+                        <segue destination="vCU-SK-Mbh" kind="relationship" relationship="rootViewController" id="xCp-Xg-rh5"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3WD-kQ-NOP" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -372,6 +356,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="SBG-1F-ZvQ"/>
+        <segue reference="rLd-DA-xPh"/>
     </inferredMetricsTieBreakers>
 </document>
