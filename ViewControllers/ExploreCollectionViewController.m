@@ -13,7 +13,8 @@
 
 @interface ExploreCollectionViewController()
 @property (strong, nonatomic) UITextField *searchTextField;
-@property(strong, nonatomic) NSArray *searchResults;
+@property(strong, nonatomic) NSMutableArray *searchResults;
+@property (nonatomic) BOOL isLoadingMore;
 @end
 
 @implementation ExploreCollectionViewController
@@ -27,23 +28,62 @@
     [self setNavbarTitle];
     [self initSearchTextField];
     [self initSearchResults];
-    
+    _isLoadingMore = FALSE;
+}
+
+-(void)viewDidAppear:(BOOL)animated{
+    [_searchTextField resignFirstResponder];
 }
 
 
 -(void) initSearchResults{
+    _searchResults = nil;
     NSArray *results;
     [User getRandomUsersThisMany:10 inThisArray:&results inManagedObjectContext:[RKManagedObjectStore defaultStore].mainQueueManagedObjectContext existingUsers:nil];
     for(User * user in results){
         NSLog(@"%@", user.name);
     }
-    _searchResults = results;
+    _searchResults = [[NSMutableArray alloc] init];
+    for(User *user in results){
+        [_searchResults addObject:user];
+    }
+//                       ]initWithArray:results];
+    [self.collectionView reloadData];
+}
+
+
+-(void) reInitSearchResults:(NSArray *)results{
+    NSString *a = @"yes";
+
+    [a rangeOfCharacterFromSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    
+    
+    
+    _searchResults = nil;
+    _searchResults = [[NSMutableArray alloc] init];
+    for(User *user in results){
+        [_searchResults addObject:user];
+    }
+//    _searchResults =[[NSMutableArray alloc] initWithArray:results];
+    [self.collectionView reloadData];
+}
+
+-(void) addSearchResults:(NSArray *)results{
+    for(User *user in results){
+        [_searchResults addObject:user];
+    }
+    [self.collectionView reloadData];
+    _isLoadingMore = FALSE;
 }
 
 -(void) initSearchTextField{
     _searchTextField = [[UITextField alloc] initWithFrame:CGRectMake(LEFT_ALIGNMENT, 12, self.view.frame.size.width - 2*LEFT_ALIGNMENT, 26)];
     [_searchTextField setBackgroundColor:[UIColor colorWithWhite:0.9 alpha:1]];
     _searchTextField.delegate = self;
+    
+    [_searchTextField addTarget:self
+                          action:@selector(textFieldDidChange:)
+                forControlEvents:UIControlEventEditingChanged];
     [self.view addSubview:_searchTextField];
 }
 
@@ -59,6 +99,7 @@
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
     return [_searchResults count];
+    NSLog(@"there are %d elements", [_searchResults count]);
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
@@ -66,6 +107,7 @@
     
     User *user = [_searchResults objectAtIndex:indexPath.row];
     [cell setCellUser:user];
+    NSLog(@"%@", user.name);
     [cell setBackgroundColor:[UIColor grayColor]];
     return cell;
 }
@@ -89,6 +131,7 @@
 }
 
 -(void) gotoProfileWithName:(NSString *)name andID:(NSString *)fbid{
+    [_searchTextField resignFirstResponder];
     NSArray *infoBundle = [NSArray arrayWithObjects:name,fbid, nil];
     [self performSegueWithIdentifier:@"ProfileViewControllerSegue" sender:infoBundle];
 }
@@ -99,6 +142,58 @@
     [self.view endEditing:YES];
     return YES;
 }
+
+-(void)textFieldDidChange :(UITextField *)textField{
+    NSLog(@"text changed %@", [textField text]);
+    _isLoadingMore = FALSE;
+    NSArray *arrayOfUsers;
+    [User searchUserThatContains:[textField text]
+             returnThisManyUsers:10
+                     inThisArray:&arrayOfUsers
+          inManagedObjectContext:[RKManagedObjectStore defaultStore].mainQueueManagedObjectContext
+                   existingUsers:nil];
+    [self reInitSearchResults:arrayOfUsers];
+}
+
+-(void)startLoadingMore{
+    _isLoadingMore = TRUE;
+    NSArray *arrayOfUsers;
+    [User searchUserThatContains:[_searchTextField text]
+             returnThisManyUsers:10
+                     inThisArray:&arrayOfUsers
+          inManagedObjectContext:[RKManagedObjectStore defaultStore].mainQueueManagedObjectContext
+                   existingUsers:_searchResults];
+    if([arrayOfUsers count] == 0){
+        return;
+    }
+    [self addSearchResults:arrayOfUsers];
+}
+
+
+#pragma mark -
+#pragma mark UIScrollView Delegate Methods
+
+-(void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    if (scrollView.contentSize.height < scrollView.frame.size.height) return;
+    
+    if(!_isLoadingMore) {
+    
+        CGFloat height = scrollView.frame.size.height;
+        
+        CGFloat contentYoffset = scrollView.contentOffset.y;
+        
+        CGFloat distanceFromBottom = scrollView.contentSize.height - contentYoffset;
+        
+        //TODO: grab more data from server
+        if(distanceFromBottom < height)
+        {
+            [self startLoadingMore];
+            //[self.tableView reloadData];
+        }
+    }
+}
+
 
 #pragma mark - Navigation
 

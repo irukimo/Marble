@@ -22,7 +22,8 @@
 + (BOOL)searchUserThatContains:(NSString *)string
            returnThisManyUsers:(int)num
                    inThisArray:(NSArray **)usersToReturn
-        inManagedObjectContext:(NSManagedObjectContext *)context;
+        inManagedObjectContext:(NSManagedObjectContext *)context
+                 existingUsers:(NSArray *)existingUsers;
 
 + (BOOL)getRandomUsersThisMany:(int)num
                    inThisArray:(NSArray **)usersToReturn

@@ -161,17 +161,22 @@
 + (BOOL)searchUserThatContains:(NSString *)string
            returnThisManyUsers:(int)num
                    inThisArray:(NSArray **)usersToReturn
-        inManagedObjectContext:(NSManagedObjectContext *)context{
+        inManagedObjectContext:(NSManagedObjectContext *)context
+                 existingUsers:(NSArray *)existingUsers {
     NSError *error = nil;
     NSMutableArray *allMatches = [[NSMutableArray alloc] init];
-    [allMatches addObjectsFromArray:[User returnSearchArrayWithString:string inContext:context]];
+    [allMatches addObjectsFromArray:[User returnSearchArrayWithString:string
+                                                            inContext:context
+                                                        existingUsers:existingUsers]];
     
     
     if([string rangeOfString:@" "].location != NSNotFound){
         NSArray* substrings = [string componentsSeparatedByString: @" "];
         for(NSString * substr in substrings){
             NSLog(@"%@", substr);
-            NSArray *matches = [User returnSearchArrayWithString:substr inContext:context];
+            NSArray *matches = [User returnSearchArrayWithString:substr
+                                                       inContext:context
+                                                   existingUsers:allMatches];
             for(id match in matches){
                 if(![allMatches containsObject:match]){
                     [allMatches addObject:match];
@@ -248,14 +253,16 @@
     return user;
 }
 
-+(NSArray *)returnSearchArrayWithString:(NSString *)string inContext:(NSManagedObjectContext *)context{
++(NSArray *)returnSearchArrayWithString:(NSString *)string
+                              inContext:(NSManagedObjectContext *)context
+                          existingUsers:(NSArray *)existingUsers{
     if([string isEqualToString:@""]){
         return [[NSArray alloc] initWithObjects: nil];
     }
     
     NSError *error = nil;
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"User"];
-    request.predicate = [NSPredicate predicateWithFormat:@"name CONTAINS[c] %@", string];
+    request.predicate = [NSPredicate predicateWithFormat:@"(name CONTAINS[c] %@) AND NOT (self IN %@)", string, existingUsers];
     
     NSArray *matches = [context
                         executeFetchRequest:request error:&error];

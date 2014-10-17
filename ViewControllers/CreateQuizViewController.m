@@ -297,7 +297,10 @@
 -(void)textFieldDidChange :(UITextField *)textField{
     if(textField == _option1NameTextField || textField == _option0NameTextField){
         NSArray *arrayOfUsers;
-        [User searchUserThatContains:[textField text] returnThisManyUsers:10 inThisArray:&arrayOfUsers inManagedObjectContext:[RKManagedObjectStore defaultStore].mainQueueManagedObjectContext];
+        [User searchUserThatContains:[textField text]
+                 returnThisManyUsers:10 inThisArray:&arrayOfUsers
+              inManagedObjectContext:[RKManagedObjectStore defaultStore].mainQueueManagedObjectContext
+                       existingUsers:nil];
         if(_delegate && [_delegate respondsToSelector:@selector(gotSearchUsersResult:)]){
             [_delegate gotSearchUsersResult:arrayOfUsers];
         }

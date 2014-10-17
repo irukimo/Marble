@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ExploreCollectionViewController : UICollectionViewController <UITextFieldDelegate>
-
+@interface ExploreCollectionViewController : UICollectionViewController <UITextFieldDelegate, UIScrollViewDelegate>
+-(void) initSearchResults;
 @end
