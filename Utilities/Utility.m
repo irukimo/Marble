@@ -262,22 +262,28 @@
     NSMutableDictionary *params = [NSMutableDictionary
                                    dictionaryWithObjects:@[[KeyChainWrapper getSessionTokenForUser]]
                                    forKeys:@[@"auth_token"]];
-    [params addEntriesFromDictionary:params_];
+    if (params_ != nil) {[params addEntriesFromDictionary:params_];}
     
     NSMutableURLRequest *request = [[RKObjectManager sharedManager] requestWithPathForRouteNamed:routeName
                                                                                           object:self
                                                                                       parameters:params];
     
     RKHTTPRequestOperation *operation = [[RKHTTPRequestOperation alloc] initWithRequest:request];
+    
     [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
-        MBDebug(@"object posted via route %@", routeName);
+
+        NSDictionary *response = (NSDictionary *)[NSJSONSerialization JSONObjectWithData:responseObject
+                                                                                 options:NSJSONReadingMutableContainers
+                                                                                   error:nil];
+                MBDebug(@"SEND THROUGH %@", response);
+        MBDebug(@"object posted/got via route %@", routeName);
         if (successBlock) {successBlock();}
     }
      failure:^(AFHTTPRequestOperation *operation, NSError *error) {
          dispatch_async(dispatch_get_main_queue(), ^{
              [Utility generateAlertWithMessage:@"Network problem"];
          });
-         MBError(@"Cannot send object via route %@!", routeName);
+         MBError(@"Cannot send/get object via route %@!", routeName);
          if (failureBlock) {failureBlock();}
      }];
     

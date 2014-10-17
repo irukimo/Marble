@@ -11,9 +11,11 @@
 
 @implementation CommentNotification
 
+@dynamic comment;
 @dynamic commenterFBID;
 @dynamic commenterName;
-@dynamic comment;
 @dynamic type;
+@dynamic time;
+@dynamic postUUID;
 
 @end

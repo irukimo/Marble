@@ -8,6 +8,7 @@
 
 #import "NotifViewController.h"
 #import "NotificationTableViewCell.h"
+#import "KeyChainWrapper.h"
 
 @interface NotifViewController ()
 
@@ -23,7 +24,21 @@
     [super viewDidLoad];
     [self setNavbarTitle];
     _notifications = [[NSMutableArray alloc] init];
-    [self fetchNotifcations];
+    NSMutableDictionary *params = [NSMutableDictionary
+                                   dictionaryWithObjects:@[[KeyChainWrapper getSessionTokenForUser]]
+                                   forKeys:@[@"auth_token"]];
+    
+    [[RKObjectManager sharedManager] getObjectsAtPathForRouteNamed:@"get_notifications" object:self parameters:params
+       success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+           MBDebug(@"GET notification: %@", mappingResult);
+           [self fetchNotifcations];
+       }
+       failure:^(RKObjectRequestOperation *operation, NSError *error) {
+           [Utility generateAlertWithMessage:@"Network problem"];
+           MBError(@"Cannot get notifications!");
+       }];
+
+    
     
     // Do any additional setup after loading the view.
 }

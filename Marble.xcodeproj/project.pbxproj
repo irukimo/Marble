@@ -17,6 +17,7 @@
 		50B5690719E497020050C8EC /* explore-unselected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B568FF19E497020050C8EC /* explore-unselected@2x.png */; };
 		50B5690819E497020050C8EC /* explore-selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B5690019E497020050C8EC /* explore-selected@2x.png */; };
 		50B5690C19E4AA260050C8EC /* login.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B5690B19E4AA260050C8EC /* login.png */; };
+		5118902119F09A2B00E62CD4 /* CommentNotification.m in Sources */ = {isa = PBXBuildFile; fileRef = 5118902019F09A2B00E62CD4 /* CommentNotification.m */; };
 		5152F8DF19DCAD86008E99DB /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 5152F8DD19DCAD86008E99DB /* Model.xcdatamodeld */; };
 		516937A219ECCD5600EE0C0D /* Post.m in Sources */ = {isa = PBXBuildFile; fileRef = 516937A119ECCD5600EE0C0D /* Post.m */; };
 		516937A519ECD35D00EE0C0D /* KeywordUpdate+MBKeywordUpdate.m in Sources */ = {isa = PBXBuildFile; fileRef = 516937A419ECD35D00EE0C0D /* KeywordUpdate+MBKeywordUpdate.m */; };
@@ -33,7 +34,6 @@
 		517C895019DB7DB4005A8407 /* RestKitInitializer.m in Sources */ = {isa = PBXBuildFile; fileRef = 517C894F19DB7DB4005A8407 /* RestKitInitializer.m */; };
 		51BB7CB419EF221A00D10F0D /* Quiz.h in Sources */ = {isa = PBXBuildFile; fileRef = 51BB7CB219EF21FB00D10F0D /* Quiz.h */; };
 		51BB7CB519EF221A00D10F0D /* Quiz.m in Sources */ = {isa = PBXBuildFile; fileRef = 51BB7CB319EF21FB00D10F0D /* Quiz.m */; };
-		51BB7CB819F04E6F00D10F0D /* CommentNotification.m in Sources */ = {isa = PBXBuildFile; fileRef = 51BB7CB719F04E6F00D10F0D /* CommentNotification.m */; };
 		51BB7CBF19F0617300D10F0D /* NotificationTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 51BB7CBE19F0617300D10F0D /* NotificationTableViewCell.m */; };
 		51DF106E19E460E00021C3F9 /* ArrayToDataTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 51DF106D19E460E00021C3F9 /* ArrayToDataTransformer.m */; };
 		51F5A74B19E60827006097EF /* Quiz+MBQuiz.m in Sources */ = {isa = PBXBuildFile; fileRef = 51F5A74A19E60827006097EF /* Quiz+MBQuiz.m */; };
@@ -98,6 +98,8 @@
 		50B5690019E497020050C8EC /* explore-selected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "explore-selected@2x.png"; path = "Icons/explore-selected@2x.png"; sourceTree = "<group>"; };
 		50B5690B19E4AA260050C8EC /* login.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = login.png; path = Icons/login.png; sourceTree = "<group>"; };
 		51036C1219E72E0700335973 /* Model 7.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Model 7.xcdatamodel"; sourceTree = "<group>"; };
+		5118901F19F09A2B00E62CD4 /* CommentNotification.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentNotification.h; sourceTree = "<group>"; };
+		5118902019F09A2B00E62CD4 /* CommentNotification.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentNotification.m; sourceTree = "<group>"; };
 		511D9F1419DCDDC300FCCFB2 /* Model 3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Model 3.xcdatamodel"; sourceTree = "<group>"; };
 		511E8C4319EF16260061E780 /* Model 11.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Model 11.xcdatamodel"; sourceTree = "<group>"; };
 		5137168D19DCBF7B00571C9A /* Model 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Model 2.xcdatamodel"; sourceTree = "<group>"; };
@@ -129,8 +131,6 @@
 		517C895119DB7E0C005A8407 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Constants.h; path = Utilities/Constants.h; sourceTree = "<group>"; };
 		51BB7CB219EF21FB00D10F0D /* Quiz.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Quiz.h; sourceTree = "<group>"; };
 		51BB7CB319EF21FB00D10F0D /* Quiz.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Quiz.m; sourceTree = "<group>"; };
-		51BB7CB619F04E6F00D10F0D /* CommentNotification.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentNotification.h; sourceTree = "<group>"; };
-		51BB7CB719F04E6F00D10F0D /* CommentNotification.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentNotification.m; sourceTree = "<group>"; };
 		51BB7CBD19F0617300D10F0D /* NotificationTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NotificationTableViewCell.h; path = TableViewCells/NotificationTableViewCell.h; sourceTree = "<group>"; };
 		51BB7CBE19F0617300D10F0D /* NotificationTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NotificationTableViewCell.m; path = TableViewCells/NotificationTableViewCell.m; sourceTree = "<group>"; };
 		51C1F0E119E4B0AB00B56DD9 /* Model 5.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Model 5.xcdatamodel"; sourceTree = "<group>"; };
@@ -271,8 +271,8 @@
 				7AD2A32C19DE1F9800B200E9 /* User+MBUser.h */,
 				7AD2A32D19DE1F9800B200E9 /* User+MBUser.m */,
 				5152F8DD19DCAD86008E99DB /* Model.xcdatamodeld */,
-				51BB7CB619F04E6F00D10F0D /* CommentNotification.h */,
-				51BB7CB719F04E6F00D10F0D /* CommentNotification.m */,
+				5118901F19F09A2B00E62CD4 /* CommentNotification.h */,
+				5118902019F09A2B00E62CD4 /* CommentNotification.m */,
 				516937A019ECCD5600EE0C0D /* Post.h */,
 				516937A119ECCD5600EE0C0D /* Post.m */,
 				516937A919ECD56500EE0C0D /* Post+MBPost.h */,
@@ -642,10 +642,10 @@
 				51706D3919E9E50D005010E6 /* KeywordUpdate.m in Sources */,
 				7AEB9CF619E8572200409276 /* KeywordUpdateTableViewCell.m in Sources */,
 				7AF4123619D9FB6C00A470E1 /* AppDelegate.m in Sources */,
+				5118902119F09A2B00E62CD4 /* CommentNotification.m in Sources */,
 				517C894D19DB7129005A8407 /* KeyChainWrapper.m in Sources */,
 				7AF4127119DA6A8300A470E1 /* SelectPeopleViewCell.m in Sources */,
 				5152F8DF19DCAD86008E99DB /* Model.xcdatamodeld in Sources */,
-				51BB7CB819F04E6F00D10F0D /* CommentNotification.m in Sources */,
 				51BB7CBF19F0617300D10F0D /* NotificationTableViewCell.m in Sources */,
 				7AB925B019E3730C00F8229F /* UIColor+MBColor.m in Sources */,
 				516937AB19ECD56500EE0C0D /* Post+MBPost.m in Sources */,

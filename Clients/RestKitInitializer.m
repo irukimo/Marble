@@ -51,7 +51,12 @@
                                         keyPath:@"Quiz"
                                     statusCodes:successCode];
     
-    
+    RKResponseDescriptor *quizNotifGETResponseDescriptor =
+    [RKResponseDescriptor responseDescriptorWithMapping:quizMapping
+                                                 method:RKRequestMethodGET
+                                            pathPattern:@"notifications"
+                                                keyPath:@"quiz"
+                                            statusCodes:successCode];
     
     // options mapping
     RKEntityMapping *optionsMapping = [RKEntityMapping mappingForEntityForName:@"User" inManagedObjectStore:managedObjectStore];
@@ -127,13 +132,41 @@
                                                 keyPath:@"Keyword_Update"
                                             statusCodes:successCode];
     
+    RKResponseDescriptor *keywordUpdateNotifGETResponseDescriptor =
+    [RKResponseDescriptor responseDescriptorWithMapping:keywordUpdateMapping
+                                                 method:RKRequestMethodGET
+                                            pathPattern:@"notifications"
+                                                keyPath:@"keyword_update"
+                                            statusCodes:successCode];
+    
+    // comment notification mapping
+    RKEntityMapping *commentNotificationMapping = [RKEntityMapping mappingForEntityForName:@"CommentNotification"
+                                                                      inManagedObjectStore:managedObjectStore];
+    
+    [commentNotificationMapping addAttributeMappingsFromDictionary:@{@"time": @"time",
+                                                                 @"fb_id": @"commenterFBID",
+                                                                 @"name": @"commenterName",
+                                                                 @"comment": @"comment",
+                                                                 @"post_uuid": @"postUUID",
+                                                                 @"type": @"type"
+                                                                 }];
+    RKResponseDescriptor *commentNotifGETResponseDescriptor =
+    [RKResponseDescriptor responseDescriptorWithMapping:commentNotificationMapping
+                                                 method:RKRequestMethodGET
+                                            pathPattern:@"notifications"
+                                                keyPath:@"comment"
+                                            statusCodes:successCode];
+    
     // add response descriptors to object manager
     [objectManager addResponseDescriptorsFromArray:@[quizGETResponseDescriptor,
                                                      optionsGETResponseDescriptor,
                                                      commentsGETResponseDescriptor,
                                                      userGETResponseDescriptor,
                                                      statusUpdateGETResponseDescriptor,
-                                                     keywordUpdateGETResponseDescriptor]];
+                                                     keywordUpdateGETResponseDescriptor,
+                                                     quizNotifGETResponseDescriptor,
+                                                     keywordUpdateNotifGETResponseDescriptor,
+                                                     commentNotifGETResponseDescriptor]];
 
     /* Set up request descriptor
      *
@@ -203,10 +236,13 @@
     
     RKRoute *sendStatusRoute = [RKRoute routeWithName:@"send_status" pathPattern:@"status" method:RKRequestMethodPOST];
     
+    RKRoute *getNotificationsRoute = [RKRoute routeWithName:@"get_notifications" pathPattern:@"notifications" method:RKRequestMethodGET];
+    
     [objectManager.router.routeSet addRoutes:@[// class routes
                                                quizGETRoute, quizPOSTRoute, /*statusPOSTRoute,*/ postGETRoute, userGETRoute,
                                                // named routes
-                                               sendDeviceTokenRoute, sendCommentRoute, getCommentsRoute, sendGuessRoute, sendStatusRoute]];
+                                               sendDeviceTokenRoute, sendCommentRoute, getCommentsRoute,
+                                               sendGuessRoute, sendStatusRoute, getNotificationsRoute]];
 
 
 }

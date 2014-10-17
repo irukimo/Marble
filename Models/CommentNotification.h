@@ -12,9 +12,11 @@
 
 @interface CommentNotification : NSManagedObject
 
+@property (nonatomic, retain) NSString * comment;
 @property (nonatomic, retain) NSString * commenterFBID;
 @property (nonatomic, retain) NSString * commenterName;
-@property (nonatomic, retain) NSString * comment;
 @property (nonatomic, retain) NSString * type;
+@property (nonatomic, retain) NSDate * time;
+@property (nonatomic, retain) NSString * postUUID;
 
 @end
