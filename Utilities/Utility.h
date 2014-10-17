@@ -31,6 +31,13 @@ typedef void (^voidBlock)(void);
 + (NSDictionary *)getNavigationBarTitleFontDictionary;
 + (NSDictionary *)getWriteACommentFontDictionary;
 
++ (NSDictionary *)getNotifBlackBoldFontDictionary;
++ (NSDictionary *)getNotifOrangeBoldFontDictionary;
++ (NSDictionary *)getNotifOrangeNormalFontDictionary;
++ (NSDictionary *)getNotifBlackNormalFontDictionary;
++ (NSDictionary *)getGraySmallFontDictionary;
+
+
 + (void) sendThroughRKRoute:(NSString *)routeName withParams:(NSDictionary *)params_;
 + (void) sendThroughRKRoute:(NSString *)routeName withParams:(NSDictionary *)params_
                successBlock:(voidBlock)successBlock failureBlock:(voidBlock)failureBlock;

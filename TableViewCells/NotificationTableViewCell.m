@@ -17,7 +17,9 @@
 @property (strong, nonatomic) NSString *fbID;
 @property (strong, nonatomic) NSString *name;
 @property (assign, nonatomic) NotificationType type;
-@property(strong, nonatomic) UILabel *nameLabel;
+@property(strong, nonatomic) UILabel *descLabel;
+@property (strong, nonatomic) UIImageView *authorPicView;
+@property (strong, nonatomic) UILabel *timeLabel;
 @end
 
 @implementation NotificationTableViewCell
@@ -26,6 +28,7 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         [self addStaticLabels];
+        [self initPicView];
         // Initialization code
     }
     return self;
@@ -34,6 +37,14 @@
     // Initialization code
 }
 
+-(void) initPicView{
+    _authorPicView = [[UIImageView alloc] initWithFrame:CGRectMake(15, 5, 40, 40)];
+    _authorPicView.layer.cornerRadius = _authorPicView.frame.size.height/2.0;
+    _authorPicView.layer.masksToBounds = YES;
+    [self.contentView addSubview:_authorPicView];
+}
+
+
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
 
@@ -41,8 +52,12 @@
 }
 
 -(void) addStaticLabels{
-    _nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, 5, 100, 30)];
-    [self.contentView addSubview:_nameLabel];
+    _descLabel = [[UILabel alloc] initWithFrame:CGRectMake(60, 0, self.contentView.frame.size.width - LEFT_ALIGNMENT - LEFT_ALIGNMENT - 30, self.contentView.frame.size.height)];
+    _descLabel.lineBreakMode = NSLineBreakByWordWrapping;
+    _descLabel.numberOfLines = 0;
+    _timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(60, 30, self.contentView.frame.size.width - LEFT_ALIGNMENT - LEFT_ALIGNMENT - 30, 30)];
+    [self.contentView addSubview:_descLabel];
+    [self.contentView addSubview:_timeLabel];
 }
 
 -(void)setCellPost:(id)post{
@@ -63,29 +78,73 @@
 
 -(void) setKeywordUpdate:(KeywordUpdate *)update{
     [self setName:update.name];
-    _fbID = update.fbID;
-    NSArray *keywords = update.keywords;
-    for (NSString *string in keywords) {
-        UILabel *keywordLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 20, 100, 20)];
-        [keywordLabel setText:string];
-        [self.contentView addSubview:keywordLabel];
-    }
+    [self setAuthorFBID:update.fbID];
+    NSAttributedString *stringToDisplay = [self generateAttributedStringForKeywordUpdate:update.keywords];
+    [self setDesc:stringToDisplay];
+    [self setTimeLabelWithDate:update.time];
+
 }
 
+
 -(void) setQuiz:(Quiz *)quiz{
-    [self setName:quiz.authorName];
-    _fbID = quiz.author;
+    [self setAuthorFBID:quiz.author];
+    NSAttributedString *stringToDisplay = [self generateAttributedStringForQuizWithAuthor:quiz.authorName andOption0:quiz.option0Name andOption1:quiz.option1Name andKeyword:quiz.keyword];
+    [self setDesc:stringToDisplay];
+    [self setTimeLabelWithDate:quiz.time];
 }
 
 -(void) setCommentNotif:(CommentNotification *)commentNotif{
     [self setName:commentNotif.commenterName];
-    _fbID = commentNotif.commenterFBID;
+    [self setAuthorFBID:commentNotif.commenterFBID];
 }
 
 
--(void) setName:(NSString *)name{
-    _name = [name copy];
-    [_nameLabel setText:_name];
+-(NSAttributedString *)generateAttributedStringForKeywordUpdate:(NSArray *)keywordArray{
+    NSMutableAttributedString *finalString = [[NSMutableAttributedString alloc] init];
+    int i = 0;
+    for(NSString *keyword in keywordArray){
+        NSAttributedString *keywordstring = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"\"%@\"", keyword] attributes:[Utility getNotifOrangeNormalFontDictionary]];
+        [finalString appendAttributedString:keywordstring];
+        i++;
+    }
+    NSAttributedString *descString = [[NSAttributedString alloc] initWithString:@" was added to your profile" attributes:[Utility getNotifBlackNormalFontDictionary]];
+    [finalString appendAttributedString:descString];
+    return finalString;
+}
+
+
+-(void)setTimeLabelWithDate:(NSDate *)date{
+    NSAttributedString *timeString = [[NSAttributedString alloc] initWithString:[Utility getDateToShow:date inWhole:NO] attributes:[Utility getGraySmallFontDictionary]];
+    [_timeLabel setAttributedText:timeString];
+}
+
+-(NSAttributedString *)generateAttributedStringForQuizWithAuthor:(NSString *)authorName andOption0:(NSString *)option0Name andOption1:(NSString *)option1Name andKeyword:(NSString *)keyword{
+    NSMutableAttributedString *authorString = [[NSMutableAttributedString alloc] initWithString:[Utility getNameToDisplay:authorName] attributes:[Utility getNotifBlackBoldFontDictionary]];
+    NSAttributedString *desc1String = [[NSAttributedString alloc] initWithString:@" compared " attributes:[Utility getNotifBlackNormalFontDictionary]];
+    NSAttributedString *option0String = [[NSAttributedString alloc] initWithString:[Utility getNameToDisplay:option0Name] attributes:[Utility getNotifOrangeBoldFontDictionary]];
+    NSAttributedString *andString = [[NSAttributedString alloc] initWithString:@" and " attributes:[Utility getNotifBlackNormalFontDictionary]];
+    NSAttributedString *option1String = [[NSAttributedString alloc] initWithString:[Utility getNameToDisplay:option1Name] attributes:[Utility getNotifOrangeBoldFontDictionary]];
+    NSAttributedString *desc2String = [[NSAttributedString alloc] initWithString:@" with " attributes:[Utility getNotifBlackNormalFontDictionary]];
+    NSAttributedString *keywordString = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"\"%@\"", keyword] attributes:[Utility getNotifOrangeNormalFontDictionary]];
+
+    [authorString appendAttributedString:desc1String];
+    [authorString appendAttributedString:option0String];
+    [authorString appendAttributedString:andString];
+    [authorString appendAttributedString:option1String];
+    [authorString appendAttributedString:desc2String];
+    [authorString appendAttributedString:keywordString];
+    return authorString;
+}
+
+
+-(void) setAuthorFBID:(NSString *)fbid{
+    NSString *authorPictureUrl = [NSString stringWithFormat:@"https://graph.facebook.com/%@/picture", fbid];
+    [_authorPicView setImageWithURL:[NSURL URLWithString:authorPictureUrl] placeholderImage:[UIImage imageNamed:@"login.png"]];
+}
+
+
+-(void) setDesc:(NSAttributedString *)string{
+    [_descLabel setAttributedText:string];
 }
 
 @end
