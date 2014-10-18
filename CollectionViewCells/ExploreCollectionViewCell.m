@@ -44,9 +44,17 @@
 -(void)setCellUser:(User *)user{
     _user = user;
     [_nameLabel setText:_user.name];
+    
     if(_user.keywords){
-        NSString *string =_user.keywords;
-        [_keywordLabel setText:string];
+        if([_user.keywords isKindOfClass:[NSString class]]){
+            NSString *string = (NSString *)_user.keywords;
+            [_keywordLabel setText:string];
+        } else if([_user.keywords isKindOfClass:[NSArray class]]){
+            NSArray *keywordArray = (NSArray *)_user.keywords;
+            if([keywordArray count] > 0){
+                [_keywordLabel setText:keywordArray[0]];
+            }
+        }
     }
     NSUInteger width = self.contentView.frame.size.height*2;
     NSString *authorPictureUrl = [NSString stringWithFormat:@"https://graph.facebook.com/%@/picture?width=%lu&height=%lu", _user.fbID,(unsigned long)width , (unsigned long)width];
