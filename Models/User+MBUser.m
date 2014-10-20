@@ -167,16 +167,64 @@
                  existingUsers:(NSArray *)existingUsers {
     NSError *error = nil;
     MBDebug(@"LOAD more: existing users ids: %@", [existingUsers valueForKey:@"fbID"]);
+    
+    // strip out all the leading and trailing spaces
+    NSString *strippedStr = [string stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+    
+    
+    /*
+      * we may consider use compound predicate later to improve efficiency
+      *
+    // break up the search terms (separated by spaces)
+    NSArray *searchItems = nil;
+    if (strippedStr.length > 0) {
+        searchItems = [strippedStr componentsSeparatedByString:@" "];
+    }
+    
+    // build all the "AND" expressions for each value in the searchString
+    //
+    NSMutableArray *orMatchPredicates = [NSMutableArray array];
+    
+    for (NSString *searchString in searchItems) {
+        //
+        //      name CONTAINS[c] "Wen"
+        //
+        
+        // name field matching
+        NSExpression *lhs = [NSExpression expressionForKeyPath:@"name"];
+        NSExpression *rhs = [NSExpression expressionForConstantValue:searchString];
+        NSPredicate *finalPredicate = [NSComparisonPredicate
+                                       predicateWithLeftExpression:lhs
+                                       rightExpression:rhs
+                                       modifier:NSDirectPredicateModifier
+                                       type:NSContainsPredicateOperatorType
+                                       options:NSCaseInsensitivePredicateOption];
+    
+        // master OR predicate
+        [orMatchPredicates addObject:finalPredicate];
+    }
+    
+    NSCompoundPredicate *finalCompoundPredicate = nil;
+    
+    // match up the fields of the Product object
+    finalCompoundPredicate =
+    (NSCompoundPredicate *)[NSCompoundPredicate orPredicateWithSubpredicates:orMatchPredicates];
+    searchResults = [[searchResults filteredArrayUsingPredicate:finalCompoundPredicate] mutableCopy];
+    */
+
+    
+    
     NSMutableArray *allMatches = [[NSMutableArray alloc] init];
-    MBDebug(@"Trying to search words: %@", string);
-    [allMatches addObjectsFromArray:[User returnSearchArrayWithString:string
+    MBDebug(@"Trying to search words: %@", strippedStr);
+    [allMatches addObjectsFromArray:[User returnSearchArrayWithString:strippedStr
                                                             inContext:context
                                                         existingUsers:existingUsers]];
+    
     NSPredicate *predicateTemplate = [NSPredicate
                               predicateWithFormat:@"fbID = $FBID"];
     
-    if([string rangeOfString:@" "].location != NSNotFound){
-        NSArray* substrings = [string componentsSeparatedByString: @" "];
+    if([strippedStr rangeOfString:@" "].location != NSNotFound){
+        NSArray* substrings = [strippedStr componentsSeparatedByString: @" "];
         for(NSString * substr in substrings){
             NSMutableArray *newExistingUsers = [NSMutableArray arrayWithArray:existingUsers];
             [newExistingUsers addObjectsFromArray:allMatches];
@@ -201,7 +249,7 @@
         *usersToReturn = nil;
         return FALSE;
     } else if([allMatches count]){
-        if([allMatches count] > num){
+        if([allMatches count] > num && num != -1){
             *usersToReturn = [allMatches subarrayWithRange:NSMakeRange(0, (int)num)];
         } else{
             *usersToReturn = allMatches;

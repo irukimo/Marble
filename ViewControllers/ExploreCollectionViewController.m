@@ -14,7 +14,7 @@
 @interface ExploreCollectionViewController()
 @property (strong, nonatomic) UITextField *searchTextField;
 @property(strong, nonatomic) NSMutableArray *searchResults;
-@property (nonatomic) BOOL isLoadingMore;
+//@property (nonatomic) BOOL isLoadingMore;
 @end
 
 @implementation ExploreCollectionViewController
@@ -28,7 +28,8 @@
     [self setNavbarTitle];
     [self initSearchTextField];
     [self initSearchResults];
-    _isLoadingMore = FALSE;
+    
+//    _isLoadingMore = FALSE;
 }
 
 -(void)viewDidAppear:(BOOL)animated{
@@ -44,40 +45,27 @@
         NSLog(@"%@", user.name);
     }
     _searchResults = [NSMutableArray arrayWithArray:results];
-//    for(User *user in results){
-//        [_searchResults addObject:user];
-//    }
-//                       ]initWithArray:results];
+
     [self.collectionView reloadData];
 }
 
 
 -(void) reInitSearchResults:(NSArray *)results{
-    _isLoadingMore = FALSE;
+//    _isLoadingMore = FALSE;
     
-    [_searchResults removeAllObjects];
-    [self.collectionView reloadData];
     _searchResults = [NSMutableArray arrayWithArray:results];
-//    for(User *user in results){
-//        [_searchResults addObject:user];
-//    }
-//    _searchResults =[[NSMutableArray alloc] initWithArray:results];
     [self.collectionView reloadData];
 }
 
 
 //#TODO: loading more is called more often than thought. Maybe check duplication here too.
--(void) addSearchResults:(NSArray *)results{
-    if (_isLoadingMore) {
-        [_searchResults addObjectsFromArray:results];
-    
-    //    for(User *user in results){
-    //        [_searchResults addObject:user];
-    //    }
-        [self.collectionView reloadData];
-        _isLoadingMore = FALSE;
-    }
-}
+//-(void) addSearchResults:(NSArray *)results{
+//    if (_isLoadingMore) {
+//        [_searchResults addObjectsFromArray:results];
+//        [self.collectionView reloadData];
+//        _isLoadingMore = FALSE;
+//    }
+//}
 
 -(void) initSearchTextField{
     _searchTextField = [[UITextField alloc] initWithFrame:CGRectMake(LEFT_ALIGNMENT, 12, self.view.frame.size.width - 2*LEFT_ALIGNMENT, 26)];
@@ -146,65 +134,61 @@
     return YES;
 }
 
-/*
- * Type 'wang' gives the right result.
- * Type 'wang ' gives either all empty cells or indefinite scroll
- * Type 'wang i' very fast gives you the wrong result....
- * Seems like randomness or timing has side effect. I think it is the randomness.
- */
 
 -(void)textFieldDidChange :(UITextField *)textField{
     MBDebug(@"text changed %@", [textField text]);
-    [self.collectionView setContentOffset:CGPointZero animated:NO];
-    _isLoadingMore = FALSE;
+//    _isLoadingMore = FALSE;
+//    [self.collectionView setContentOffset:CGPointZero animated:NO];
+
     NSArray *arrayOfUsers;
     [User searchUserThatContains:[textField text]
-             returnThisManyUsers:10
+             returnThisManyUsers:-1 // -1 means no limit on number of returned users
                      inThisArray:&arrayOfUsers
           inManagedObjectContext:[RKManagedObjectStore defaultStore].mainQueueManagedObjectContext
                    existingUsers:nil];
     [self reInitSearchResults:arrayOfUsers];
 }
 
--(void)startLoadingMore{
-    _isLoadingMore = TRUE;
-    NSArray *arrayOfUsers;
-    MBDebug(@"start leading more");
-    [User searchUserThatContains:[_searchTextField text]
-             returnThisManyUsers:10
-                     inThisArray:&arrayOfUsers
-          inManagedObjectContext:[RKManagedObjectStore defaultStore].mainQueueManagedObjectContext
-                   existingUsers:_searchResults];
-    if([arrayOfUsers count] == 0){
-        return;
-    }
-    [self addSearchResults:arrayOfUsers];
-}
+//-(void)startLoadingMore{
+//    _isLoadingMore = TRUE;
+//    NSArray *arrayOfUsers;
+//    MBDebug(@"start leading more");
+//    [User searchUserThatContains:[_searchTextField text]
+//             returnThisManyUsers:10
+//                     inThisArray:&arrayOfUsers
+//          inManagedObjectContext:[RKManagedObjectStore defaultStore].mainQueueManagedObjectContext
+//                   existingUsers:_searchResults];
+//    if([arrayOfUsers count] == 0){
+//        _isLoadingMore = false;
+//        return;
+//    }
+//    [self addSearchResults:arrayOfUsers];
+//}
 
 
 #pragma mark -
 #pragma mark UIScrollView Delegate Methods
 
--(void)scrollViewDidScroll:(UIScrollView *)scrollView
-{
-    if (scrollView.contentSize.height < scrollView.frame.size.height) return;
-    
-    if(!_isLoadingMore) {
-    
-        CGFloat height = scrollView.frame.size.height;
-        
-        CGFloat contentYoffset = scrollView.contentOffset.y;
-        
-        CGFloat distanceFromBottom = scrollView.contentSize.height - contentYoffset;
-        
-        //TODO: grab more data from server
-        if(distanceFromBottom < height)
-        {
-            [self startLoadingMore];
-            //[self.tableView reloadData];
-        }
-    }
-}
+//-(void)scrollViewDidScroll:(UIScrollView *)scrollView
+//{
+//    if (scrollView.contentSize.height < scrollView.frame.size.height) return;
+//    
+//    if(!_isLoadingMore) {
+//    
+//        CGFloat height = scrollView.frame.size.height;
+//        
+//        CGFloat contentYoffset = scrollView.contentOffset.y;
+//        
+//        CGFloat distanceFromBottom = scrollView.contentSize.height - contentYoffset;
+//        
+//        //TODO: grab more data from server
+//        if(distanceFromBottom < height)
+//        {
+//            [self startLoadingMore];
+//            //[self.tableView reloadData];
+//        }
+//    }
+//}
 
 
 #pragma mark - Navigation
