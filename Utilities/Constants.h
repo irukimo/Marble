@@ -13,8 +13,8 @@
 #define MBError NSLog
 #define URLMake(IP) (@"http://" IP @":4567/")
 
-//#define PRODUCTION_SERVER @"192.168.2.39"
-#define PRODUCTION_SERVER @"localhost"
+#define PRODUCTION_SERVER @"172.20.10.9"
+//#define PRODUCTION_SERVER @"localhost"
 
 #define ASYNC(...) dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{ __VA_ARGS__ })
 
@@ -34,6 +34,7 @@
 #define exploreCollectionViewCellIdentifier @"exploreCollectionViewCellIdentifier"
 
 #define QuizTableViewCellHeight 230
+#define QuizTableViewCellDisplayHeight 250
 #define StatusUpdateTableViewCellHeight 90
 #define KeywordUpdateTableViewCellHeight 90
 #define CommentIncrementHeight 20

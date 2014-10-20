@@ -342,11 +342,11 @@
     
     if ([post isKindOfClass:[Quiz class]]){
         if(!post.comments){
-            return QuizTableViewCellHeight;
+            return QuizTableViewCellDisplayHeight;
         } else if([post.comments count] > 2){
-            return QuizTableViewCellHeight + 3*CommentIncrementHeight;
+            return QuizTableViewCellDisplayHeight + 3*CommentIncrementHeight;
         } else{
-            return QuizTableViewCellHeight + [post.comments count]*CommentIncrementHeight;
+            return QuizTableViewCellDisplayHeight + [post.comments count]*CommentIncrementHeight;
         }
     } else if([post isKindOfClass:[StatusUpdate class]]){
         if(!post.comments){
