@@ -155,7 +155,12 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)error
         NSInteger badgeNumber = [UIApplication sharedApplication].applicationIconBadgeNumber;
         badgeNumber = badgeNumber + 1;
         [UIApplication sharedApplication].applicationIconBadgeNumber = badgeNumber;
-        [[[[myTabBarController tabBar] items] lastObject] setBadgeValue:[NSString stringWithFormat:@"%d", badgeNumber]];
+        if (badgeNumber == 0) {
+            [[[[myTabBarController tabBar] items] lastObject] setBadgeValue:nil];
+        } else {
+            [[[[myTabBarController tabBar] items] lastObject] setBadgeValue:[NSString stringWithFormat:@"%ld", (long)badgeNumber]];
+        }
+        
         MBDebug(@"Received notification while being active, set badge num from %d to %d", (badgeNumber - 1), badgeNumber);
 
         

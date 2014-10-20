@@ -63,8 +63,14 @@
     }
     
     // Do any additional setup after loading the view.
-    NSString *badgeValue = [NSString stringWithFormat:@"%ld", (long)[UIApplication sharedApplication].applicationIconBadgeNumber];
-    [[[[self tabBar] items] lastObject] setBadgeValue:badgeValue];
+
+    if ([UIApplication sharedApplication].applicationIconBadgeNumber == 0) {
+        [[[[self tabBar] items] lastObject] setBadgeValue:nil];
+    } else {
+        NSString *badgeValue = [NSString stringWithFormat:@"%ld", (long)[UIApplication sharedApplication].applicationIconBadgeNumber];
+        [[[[self tabBar] items] lastObject] setBadgeValue:badgeValue];
+    }
+    
 }
 
 

@@ -34,7 +34,7 @@
                MBDebug(@"GET notification: %@", mappingResult);
                [self fetchNotifcations];
                [ClientManager sendBadgeNumber:0];
-               [[[[self.tabBarController tabBar] items] lastObject] setBadgeValue:[NSString stringWithFormat:@"%d", 0]];
+               [[[[self.tabBarController tabBar] items] lastObject] setBadgeValue:nil];
            }
            failure:^(RKObjectRequestOperation *operation, NSError *error) {
                [Utility generateAlertWithMessage:@"Network problem"];

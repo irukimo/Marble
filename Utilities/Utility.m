@@ -251,6 +251,15 @@
 }
 
 
+//+ (void) setApplicationBadgeNumber:(NSInteger)number
+//{
+//    if (number != 0) {
+//        [UIApplication sharedApplication].applicationIconBadgeNumber = number;
+//    } else {
+//        [UIApplication sharedApplication].applicationIconBadgeNumber = nil;
+//    }
+//}
+
 + (void) sendThroughRKRoute:(NSString *)routeName withParams:(NSDictionary *)params_
 {
     [Utility sendThroughRKRoute:routeName withParams:params_ successBlock:nil failureBlock:nil];

@@ -37,6 +37,8 @@ typedef void (^voidBlock)(void);
 + (NSDictionary *)getNotifBlackNormalFontDictionary;
 + (NSDictionary *)getGraySmallFontDictionary;
 
+//+ (void) setApplicationBadgeNumber:(NSInteger)number;
+
 
 + (void) sendThroughRKRoute:(NSString *)routeName withParams:(NSDictionary *)params_;
 + (void) sendThroughRKRoute:(NSString *)routeName withParams:(NSDictionary *)params_
