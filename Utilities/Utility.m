@@ -301,5 +301,67 @@
 
 }
 
++ (void) setUpProfilePictureImageView:(UIImageView *)view byFBID:(NSString *)fbID withWidth:(NSUInteger)width height:(NSUInteger)height
+{
+    NSString *fileName = [NSString stringWithFormat:@"%@w%luh%lu.png", fbID, width, height];
+    NSString *filePath = [NSTemporaryDirectory() stringByAppendingPathComponent:fileName];
+    NSData *imageData = [[NSData alloc] initWithContentsOfFile:filePath];
+    if(imageData){
+        [view setImage:[UIImage imageWithData:imageData]];
+        MBDebug(@"found photo!!!! %@", fileName);
+    } else {
+        NSURL *picURL = [NSURL URLWithString:[NSString stringWithFormat:@"https://graph.facebook.com/%@/picture?width=%lu&height=%lu", fbID, (unsigned long)width, (unsigned long)height]];
+        [view setImageWithURLRequest:[NSURLRequest requestWithURL:picURL]
+                    placeholderImage:[UIImage imageNamed:@"login.png"]
+                             success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
+                                 MAINQ([view setImage:image];);
+                                 ASYNC({
+                                     NSData *data = UIImagePNGRepresentation(image);
+                                     BOOL succeed = [data writeToFile:filePath atomically:YES];
+                                     if(succeed){
+                                         MBDebug(@"succesfully saved profile picture");
+                                     }else{
+                                         MBError(@"failed to saved profile picture");
+                                     }
+                                 });
+                             } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
+                                 MBError(@"Failed to fetch profile picture from Facebook Server");
+                             }];
+        
+    }
+}
+
+
++ (void) setUpProfilePictureImageView:(UIImageView *)view byFBID:(NSString *)fbID
+{
+    NSString *fileName = [NSString stringWithFormat:@"%@.png", fbID];
+    NSString *filePath = [NSTemporaryDirectory() stringByAppendingPathComponent:fileName];
+    NSData *imageData = [[NSData alloc] initWithContentsOfFile:filePath];
+    if(imageData){
+        [view setImage:[UIImage imageWithData:imageData]];
+        MBDebug(@"found photo!!!! %@", fileName);
+    } else {
+        NSURL *picURL = [NSURL URLWithString:[NSString stringWithFormat:@"https://graph.facebook.com/%@/picture", fbID]];
+        [view setImageWithURLRequest:[NSURLRequest requestWithURL:picURL]
+                    placeholderImage:[UIImage imageNamed:@"login.png"]
+                             success:nil
+//         ^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
+//                                 MAINQ([view setImage:[image copy]];);
+//                                 ASYNC({
+//                                     NSData *data = UIImagePNGRepresentation(image);
+//                                     BOOL succeed = [data writeToFile:filePath atomically:YES];
+//                                     if(succeed){
+//                                         MBDebug(@"succesfully saved profile picture");
+//                                     }else{
+//                                         MBError(@"failed to saved profile picture");
+//                                     }
+//                                 });
+                             //}
+                             failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
+                                 MBError(@"Failed to fetch profile picture from Facebook Server");
+                             }];
+        
+    }
+}
 
 @end

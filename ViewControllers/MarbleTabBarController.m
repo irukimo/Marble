@@ -172,11 +172,11 @@
         ProfileNavigationController *profileNavigationController = (ProfileNavigationController *)viewController;
         [profileNavigationController setSelf];
         [profileNavigationController backToRoot];
-        NSLog(@"sent Iru Wang");
+//        NSLog(@"sent Iru Wang");
     } else if([viewController isKindOfClass:[ExploreNavigationController class]]){
         ExploreNavigationController *exploreNavigationController = (ExploreNavigationController *)viewController;
         [exploreNavigationController backToRoot];
-        NSLog(@"sent Iru Wang");
+//        NSLog(@"sent Iru Wang");
     }
     //    if([viewController isKindOfClass:MyPostsViewController.class]){
     //        //dont add it in here, add it in my post

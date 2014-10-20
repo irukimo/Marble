@@ -43,4 +43,7 @@ typedef void (^voidBlock)(void);
 + (void) sendThroughRKRoute:(NSString *)routeName withParams:(NSDictionary *)params_;
 + (void) sendThroughRKRoute:(NSString *)routeName withParams:(NSDictionary *)params_
                successBlock:(voidBlock)successBlock failureBlock:(voidBlock)failureBlock;
+
++ (void) setUpProfilePictureImageView:(UIImageView *)view byFBID:(NSString *)fbID;
++ (void) setUpProfilePictureImageView:(UIImageView *)view byFBID:(NSString *)fbID withWidth:(NSUInteger)width height:(NSUInteger)height;
 @end

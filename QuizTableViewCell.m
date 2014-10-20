@@ -280,13 +280,20 @@
 }
 
 -(void) setupProfileViews{
-    NSString *authorPictureUrl = [NSString stringWithFormat:@"https://graph.facebook.com/%@/picture?width=120&height=120", _quiz.author];
-    NSString *option0PictureUrl = [NSString stringWithFormat:@"https://graph.facebook.com/%@/picture?width=270&height=270", _quiz.option0];
-    NSString *option1PictureUrl = [NSString stringWithFormat:@"https://graph.facebook.com/%@/picture?width=270&height=270", _quiz.option1];
+//    NSString *authorPictureUrl = [NSString stringWithFormat:@"https://graph.facebook.com/%@/picture?width=120&height=120", _quiz.author];
+//    NSString *option0PictureUrl = [NSString stringWithFormat:@"https://graph.facebook.com/%@/picture?width=270&height=270", _quiz.option0];
+//    NSString *option1PictureUrl = [NSString stringWithFormat:@"https://graph.facebook.com/%@/picture?width=270&height=270", _quiz.option1];
+//    
+//    [_authorPicView setImageWithURL:[NSURL URLWithString:authorPictureUrl] placeholderImage:[UIImage imageNamed:@"login.png"]];
+//    [_option0PicView setImageWithURL:[NSURL URLWithString:option0PictureUrl] placeholderImage:[UIImage imageNamed:@"login.png"]];
+//    [_option1PicView setImageWithURL:[NSURL URLWithString:option1PictureUrl] placeholderImage:[UIImage imageNamed:@"login.png"]];
     
-    [_authorPicView setImageWithURL:[NSURL URLWithString:authorPictureUrl] placeholderImage:[UIImage imageNamed:@"login.png"]];
-    [_option0PicView setImageWithURL:[NSURL URLWithString:option0PictureUrl] placeholderImage:[UIImage imageNamed:@"login.png"]];
-    [_option1PicView setImageWithURL:[NSURL URLWithString:option1PictureUrl] placeholderImage:[UIImage imageNamed:@"login.png"]];
+    [Utility setUpProfilePictureImageView:_authorPicView byFBID:_quiz.author
+                                withWidth:120 height:120];
+    [Utility setUpProfilePictureImageView:_option0PicView byFBID:_quiz.option0
+                                withWidth:270 height:270];
+    [Utility setUpProfilePictureImageView:_option1PicView byFBID:_quiz.option1
+                                withWidth:270 height:270];
 }
 
 -(void)setupNameButtons{

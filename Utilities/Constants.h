@@ -17,6 +17,7 @@
 //#define PRODUCTION_SERVER @"localhost"
 
 #define ASYNC(...) dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{ __VA_ARGS__ })
+#define MAINQ(...) dispatch_async(dispatch_get_main_queue(), ^{ __VA_ARGS__ })
 
 #define BASE_URL URLMake(PRODUCTION_SERVER)
 

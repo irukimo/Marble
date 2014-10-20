@@ -43,9 +43,9 @@
     NSArray *results;
     [User getRandomUsersThisMany:-1 // -1 means no limit
                      inThisArray:&results inManagedObjectContext:[RKManagedObjectStore defaultStore].mainQueueManagedObjectContext existingUsers:nil];
-    for(User * user in results){
+//    for(User * user in results){
 //        NSLog(@"%@", user.name);
-    }
+//    }
     _searchResults = [NSMutableArray arrayWithArray:results];
 
     [self.collectionView reloadData];
