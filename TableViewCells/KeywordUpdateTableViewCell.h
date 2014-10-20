@@ -14,6 +14,6 @@
 
 @interface KeywordUpdateTableViewCell : PostsTableViewSuperCell
 @property(strong, nonatomic) UIButton *nameButton;
-- (void) setName:(NSString *)name andID:(NSString *)fbid andDescription:(NSString *)desc;
+- (void) setName:(NSString *)name andID:(NSString *)fbid andKeyword:(id)keywords;
 @end
 

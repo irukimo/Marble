@@ -278,7 +278,7 @@
         if (!cell){
             cell = [[KeywordUpdateTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:keywordUpdateTableViewCellIdentifier];
         }
-        [cell setName:keywordUpdate.name andID:keywordUpdate.fbID andDescription:[NSString stringWithFormat:@"\"%@\" is added to %@'s profile", keywordUpdate.keywords[0], keywordUpdate.name]];
+        [cell setName:keywordUpdate.name andID:keywordUpdate.fbID andKeyword: keywordUpdate.keywords];
         MBDebug(@"keyword update: %@", keywordUpdate);
         cell.delegate = self;
         //if keyword comment ready, uncomment

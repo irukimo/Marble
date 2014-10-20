@@ -34,7 +34,7 @@
 
 
 -(void)initStaticButtonsAndLabels{
-    _descriptionLabel = [[UILabel alloc] initWithFrame:CGRectMake(40, 20, 300, 30)];
+    _descriptionLabel = [[UILabel alloc] initWithFrame:CGRectMake(100, 20, 300, 30)];
     _nameButton = [[UIButton alloc] initWithFrame:CGRectMake(50, 5, 100, 30)];
     [_nameButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [_nameButton addTarget:self action:@selector(nameClicked:) forControlEvents:UIControlEventTouchUpInside];
@@ -48,13 +48,32 @@
     }
 }
 
-- (void) setName:(NSString *)name andID:(NSString *)fbid andDescription:(NSString *)desc
-{
+- (void) setName:(NSString *)name andID:(NSString *)fbid andKeyword:(id)keywords{
     _name = [name copy];
     _fbid = [fbid copy];
-    NSAttributedString *nameString = [[NSAttributedString alloc] initWithString:[Utility getNameToDisplay:_name] attributes:[Utility getPostsViewNameFontDictionary]];
-    [_nameButton setAttributedTitle:nameString forState:UIControlStateNormal];
-    [_descriptionLabel setText:[desc copy]];
+    if(_name){
+        NSAttributedString *nameString = [[NSAttributedString alloc] initWithString:[Utility getNameToDisplay:_name] attributes:[Utility getPostsViewNameFontDictionary]];        
+        [_nameButton setAttributedTitle:nameString forState:UIControlStateNormal];
+    }
+    
+    NSString *keywordString;
+    if(keywords){
+        if([keywords isKindOfClass:[NSString class]]){
+            keywordString = (NSString *)keywords;
+        } else if([keywords isKindOfClass:[NSArray class]]){
+            NSArray *keywordArray = (NSArray *)keywords;
+            if([keywordArray count] > 0){
+                keywordString = keywords[0];
+            }
+        }
+    }
+    if(keywordString){
+        NSAttributedString *descString = [[NSAttributedString alloc] initWithString:keywordString attributes:[Utility getNotifBlackBoldFontDictionary]];
+        [_descriptionLabel setAttributedText:descString];
+    }
+    
+
+    
     NSString *authorPictureUrl = [NSString stringWithFormat:@"https://graph.facebook.com/%@/picture", fbid];
     [_authorPicView setImageWithURL:[NSURL URLWithString:authorPictureUrl] placeholderImage:[UIImage imageNamed:@"login.png"]];
 }
