@@ -94,8 +94,29 @@
 }
 
 -(void) setCommentNotif:(CommentNotification *)commentNotif{
-    [self setName:commentNotif.commenterName];
     [self setAuthorFBID:commentNotif.commenterFBID];
+    NSAttributedString *stringToDisplay = [self generateAttributedStringForCommentWithName:commentNotif.commenterName andComment:commentNotif.comment andType:commentNotif.type];
+    [self setDesc:stringToDisplay];
+    [self setTimeLabelWithDate:commentNotif.time];
+    
+}
+
+
+
+-(NSAttributedString *)generateAttributedStringForCommentWithName:(NSString *)name andComment:(NSString *)comment andType:(NSString *)type{
+    NSMutableAttributedString *finalString = [[NSMutableAttributedString alloc] init];
+    NSAttributedString *nameString = [[NSMutableAttributedString alloc] initWithString:[Utility getNameToDisplay:name] attributes:[Utility getNotifBlackBoldFontDictionary]];
+    NSAttributedString *descString;
+    if([type isEqualToString:@"quiz"]){
+        descString = [[NSAttributedString alloc] initWithString:@" commented on your Marble: " attributes:[Utility getNotifBlackNormalFontDictionary]];
+    } else{
+        descString = [[NSAttributedString alloc] initWithString:@" commented on your profile quote: " attributes:[Utility getNotifBlackNormalFontDictionary]];
+    }
+    NSAttributedString *commentString = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"\"%@\"", comment] attributes:[Utility getNotifOrangeNormalFontDictionary]];
+    [finalString appendAttributedString:nameString];
+    [finalString appendAttributedString:descString];
+    [finalString appendAttributedString:commentString];
+    return finalString;
 }
 
 

@@ -113,6 +113,7 @@
     }
     
     [self setMyTableView];
+    self.tableView.keyboardDismissMode  = UIScrollViewKeyboardDismissModeInteractive;
     
 }
 
@@ -497,5 +498,13 @@
         }
     }
 }
+
+
+#pragma mark - Scroll view delegate method
+-(void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
+{
+    [self.tableView endEditing:YES];
+}
+
 
 @end

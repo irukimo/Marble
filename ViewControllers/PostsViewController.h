@@ -14,7 +14,7 @@
 
 @protocol PostsViewControllerDelegate;
 
-@interface PostsViewController : UITableViewController <NSFetchedResultsControllerDelegate, PostsViewControllerDelegate >
+@interface PostsViewController : UITableViewController <NSFetchedResultsControllerDelegate, PostsViewControllerDelegate,UIScrollViewDelegate >
 
 @property (strong, nonatomic) NSArray *postArray;
 @property (strong, nonatomic) NSString *type;
