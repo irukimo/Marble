@@ -291,7 +291,7 @@
     }
     
     *usersToReturn = users;
-    MBDebug(@"After random: users ids: %@", [(*usersToReturn) valueForKey:@"fbID"]);
+//    MBDebug(@"After random: users ids: %@", [(*usersToReturn) valueForKey:@"fbID"]);
     return TRUE;
 }
 

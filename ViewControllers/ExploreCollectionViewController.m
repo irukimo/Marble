@@ -38,12 +38,13 @@
 
 
 -(void) initSearchResults{
+    [_searchTextField setText:@""];
     _searchResults = nil;
     NSArray *results;
     [User getRandomUsersThisMany:-1 // -1 means no limit
                      inThisArray:&results inManagedObjectContext:[RKManagedObjectStore defaultStore].mainQueueManagedObjectContext existingUsers:nil];
     for(User * user in results){
-        NSLog(@"%@", user.name);
+//        NSLog(@"%@", user.name);
     }
     _searchResults = [NSMutableArray arrayWithArray:results];
 
@@ -99,7 +100,7 @@
     
     User *user = [_searchResults objectAtIndex:indexPath.row];
     [cell setCellUser:user];
-    NSLog(@"%@", user.name);
+//    NSLog(@"%@", user.name);
     [cell setBackgroundColor:[UIColor grayColor]];
     return cell;
 }
