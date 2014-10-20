@@ -65,9 +65,6 @@
 
 
 
--(void)viewWillAppear:(BOOL)animated{
-    [self setNavbarTitle];
-}
 
 -(void) setNavbarTitle{
     UINavigationBar *myNavBar =[self.navigationController navigationBar];

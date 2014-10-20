@@ -119,6 +119,9 @@
     [self addMarbleButton];
 }
 
+-(void)viewWillAppear:(BOOL)animated{
+}
+
 -(void) addMarbleButton{
     UIBarButtonItem *rightButton = [[UIBarButtonItem alloc]
                                     initWithTitle: @"+"
@@ -378,13 +381,17 @@
 }
 
 -(void) presentCellWithKeywordOn:(id) sender{
+    
     CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.tableView];
     NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:buttonPosition];
     self.tableView.contentInset =  UIEdgeInsetsMake(0, 0, KEYBOARD_HEIGHT, 0);
     [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:indexPath.row inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:YES];
+    
 }
 -(void) endPresentingCellWithKeywordOn{
+    
     self.tableView.contentInset = UIEdgeInsetsMake(0, 0, TABBAR_HEIGHT, 0);
+     
 }
 
 
