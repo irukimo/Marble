@@ -32,6 +32,7 @@
 		517C894A19DB706C005A8407 /* ClientManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 517C894919DB706C005A8407 /* ClientManager.m */; };
 		517C894D19DB7129005A8407 /* KeyChainWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 517C894C19DB7129005A8407 /* KeyChainWrapper.m */; };
 		517C895019DB7DB4005A8407 /* RestKitInitializer.m in Sources */ = {isa = PBXBuildFile; fileRef = 517C894F19DB7DB4005A8407 /* RestKitInitializer.m */; };
+		519CB25C19F59688001E1C1A /* NSMutableArray+Shuffling.m in Sources */ = {isa = PBXBuildFile; fileRef = 519CB25B19F59688001E1C1A /* NSMutableArray+Shuffling.m */; };
 		51BB7CB419EF221A00D10F0D /* Quiz.h in Sources */ = {isa = PBXBuildFile; fileRef = 51BB7CB219EF21FB00D10F0D /* Quiz.h */; };
 		51BB7CB519EF221A00D10F0D /* Quiz.m in Sources */ = {isa = PBXBuildFile; fileRef = 51BB7CB319EF21FB00D10F0D /* Quiz.m */; };
 		51BB7CBF19F0617300D10F0D /* NotificationTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 51BB7CBE19F0617300D10F0D /* NotificationTableViewCell.m */; };
@@ -131,7 +132,9 @@
 		517C894C19DB7129005A8407 /* KeyChainWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KeyChainWrapper.m; path = Clients/KeyChainWrapper.m; sourceTree = "<group>"; };
 		517C894E19DB7DB4005A8407 /* RestKitInitializer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RestKitInitializer.h; path = Clients/RestKitInitializer.h; sourceTree = "<group>"; };
 		517C894F19DB7DB4005A8407 /* RestKitInitializer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RestKitInitializer.m; path = Clients/RestKitInitializer.m; sourceTree = "<group>"; };
-		517C895119DB7E0C005A8407 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Constants.h; path = Utilities/Constants.h; sourceTree = "<group>"; };
+		517C895119DB7E0C005A8407 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
+		519CB25A19F59688001E1C1A /* NSMutableArray+Shuffling.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+Shuffling.h"; sourceTree = "<group>"; };
+		519CB25B19F59688001E1C1A /* NSMutableArray+Shuffling.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableArray+Shuffling.m"; sourceTree = "<group>"; };
 		51BB7CB219EF21FB00D10F0D /* Quiz.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Quiz.h; sourceTree = "<group>"; };
 		51BB7CB319EF21FB00D10F0D /* Quiz.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Quiz.m; sourceTree = "<group>"; };
 		51BB7CBD19F0617300D10F0D /* NotificationTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NotificationTableViewCell.h; path = TableViewCells/NotificationTableViewCell.h; sourceTree = "<group>"; };
@@ -143,8 +146,8 @@
 		51F5A74519E60520006097EF /* Model 6.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Model 6.xcdatamodel"; sourceTree = "<group>"; };
 		51F5A74919E60827006097EF /* Quiz+MBQuiz.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Quiz+MBQuiz.h"; sourceTree = "<group>"; };
 		51F5A74A19E60827006097EF /* Quiz+MBQuiz.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Quiz+MBQuiz.m"; sourceTree = "<group>"; };
-		51F5A74F19E6089D006097EF /* NSNumber+MBNumber.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSNumber+MBNumber.h"; path = "Utilities/NSNumber+MBNumber.h"; sourceTree = "<group>"; };
-		51F5A75019E6089D006097EF /* NSNumber+MBNumber.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSNumber+MBNumber.m"; path = "Utilities/NSNumber+MBNumber.m"; sourceTree = "<group>"; };
+		51F5A74F19E6089D006097EF /* NSNumber+MBNumber.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSNumber+MBNumber.h"; sourceTree = "<group>"; };
+		51F5A75019E6089D006097EF /* NSNumber+MBNumber.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSNumber+MBNumber.m"; sourceTree = "<group>"; };
 		7A0E976719DCB194003A9359 /* ProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileViewController.h; sourceTree = "<group>"; };
 		7A0E976819DCB194003A9359 /* ProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileViewController.m; sourceTree = "<group>"; };
 		7A0E976A19DCB389003A9359 /* MarbleTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MarbleTabBarController.h; sourceTree = "<group>"; };
@@ -171,8 +174,8 @@
 		7A48343F19EC9B940029D092 /* PostsTableViewSuperCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PostsTableViewSuperCell.m; path = TableViewCells/PostsTableViewSuperCell.m; sourceTree = "<group>"; };
 		7A48344119EDEFB50029D092 /* SelectKeywordViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SelectKeywordViewCell.h; path = TableViewCells/SelectKeywordViewCell.h; sourceTree = "<group>"; };
 		7A48344219EDEFB50029D092 /* SelectKeywordViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SelectKeywordViewCell.m; path = TableViewCells/SelectKeywordViewCell.m; sourceTree = "<group>"; };
-		7AB925AE19E3730C00F8229F /* UIColor+MBColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIColor+MBColor.h"; path = "Utilities/UIColor+MBColor.h"; sourceTree = "<group>"; };
-		7AB925AF19E3730C00F8229F /* UIColor+MBColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIColor+MBColor.m"; path = "Utilities/UIColor+MBColor.m"; sourceTree = "<group>"; };
+		7AB925AE19E3730C00F8229F /* UIColor+MBColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+MBColor.h"; sourceTree = "<group>"; };
+		7AB925AF19E3730C00F8229F /* UIColor+MBColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+MBColor.m"; sourceTree = "<group>"; };
 		7AB925B119E374E500F8229F /* ExploreViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExploreViewController.h; sourceTree = "<group>"; };
 		7AB925B219E374E500F8229F /* ExploreViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExploreViewController.m; sourceTree = "<group>"; };
 		7AD2A32C19DE1F9800B200E9 /* User+MBUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "User+MBUser.h"; sourceTree = "<group>"; };
@@ -208,8 +211,8 @@
 		7AF4127019DA6A8300A470E1 /* SelectPeopleViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SelectPeopleViewCell.m; path = TableViewCells/SelectPeopleViewCell.m; sourceTree = "<group>"; };
 		7AF4127319DB392200A470E1 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		7AF4127419DB392200A470E1 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
-		7AF4127D19DB62C600A470E1 /* Utility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Utility.h; path = Utilities/Utility.h; sourceTree = "<group>"; };
-		7AF4127E19DB62C600A470E1 /* Utility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Utility.m; path = Utilities/Utility.m; sourceTree = "<group>"; };
+		7AF4127D19DB62C600A470E1 /* Utility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utility.h; sourceTree = "<group>"; };
+		7AF4127E19DB62C600A470E1 /* Utility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Utility.m; sourceTree = "<group>"; };
 		7AF4128019DB653D00A470E1 /* Marble-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Marble-Prefix.pch"; sourceTree = "<group>"; };
 		7AFF5BBC19E59AEA00CFD35D /* SelectKeywordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelectKeywordViewController.h; sourceTree = "<group>"; };
 		7AFF5BBD19E59AEA00CFD35D /* SelectKeywordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelectKeywordViewController.m; sourceTree = "<group>"; };
@@ -496,8 +499,10 @@
 				7AF4127E19DB62C600A470E1 /* Utility.m */,
 				7AB925AE19E3730C00F8229F /* UIColor+MBColor.h */,
 				7AB925AF19E3730C00F8229F /* UIColor+MBColor.m */,
+				519CB25A19F59688001E1C1A /* NSMutableArray+Shuffling.h */,
+				519CB25B19F59688001E1C1A /* NSMutableArray+Shuffling.m */,
 			);
-			name = Utilities;
+			path = Utilities;
 			sourceTree = "<group>";
 		};
 		D85B1E611F9E19FEC539FC9A /* Frameworks */ = {
@@ -699,6 +704,7 @@
 				7AF4126E19DA672500A470E1 /* SelectPeopleViewController.m in Sources */,
 				516937A819ECD38300EE0C0D /* StatusUpdate+MBStatusUpdate.m in Sources */,
 				7A0E976F19DCBCBF003A9359 /* QuizTableViewCell.m in Sources */,
+				519CB25C19F59688001E1C1A /* NSMutableArray+Shuffling.m in Sources */,
 				7AF4127519DB392200A470E1 /* LoginViewController.m in Sources */,
 				7AF4125819D9FFB800A470E1 /* HomeViewController.m in Sources */,
 				7A10A56D19EF241C006A2CED /* CommentsTableViewCell.m in Sources */,

@@ -8,6 +8,7 @@
 
 #import <FacebookSDK/FacebookSDK.h>
 
+#import "NSMutableArray+Shuffling.h"
 #import "User+MBUser.h"
 
 #import "Utility.h"
@@ -272,14 +273,22 @@
     NSUInteger myUserCount = [context countForFetchRequest:myRequest error:&error];
     [Utility saveToPersistenceStore:context failureMessage:@"Failed to save to persistent store in MBUser"];
     
-    NSUInteger randomNumber = arc4random() % (myUserCount - [existingUsers count]-2);
+
 
     NSFetchRequest *myUserRequest = [NSFetchRequest fetchRequestWithEntityName:@"User"];
     
     [myUserRequest setPredicate:predicate];
-    [myUserRequest setFetchLimit:(randomNumber + num - 1)];
-    [myUserRequest setFetchOffset:randomNumber];
-    NSArray *users = [context executeFetchRequest:myUserRequest error:&error];
+    if (num != -1) {
+        NSUInteger randomNumber = arc4random() % (myUserCount - [existingUsers count]-2);
+        [myUserRequest setFetchLimit:(randomNumber + num - 1)];
+        [myUserRequest setFetchOffset:randomNumber];
+    }
+    
+    NSMutableArray *users = [NSMutableArray arrayWithArray:[context executeFetchRequest:myUserRequest error:&error]];
+    
+    if (num == -1) {
+        [users shuffle];
+    }
     
     *usersToReturn = users;
     MBDebug(@"After random: users ids: %@", [(*usersToReturn) valueForKey:@"fbID"]);
