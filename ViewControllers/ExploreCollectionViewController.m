@@ -43,37 +43,40 @@
     for(User * user in results){
         NSLog(@"%@", user.name);
     }
-    _searchResults = [[NSMutableArray alloc] init];
-    for(User *user in results){
-        [_searchResults addObject:user];
-    }
+    _searchResults = [NSMutableArray arrayWithArray:results];
+//    for(User *user in results){
+//        [_searchResults addObject:user];
+//    }
 //                       ]initWithArray:results];
     [self.collectionView reloadData];
 }
 
 
 -(void) reInitSearchResults:(NSArray *)results{
-    NSString *a = @"yes";
-
-    [a rangeOfCharacterFromSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    _isLoadingMore = FALSE;
     
-    
-    
-    _searchResults = nil;
-    _searchResults = [[NSMutableArray alloc] init];
-    for(User *user in results){
-        [_searchResults addObject:user];
-    }
+    [_searchResults removeAllObjects];
+    [self.collectionView reloadData];
+    _searchResults = [NSMutableArray arrayWithArray:results];
+//    for(User *user in results){
+//        [_searchResults addObject:user];
+//    }
 //    _searchResults =[[NSMutableArray alloc] initWithArray:results];
     [self.collectionView reloadData];
 }
 
+
+//#TODO: loading more is called more often than thought. Maybe check duplication here too.
 -(void) addSearchResults:(NSArray *)results{
-    for(User *user in results){
-        [_searchResults addObject:user];
+    if (_isLoadingMore) {
+        [_searchResults addObjectsFromArray:results];
+    
+    //    for(User *user in results){
+    //        [_searchResults addObject:user];
+    //    }
+        [self.collectionView reloadData];
+        _isLoadingMore = FALSE;
     }
-    [self.collectionView reloadData];
-    _isLoadingMore = FALSE;
 }
 
 -(void) initSearchTextField{
@@ -143,8 +146,16 @@
     return YES;
 }
 
+/*
+ * Type 'wang' gives the right result.
+ * Type 'wang ' gives either all empty cells or indefinite scroll
+ * Type 'wang i' very fast gives you the wrong result....
+ * Seems like randomness or timing has side effect. I think it is the randomness.
+ */
+
 -(void)textFieldDidChange :(UITextField *)textField{
-    NSLog(@"text changed %@", [textField text]);
+    MBDebug(@"text changed %@", [textField text]);
+    [self.collectionView setContentOffset:CGPointZero animated:NO];
     _isLoadingMore = FALSE;
     NSArray *arrayOfUsers;
     [User searchUserThatContains:[textField text]
@@ -158,6 +169,7 @@
 -(void)startLoadingMore{
     _isLoadingMore = TRUE;
     NSArray *arrayOfUsers;
+    MBDebug(@"start leading more");
     [User searchUserThatContains:[_searchTextField text]
              returnThisManyUsers:10
                      inThisArray:&arrayOfUsers

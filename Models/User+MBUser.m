@@ -27,7 +27,7 @@
 + (BOOL)createUsersInBatchForEng:(NSArray *)fbEngUsers andChinese:(NSArray *)fbChUsers inManagedObjectContext:(NSManagedObjectContext *)context
 {
     if (fbEngUsers == nil || fbChUsers == nil) return FALSE;
-    MBDebug(@"fbEngUsers: %@, fbChUsers: %@", fbEngUsers, fbChUsers);
+//    MBDebug(@"fbEngUsers: %@, fbChUsers: %@", fbEngUsers, fbChUsers);
     NSArray *fbIDs = [fbEngUsers valueForKey:@"id"];
     if (fbIDs != nil) [fbIDs sortedArrayUsingSelector: @selector(compare:)];
 //    MBDebug(@"fb ids: %@", fbIDs);
@@ -166,21 +166,30 @@
         inManagedObjectContext:(NSManagedObjectContext *)context
                  existingUsers:(NSArray *)existingUsers {
     NSError *error = nil;
+    MBDebug(@"LOAD more: existing users ids: %@", [existingUsers valueForKey:@"fbID"]);
     NSMutableArray *allMatches = [[NSMutableArray alloc] init];
+    MBDebug(@"Trying to search words: %@", string);
     [allMatches addObjectsFromArray:[User returnSearchArrayWithString:string
                                                             inContext:context
                                                         existingUsers:existingUsers]];
-    
+    NSPredicate *predicateTemplate = [NSPredicate
+                              predicateWithFormat:@"fbID = $FBID"];
     
     if([string rangeOfString:@" "].location != NSNotFound){
         NSArray* substrings = [string componentsSeparatedByString: @" "];
         for(NSString * substr in substrings){
-            NSLog(@"%@", substr);
+            NSMutableArray *newExistingUsers = [NSMutableArray arrayWithArray:existingUsers];
+            [newExistingUsers addObjectsFromArray:allMatches];
+            MBDebug(@"Trying to search words: %@", substr);
             NSArray *matches = [User returnSearchArrayWithString:substr
                                                        inContext:context
-                                                   existingUsers:allMatches];
-            for(id match in matches){
-                if(![allMatches containsObject:match]){
+                                                   existingUsers:newExistingUsers];
+
+            for(User *match in matches){
+                NSPredicate *predicate = [predicateTemplate predicateWithSubstitutionVariables:
+                                          @{@"FBID": match.fbID}];
+                NSArray *residue = [newExistingUsers filteredArrayUsingPredicate:predicate];
+                if([residue count] == 0){
                     [allMatches addObject:match];
                 }
             }
@@ -197,6 +206,7 @@
         } else{
             *usersToReturn = allMatches;
         }
+        MBDebug(@"After LOAD MORE: users ids: %@", [(*usersToReturn) valueForKey:@"fbID"]);
         return TRUE;
     }
     return FALSE;
@@ -206,7 +216,7 @@
                    inThisArray:(NSArray **)usersToReturn
         inManagedObjectContext:(NSManagedObjectContext *)context
                  existingUsers:(NSArray *)existingUsers{
-    
+    MBDebug(@"random: existing users ids: %@", [existingUsers valueForKey:@"fbID"]);
     NSFetchRequest *myRequest = [NSFetchRequest fetchRequestWithEntityName:@"User"];
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"NOT (self IN %@)", existingUsers];
     [myRequest setPredicate:predicate];
@@ -222,8 +232,9 @@
     [myUserRequest setFetchLimit:(randomNumber + num - 1)];
     [myUserRequest setFetchOffset:randomNumber];
     NSArray *users = [context executeFetchRequest:myUserRequest error:&error];
-
+    
     *usersToReturn = users;
+    MBDebug(@"After random: users ids: %@", [(*usersToReturn) valueForKey:@"fbID"]);
     return TRUE;
 }
 
@@ -259,19 +270,19 @@
                               inContext:(NSManagedObjectContext *)context
                           existingUsers:(NSArray *)existingUsers{
     if([string isEqualToString:@""]){
-        return [[NSArray alloc] initWithObjects: nil];
+        return [[NSArray alloc] init];
     }
     
     NSError *error = nil;
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"User"];
-    request.predicate = [NSPredicate predicateWithFormat:@"(name CONTAINS[c] %@) AND NOT (self IN %@)", string, existingUsers];
+    NSArray *fbIDs = [existingUsers valueForKey:@"fbID"];
+    request.predicate = [NSPredicate predicateWithFormat:@"(name CONTAINS[c] %@) AND NOT (fbID IN %@)", string, fbIDs];
     
     NSArray *matches = [context
                         executeFetchRequest:request error:&error];
     return matches;
 
 }
-
 
 
 
