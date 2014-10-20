@@ -52,11 +52,13 @@
 
 -(void) setNavbarTitle{
     UINavigationBar *myNavBar =[self.navigationController navigationBar];
-    [[myNavBar topItem] setTitle:@"NOTIFICATIONS"];
+    [myNavBar setTitleTextAttributes:[Utility getNavigationBarTitleFontDictionary]];
+    [[myNavBar topItem] setTitle:@"Notifications"];
     [myNavBar setTranslucent:NO];
     [myNavBar setBarTintColor:[UIColor marbleOrange]];
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
     //    [[self.navigationController navigationBar] setBackgroundColor:[UIColor marbleOrange]];
+
 }
 
 - (void)didReceiveMemoryWarning {
