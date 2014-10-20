@@ -43,9 +43,6 @@
 #define KEYBOARD_HEIGHT 260
 #define LEFT_ALIGNMENT 25
 
-#define HOME_POSTS_TYPE @"home_posts_type"
-#define PROFILE_POSTS_TYPE @"profile_posts_type"
-#define KEYWORD_POSTS_TYPE @"keyword_posts_type"
 
 #define QUIZ_CELL_TYPE @"quiz_cell_type"
 #define STATUS_UPDATE_CELL_TYPE @"status_update_cell_type"
@@ -59,5 +56,6 @@ typedef NS_ENUM(NSUInteger, NotificationType) {
     MBQuiz,
     MBKeyword
 };
+
 
 #endif

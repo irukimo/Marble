@@ -93,6 +93,9 @@
                             <outlet property="delegate" destination="jyU-mL-2Is" id="jms-gN-6gF"/>
                         </connections>
                     </tableView>
+                    <connections>
+                        <segue destination="yrV-Hg-Gjs" kind="show" identifier="ProfileViewControllerSegue" id="yq4-bX-wPk"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="agW-ps-V05" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -357,6 +360,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="rLd-DA-xPh"/>
+        <segue reference="yq4-bX-wPk"/>
     </inferredMetricsTieBreakers>
 </document>

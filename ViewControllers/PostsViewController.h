@@ -17,7 +17,6 @@
 @interface PostsViewController : UITableViewController <NSFetchedResultsControllerDelegate, PostsViewControllerDelegate,UIScrollViewDelegate >
 
 @property (strong, nonatomic) NSArray *postArray;
-@property (strong, nonatomic) NSString *type;
 @property (strong, nonatomic) NSPredicate *predicate;
 @property (nonatomic, weak) id<PostsViewControllerDelegate> delegate;
 - (void) commentPostAtIndexPath:(NSIndexPath *)indexPath withComment:(NSString *)comment;

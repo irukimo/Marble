@@ -189,7 +189,15 @@
     //    }
 }
 
--(void) marbleButtonClicked{
+-(void) marbleButtonClickedWithUser:(User *)user orKeyword:(NSString *)keyword{
+    if(user){
+        [_createQuizViewController setOption0:user];
+    } else if(keyword){
+        NSLog(@"tabbarset keyword %@", keyword);
+        [_createQuizViewController setKeyword:keyword];
+    } else{
+        [_createQuizViewController resetAllOptions];
+    }
     if(_isCreatingMarble){
         [_createQuizWholeView removeFromSuperview];
         _isCreatingMarble = FALSE;
@@ -215,7 +223,7 @@
 -(void)initCreateQuizView{
     UIView *blackBGView = [[UIView alloc] initWithFrame:CGRectMake(0, NAVBAR_HEIGHT, self.view.frame.size.width, self.view.frame.size.height)];
     [blackBGView setBackgroundColor:[UIColor colorWithWhite:0 alpha:0.8f]];
-    UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(marbleButtonClicked)];
+    UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(closeMarbleWholeView)];
     [blackBGView addGestureRecognizer:singleTap];
     
     _createQuizViewController = [[CreateQuizViewController alloc] init];
@@ -225,6 +233,11 @@
     [_createQuizWholeView addSubview:blackBGView];
     [_createQuizWholeView addSubview:_createQuizViewController.view];
 
+}
+
+-(void)closeMarbleWholeView{
+    [_createQuizWholeView removeFromSuperview];
+    _isCreatingMarble = FALSE;
 }
 
 

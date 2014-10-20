@@ -10,6 +10,6 @@
 #import "PostsViewController.h"
 
 @interface KeywordProfileViewController :PostsViewController <PostsViewControllerDelegate>
-
+@property (strong, nonatomic) NSString *keyword;
 -(void) setKeyword:(NSString *)keyword;
 @end

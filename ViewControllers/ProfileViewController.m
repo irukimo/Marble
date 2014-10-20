@@ -16,8 +16,6 @@
 @property (strong, nonatomic) CreateQuizViewController *createQuizViewController;
 @property (strong, nonatomic) PostsViewController *postsViewController;
 @property (strong, nonatomic) UITextField *statusTextField;
-@property (strong,nonatomic) NSString *name;
-@property (strong,nonatomic) NSString *fbid;
 @property (strong, nonatomic) UIButton *statusBtn;
 @property (strong, nonatomic) UIButton *viewKeywordBtn;
 @property ( nonatomic) BOOL isSelf;
@@ -28,7 +26,7 @@
 @implementation ProfileViewController
 
 - (void)viewDidLoad {
-    self.predicate = [NSPredicate predicateWithFormat:@"fbID1 == %@ OR fbID2 == %@ OR fbID3 == %@", _fbid, _fbid, _fbid];
+    self.predicate = [NSPredicate predicateWithFormat:@"fbID1 == %@ OR fbID2 == %@ OR fbID3 == %@", _user.fbID, _user.fbID, _user.fbID];
     [super viewDidLoad];
     [self prepareHeaderView];
 //    [self initiateCreateQuizViewController];
@@ -36,8 +34,8 @@
     if(!_profilePicView){
         [self initFBProfilePicViews];
     }
-    self.type = PROFILE_POSTS_TYPE;
     self.delegate = self;
+    //profileview
     self.tableView.tableHeaderView = _headerView;
     
 }
@@ -55,7 +53,7 @@
     _profilePicView.layer.cornerRadius = 25.0f;
     _profilePicView.layer.masksToBounds = YES;
     [self.view addSubview:_profilePicView];
-    _profilePicView.profileID = _fbid;
+    _profilePicView.profileID = _user.fbID;
 }
 
 //-(void)setNavigationAttributes{
@@ -64,8 +62,7 @@
 
 -(void) setNavbarTitle{
     UINavigationBar *myNavBar =[self.navigationController navigationBar];
-    NSLog(@"set name%@", _name);
-    [[myNavBar topItem] setTitle:[Utility getNameToDisplay:_name]];
+    [[myNavBar topItem] setTitle:[Utility getNameToDisplay:_user.name]];
     [myNavBar setTranslucent:NO];
     [myNavBar setBarTintColor:[UIColor marbleOrange]];
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
@@ -116,26 +113,39 @@
     [_headerView addSubview:_viewKeywordBtn];
 }
 
+-(void)setByUserObject:(User *)user sentFromTabbar:(BOOL)isSentFromTabbar {
+    _user = user;
+    [self setUserInformation:isSentFromTabbar];
+}
 -(void) setName:(NSString *)name andID:(NSString *)fbid sentFromTabbar:(BOOL) isSentFromTabbar{
+    User *user = nil;
+    if (![User findOrCreateUserForName:name withfbID:fbid returnAsEntity:&user
+                inManagedObjectContext:[RKManagedObjectStore defaultStore].mainQueueManagedObjectContext])
+    {
+        MBError(@"Cannot find or create the user (id: %@, name: %@)", name, fbid);
+        return;
+    }
+    _user = user;
+    [self setUserInformation:isSentFromTabbar];
+}
+
+-(void) setUserInformation:(BOOL) isSentFromTabbar{
     NSString *selfFBID = [KeyChainWrapper getSelfFBID];
     
-    _name = [name copy];
-    _fbid = [fbid copy];
     if(!_profilePicView){
         [self initFBProfilePicViews];
     }
-    _profilePicView.profileID = _fbid;
-//    [self setNavbarTitle];
-//    [self setTitle:[Utility getNameToDisplay:name]];
-//    [_nameLabel setText:[Utility getNameToDisplay:name]];
-    _isSelf = ([_fbid isEqualToString:selfFBID])? TRUE : FALSE;
-    NSLog(@"personid %@, selfid %@", _fbid, selfFBID);
+    _profilePicView.profileID = _user.fbID;
+    //    [self setNavbarTitle];
+    //    [self setTitle:[Utility getNameToDisplay:name]];
+    //    [_nameLabel setText:[Utility getNameToDisplay:name]];
+    _isSelf = ([_user.fbID isEqualToString:selfFBID])? TRUE : FALSE;
     if(_isSelf){
-        [self setTitle:[Utility getNameToDisplay:_name]];
+        [self setTitle:[Utility getNameToDisplay:_user.name]];
         [_statusTextField setEnabled:YES];
     } else{
         if(!isSentFromTabbar){
-            [self setTitle:[Utility getNameToDisplay:_name]];
+            [self setTitle:[Utility getNameToDisplay:_user.name]];
         }
         [_statusTextField setEnabled:NO];
         for(id view in _headerView.subviews){
@@ -150,6 +160,8 @@
     [self getStatus];
 }
 
+
+
 //#TODO: Handle the case when the user has not been created yet
 -(void) getStatus{
 //    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
@@ -161,26 +173,19 @@
 //    NSError *error;
 //    NSArray *matches = [[RKManagedObjectStore defaultStore].mainQueueManagedObjectContext executeFetchRequest:fetchRequest error:&error];
 //    User *user = [matches firstObject];
-    User *user = nil;
-    if (![User findOrCreateUserForName:_name withfbID:_fbid returnAsEntity:&user
-           inManagedObjectContext:[RKManagedObjectStore defaultStore].mainQueueManagedObjectContext])
-    {
-        MBError(@"Cannot find or create the user (id: %@, name: %@)", _fbid, _name);
-        return;
-    }
-        
+    
     NSMutableDictionary *params = [NSMutableDictionary
-                                   dictionaryWithObjects:@[[KeyChainWrapper getSessionTokenForUser], user.fbID]
+                                   dictionaryWithObjects:@[[KeyChainWrapper getSessionTokenForUser], _user.fbID]
                                    forKeys:@[@"auth_token", @"fb_id"]];
 
     [[RKObjectManager sharedManager]
-     getObject:user
+     getObject:_user
      path:nil //previously defined Class routes
      parameters:params
      success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
          MBDebug(@"status result: %@", [mappingResult array]);
-         if([user isKindOfClass:[User class]]){
-             [_statusTextField setText:user.status];
+         if([_user isKindOfClass:[User class]]){
+             [_statusTextField setText:_user.status];
          }
      } failure:^(RKObjectRequestOperation *operation, NSError *error) {
          MBDebug(@"failed to get status");

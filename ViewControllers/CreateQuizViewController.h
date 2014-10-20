@@ -15,6 +15,8 @@
 @property (nonatomic, weak) id<CreateQuizViewControllerDelegate> delegate;
 -(void) setUser:(User *)user;
 -(void) setKeyword:(NSString *)keyword;
+-(void) setOption0:(User *)option0;
+-(void) resetAllOptions;
 @end
 
 @protocol CreateQuizViewControllerDelegate <NSObject>

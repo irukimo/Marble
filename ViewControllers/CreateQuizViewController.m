@@ -256,11 +256,15 @@
     [self recordData];
 }
 
+-(void) resetAllOptions{
+    
+}
+
 -(void) setKeyword:(NSString *)keyword{
-    NSLog(@"keyword set");
+    NSLog(@"keyword set %@", keyword);
     _keywordCurrentValue = [keyword copy];
-    [_ongoingTextField setText:_keywordCurrentValue];
-    [_ongoingTextField endEditing:YES];
+    [_keywordTextField setText:_keywordCurrentValue];
+    [_keywordTextField endEditing:YES];
     [self recordData];
 }
 

@@ -22,10 +22,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setNavbarTitle];
-    [self addMarbleButton];
+
 
     self.delegate = self;
-    self.type = HOME_POSTS_TYPE;
     
 
     //    [self.view addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:_CreateQuizViewController.view action:@selector(endEditing:)]];
@@ -62,32 +61,9 @@
 //    [self.tableView bringSubviewToFront:_marbleView];
 //}
 
--(void) addMarbleButton{
-    UIBarButtonItem *rightButton = [[UIBarButtonItem alloc]
-                                   initWithTitle: @"+"
-                                   style: UIBarButtonItemStyleBordered
-                                    target:self action: @selector(marbleButtonClicked:)];
-    
-    [self.navigationItem setRightBarButtonItem:rightButton];
-}
 
--(void) marbleButtonClicked:(id)sender{
-    if([self.tabBarController isKindOfClass:[MarbleTabBarController class]]){
-        MarbleTabBarController *tabbarcontroller = (MarbleTabBarController *)self.tabBarController;
-        [tabbarcontroller marbleButtonClicked];
-       
-    }
-    /*
-    if(_isCreatingMarble){
-        [_createQuizViewController.view removeFromSuperview];
-//        [self.tableView setUserInteractionEnabled:YES];
-        _isCreatingMarble = FALSE;
-    } else{
-        [self.view addSubview:_createQuizViewController.view];
-//        [self.tableView setUserInteractionEnabled:NO];
-        _isCreatingMarble = TRUE;
-    }*/
-}
+
+
 
 -(void)viewWillAppear:(BOOL)animated{
     [self setNavbarTitle];

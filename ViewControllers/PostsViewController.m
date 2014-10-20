@@ -8,6 +8,8 @@
 
 #import "PostsViewController.h"
 #import "ProfileViewController.h"
+#import "HomeViewController.h"
+#import "KeywordProfileViewController.h"
 
 #import "QuizTableViewCell.h"
 #import "StatusUpdateTableViewCell.h"
@@ -114,7 +116,34 @@
     
     [self setMyTableView];
     self.tableView.keyboardDismissMode  = UIScrollViewKeyboardDismissModeInteractive;
+    [self addMarbleButton];
+}
+
+-(void) addMarbleButton{
+    UIBarButtonItem *rightButton = [[UIBarButtonItem alloc]
+                                    initWithTitle: @"+"
+                                    style: UIBarButtonItemStyleBordered
+                                    target:self action: @selector(marbleButtonClicked:)];
     
+    [self.navigationItem setRightBarButtonItem:rightButton];
+}
+
+-(void) marbleButtonClicked:(id)sender{
+    if([self.tabBarController isKindOfClass:[MarbleTabBarController class]]){
+        MarbleTabBarController *tabbarcontroller = (MarbleTabBarController *)self.tabBarController;
+        if([self isKindOfClass:[HomeViewController class]]){
+            [tabbarcontroller marbleButtonClickedWithUser:nil orKeyword:nil];
+        } else if([self isKindOfClass:[ProfileViewController class]]){
+            ProfileViewController *profileVC = (ProfileViewController *)self;
+            [tabbarcontroller marbleButtonClickedWithUser:profileVC.user orKeyword:nil];
+        } else if([self isKindOfClass:[KeywordProfileViewController class]]){
+            KeywordProfileViewController *keywordProfileVC = (KeywordProfileViewController *)self;
+            [tabbarcontroller marbleButtonClickedWithUser:nil orKeyword:keywordProfileVC.keyword];
+            NSLog(@"set keyword %@", keywordProfileVC.keyword);
+        } else{
+            NSLog(@"should never happen");
+        }
+    }
 }
 
 
