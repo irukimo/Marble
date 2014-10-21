@@ -32,6 +32,13 @@
     // Do any additional setup after loading the view.
 }
 
+-(void) viewWillAppear:(BOOL)animated{
+    [self setNavbarTitle];
+}
+
+-(void) viewDidAppear:(BOOL)animated{
+    [self setNavbarTitle];
+}
 #pragma mark - UIScrollViewDelegate
 
 //- (void)scrollViewDidScroll:(UIScrollView *)scrollView

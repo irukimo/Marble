@@ -46,6 +46,15 @@
 
 }
 
+-(void)viewWillAppear:(BOOL)animated{
+    NSLog(@"view will appear for %@", _user.name);
+    [self setNavbarTitle];
+}
+
+-(void)viewDidAppear:(BOOL)animated{
+    NSLog(@"view did appear for %@", _user.name);
+    [self setNavbarTitle];
+}
 
 -(void) viewKeywordBtnClicked:(id)sender{
     [self performSegueWithIdentifier:@"KeywordListViewControllerSegue" sender:_user.keywords];
@@ -64,6 +73,7 @@
 
 -(void) setNavbarTitle{
     UINavigationBar *myNavBar =[self.navigationController navigationBar];
+    [myNavBar setTitleTextAttributes:[Utility getNavigationBarTitleFontDictionary]];
     [[myNavBar topItem] setTitle:[Utility getNameToDisplay:_user.name]];
     [myNavBar setTranslucent:NO];
     [myNavBar setBarTintColor:[UIColor marbleOrange]];
@@ -160,13 +170,16 @@
     
     _isSelf = ([_user.fbID isEqualToString:selfFBID])? TRUE : FALSE;
     if(_isSelf){
-        [self setTitle:[Utility getNameToDisplay:_user.name]];
+//        if(!isSentFromTabbar){
+//            [self setTitle:[Utility getNameToDisplay:_user.name]];
+//        }
+//        [self setTitle:[Utility getNameToDisplay:_user.name]];
         [_statusTextField setEnabled:YES];
         [_headerView addSubview:_statusBtn];
     } else{
-        if(!isSentFromTabbar){
-            [self setTitle:[Utility getNameToDisplay:_user.name]];
-        }
+//        if(!isSentFromTabbar){
+//            [self setTitle:[Utility getNameToDisplay:_user.name]];
+//        }
         [_statusTextField setEnabled:NO];
         [_statusBtn removeFromSuperview];
     }
