@@ -66,9 +66,13 @@
                                                [quiz initFBIDs];
                                                MBDebug(@"quiz compare num: %@", quiz.compareNum);
                                                MBDebug(@"quiz time: %@", quiz.time);
+                         
                                                MBDebug(@"quiz show time: %@", [Utility getDateToShow:quiz.time inWhole:NO]);
                                                MBDebug(@"quiz show time: %@", [Utility getDateToShow:quiz.time inWhole:YES]);
+
+                                               MBDebug(@"quiz popularity: %@", quiz.popularity);
                                            }
+                                           
                                            [Utility saveToPersistenceStore:[RKManagedObjectStore defaultStore].mainQueueManagedObjectContext failureMessage:@"failed to save."];
                                        }
                                        failure:[Utility failureBlockWithAlertMessage:@"Can't connect to the server"
@@ -102,12 +106,12 @@
     
     //set up fetched results controller
     NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"Post"];
-//    if(_predicate != nil) {
-//        [request setPredicate:_predicate];
-//        
-//    }
+    if(_predicate != nil) {
+        [request setPredicate:_predicate];
+        
+    }
 //    MBDebug(@"predicate: %@", _predicate);
-    NSSortDescriptor *sort = [[NSSortDescriptor alloc] initWithKey:@"popularity" ascending:YES];
+    NSSortDescriptor *sort = [[NSSortDescriptor alloc] initWithKey:@"popularity" ascending:NO];
     request.sortDescriptors = @[sort];
     
     _fetchedResultsController =
@@ -154,7 +158,8 @@
     self.tableView.contentInset =  UIEdgeInsetsMake(5, 0, 5, 0);
 }
 
--(void)viewWillAppear:(BOOL)animated{
+-(void)viewDidAppear:(BOOL)animated{
+    [self.tableView triggerPullToRefresh];
 }
 
 -(void) addMarbleButton{
@@ -204,6 +209,7 @@
                                            MBDebug(@"Refreshing: %ld quiz(zes) were successfully loaded.", [[mappingResult array] count]);
                                            [Utility saveToPersistenceStore:[RKManagedObjectStore defaultStore].mainQueueManagedObjectContext failureMessage:@"failed to save."];
                                            
+                                           
                                            [weakSelf.tableView.pullToRefreshView stopAnimating];
                                        }
                                        failure:[Utility failureBlockWithAlertMessage:@"Can't connect to the server"
@@ -252,8 +258,6 @@
     return [NSMutableDictionary dictionaryWithObjects:@[sessionToken]
                                               forKeys:@[@"auth_token"]];
 
-//    return [NSMutableDictionary dictionaryWithObjects:@[sessionToken, self.type]
-//                                              forKeys:@[@"auth_token", @"type"]];
 }
 
 - (void) startRefreshing:(NSMutableDictionary *)params

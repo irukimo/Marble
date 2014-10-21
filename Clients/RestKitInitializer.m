@@ -38,6 +38,7 @@
                                                 @"answer":             @"answer",
                                                 @"created_at":               @"time",
                                                 @"compare_num":        @"compareNum",
+                                                      @"popularity":  @"popularity",
                                                       @"answered_before": @"guessed"}];
     
     /* We map the entity by uuid. If it is an existing entity on the server side, we updateUUID after object mapping
@@ -108,6 +109,7 @@
                                                         @"fb_id":     @"fbID",
                                                         @"created_at": @"time",
                                                         @"name":      @"name",
+                                                        @"popularity":  @"popularity",
                                                         @"uuid":      @"uuid"}];
     statusUpdateMapping.identificationAttributes = @[@"uuid"];
     RKResponseDescriptor *statusUpdateGETResponseDescriptor =
@@ -120,10 +122,11 @@
     RKEntityMapping *keywordUpdateMapping = [RKEntityMapping mappingForEntityForName:@"KeywordUpdate"
                                                                 inManagedObjectStore:managedObjectStore];
     [keywordUpdateMapping addAttributeMappingsFromDictionary:@{@"name": @"name",
-                                                         @"fb_id": @"fbID",
-                                                         @"created_at": @"time",
-                                                         @"uuid": @"uuid",
-                                                         @"keywords": @"keywords"}];
+                                                             @"fb_id": @"fbID",
+                                                             @"created_at": @"time",
+                                                             @"uuid": @"uuid",
+                                                             @"popularity":  @"popularity",
+                                                             @"keywords": @"keywords"}];
     keywordUpdateMapping.identificationAttributes = @[@"uuid"];
     RKResponseDescriptor *keywordUpdateGETResponseDescriptor =
     [RKResponseDescriptor responseDescriptorWithMapping:keywordUpdateMapping

@@ -150,8 +150,12 @@ static NSString *selfFBID = nil;
 }
 
 +(NSString *)getARandomKeyword{
-    NSUInteger randomNumber = arc4random() % ([self.keywords count]);
-    return self.keywords[randomNumber];
+    if ([self.keywords count] == 0) {
+        return @"";
+    } else {
+        NSUInteger randomNumber = arc4random() % ([self.keywords count]);
+        return self.keywords[randomNumber];
+    }
 }
 
 
