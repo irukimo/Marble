@@ -132,7 +132,6 @@
     [self addMarbleButton];
 
     [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
-<<<<<<< HEAD
 
     
     __weak PostsViewController *weakSelf = self;
