@@ -10,6 +10,8 @@
 #import "FacebookSDK/FacebookSDK.h"
 #import "User+MBUser.h"
 #define CORRECT_WRONG_ICON_TAG 768
+#define WORD_SEPARATION 5
+#define OPTION_SQUARE_WIDTH 123
 
 
 @interface QuizTableViewCell()
@@ -27,10 +29,11 @@
 @property(strong, nonatomic) UILabel *option0WrongIcon;
 @property(strong, nonatomic) UILabel *option1CorrectIcon;
 @property(strong, nonatomic) UILabel *option1WrongIcon;
+@property(strong, nonatomic) UILabel *compareTextLabel;
+@property(strong, nonatomic) UILabel *andTextLabel;
+@property(strong, nonatomic) UIView *grayLine;
 
-
-
-@property(strong,nonatomic) UILabel *keywordLabel;
+@property(strong,nonatomic) UIButton *keywordButton;
 
 
 // for temporary use
@@ -66,14 +69,10 @@
 
 
 -(void) initPicViews{
-    _option0PicView = [[UIImageView alloc] initWithFrame:CGRectMake(25, 45, 135, 135)];
-    _option1PicView = [[UIImageView alloc] initWithFrame:CGRectMake(160, 45, 135, 135)];
-    UIView *whiteView = [[UIView alloc] initWithFrame:CGRectMake(7, 7, 50, 50)];
-    [whiteView setBackgroundColor:[UIColor whiteColor]];
-    whiteView.layer.cornerRadius = 25;
-    whiteView.layer.masksToBounds = YES;
-    _authorPicView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 10, 44, 44)];
-    _authorPicView.layer.cornerRadius = 22;
+    _option0PicView = [[UIImageView alloc] initWithFrame:CGRectMake(30, 115, OPTION_SQUARE_WIDTH, OPTION_SQUARE_WIDTH)];
+    _option1PicView = [[UIImageView alloc] initWithFrame:CGRectMake(165, 115, OPTION_SQUARE_WIDTH, OPTION_SQUARE_WIDTH)];
+    _authorPicView = [[UIImageView alloc] initWithFrame:CGRectMake(20, 14, 50, 50)];
+    _authorPicView.layer.cornerRadius = _authorPicView.frame.size.width/2.0;
     _authorPicView.layer.masksToBounds = YES;
     [_authorPicView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(authorClicked:)]];
     [_authorPicView setUserInteractionEnabled:YES];
@@ -96,7 +95,6 @@
     [self.contentView addSubview:_option0CorrectIcon];
     [self.contentView addSubview:_option1WrongIcon];
     [self.contentView addSubview:_option1CorrectIcon];
-    [self.contentView addSubview:whiteView];
     [self.contentView addSubview:_authorPicView];
 
 }
@@ -160,14 +158,28 @@
 
 
 -(void)addStaticLabels{
-    _timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(285, 5, 70, 20)];
+    _timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(NAME_LEFT_ALIGNMENT, NAME_TOP_ALIGNMENT + 34, 70, 20)];
 
-    _compareNumLabel = [[UILabel alloc] initWithFrame:CGRectMake(230, 180, 50, 20)];
+    _compareNumLabel = [[UILabel alloc] initWithFrame:CGRectMake(230, QuizTableViewCellHeight - 45, 50, 20)];
 
     
-    _authorNameButton = [[UIButton alloc] initWithFrame:CGRectMake(35, 8, 120, 20)];
-    _option0NameButton = [[UIButton alloc] initWithFrame:CGRectMake(50, 25, 120, 20)];
-    _option1NameButton = [[UIButton alloc] initWithFrame:CGRectMake(160, 25, 120, 20)];
+    _authorNameButton = [[UIButton alloc] initWithFrame:CGRectMake(NAME_LEFT_ALIGNMENT, NAME_TOP_ALIGNMENT, 120, 20)];
+    _option0NameButton = [[UIButton alloc] initWithFrame:CGRectMake(NAME_LEFT_ALIGNMENT, NAME_TOP_ALIGNMENT + 17, 120, 20)];
+    _option1NameButton = [[UIButton alloc] initWithFrame:CGRectMake(160, NAME_TOP_ALIGNMENT + 17, 120, 20)];
+    
+
+    NSAttributedString *compareTextString = [[NSAttributedString alloc] initWithString:@"compared" attributes:[Utility getNotifBlackNormalFontDictionary]];
+    NSAttributedString *andTextString = [[NSAttributedString alloc] initWithString:@"and" attributes:[Utility getNotifBlackNormalFontDictionary]];
+    _compareTextLabel = [[UILabel alloc] initWithFrame:CGRectMake(NAME_LEFT_ALIGNMENT + _authorNameButton.frame.size.width, NAME_TOP_ALIGNMENT + 3, compareTextString.size.width, compareTextString.size.height)];
+    _andTextLabel = [[UILabel alloc] initWithFrame:CGRectMake(NAME_LEFT_ALIGNMENT + _option0NameButton.frame.size.width, NAME_TOP_ALIGNMENT + 20 , andTextString.size.width, andTextString.size.height)];
+    [_compareTextLabel setAttributedText:compareTextString];
+    [_andTextLabel setAttributedText:andTextString];
+
+    
+    
+    [_authorNameButton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
+    [_option0NameButton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
+    [_option1NameButton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
     
     [_authorNameButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [_option0NameButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
@@ -177,20 +189,34 @@
     [_option1NameButton addTarget:self action:@selector(option1Clicked:) forControlEvents:UIControlEventTouchUpInside];
     [_authorNameButton addTarget:self action:@selector(authorClicked:) forControlEvents:UIControlEventTouchUpInside];
 
-    _keywordLabel = [[UILabel alloc] initWithFrame:CGRectMake(140, 120, 100, 20)];
-    [_keywordLabel setTextColor:[UIColor whiteColor]];
+    _keywordButton = [[UIButton alloc] initWithFrame:CGRectMake(0, NAME_TOP_ALIGNMENT + 60  , self.contentView.frame.size.width, 30)];
+    [_keywordButton.layer setCornerRadius:_keywordButton.frame.size.height/2.0];
+    [_keywordButton.layer setBorderColor:[UIColor grayColor].CGColor];
+    [_keywordButton.layer setBorderWidth:1.0f];
+    [_keywordButton.layer setMasksToBounds:YES];
+    [_keywordButton addTarget:self action:@selector(keywordButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+
     
+    _grayLine = [[UIView alloc] initWithFrame:CGRectMake(0, NAME_TOP_ALIGNMENT + 55, self.contentView.frame.size.width, 1)];
+    [_grayLine setBackgroundColor:[UIColor marbleLightGray]];
 
-
-
+    [self.contentView addSubview:_grayLine];
     [self.contentView addSubview:_compareNumLabel];
     [self.contentView addSubview:_authorNameButton];
     [self.contentView addSubview:_option0NameButton];
     [self.contentView addSubview:_option1NameButton];
-    [self.contentView addSubview:_keywordLabel];
-
+    [self.contentView addSubview:_keywordButton];
     [self.contentView addSubview:_timeLabel];
+    
+    [self.contentView addSubview:_compareTextLabel];
+    [self.contentView addSubview:_andTextLabel];
 
+}
+
+-(void) keywordButtonClicked:(id)sender{
+    if(self.delegate && [self.delegate respondsToSelector:@selector(gotoKeywordProfileWithKeyword:)]){
+        [self.delegate gotoKeywordProfileWithKeyword:_quiz.keyword];
+    }
 }
 
 -(void)option0Clicked:(id)sender{
@@ -234,8 +260,17 @@
     
     [self setupProfileViews];
     [self setupNameButtons];
-    [_keywordLabel setText:_keyword];
-    [_timeLabel setText:[Utility getDateToShow:quiz.time inWhole:NO]];
+    NSAttributedString *keywordString = [[NSAttributedString alloc] initWithString:_quiz.keyword attributes:[Utility getNotifOrangeNormalFontDictionary]];
+    [_keywordButton setAttributedTitle:keywordString forState:UIControlStateNormal];
+    [_keywordButton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentCenter];
+    CGRect keywordFrame = _keywordButton.frame;
+    keywordFrame.origin.x = self.contentView.frame.size.width/2.0f - keywordString.size.width/2.0f - 2*WORD_SEPARATION;
+    keywordFrame.size.width = keywordString.size.width + 4*WORD_SEPARATION;
+    _keywordButton.frame = keywordFrame;
+
+    
+    NSAttributedString *timeString = [[NSAttributedString alloc] initWithString:[Utility getDateToShow:quiz.time inWhole:NO] attributes:[Utility getGraySmallFontDictionary]];
+    [_timeLabel setAttributedText:timeString];
     
     if(_quiz.guessed){
         [self displayAlreadyGuessed:_quiz.guessed];
@@ -245,6 +280,8 @@
 }
 
 -(void) displayAlreadyGuessed:(NSString *)personGuessed{
+    [_option0PicView setAlpha:1];
+    [_option1PicView setAlpha:1];
     if([personGuessed isEqualToString:_quiz.option0Name]){
         [self setSelectedView:_option0Mask];
         [self setDidNotselectedView:_option1Mask];
@@ -279,23 +316,14 @@
     [_option1Mask setBackgroundColor:[UIColor clearColor]];
     [_option0Mask setUserInteractionEnabled:YES];
     [_option1Mask setUserInteractionEnabled:YES];
+    [_option0PicView setAlpha:0.5];
+    [_option1PicView setAlpha:0.5];
 }
 
 -(void) setupProfileViews{
-//    NSString *authorPictureUrl = [NSString stringWithFormat:@"https://graph.facebook.com/%@/picture?width=120&height=120", _quiz.author];
-//    NSString *option0PictureUrl = [NSString stringWithFormat:@"https://graph.facebook.com/%@/picture?width=270&height=270", _quiz.option0];
-//    NSString *option1PictureUrl = [NSString stringWithFormat:@"https://graph.facebook.com/%@/picture?width=270&height=270", _quiz.option1];
-//    
-//    [_authorPicView setImageWithURL:[NSURL URLWithString:authorPictureUrl] placeholderImage:[UIImage imageNamed:@"login.png"]];
-//    [_option0PicView setImageWithURL:[NSURL URLWithString:option0PictureUrl] placeholderImage:[UIImage imageNamed:@"login.png"]];
-//    [_option1PicView setImageWithURL:[NSURL URLWithString:option1PictureUrl] placeholderImage:[UIImage imageNamed:@"login.png"]];
-    
-    [Utility setUpProfilePictureImageView:_authorPicView byFBID:_quiz.author
-                                withWidth:120 height:120];
-    [Utility setUpProfilePictureImageView:_option0PicView byFBID:_quiz.option0
-                                withWidth:270 height:270];
-    [Utility setUpProfilePictureImageView:_option1PicView byFBID:_quiz.option1
-                                withWidth:270 height:270];
+    [Utility setUpProfilePictureImageView:_authorPicView byFBID:_quiz.author];
+    [Utility setUpProfilePictureImageView:_option0PicView byFBID:_quiz.option0];
+    [Utility setUpProfilePictureImageView:_option1PicView byFBID:_quiz.option1];
 }
 
 -(void)setupNameButtons{
@@ -305,10 +333,28 @@
     [_authorNameButton setAttributedTitle:authorNameString forState:UIControlStateNormal];
     [_option0NameButton setAttributedTitle:option0NameString forState:UIControlStateNormal];
     [_option1NameButton setAttributedTitle:option1NameString forState:UIControlStateNormal];
-
+    
+    CGRect authorFrame = _authorNameButton.frame;
+    authorFrame.size.width = authorNameString.size.width;
+    _authorNameButton.frame = authorFrame;
+    
+    CGRect compareFrame = _compareTextLabel.frame;
+    compareFrame.origin.x = NAME_LEFT_ALIGNMENT + authorNameString.size.width + WORD_SEPARATION;
+    _compareTextLabel.frame = compareFrame;
+    
+    CGRect option0Frame = _option0NameButton.frame;
+    option0Frame.size.width = option0NameString.size.width;
+    _option0NameButton.frame = option0Frame;
+    
+    CGRect andFrame = _andTextLabel.frame;
+    andFrame.origin.x = NAME_LEFT_ALIGNMENT + option0NameString.size.width + WORD_SEPARATION;
+    _andTextLabel.frame = andFrame;
+    
+    CGRect option1Frame = _option1NameButton.frame;
+    option1Frame.origin.x = NAME_LEFT_ALIGNMENT + option0NameString.size.width + andFrame.size.width + 2*WORD_SEPARATION;
+    option1Frame.size.width = option1NameString.size.width;
+    _option1NameButton.frame = option1Frame;
 }
-
-
 
 
 

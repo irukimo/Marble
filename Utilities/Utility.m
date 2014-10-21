@@ -223,6 +223,14 @@
     return [NSDictionary dictionaryWithObjectsAndKeys: [UIFont fontWithName:@"OpenSans" size:16],NSFontAttributeName, [UIColor whiteColor] ,NSForegroundColorAttributeName, @(-0.5), NSKernAttributeName, nil];
 }
 
++ (NSDictionary *)getBigNameFontDictionary{
+    return [NSDictionary dictionaryWithObjectsAndKeys: [UIFont fontWithName:@"OpenSans-Semibold" size:23],NSFontAttributeName, [UIColor marbleOrange] ,NSForegroundColorAttributeName, @(-0.5), NSKernAttributeName,nil];
+}
+
++ (NSDictionary *)getProfileStatusFontDictionary{
+    return [NSDictionary dictionaryWithObjectsAndKeys: [UIFont fontWithName:@"OpenSans" size:18],NSFontAttributeName, [UIColor blackColor] ,NSForegroundColorAttributeName, @(-0.5), NSKernAttributeName, nil];
+}
+
 + (NSString *)getMonthName:(NSInteger)month{
     switch ((int)month) {
         case 1:
@@ -305,8 +313,9 @@
 
 }
 
-+ (void) setUpProfilePictureImageView:(UIImageView *)view byFBID:(NSString *)fbID withWidth:(NSUInteger)width height:(NSUInteger)height
-{
++ (void) setUpProfilePictureImageView:(UIImageView *)view byFBID:(NSString *)fbID {
+    NSUInteger width = view.frame.size.width*2;
+    NSUInteger height = view.frame.size.height*2;
     NSString *fileName = [NSString stringWithFormat:@"%@w%luh%lu.png", fbID, width, height];
     NSString *filePath = [NSTemporaryDirectory() stringByAppendingPathComponent:fileName];
     NSData *imageData = [[NSData alloc] initWithContentsOfFile:filePath];
@@ -334,38 +343,4 @@
         
     }
 }
-
-
-+ (void) setUpProfilePictureImageView:(UIImageView *)view byFBID:(NSString *)fbID
-{
-    NSString *fileName = [NSString stringWithFormat:@"%@.png", fbID];
-    NSString *filePath = [NSTemporaryDirectory() stringByAppendingPathComponent:fileName];
-    NSData *imageData = [[NSData alloc] initWithContentsOfFile:filePath];
-    if(imageData){
-        [view setImage:[UIImage imageWithData:imageData]];
-        MBDebug(@"found photo!!!! %@", fileName);
-    } else {
-        NSURL *picURL = [NSURL URLWithString:[NSString stringWithFormat:@"https://graph.facebook.com/%@/picture", fbID]];
-        [view setImageWithURLRequest:[NSURLRequest requestWithURL:picURL]
-                    placeholderImage:[UIImage imageNamed:@"login.png"]
-                             success:nil
-//         ^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
-//                                 MAINQ([view setImage:[image copy]];);
-//                                 ASYNC({
-//                                     NSData *data = UIImagePNGRepresentation(image);
-//                                     BOOL succeed = [data writeToFile:filePath atomically:YES];
-//                                     if(succeed){
-//                                         MBDebug(@"succesfully saved profile picture");
-//                                     }else{
-//                                         MBError(@"failed to saved profile picture");
-//                                     }
-//                                 });
-                             //}
-                             failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
-                                 MBError(@"Failed to fetch profile picture from Facebook Server");
-                             }];
-        
-    }
-}
-
 @end

@@ -38,4 +38,5 @@
 #import <RestKit/RestKit.h>
 #import "Utility.h" // Utility needs RestKit
 #import "UIColor+MBColor.h"
+#import "UIView+MBView.h"
 #import "KeyChainWrapper.h"

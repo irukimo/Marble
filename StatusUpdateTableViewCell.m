@@ -68,8 +68,7 @@
     [_statusLabel setText:[status copy]];
 //    NSString *authorPictureUrl = [NSString stringWithFormat:@"https://graph.facebook.com/%@/picture", fbid];
 //    [_authorPicView setImageWithURL:[NSURL URLWithString:authorPictureUrl] placeholderImage:[UIImage imageNamed:@"login.png"]];
-    [Utility setUpProfilePictureImageView:_authorPicView byFBID:fbid
-                                withWidth:120 height:120];
+    [Utility setUpProfilePictureImageView:_authorPicView byFBID:fbid];
 }
 
 -(void)nameClicked:(id)sender{

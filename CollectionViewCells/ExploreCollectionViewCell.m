@@ -56,10 +56,9 @@
             }
         }
     }
-    NSUInteger width = self.contentView.frame.size.height*2;
 //    NSString *authorPictureUrl = [NSString stringWithFormat:@"https://graph.facebook.com/%@/picture?width=%lu&height=%lu", _user.fbID,(unsigned long)width , (unsigned long)width];
 //    [_authorPicView setImageWithURL:[NSURL URLWithString:authorPictureUrl] placeholderImage:[UIImage imageNamed:@"login.png"]];
-    [Utility setUpProfilePictureImageView:_authorPicView byFBID:_user.fbID withWidth:width height:width];
+    [Utility setUpProfilePictureImageView:_authorPicView byFBID:_user.fbID];
 }
 
 -(void)setCellName:(NSString *)name andID:(NSString *)fbid{

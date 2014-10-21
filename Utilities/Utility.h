@@ -38,6 +38,9 @@ typedef void (^voidBlock)(void);
 + (NSDictionary *)getGraySmallFontDictionary;
 + (NSDictionary *)getCreateQuizNameFontDictionary;
 
++ (NSDictionary *)getBigNameFontDictionary;
++ (NSDictionary *)getProfileStatusFontDictionary;
+
 //+ (void) setApplicationBadgeNumber:(NSInteger)number;
 
 
@@ -46,5 +49,4 @@ typedef void (^voidBlock)(void);
                successBlock:(voidBlock)successBlock failureBlock:(voidBlock)failureBlock;
 
 + (void) setUpProfilePictureImageView:(UIImageView *)view byFBID:(NSString *)fbID;
-+ (void) setUpProfilePictureImageView:(UIImageView *)view byFBID:(NSString *)fbID withWidth:(NSUInteger)width height:(NSUInteger)height;
 @end

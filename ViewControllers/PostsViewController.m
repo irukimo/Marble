@@ -41,6 +41,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self.view setBackgroundColor:[UIColor marbleLightGray]];
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
@@ -131,6 +132,7 @@
     [self addMarbleButton];
 
     [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
+<<<<<<< HEAD
 
     
     __weak PostsViewController *weakSelf = self;
@@ -150,6 +152,7 @@
         // call [tableView.pullToRefreshView stopAnimating] when done
     }];
 
+    self.tableView.contentInset =  UIEdgeInsetsMake(5, 0, 5, 0);
 }
 
 -(void)viewWillAppear:(BOOL)animated{
@@ -411,6 +414,10 @@
     [self performSegueWithIdentifier:@"ProfileViewControllerSegue" sender:infoBundle];
 }
 
+-(void) gotoKeywordProfileWithKeyword:(NSString *)keyword{
+    [self performSegueWithIdentifier:@"KeywordProfileViewControllerSegue" sender:keyword];
+}
+
 /*
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     Quiz *quiz = [_fetchedResultsController objectAtIndexPath:indexPath];
@@ -467,14 +474,15 @@
     
     CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.tableView];
     NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:buttonPosition];
-    self.tableView.contentInset =  UIEdgeInsetsMake(0, 0, KEYBOARD_HEIGHT, 0);
+    self.tableView.contentInset =  UIEdgeInsetsMake(5, 0, KEYBOARD_HEIGHT, 0);
     [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:indexPath.row inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:YES];
     
 }
 -(void) endPresentingCellWithKeywordOn{
-    
-    self.tableView.contentInset = UIEdgeInsetsMake(0, 0, TABBAR_HEIGHT, 0);
-     
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationDuration:0.25];
+    self.tableView.contentInset = UIEdgeInsetsMake(5, 0,  TABBAR_HEIGHT + 5, 0);
+    [UIView commitAnimations];
 }
 
 
@@ -615,6 +623,9 @@
             ProfileViewController *viewController =[segue destinationViewController];
             [viewController setName:(NSString *)[sender firstObject] andID:[sender objectAtIndex:1] sentFromTabbar:NO];
         }
+    } else if([[segue destinationViewController] isKindOfClass:[KeywordProfileViewController class]]){
+        KeywordProfileViewController *viewController =[segue destinationViewController];
+        [viewController setKeyword:sender];
     }
 }
 

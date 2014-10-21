@@ -52,10 +52,9 @@
 }
 
 -(void) initFBProfilePicViews{
-    _profilePicView = [[FBProfilePictureView alloc] initWithFrame:CGRectMake(10, 20, 50, 50)];
-    _profilePicView.layer.cornerRadius = 25.0f;
+    _profilePicView = [[FBProfilePictureView alloc] initWithFrame:CGRectMake(20, 15, 100, 100)];
+    _profilePicView.layer.cornerRadius = _profilePicView.frame.size.width/2.0f;
     _profilePicView.layer.masksToBounds = YES;
-    [self.view addSubview:_profilePicView];
     _profilePicView.profileID = _user.fbID;
 }
 
@@ -94,26 +93,34 @@
 
 -(void) prepareHeaderView{
     _headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 200)];
-    _nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(100, 20, 100, 30)];
+    [_headerView setBackgroundColor:[UIColor whiteColor]];
+    
+    _nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(135, 15, self.view.frame.size.width, 35)];
+    NSAttributedString *nameString =[[NSAttributedString alloc] initWithString:[Utility getNameToDisplay:_user.name] attributes:[Utility getBigNameFontDictionary]];
+    [_nameLabel setAttributedText:nameString];
+    
     _viewKeywordBtn = [[UIButton alloc] initWithFrame:CGRectMake(200, 120, 80, 20)];
-    [_viewKeywordBtn setTitle:@"view all" forState:UIControlStateNormal];
+    [_viewKeywordBtn setTitle:@"more" forState:UIControlStateNormal];
     [_viewKeywordBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    _statusTextField = [[UITextField alloc] initWithFrame:CGRectMake(100, 70, 100, 20)];
+    _statusTextField = [[UITextField alloc] initWithFrame:CGRectMake(135, 50, 100, 20)];
     [_statusTextField setText:@""];
     _statusBtn = [[UIButton alloc] initWithFrame:CGRectMake(200, 70, 40, 20)];
     [_statusTextField setDelegate:self];
     [_statusBtn setTitle:@"send" forState:UIControlStateNormal];
     [_statusBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [_statusBtn setTag:SEND_BUTTON_TAG];
-    [_statusTextField setBorderStyle:UITextBorderStyleLine];
     
     [_statusBtn addTarget:self action:@selector(sendStatusBtnClicked) forControlEvents:UIControlEventTouchUpInside];
     [_viewKeywordBtn addTarget:self action:@selector(viewKeywordBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
-    [_headerView.layer setBorderColor:[UIColor grayColor].CGColor];
+    [UIView addLeftBorderOn:_headerView withColor:[UIColor marbleLightGray] andWidth:5 andHeight:0 withOffset:5];
+    [UIView addRightBorderOn:_headerView withColor:[UIColor marbleLightGray] andWidth:5 andHeight:0 withOffset:5];
+    [_headerView addSubview:_profilePicView];
+    [_headerView.layer setBorderColor:[UIColor marbleLightGray].CGColor];
     [_headerView.layer setBorderWidth:5.0f];
+    if(_isSelf){
+        [_headerView addSubview:_statusBtn];
+    }
     [_headerView addSubview:_nameLabel];
     [_headerView addSubview:_statusTextField];
-    [_headerView addSubview:_statusBtn];
     [_headerView addSubview:_viewKeywordBtn];
 }
 
@@ -122,6 +129,7 @@
     [self setUserInformation:isSentFromTabbar];
 }
 -(void) setName:(NSString *)name andID:(NSString *)fbid sentFromTabbar:(BOOL) isSentFromTabbar{
+    
     User *user = nil;
     if (![User findOrCreateUserForName:name withfbID:fbid returnAsEntity:&user
                 inManagedObjectContext:[RKManagedObjectStore defaultStore].mainQueueManagedObjectContext])
@@ -134,6 +142,11 @@
 }
 
 -(void) setUserInformation:(BOOL) isSentFromTabbar{
+    
+    NSAttributedString *nameString =[[NSAttributedString alloc] initWithString:[Utility getNameToDisplay:_user.name] attributes:[Utility getBigNameFontDictionary]];
+    [_nameLabel setAttributedText:nameString];
+    NSLog(@"profilename %@", _user.name);
+    
     NSString *selfFBID = [KeyChainWrapper getSelfFBID];
     
     if(!_profilePicView){
@@ -142,24 +155,20 @@
     _profilePicView.profileID = _user.fbID;
     //    [self setNavbarTitle];
     //    [self setTitle:[Utility getNameToDisplay:name]];
-    //    [_nameLabel setText:[Utility getNameToDisplay:name]];
+    
+
+    
     _isSelf = ([_user.fbID isEqualToString:selfFBID])? TRUE : FALSE;
     if(_isSelf){
         [self setTitle:[Utility getNameToDisplay:_user.name]];
         [_statusTextField setEnabled:YES];
+        [_headerView addSubview:_statusBtn];
     } else{
         if(!isSentFromTabbar){
             [self setTitle:[Utility getNameToDisplay:_user.name]];
         }
         [_statusTextField setEnabled:NO];
-        for(id view in _headerView.subviews){
-            if([view isKindOfClass:[UIButton class]]){
-                UIButton *btn = view;
-                if([btn tag] == SEND_BUTTON_TAG){
-                    [view removeFromSuperview];
-                }
-            }
-        }
+        [_statusBtn removeFromSuperview];
     }
     [self getStatus];
 }
@@ -189,7 +198,7 @@
      success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
          MBDebug(@"status result: %@", [mappingResult array]);
          if([_user isKindOfClass:[User class]]){
-             [_statusTextField setText:_user.status];
+             [self setStatusWithText:_user.status];
              [self displayKeywords];
          }
      } failure:^(RKObjectRequestOperation *operation, NSError *error) {
@@ -205,24 +214,38 @@
             [self addKeywordLabelAtX:100 andY:100 withKeyword:keywordString atIndex:-1];
         } else if([_user.keywords isKindOfClass:[NSArray class]]){
             NSArray *keywordArray = (NSArray *)_user.keywords;
-            int x = 40;
-            int y = 100;
+            int x = 25;
+            int y = 125;
             for(NSString *keyword in keywordArray){
+
                 NSAttributedString *keywordString =[[NSAttributedString alloc] initWithString:keyword attributes:[Utility getNotifOrangeNormalFontDictionary]];
                 [self addKeywordLabelAtX:x andY:y withKeyword:keywordString atIndex:[keywordArray indexOfObject:keyword]];
                 x+= keywordString.size.width + 20;
                 if(x>250){
-                    x=40;
-                    y+=20;
+                    x=25;
+                    y+=33;
                 }
             }
         }
     }
 }
 
+-(void) setStatusWithText:(NSString *)status{
+    if(!status){
+        [_statusTextField setText:@""];
+        return;
+    }
+    NSAttributedString *statusString =[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"\"%@\"",_user.status] attributes:[Utility getProfileStatusFontDictionary]];
+    [_statusTextField setAttributedText:statusString];
+}
+
 -(void) addKeywordLabelAtX:(int)x andY:(int)y withKeyword:(NSAttributedString *)string atIndex:(NSInteger)index{
-    UIButton *keywordBtn = [[UIButton alloc] initWithFrame:CGRectMake(x, y, string.size.width, string.size.height)];
-    [keywordBtn setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
+    UIButton *keywordBtn = [[UIButton alloc] initWithFrame:CGRectMake(x, y, string.size.width + 15, string.size.height + 10)];
+    [keywordBtn.layer setBorderColor:[UIColor grayColor].CGColor];
+    [keywordBtn.layer setBorderWidth:1.0f];
+    [keywordBtn.layer setCornerRadius:keywordBtn.frame.size.height/2.0f];
+    [keywordBtn.layer setMasksToBounds:YES];
+    [keywordBtn setContentHorizontalAlignment:UIControlContentHorizontalAlignmentCenter];
     [keywordBtn setAttributedTitle:string forState:UIControlStateNormal];
     [keywordBtn setTag:index];
     [keywordBtn addTarget:self action:@selector(keywordBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
@@ -248,6 +271,8 @@
     NSString *status = _statusTextField.text;
     MBDebug(@"To send status: %@", status);
     [Utility sendThroughRKRoute:@"send_status" withParams:@{@"status": status}];
+    [self getStatus];
+    [_statusTextField resignFirstResponder];
 }
 
 
@@ -301,6 +326,12 @@
 
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    UIBarButtonItem *backButton = [[UIBarButtonItem alloc]
+                                   initWithTitle: @" "
+                                   style: UIBarButtonItemStyleBordered
+                                   target: nil action: nil];
+    
+    [self.navigationItem setBackBarButtonItem: backButton];
     NSLog(@"segue %@", [[segue destinationViewController] class]);
     if([[segue destinationViewController] isKindOfClass:[KeywordListViewController class]]){
         KeywordListViewController *keywordListViewController =[segue destinationViewController];
@@ -321,6 +352,19 @@
 -(void) postSelected:(NSString *)name andID:(NSString *)fbid{
     NSArray *infoBundle = [NSArray arrayWithObjects:name,fbid, nil];
     [self performSegueWithIdentifier:@"ProfileViewControllerSegue" sender:infoBundle];
+}
+
+
+#pragma mark -
+#pragma mark UITextField Delegate Methods
+- (void)textFieldDidBeginEditing:(UITextField *)textField{
+    [textField setText:@""];
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [self.view endEditing:YES];
+    [self setStatusWithText:_user.status];
+    return YES;
 }
 
 @end

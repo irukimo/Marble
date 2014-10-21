@@ -16,7 +16,6 @@
 //#define PRODUCTION_SERVER @"172.20.10.9"
 #define PRODUCTION_SERVER @"localhost"
 
-
 #define ASYNC(...) dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{ __VA_ARGS__ })
 #define MAINQ(...) dispatch_async(dispatch_get_main_queue(), ^{ __VA_ARGS__ })
 
@@ -35,8 +34,8 @@
 
 #define exploreCollectionViewCellIdentifier @"exploreCollectionViewCellIdentifier"
 
-#define QuizTableViewCellHeight 230
-#define QuizTableViewCellDisplayHeight 250
+#define QuizTableViewCellHeight 285
+#define QuizTableViewCellDisplayHeight 300
 #define StatusUpdateTableViewCellHeight 90
 #define KeywordUpdateTableViewCellHeight 90
 #define CommentIncrementHeight 20
@@ -45,7 +44,8 @@
 #define NAVBAR_HEIGHT 64
 #define KEYBOARD_HEIGHT 260
 #define LEFT_ALIGNMENT 25
-
+#define NAME_LEFT_ALIGNMENT 75
+#define NAME_TOP_ALIGNMENT 16
 
 #define QUIZ_CELL_TYPE @"quiz_cell_type"
 #define STATUS_UPDATE_CELL_TYPE @"status_update_cell_type"

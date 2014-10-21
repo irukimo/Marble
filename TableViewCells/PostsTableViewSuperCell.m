@@ -38,9 +38,18 @@
 }
 
 -(void) setBorder{
-    [self.contentView.layer setBorderColor:[UIColor grayColor].CGColor];
+    [self.contentView.layer setBorderColor:[UIColor marbleLightGray].CGColor];
     [self.contentView.layer setBorderWidth:5.0f];
-    
+    if([_cellType isEqualToString:QUIZ_CELL_TYPE]){
+        [UIView addLeftBorderOn:self.contentView withColor:[UIColor marbleLightGray] andWidth:5 andHeight:QuizTableViewCellDisplayHeight withOffset:5];
+        [UIView addRightBorderOn:self.contentView withColor:[UIColor marbleLightGray] andWidth:5 andHeight:QuizTableViewCellDisplayHeight withOffset:5];
+    } else if([_cellType isEqualToString:STATUS_UPDATE_CELL_TYPE]){
+        [UIView addLeftBorderOn:self.contentView withColor:[UIColor marbleLightGray] andWidth:5 andHeight:StatusUpdateTableViewCellHeight withOffset:5];
+        [UIView addRightBorderOn:self.contentView withColor:[UIColor marbleLightGray] andWidth:5 andHeight:QuizTableViewCellDisplayHeight withOffset:5];
+    } else{
+       [UIView addLeftBorderOn:self.contentView withColor:[UIColor marbleLightGray] andWidth:5 andHeight:KeywordUpdateTableViewCellHeight withOffset:5];
+        [UIView addRightBorderOn:self.contentView withColor:[UIColor marbleLightGray] andWidth:5 andHeight:QuizTableViewCellDisplayHeight withOffset:5];
+    }
 }
 
 -(void)prepareForReuse{
@@ -63,7 +72,7 @@
 
 -(void) initializeAccordingToType{
     if([_cellType isEqualToString:QUIZ_CELL_TYPE]){
-        _commentNumLabel = [[UILabel alloc] initWithFrame:CGRectMake(280, 180, 50, 20)];
+        _commentNumLabel = [[UILabel alloc] initWithFrame:CGRectMake(280, QuizTableViewCellHeight - 45, 50, 20)];
     } else if([_cellType isEqualToString:STATUS_UPDATE_CELL_TYPE]){
         _commentNumLabel = [[UILabel alloc] initWithFrame:CGRectMake(280, 15, 50, 20)];
     } else{
@@ -109,7 +118,7 @@
     if(commentCnt > 2){
         _viewMoreCommentsBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
         [_viewMoreCommentsBtn setTag:COMMENT_RELATED_TAG];
-         NSAttributedString *defaultViewMoreCommentsText = [[NSAttributedString alloc] initWithString:@"view more comments" attributes:[Utility getWriteACommentFontDictionary]];
+         NSAttributedString *defaultViewMoreCommentsText = [[NSAttributedString alloc] initWithString:@"[...]" attributes:[Utility getWriteACommentFontDictionary]];
         [_viewMoreCommentsBtn setAttributedTitle:defaultViewMoreCommentsText forState:UIControlStateNormal];
         [_viewMoreCommentsBtn addTarget:self action:@selector(viewMoreCommentsBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
         [self.contentView addSubview:_viewMoreCommentsBtn];

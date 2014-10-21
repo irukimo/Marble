@@ -30,4 +30,5 @@
 -(void) presentCellWithKeywordOn:(id) sender;
 -(void) endPresentingCellWithKeywordOn;
 -(void) viewMoreComments:(id)sender;
+-(void) gotoKeywordProfileWithKeyword:(NSString *)keyword;
 @end
