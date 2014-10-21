@@ -36,6 +36,7 @@ typedef void (^voidBlock)(void);
 + (NSDictionary *)getNotifOrangeNormalFontDictionary;
 + (NSDictionary *)getNotifBlackNormalFontDictionary;
 + (NSDictionary *)getGraySmallFontDictionary;
++ (NSDictionary *)getCreateQuizNameFontDictionary;
 
 //+ (void) setApplicationBadgeNumber:(NSInteger)number;
 

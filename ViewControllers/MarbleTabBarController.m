@@ -190,6 +190,7 @@
 }
 
 -(void) marbleButtonClickedWithUser:(User *)user orKeyword:(NSString *)keyword{
+    [_createQuizViewController setOption0Option1];
     if(user){
         [_createQuizViewController setOption0:user];
     } else if(keyword){

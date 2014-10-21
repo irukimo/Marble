@@ -21,7 +21,7 @@
 @property (strong, nonatomic) UITextField *keywordTextField;
 @property (strong, nonatomic) UITextField *option0NameTextField;
 @property (strong, nonatomic) UITextField *option1NameTextField;
-@property (strong, nonatomic) UIButton *shuffleKeywordBtn;
+@property (strong, nonatomic) UIButton *shuffleAllBtn;
 @property (strong, nonatomic) UIButton *shufflePeopleBtn;
 @property (strong, nonatomic) UITextField *ongoingTextField;
 @property (strong, nonatomic) NSString *keywordCurrentValue;
@@ -34,6 +34,12 @@
 @property (strong, nonatomic) User *option1;
 @property (strong, nonatomic) FBProfilePictureView *option0PicView;
 @property (strong, nonatomic) FBProfilePictureView *option1PicView;
+@property (strong, nonatomic) UIButton *keywordLockBtn;
+@property (strong, nonatomic) UIButton *option0LockBtn;
+@property (strong, nonatomic) UIButton *option1LockBtn;
+@property (nonatomic) BOOL keywordIsLocked;
+@property (nonatomic) BOOL option0IsLocked;
+@property (nonatomic) BOOL option1IsLocked;
 @end
 
 @implementation CreateQuizViewController
@@ -44,6 +50,7 @@
     [self addShuffleButtons];
     [self addPeopleButtons];
     [self initFBProfilePicViews];
+    [self addLockBtns];
 //    [self.view setAlpha:0.5f];
     [self.view setBackgroundColor:[UIColor marbleOrange]];
     
@@ -64,16 +71,66 @@
     // Do any additional setup after loading the view.
 }
 
+-(void)addLockBtns{
+    _keywordIsLocked = FALSE;
+    _option0IsLocked = FALSE;
+    _option1IsLocked = FALSE;
+    _keywordLockBtn = [[UIButton alloc] initWithFrame:CGRectMake(25, 10, 70, 50)];
+    _option0LockBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 80, 70, 50)];
+    _option1LockBtn = [[UIButton alloc] initWithFrame:CGRectMake(250, 80, 70, 50)];
+    [_keywordLockBtn setTitle:@"lock" forState:UIControlStateNormal];
+    [_option0LockBtn setTitle:@"lock" forState:UIControlStateNormal];
+    [_option1LockBtn setTitle:@"lock" forState:UIControlStateNormal];
+    [_keywordLockBtn addTarget:self action:@selector(keywordLockBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
+    [_option0LockBtn addTarget:self action:@selector(option0LockBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
+    [_option1LockBtn addTarget:self action:@selector(option1LockBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
+
+    [self.view addSubview:_keywordLockBtn];
+    [self.view addSubview:_option0LockBtn];
+    [self.view addSubview:_option1LockBtn];
+}
+
 -(void) initFBProfilePicViews{
-    _option0PicView = [[FBProfilePictureView alloc] initWithFrame:CGRectMake(10, 20, 50, 50)];
-    _option1PicView = [[FBProfilePictureView alloc] initWithFrame:CGRectMake(200, 20, 50, 50)];
+    _option0PicView = [[FBProfilePictureView alloc] initWithFrame:CGRectMake(60, 80, 60, 60)];
+    _option1PicView = [[FBProfilePictureView alloc] initWithFrame:CGRectMake(200,80, 60, 60)];
     _option0PicView.layer.cornerRadius = _option0PicView.frame.size.width/2.0;
     _option0PicView.layer.masksToBounds = YES;
     _option1PicView.layer.cornerRadius = _option1PicView.frame.size.width/2.0;
+    [_option0PicView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(chooseName1BtnClicked)]];
+    [_option1PicView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(chooseName2BtnClicked)]];
     _option1PicView.layer.masksToBounds = YES;
     [self.view addSubview:_option0PicView];
     [self.view addSubview:_option1PicView];
 }
+
+-(void) keywordLockBtnClicked:(id)sender{
+    if(_keywordIsLocked){
+        [_keywordLockBtn setTitle:@"lock" forState:UIControlStateNormal];
+        _keywordIsLocked = FALSE;
+    } else {
+        [_keywordLockBtn setTitle:@"unlock" forState:UIControlStateNormal];
+        _keywordIsLocked = TRUE;
+    }
+}
+-(void) option0LockBtnClicked:(id)sender{
+    if(_option0IsLocked){
+        [_option0LockBtn setTitle:@"lock" forState:UIControlStateNormal];
+        _option0IsLocked = FALSE;
+    } else {
+        [_option0LockBtn setTitle:@"unlock" forState:UIControlStateNormal];
+        _option0IsLocked = TRUE;
+    }
+}
+-(void) option1LockBtnClicked:(id)sender{
+    if(_option1IsLocked){
+        [_option1LockBtn setTitle:@"lock" forState:UIControlStateNormal];
+        _option1IsLocked = FALSE;
+    } else {
+        [_option1LockBtn setTitle:@"unlock" forState:UIControlStateNormal];
+        _option1IsLocked = TRUE;
+    }
+}
+
 
 -(void) setOption0Option1{
     NSArray *randomUser;
@@ -88,15 +145,27 @@
 }
 
 -(void) setOption0:(User *)option0{
+    if(!option0){
+        NSAttributedString *nameString = [[NSAttributedString alloc] initWithString:[Utility getNameToDisplay:_option0.name] attributes:[Utility getCreateQuizNameFontDictionary]];
+        [_option0NameTextField setAttributedText:nameString];
+        return;
+    }
     _option0 = option0;
     _option0PicView.profileID = _option0.fbID;
-    [_option0NameTextField setText:[Utility getNameToDisplay:_option0.name]];
+    NSAttributedString *nameString = [[NSAttributedString alloc] initWithString:[Utility getNameToDisplay:_option0.name] attributes:[Utility getCreateQuizNameFontDictionary]];
+    [_option0NameTextField setAttributedText:nameString];
 }
 
 -(void) setOption1:(User *)option1{
+    if(!option1){
+        NSAttributedString *nameString = [[NSAttributedString alloc] initWithString:[Utility getNameToDisplay:_option1.name] attributes:[Utility getCreateQuizNameFontDictionary]];
+        [_option1NameTextField setAttributedText:nameString];
+        return;
+    }
     _option1 = option1;
     _option1PicView.profileID = _option1.fbID;
-    [_option1NameTextField setText:[Utility getNameToDisplay:_option1.name]];
+    NSAttributedString *nameString = [[NSAttributedString alloc] initWithString:[Utility getNameToDisplay:_option1.name] attributes:[Utility getCreateQuizNameFontDictionary]];
+    [_option1NameTextField setAttributedText:nameString];
 }
 
 -(void)setCurrentUserValues{
@@ -158,16 +227,17 @@
      failure:^(RKObjectRequestOperation *operation, NSError *error) {
          [Utility generateAlertWithMessage:@"No network!"];
      }];
-    [self setOption0Option1];
+    [self shuffleAll:nil];
 
 }
 
 -(void)addTextFields{
-    _keywordTextField = [[UITextField alloc] initWithFrame:CGRectMake(130, 20, 50, 50)];
-    _option0NameTextField = [[UITextField alloc] initWithFrame:CGRectMake(10, 70, 120, 50)];
-    _option1NameTextField = [[UITextField alloc] initWithFrame:CGRectMake(200, 70, 120, 50)];
+    _keywordTextField = [[UITextField alloc] initWithFrame:CGRectMake(80, 20, 150, 40)];
+    _option0NameTextField = [[UITextField alloc] initWithFrame:CGRectMake(10, 130, 120, 50)];
+    _option1NameTextField = [[UITextField alloc] initWithFrame:CGRectMake(200, 130, 120, 50)];
     _keywordCurrentValue = @"yay";
     [_keywordTextField setText:_keywordCurrentValue];
+    [_keywordTextField setTextAlignment:NSTextAlignmentCenter];
     
     
     
@@ -181,7 +251,9 @@
     [self.view addSubview:_option1NameTextField];
     [_keywordTextField setBorderStyle:UITextBorderStyleNone];
     [_keywordTextField setDelegate:self];
-    [_keywordTextField setBackgroundColor:[UIColor yellowColor]];
+    [_keywordTextField setBackgroundColor:[UIColor whiteColor]];
+    _keywordTextField.layer.cornerRadius = _keywordTextField.frame.size.height/2;
+    _keywordTextField.layer.masksToBounds = YES;
     [_keywordTextField setTextAlignment:NSTextAlignmentCenter];
     [_option0NameTextField setBorderStyle:UITextBorderStyleNone];
     [_option1NameTextField setBorderStyle:UITextBorderStyleNone];
@@ -204,16 +276,11 @@
 
 
 -(void)addShuffleButtons{
-    _shuffleKeywordBtn = [[UIButton alloc] initWithFrame:CGRectMake(80, 60, 100, 50)];
-    _shufflePeopleBtn = [[UIButton alloc] initWithFrame:CGRectMake(140, 60, 100, 50)];
-    [_shuffleKeywordBtn setTitle:@"關鍵字" forState:UIControlStateNormal];
-    [_shufflePeopleBtn setTitle:@"朋友" forState:UIControlStateNormal];
-    [_shuffleKeywordBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [_shufflePeopleBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [self.view addSubview:_shuffleKeywordBtn];
-    [self.view addSubview:_shufflePeopleBtn];
-    [_shufflePeopleBtn addTarget:self action:@selector(shufflePeople:) forControlEvents:UIControlEventTouchUpInside];
-    [_shuffleKeywordBtn addTarget:self action:@selector(shuffleKeyword:) forControlEvents:UIControlEventTouchUpInside];
+    _shuffleAllBtn = [[UIButton alloc] initWithFrame:CGRectMake(100, 150, 100, 50)];
+    [_shuffleAllBtn setTitle:@"shuffle" forState:UIControlStateNormal];
+    [_shuffleAllBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [self.view addSubview:_shuffleAllBtn];
+    [_shuffleAllBtn addTarget:self action:@selector(shuffleAll:) forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -221,14 +288,27 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)shuffleKeyword:(id)sender {
-    [_keywordTextField setText:@"人性"];
-    _keywordCurrentValue = [_keywordTextField text];
+- (void)shuffleAll:(id)sender {
+    if(!_keywordIsLocked){
+        [_keywordTextField setText:[KeyChainWrapper getARandomKeyword]];
+        _keywordCurrentValue = [_keywordTextField text];
+    }
+    
+    NSArray *randomUser;
+    NSMutableArray *existingUsers = [[NSMutableArray alloc] init];
+    if (_option0 != nil) [existingUsers addObject:_option0];
+    if (_option1 != nil) [existingUsers addObject:_option1];
+    [User getRandomUsersThisMany:2 inThisArray:&randomUser inManagedObjectContext:[RKManagedObjectStore defaultStore].mainQueueManagedObjectContext existingUsers:existingUsers];
+    if([randomUser count] >= 2) {
+        if(!_option0IsLocked){
+            [self setOption0:[randomUser firstObject]];
+        }
+        if(!_option1IsLocked){
+            [self setOption1:[randomUser objectAtIndex:1]];
+        }
+    }
 }
 
-- (void)shufflePeople:(id)sender {
-    [self setOption0Option1];
-}
 
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
     NSLog(@"got touched!");
@@ -349,8 +429,8 @@
 }
 
 -(void) presentData{
-    [_option0NameTextField setText:[Utility getNameToDisplay:_option0.name]];
-    [_option1NameTextField setText:[Utility getNameToDisplay:_option1.name]];
+    [self setOption0:nil];
+    [self setOption1:nil];
     [_keywordTextField setText:_keywordCurrentValue];
 }
 

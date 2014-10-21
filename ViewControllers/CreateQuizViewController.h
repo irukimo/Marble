@@ -17,6 +17,7 @@
 -(void) setKeyword:(NSString *)keyword;
 -(void) setOption0:(User *)option0;
 -(void) resetAllOptions;
+-(void) setOption0Option1;
 @end
 
 @protocol CreateQuizViewControllerDelegate <NSObject>

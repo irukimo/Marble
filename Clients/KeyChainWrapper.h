@@ -26,6 +26,7 @@
 +(void)storeKeywords:(NSArray *)theKeywords;
 +(NSArray *)keywords;
 +(NSArray *)searchKeywordThatContains:(NSString *)text returnThisManyKeywords:(int)num;
++(NSString *)getARandomKeyword;
 
 +(void)storeSelfName:(NSString *)name andID:(NSString *)fbid;
 +(NSString *)getSelfName;

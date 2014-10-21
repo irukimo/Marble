@@ -149,5 +149,10 @@ static NSString *selfFBID = nil;
     return arrayOfKeywords;
 }
 
++(NSString *)getARandomKeyword{
+    NSUInteger randomNumber = arc4random() % ([self.keywords count]);
+    return self.keywords[randomNumber];
+}
+
 
 @end

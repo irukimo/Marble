@@ -219,6 +219,10 @@
     return paragraphStyle;
 }
 
++ (NSDictionary *)getCreateQuizNameFontDictionary{
+    return [NSDictionary dictionaryWithObjectsAndKeys: [UIFont fontWithName:@"OpenSans" size:16],NSFontAttributeName, [UIColor whiteColor] ,NSForegroundColorAttributeName, @(-0.5), NSKernAttributeName, nil];
+}
+
 + (NSString *)getMonthName:(NSInteger)month{
     switch ((int)month) {
         case 1:
