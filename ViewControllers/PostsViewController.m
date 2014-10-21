@@ -117,6 +117,8 @@
     [self setMyTableView];
     self.tableView.keyboardDismissMode  = UIScrollViewKeyboardDismissModeInteractive;
     [self addMarbleButton];
+    [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
+
 }
 
 -(void)viewWillAppear:(BOOL)animated{

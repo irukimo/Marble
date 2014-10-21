@@ -9,6 +9,7 @@
 #import "ProfileViewController.h"
 #import "FacebookSDK/FacebookSDK.h"
 #import "KeywordListViewController.h"
+#import "KeywordProfileViewController.h"
 
 #define SEND_BUTTON_TAG 116
 
@@ -108,7 +109,8 @@
     
     [_statusBtn addTarget:self action:@selector(sendStatusBtnClicked) forControlEvents:UIControlEventTouchUpInside];
     [_viewKeywordBtn addTarget:self action:@selector(viewKeywordBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
-    
+    [_headerView.layer setBorderColor:[UIColor grayColor].CGColor];
+    [_headerView.layer setBorderWidth:5.0f];
     [_headerView addSubview:_nameLabel];
     [_headerView addSubview:_statusTextField];
     [_headerView addSubview:_statusBtn];
@@ -200,23 +202,41 @@
         if([_user.keywords isKindOfClass:[NSString class]]){
             NSString *keyword = (NSString *)_user.keywords;
             NSAttributedString *keywordString =[[NSAttributedString alloc] initWithString:keyword attributes:[Utility getNotifOrangeNormalFontDictionary]];
-            [self addKeywordLabelAtX:100 withKeyword:keywordString];
+            [self addKeywordLabelAtX:100 andY:100 withKeyword:keywordString atIndex:-1];
         } else if([_user.keywords isKindOfClass:[NSArray class]]){
             NSArray *keywordArray = (NSArray *)_user.keywords;
             int x = 40;
+            int y = 100;
             for(NSString *keyword in keywordArray){
                 NSAttributedString *keywordString =[[NSAttributedString alloc] initWithString:keyword attributes:[Utility getNotifOrangeNormalFontDictionary]];
-                [self addKeywordLabelAtX:x withKeyword:keywordString];
+                [self addKeywordLabelAtX:x andY:y withKeyword:keywordString atIndex:[keywordArray indexOfObject:keyword]];
                 x+= keywordString.size.width + 20;
+                if(x>250){
+                    x=40;
+                    y+=20;
+                }
             }
         }
     }
 }
 
--(void) addKeywordLabelAtX:(int)x withKeyword:(NSAttributedString *)string{
-    UILabel *keywordLabel = [[UILabel alloc] initWithFrame:CGRectMake(x, 100, 50, 50)];
-    [keywordLabel setAttributedText:string];
-    [_headerView addSubview:keywordLabel];
+-(void) addKeywordLabelAtX:(int)x andY:(int)y withKeyword:(NSAttributedString *)string atIndex:(NSInteger)index{
+    UIButton *keywordBtn = [[UIButton alloc] initWithFrame:CGRectMake(x, y, string.size.width, string.size.height)];
+    [keywordBtn setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
+    [keywordBtn setAttributedTitle:string forState:UIControlStateNormal];
+    [keywordBtn setTag:index];
+    [keywordBtn addTarget:self action:@selector(keywordBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
+    [_headerView addSubview:keywordBtn];
+}
+
+-(void) keywordBtnClicked:(id)sender{
+    NSString *keyword;
+    if([sender tag] == -1){
+        keyword = (NSString *)_user.keywords;
+    } else{
+        keyword = [_user.keywords objectAtIndex:[sender tag]];
+    }
+    [self performSegueWithIdentifier:@"KeywordProfileViewControllerSegue" sender:keyword];
 }
 
 -(void) postSelected:(NSString *)name{
@@ -290,6 +310,9 @@
          ProfileViewController *viewController =[segue destinationViewController];
              [viewController setName:(NSString *)[sender firstObject] andID:[sender objectAtIndex:1] sentFromTabbar:NO];
          }
+    } else if([[segue destinationViewController] isKindOfClass:[KeywordProfileViewController class]]){
+        KeywordProfileViewController *viewController =[segue destinationViewController];
+        [viewController setKeyword:sender];
     }
 }
 

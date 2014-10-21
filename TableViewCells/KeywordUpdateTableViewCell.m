@@ -74,13 +74,16 @@
     
 //    NSString *authorPictureUrl = [NSString stringWithFormat:@"https://graph.facebook.com/%@/picture", fbid];
 //    [_authorPicView setImageWithURL:[NSURL URLWithString:authorPictureUrl] placeholderImage:[UIImage imageNamed:@"login.png"]];
-    [Utility setUpProfilePictureImageView:_authorPicView byFBID:fbid];
+    [Utility setUpProfilePictureImageView:_authorPicView byFBID:fbid
+                                withWidth:120 height:120];
 }
 
 -(void) initProfilePic{
     _authorPicView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 10, 44, 44)];
     _authorPicView.layer.cornerRadius = 22;
     _authorPicView.layer.masksToBounds = YES;
+    [_authorPicView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(nameClicked:)]];
+    [_authorPicView setUserInteractionEnabled:YES];
     [self.contentView addSubview:_authorPicView];
 }
 

@@ -75,6 +75,8 @@
     _authorPicView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 10, 44, 44)];
     _authorPicView.layer.cornerRadius = 22;
     _authorPicView.layer.masksToBounds = YES;
+    [_authorPicView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(authorClicked:)]];
+    [_authorPicView setUserInteractionEnabled:YES];
     
     _option0Mask = [[UIView alloc] initWithFrame:_option0PicView.frame];
     _option1Mask = [[UIView alloc] initWithFrame:_option1PicView.frame];

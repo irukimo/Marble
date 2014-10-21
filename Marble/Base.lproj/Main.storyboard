@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6245" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="vdv-fJ-j5t">
     <dependencies>
-        <deployment defaultVersion="1792" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
     </dependencies>
     <scenes>
@@ -99,7 +98,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="agW-ps-V05" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4767" y="71.25"/>
+            <point key="canvasLocation" x="4764" y="221.25"/>
         </scene>
         <!--Notif View Controller-->
         <scene sceneID="sho-rT-KPf">
@@ -284,6 +283,7 @@
                     <navigationItem key="navigationItem" id="nqV-AC-gk2"/>
                     <connections>
                         <segue destination="QNW-7B-jjH" kind="show" identifier="KeywordListViewControllerSegue" id="5MI-Qv-fEN"/>
+                        <segue destination="jyU-mL-2Is" kind="show" identifier="KeywordProfileViewControllerSegue" id="cKE-NW-u56"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iUe-7c-SB7" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -360,6 +360,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
+        <segue reference="cKE-NW-u56"/>
         <segue reference="yq4-bX-wPk"/>
     </inferredMetricsTieBreakers>
 </document>

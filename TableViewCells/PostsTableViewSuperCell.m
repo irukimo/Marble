@@ -31,9 +31,16 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         self.selectionStyle = UITableViewCellSelectionStyleNone;
+        [self setBorder];
         // Initialization code
     }
     return self;
+}
+
+-(void) setBorder{
+    [self.contentView.layer setBorderColor:[UIColor grayColor].CGColor];
+    [self.contentView.layer setBorderWidth:5.0f];
+    
 }
 
 -(void)prepareForReuse{

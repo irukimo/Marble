@@ -12,10 +12,11 @@
 
 
 @interface StatusUpdateTableViewCell()
+@property(strong, nonatomic) UIButton *nameButton;
 @property(strong, nonatomic) UILabel *statusLabel;
-@property(strong, nonatomic) UILabel *nameLabel;
 @property (strong, nonatomic) UIImageView *authorPicView;
-
+@property (strong, nonatomic) NSString *name;
+@property (strong, nonatomic) NSString *fbid;
 @property(strong,nonatomic) NSArray *comments;
 
 @end
@@ -40,31 +41,42 @@
 
 
 -(void) addStaticLabels{
+    _nameButton = [[UIButton alloc] initWithFrame:CGRectMake(50, 5, 100, 30)];
+    [_nameButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [_nameButton addTarget:self action:@selector(nameClicked:) forControlEvents:UIControlEventTouchUpInside];
+    [self.contentView addSubview:_nameButton];
 
     _statusLabel = [[UILabel alloc] initWithFrame:CGRectMake(200, 5, 150, 30)];
-    _nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(50, 5, 100, 30)];
     [self.contentView addSubview:_statusLabel];
-    [self.contentView addSubview:_nameLabel];
 }
 
 -(void) initPicView{
-    _authorPicView = [[UIImageView alloc] initWithFrame:CGRectMake(5, 5, 30, 30)];
-    _authorPicView.layer.cornerRadius = 15;
+    _authorPicView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 10, 44, 44)];
+    _authorPicView.layer.cornerRadius = _authorPicView.frame.size.height/2.0;
     _authorPicView.layer.masksToBounds = YES;
+    [_authorPicView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(nameClicked:)]];
+    [_authorPicView setUserInteractionEnabled:YES];
     [self.contentView addSubview:_authorPicView];
 }
 
 - (void) setName:(NSString *)name andID:(NSString *)fbid andStatus:(NSString *)status
 {
-
+    _name = [name copy];
+    _fbid = [fbid copy];
     NSAttributedString *nameString = [[NSAttributedString alloc] initWithString:[Utility getNameToDisplay:name] attributes:[Utility getPostsViewNameFontDictionary]];
-    [_nameLabel setAttributedText:nameString];
+    [_nameButton setAttributedTitle:nameString forState:UIControlStateNormal];
     [_statusLabel setText:[status copy]];
 //    NSString *authorPictureUrl = [NSString stringWithFormat:@"https://graph.facebook.com/%@/picture", fbid];
 //    [_authorPicView setImageWithURL:[NSURL URLWithString:authorPictureUrl] placeholderImage:[UIImage imageNamed:@"login.png"]];
-    [Utility setUpProfilePictureImageView:_authorPicView byFBID:fbid];
+    [Utility setUpProfilePictureImageView:_authorPicView byFBID:fbid
+                                withWidth:120 height:120];
 }
 
+-(void)nameClicked:(id)sender{
+    if(self.delegate && [self.delegate respondsToSelector:@selector(gotoProfileWithName:andID:)]){
+        [self.delegate gotoProfileWithName:_name andID:_fbid];
+    }
+}
 
 
 @end

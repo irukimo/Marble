@@ -63,7 +63,6 @@
 }
 
 -(void) setKeywords:(id)keywords{
-    NSLog(@"%@", [keywords class]);
     if(keywords){
         if([keywords isKindOfClass:[NSString class]]){
             NSString *keyword = (NSString *)keywords;
@@ -73,7 +72,6 @@
             _keywordList = [[NSMutableArray alloc] initWithArray:keywordArray];
         }
     }
-    NSLog(@"%@", _keywordList);
     [self.tableView reloadData];
 }
 
