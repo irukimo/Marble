@@ -20,7 +20,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    _keywordList = [[NSMutableArray alloc] initWithObjects:@"smart",@"cute", nil];
     //    NSManagedObjectContext *context = [[RKManagedObjectStore defaultStore].mainQueueManagedObjectContext];
     
     //    _peopleArray = [NSArray arrayWithObjects:@"Peanut",@"Wen Shaw",  nil];
@@ -63,6 +62,20 @@
     return 50;
 }
 
+-(void) setKeywords:(id)keywords{
+    NSLog(@"%@", [keywords class]);
+    if(keywords){
+        if([keywords isKindOfClass:[NSString class]]){
+            NSString *keyword = (NSString *)keywords;
+            _keywordList = [[NSMutableArray alloc] initWithObjects:keyword, nil];
+        } else if([keywords isKindOfClass:[NSArray class]]){
+            NSArray *keywordArray = (NSArray *)keywords;
+            _keywordList = [[NSMutableArray alloc] initWithArray:keywordArray];
+        }
+    }
+    NSLog(@"%@", _keywordList);
+    [self.tableView reloadData];
+}
 
 -(void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
     UIBarButtonItem *backButton = [[UIBarButtonItem alloc]

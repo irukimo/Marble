@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface KeywordListViewController : UITableViewController
-
+-(void) setKeywords:(id)keywords;
 @end

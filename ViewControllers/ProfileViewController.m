@@ -8,6 +8,7 @@
 
 #import "ProfileViewController.h"
 #import "FacebookSDK/FacebookSDK.h"
+#import "KeywordListViewController.h"
 
 #define SEND_BUTTON_TAG 116
 
@@ -46,7 +47,7 @@
 
 
 -(void) viewKeywordBtnClicked:(id)sender{
-    [self performSegueWithIdentifier:@"KeywordListViewControllerSegue" sender:sender];
+    [self performSegueWithIdentifier:@"KeywordListViewControllerSegue" sender:_user.keywords];
 }
 
 -(void) initFBProfilePicViews{
@@ -187,11 +188,35 @@
          MBDebug(@"status result: %@", [mappingResult array]);
          if([_user isKindOfClass:[User class]]){
              [_statusTextField setText:_user.status];
+             [self displayKeywords];
          }
      } failure:^(RKObjectRequestOperation *operation, NSError *error) {
          MBDebug(@"failed to get status");
      }];
+}
 
+-(void) displayKeywords{
+    if(_user.keywords){
+        if([_user.keywords isKindOfClass:[NSString class]]){
+            NSString *keyword = (NSString *)_user.keywords;
+            NSAttributedString *keywordString =[[NSAttributedString alloc] initWithString:keyword attributes:[Utility getNotifOrangeNormalFontDictionary]];
+            [self addKeywordLabelAtX:100 withKeyword:keywordString];
+        } else if([_user.keywords isKindOfClass:[NSArray class]]){
+            NSArray *keywordArray = (NSArray *)_user.keywords;
+            int x = 40;
+            for(NSString *keyword in keywordArray){
+                NSAttributedString *keywordString =[[NSAttributedString alloc] initWithString:keyword attributes:[Utility getNotifOrangeNormalFontDictionary]];
+                [self addKeywordLabelAtX:x withKeyword:keywordString];
+                x+= keywordString.size.width + 20;
+            }
+        }
+    }
+}
+
+-(void) addKeywordLabelAtX:(int)x withKeyword:(NSAttributedString *)string{
+    UILabel *keywordLabel = [[UILabel alloc] initWithFrame:CGRectMake(x, 100, 50, 50)];
+    [keywordLabel setAttributedText:string];
+    [_headerView addSubview:keywordLabel];
 }
 
 -(void) postSelected:(NSString *)name{
@@ -255,16 +280,18 @@
 //}
 
 
-//- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-//    if([[segue destinationViewController] isKindOfClass:[ProfileViewController class]]){
-//        if([sender isKindOfClass:[NSArray class]]){
-//            ProfileViewController *viewController =[segue destinationViewController];
-//            [viewController setName:(NSString *)[sender firstObject] andID:[sender objectAtIndex:1]];
-//        }
-//    }
-//    // Get the new view controller using [segue destinationViewController].
-//    // Pass the selected object to the new view controller.
-//}
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    NSLog(@"segue %@", [[segue destinationViewController] class]);
+    if([[segue destinationViewController] isKindOfClass:[KeywordListViewController class]]){
+        KeywordListViewController *keywordListViewController =[segue destinationViewController];
+        [keywordListViewController setKeywords:sender];
+    } else if([[segue destinationViewController] isKindOfClass:[ProfileViewController class]]){
+         if([sender isKindOfClass:[NSArray class]]){
+         ProfileViewController *viewController =[segue destinationViewController];
+             [viewController setName:(NSString *)[sender firstObject] andID:[sender objectAtIndex:1] sentFromTabbar:NO];
+         }
+    }
+}
 
 #pragma mark -
 #pragma mark PostViewController Delegate Methods
