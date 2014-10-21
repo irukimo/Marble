@@ -6,6 +6,8 @@
 //  Copyright (c) 2014 Orrzs Inc. All rights reserved.
 //
 
+#import "SVPullToRefresh.h"
+
 #import "PostsViewController.h"
 #import "ProfileViewController.h"
 #import "HomeViewController.h"
@@ -15,6 +17,8 @@
 #import "StatusUpdateTableViewCell.h"
 #import "KeywordUpdateTableViewCell.h"
 #import "MarbleTabBarController.h"
+
+#import "NSNumber+MBNumber.h"
 
 #import "User+MBUser.h"
 #import "Quiz.h"
@@ -29,26 +33,32 @@
 
 @interface PostsViewController ()
     @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
+    @property (strong, nonatomic) NSNumber *numOfPagesOfQuizzes;
+    @property (strong, nonatomic) NSNumber *numOfPagesOfUpdates;
 @end
 
 @implementation PostsViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    _postArray = [NSArray arrayWithObjects:@"Peanut",@"Wen Shaw",  nil];
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
+    // initialize num pages
+    self.numOfPagesOfQuizzes = [NSNumber numberWithInt:1]; // page number starts from 1
+    self.numOfPagesOfUpdates = [NSNumber numberWithInt:1];
+    
     // Load quizzes from the server
     NSString *sessionToken = [KeyChainWrapper getSessionTokenForUser];
-    NSDictionary *params = [NSDictionary dictionaryWithObjects:@[sessionToken] forKeys:@[@"auth_token"]];
+    NSDictionary *params = [NSDictionary dictionaryWithObjects:@[sessionToken, _numOfPagesOfQuizzes] forKeys:@[@"auth_token", @"page"]];
     [[RKObjectManager sharedManager] getObject:[Quiz alloc]
                                           path:nil
                                     parameters:params
                                        success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+                                           _numOfPagesOfQuizzes = [_numOfPagesOfQuizzes increment];
                                            MBDebug(@"Successfully loadded quizzes");
                                            MBDebug(@"%ld quiz(zes) were loaded.", [[mappingResult array] count]);
                                            for (Quiz *quiz in [mappingResult array]) {
@@ -65,10 +75,12 @@
      ];
     
     //Load updates from the server
+    params = [NSDictionary dictionaryWithObjects:@[sessionToken, _numOfPagesOfUpdates] forKeys:@[@"auth_token", @"page"]];
     [[RKObjectManager sharedManager] getObject:[Post alloc]
                                           path:nil
                                     parameters:params
                                        success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+                                           _numOfPagesOfUpdates = [_numOfPagesOfUpdates increment];
                                            MBDebug(@"Successfully loadded posts");
                                            MBDebug(@"%ld post(s) were loaded.", [[mappingResult array] count]);
                                            
@@ -117,7 +129,26 @@
     [self setMyTableView];
     self.tableView.keyboardDismissMode  = UIScrollViewKeyboardDismissModeInteractive;
     [self addMarbleButton];
+
     [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
+
+    
+    __weak PostsViewController *weakSelf = self;
+    
+    [self.tableView addInfiniteScrollingWithActionHandler:^{
+        MBDebug(@"Called infinite scrolling");
+        // append data to data source, insert new cells at the end of table view
+        // call [tableView.infiniteScrollingView stopAnimating] when done
+        [weakSelf startLoadingMore];
+    }];
+    
+    // setup pull-to-refresh
+    [self.tableView addPullToRefreshWithActionHandler:^{
+        MBDebug(@"Called pull to refreshing");
+        [weakSelf startRefreshing];
+        // prepend data to dataSource, insert cells at top of table view
+        // call [tableView.pullToRefreshView stopAnimating] when done
+    }];
 
 }
 
@@ -153,11 +184,54 @@
 
 
 -(void) setMyTableView{
-    self.refreshControl = [UIRefreshControl new];
-    [self.refreshControl addTarget:self action:@selector(startRefreshing) forControlEvents:UIControlEventValueChanged];
-    
+//    self.refreshControl = [UIRefreshControl new];
+//    [self.refreshControl addTarget:self action:@selector(startRefreshing) forControlEvents:UIControlEventValueChanged];
+}
 
+- (void) startLoadingMore {
+    __weak PostsViewController *weakSelf = self;
     
+    NSMutableDictionary *params = [weakSelf generateBasicParams];
+    [params setObject:_numOfPagesOfQuizzes forKey:@"page"];
+    [[RKObjectManager sharedManager] getObject:[Quiz alloc]
+                                          path:nil
+                                    parameters:params
+                                       success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+                                           _numOfPagesOfQuizzes = [_numOfPagesOfQuizzes increment];
+                                           MBDebug(@"# of pages of quizzes: %@", _numOfPagesOfQuizzes);
+                                           MBDebug(@"Refreshing: %ld quiz(zes) were successfully loaded.", [[mappingResult array] count]);
+                                           [Utility saveToPersistenceStore:[RKManagedObjectStore defaultStore].mainQueueManagedObjectContext failureMessage:@"failed to save."];
+                                           
+                                           [weakSelf.tableView.pullToRefreshView stopAnimating];
+                                       }
+                                       failure:[Utility failureBlockWithAlertMessage:@"Can't connect to the server"
+                                                                               block:^{
+                                                                                   [weakSelf.tableView.pullToRefreshView stopAnimating];
+                                                                                   MBError(@"Cannot load quizzes");}]
+     ];
+    
+    [params setObject:_numOfPagesOfUpdates forKey:@"page"];
+    [[RKObjectManager sharedManager] getObject:[Post alloc]
+                                          path:nil
+                                    parameters:params
+                                       success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+                                           _numOfPagesOfUpdates = [_numOfPagesOfUpdates increment];
+                                           MBDebug(@"# of pages of updates: %@", _numOfPagesOfUpdates);
+                                           for (Post *post in [mappingResult array]) {
+                                               [post initFBIDs];
+                                           }
+                                           [Utility saveToPersistenceStore:[RKManagedObjectStore defaultStore].mainQueueManagedObjectContext failureMessage:@"failed to save."];
+                                           
+                                           [weakSelf.tableView.pullToRefreshView stopAnimating];
+                                       }
+                                       failure:[Utility failureBlockWithAlertMessage:@"Can't connect to the server"
+                                                                               block:^{
+                                                                                   [weakSelf.tableView.pullToRefreshView stopAnimating];
+                                                                                   MBError(@"Cannot load updates");}]
+     ];
+    
+    
+    [weakSelf.tableView.infiniteScrollingView stopAnimating];
 }
 
 -(void) startRefreshing{
@@ -168,7 +242,7 @@
     // check if seesion token is valid
     if (![KeyChainWrapper isSessionTokenValid]) {
         NSLog(@"User session token is not valid. Stop refreshing up");
-        [self.refreshControl endRefreshing];
+        [self.tableView.pullToRefreshView stopAnimating];
         return nil;
     }
     NSString *sessionToken = [KeyChainWrapper getSessionTokenForUser];
@@ -180,8 +254,24 @@
 //                                              forKeys:@[@"auth_token", @"type"]];
 }
 
-- (void) startRefreshing:(NSDictionary *)params
+- (void) startRefreshing:(NSMutableDictionary *)params
 {
+    __weak PostsViewController *weakSelf = self;
+    
+    [params setObject:[NSNumber numberWithInt:1] forKey:@"page"];
+    [[RKObjectManager sharedManager] getObject:[Quiz alloc]
+                                          path:nil
+                                    parameters:params
+                                       success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+                                           MBDebug(@"Refreshing: %ld quiz(zes) were successfully loaded.", [[mappingResult array] count]);
+                                           [Utility saveToPersistenceStore:[RKManagedObjectStore defaultStore].mainQueueManagedObjectContext failureMessage:@"failed to save."];
+                                           
+                                           [weakSelf.tableView.pullToRefreshView stopAnimating];
+                                       }
+                                       failure:[Utility failureBlockWithAlertMessage:@"Can't connect to the server"
+                                                                               block:^{MBError(@"Cannot load quizzes");}]
+     ];
+    
     [[RKObjectManager sharedManager] getObject:[Post alloc]
                                           path:nil
                                     parameters:params
@@ -191,23 +281,14 @@
                                            }
                                            [Utility saveToPersistenceStore:[RKManagedObjectStore defaultStore].mainQueueManagedObjectContext failureMessage:@"failed to save."];
                                            
-                                           /*
-                                           ASYNC({
-                                               NSArray *posts = [mappingResult array];
-                                               [Post setIndicesAsRefreshing:posts];
-                                               for (Post *post in posts) {
-                                                   [ClientManager loadPhotosForPost:post];
-                                               }
-                                           });
-                                            */
-                                           
-                                           [self.refreshControl endRefreshing];
+                                           [weakSelf.tableView.pullToRefreshView stopAnimating];
                                        }
                                        failure:[Utility failureBlockWithAlertMessage:@"Can't connect to the server"
-                                                                               block:^{[self.refreshControl endRefreshing];}]
+                                                                               block:^{[weakSelf.tableView.pullToRefreshView stopAnimating];}]
      ];
     
 }
+
 
 
 - (void)didReceiveMemoryWarning {
@@ -543,6 +624,5 @@
 {
     [self.tableView endEditing:YES];
 }
-
 
 @end
