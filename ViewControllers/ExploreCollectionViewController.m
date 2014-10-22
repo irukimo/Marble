@@ -30,8 +30,10 @@
     [self setNavbarTitle];
     [self initSearchTextField];
     [self initSearchResults];
-    [self.view setBackgroundColor:[UIColor marbleLightGray]];
-    [self.collectionView setBackgroundColor:[UIColor marbleLightGray]];
+//    [self.view setBackgroundColor:[UIColor marbleLightGray]];
+//    [self.collectionView setBackgroundColor:[UIColor marbleLightGray]];
+    [self.view setBackgroundColor:[UIColor whiteColor]];
+    [self.collectionView setBackgroundColor:[UIColor whiteColor]];
 //    _isLoadingMore = FALSE;
 }
 
@@ -74,7 +76,7 @@
 
 -(void) initSearchTextField{
     _searchTextField = [[UITextField alloc] initWithFrame:CGRectMake(SPACING, 12, self.view.frame.size.width - 2*SPACING, 26)];
-    [_searchTextField setBackgroundColor:[UIColor whiteColor]];
+    [_searchTextField setBackgroundColor:[UIColor colorWithWhite:0.9 alpha:1]];
     _searchTextField.delegate = self;
     
     [_searchTextField addTarget:self
