@@ -13,7 +13,7 @@
 
 #define SEND_BUTTON_TAG 116
 #define GOLDEN_LEFT_ALIGNMENT 130
-#define GRAY_Y 95
+#define GRAY_Y 26
 
 @interface ProfileViewController ()
 @property (strong, nonatomic) UILabel *nameLabel;
@@ -25,6 +25,9 @@
 @property ( nonatomic) BOOL isSelf;
 @property (strong, nonatomic) FBProfilePictureView *profilePicView;
 @property (strong, nonatomic) UIView *headerView;
+@property (strong, nonatomic) UILabel *createdNumLabel;
+@property (strong, nonatomic) UILabel *receivedNumLabel;
+@property (strong, nonatomic) UILabel *solvedNumLabel;
 @end
 
 @implementation ProfileViewController
@@ -43,11 +46,16 @@
     self.delegate = self;
     //profileview
     self.tableView.tableHeaderView = _headerView;
+    [self.tableView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedTableView)]];
     
 }
 
 -(void)addTextFieldAndButtons{
 
+}
+
+-(void)tappedTableView{
+    [_statusTextView resignFirstResponder];
 }
 
 -(void)viewWillAppear:(BOOL)animated{
@@ -56,8 +64,6 @@
 
 -(void)viewDidAppear:(BOOL)animated{
     MBDebug(@"view did appear for %@", _user.name);
-    [super viewDidAppear:animated];
-
     [self setNavbarTitle];
 }
 
@@ -101,10 +107,11 @@
 }
 
 -(void) prepareHeaderView{
-    _headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 200)];
+    int height = (_user.keywords)? 195: 150;
+    _headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, height)];
     [_headerView setBackgroundColor:[UIColor whiteColor]];
     
-    _nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(GOLDEN_LEFT_ALIGNMENT, 12, self.view.frame.size.width, 35)];
+    _nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(GOLDEN_LEFT_ALIGNMENT, 43, self.view.frame.size.width, 35)];
     NSAttributedString *nameString =[[NSAttributedString alloc] initWithString:[Utility getNameToDisplay:_user.name] attributes:[Utility getBigNameFontDictionary]];
     [_nameLabel setAttributedText:nameString];
     
@@ -113,12 +120,19 @@
     [_viewKeywordBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     
     
-    _statusTextView = [[UITextView alloc] initWithFrame:CGRectMake(GOLDEN_LEFT_ALIGNMENT - 3, 42, self.view.frame.size.width - GOLDEN_LEFT_ALIGNMENT - 20, 40)];
+    _statusTextView = [[UITextView alloc] initWithFrame:CGRectMake(GOLDEN_LEFT_ALIGNMENT - 3, 70, self.view.frame.size.width - GOLDEN_LEFT_ALIGNMENT - 20, 40)];
     [_statusTextView setText:@""];
     [_statusTextView setScrollEnabled:NO];
     [_statusTextView setBackgroundColor:[UIColor clearColor]];
+    if(_isSelf){
+        [_statusTextView setEditable:YES];
+        [_statusTextView setUserInteractionEnabled:YES];
+    }else{
+        [_statusTextView setEditable:NO];
+        [_statusTextView setUserInteractionEnabled:NO];
+    }
 
-    _statusBtn = [[UIButton alloc] initWithFrame:CGRectMake(200, 70, 40, 20)];
+    _statusBtn = [[UIButton alloc] initWithFrame:CGRectMake(230, 110, 40, 20)];
     [_statusTextView setDelegate:self];
     [_statusBtn setTitle:@"send" forState:UIControlStateNormal];
     [_statusBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
@@ -136,7 +150,9 @@
     [self addGrayStaticLabels];
     [_headerView addSubview:_nameLabel];
     [_headerView addSubview:_statusTextView];
-    [_headerView addSubview:_viewKeywordBtn];
+    if(_user.keywords){
+        [_headerView addSubview:_viewKeywordBtn];
+    }
 }
 
 -(void)addGrayStaticLabels{
@@ -152,6 +168,32 @@
     [_headerView addSubview:createdLabel];
     [_headerView addSubview:receivedLabel];
     [_headerView addSubview:solvedLabel];
+    
+    CGRect createdFrame = createdLabel.frame;
+    createdFrame.origin.y = createdFrame.origin.y - 12;
+    CGRect receivedFrame = receivedLabel.frame;
+    receivedFrame.origin.y = receivedFrame.origin.y - 12;
+    CGRect solvedFrame = solvedLabel.frame;
+    solvedFrame.origin.y = solvedFrame.origin.y - 12;
+    
+    _createdNumLabel = [[UILabel alloc] initWithFrame:createdFrame];
+    _receivedNumLabel = [[UILabel alloc] initWithFrame:receivedFrame];
+    _solvedNumLabel = [[UILabel alloc] initWithFrame:solvedFrame];
+    
+    NSAttributedString *zeroString = [[NSAttributedString alloc] initWithString:@"0" attributes:[Utility getNotifBlackNormalFontDictionary]];
+    
+    [_createdNumLabel setAttributedText:zeroString];
+    [_receivedNumLabel setAttributedText:zeroString];
+    [_solvedNumLabel setAttributedText:zeroString];
+    
+    [_createdNumLabel setTextAlignment:NSTextAlignmentCenter];
+    [_receivedNumLabel setTextAlignment:NSTextAlignmentCenter];
+    [_solvedNumLabel setTextAlignment:NSTextAlignmentCenter];
+
+    [_headerView addSubview:_createdNumLabel];
+    [_headerView addSubview:_receivedNumLabel];
+    [_headerView addSubview:_solvedNumLabel];
+    
 }
 
 -(void)setByUserObject:(User *)user sentFromTabbar:(BOOL)isSentFromTabbar {
@@ -194,6 +236,7 @@
 //            [self setTitle:[Utility getNameToDisplay:_user.name]];
 //        }
 //        [self setTitle:[Utility getNameToDisplay:_user.name]];
+        [_statusTextView setEditable:YES];
         [_statusTextView setUserInteractionEnabled:YES];
         [_headerView addSubview:_statusBtn];
     } else{
@@ -201,7 +244,7 @@
 //            [self setTitle:[Utility getNameToDisplay:_user.name]];
 //        }
         [_statusTextView setUserInteractionEnabled:NO];
-
+        [_statusTextView setEditable:NO];
         [_statusBtn removeFromSuperview];
     }
     [self getStatus];
@@ -242,6 +285,7 @@
 
 -(void) displayKeywords{
     if(_user.keywords){
+
         if([_user.keywords isKindOfClass:[NSString class]]){
             NSString *keyword = (NSString *)_user.keywords;
             NSAttributedString *keywordString =[[NSAttributedString alloc] initWithString:keyword attributes:[Utility getNotifOrangeNormalFontDictionary]];
@@ -256,7 +300,7 @@
                 x+= keywordString.size.width + 20;
                 if(x>250){
                     x=25;
-                    y+=33;
+                    y+=30;
                 }
             }
             CGRect moreFrame = _viewKeywordBtn.frame;
@@ -402,12 +446,18 @@
 - (void)textViewDidBeginEditing:(UITextView *) textView
 {
     [textView setText:@""];
-}
+    [textView.layer setBorderColor:[[[UIColor grayColor] colorWithAlphaComponent:0.5] CGColor]];
+    [textView.layer setBorderWidth:0.5];
+    
+    //The rounded corner part, where you specify your view's corner radius:
+    textView.layer.cornerRadius = 5;
+    textView.clipsToBounds = YES;}
 
 - (void)textViewDidEndEditing:(UITextView *)textView
 {
     [self.view endEditing:YES];
     [self setStatusWithText:_user.status];
+    [textView.layer setBorderWidth:0];
 }
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
     
