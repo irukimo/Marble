@@ -11,6 +11,8 @@
 #import "User+MBUser.h"
 #import "ProfileViewController.h"
 
+#define SPACING 22
+
 @interface ExploreCollectionViewController()
 @property (strong, nonatomic) UITextField *searchTextField;
 @property(strong, nonatomic) NSMutableArray *searchResults;
@@ -23,12 +25,13 @@
     [self.view setBackgroundColor:[UIColor whiteColor]];
     [self.collectionView setBackgroundColor:[UIColor whiteColor]];
     [self.collectionView registerClass:[ExploreCollectionViewCell class] forCellWithReuseIdentifier:exploreCollectionViewCellIdentifier];
-    [self.collectionView setContentInset:UIEdgeInsetsMake(0, LEFT_ALIGNMENT, 0, LEFT_ALIGNMENT)];
+    [self.collectionView setContentInset:UIEdgeInsetsMake(0, SPACING, 0, SPACING)];
     [self.collectionView setFrame:CGRectMake(0, 50, 320, self.view.frame.size.height - 50)];
     [self setNavbarTitle];
     [self initSearchTextField];
     [self initSearchResults];
-    
+    [self.view setBackgroundColor:[UIColor marbleLightGray]];
+    [self.collectionView setBackgroundColor:[UIColor marbleLightGray]];
 //    _isLoadingMore = FALSE;
 }
 
@@ -70,8 +73,8 @@
 //}
 
 -(void) initSearchTextField{
-    _searchTextField = [[UITextField alloc] initWithFrame:CGRectMake(LEFT_ALIGNMENT, 12, self.view.frame.size.width - 2*LEFT_ALIGNMENT, 26)];
-    [_searchTextField setBackgroundColor:[UIColor colorWithWhite:0.9 alpha:1]];
+    _searchTextField = [[UITextField alloc] initWithFrame:CGRectMake(SPACING, 12, self.view.frame.size.width - 2*SPACING, 26)];
+    [_searchTextField setBackgroundColor:[UIColor whiteColor]];
     _searchTextField.delegate = self;
     
     [_searchTextField addTarget:self
@@ -107,15 +110,15 @@
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    return CGSizeMake((self.view.frame.size.width - 2*LEFT_ALIGNMENT)/2.0, (self.view.frame.size.width - 2*LEFT_ALIGNMENT)/2.0);
+    return CGSizeMake((self.view.frame.size.width - 3*SPACING)/2.0, (self.view.frame.size.width - 3*SPACING)/2.0);
 }
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
-    return 0.0;
+    return SPACING;
 }
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section {
-    return 0.0;
+    return SPACING;
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{

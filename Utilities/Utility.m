@@ -200,6 +200,10 @@
     return [NSDictionary dictionaryWithObjectsAndKeys: [UIFont fontWithName:@"OpenSans-Semibold" size:14],NSFontAttributeName, [UIColor marbleOrange] ,NSForegroundColorAttributeName, @(-0.5), NSKernAttributeName, [Utility getNotifParagraphStyle],NSParagraphStyleAttributeName,nil];
 }
 
++ (NSDictionary *)getLightOrangeBoldFontDictionary{
+    return [NSDictionary dictionaryWithObjectsAndKeys: [UIFont fontWithName:@"OpenSans-Semibold" size:14],NSFontAttributeName, [UIColor marbleLightOrange] ,NSForegroundColorAttributeName, @(-0.5), NSKernAttributeName,nil];
+}
+
 + (NSDictionary *)getNotifOrangeNormalFontDictionary{
     return [NSDictionary dictionaryWithObjectsAndKeys: [UIFont fontWithName:@"OpenSans" size:14],NSFontAttributeName, [UIColor marbleOrange] ,NSForegroundColorAttributeName, @(-0.5), NSKernAttributeName, [Utility getNotifParagraphStyle],NSParagraphStyleAttributeName,nil];
 }

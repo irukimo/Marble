@@ -38,6 +38,8 @@ typedef void (^voidBlock)(void);
 + (NSDictionary *)getGraySmallFontDictionary;
 + (NSDictionary *)getCreateQuizNameFontDictionary;
 
++ (NSDictionary *)getLightOrangeBoldFontDictionary;
+
 + (NSDictionary *)getBigNameFontDictionary;
 + (NSDictionary *)getProfileStatusFontDictionary;
 

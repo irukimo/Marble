@@ -12,4 +12,5 @@
 +(UIColor *) unselected;
 +(UIColor *) marbleOrange;
 +(UIColor *) marbleLightGray;
++(UIColor *) marbleLightOrange;
 @end

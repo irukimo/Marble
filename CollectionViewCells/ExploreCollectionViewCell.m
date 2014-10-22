@@ -28,6 +28,10 @@
     return self;
 }
 
+-(void) prepareForReuse{
+    [_keywordLabel setText:@""];
+}
+
 
 -(void) initProfilePic{
     _authorPicView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.contentView.frame.size.width, self.contentView.frame.size.height)];
@@ -35,24 +39,27 @@
 }
 
 -(void) initStaticLabels{
-    _nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(50, 50, 50, 30)];
-    _keywordLabel = [[UILabel alloc] initWithFrame:CGRectMake(50, 65, 50, 30)];
+    _nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 80, self.contentView.frame.size.width, 20)];
+    _keywordLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 99, self.contentView.frame.size.width, 20)];
     [self.contentView addSubview:_nameLabel];
     [self.contentView addSubview:_keywordLabel];
 }
 
 -(void)setCellUser:(User *)user{
     _user = user;
-    [_nameLabel setText:_user.name];
-    
+    NSAttributedString *nameString = [[NSAttributedString alloc] initWithString:[Utility getNameToDisplay:_user.name] attributes:[Utility getLightOrangeBoldFontDictionary]];
+    [_nameLabel setAttributedText:nameString];
+
     if(_user.keywords){
         if([_user.keywords isKindOfClass:[NSString class]]){
             NSString *string = (NSString *)_user.keywords;
-            [_keywordLabel setText:string];
+            NSAttributedString *keywordString = [[NSAttributedString alloc] initWithString:string attributes:[Utility getWhiteCommentFontDictionary]];
+            [_keywordLabel setAttributedText:keywordString];
         } else if([_user.keywords isKindOfClass:[NSArray class]]){
             NSArray *keywordArray = (NSArray *)_user.keywords;
             if([keywordArray count] > 0){
-                [_keywordLabel setText:keywordArray[0]];
+                NSAttributedString *keywordString = [[NSAttributedString alloc] initWithString:keywordArray[0] attributes:[Utility getWhiteCommentFontDictionary]];
+                [_keywordLabel setAttributedText:keywordString];
             }
         }
     }

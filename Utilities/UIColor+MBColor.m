@@ -15,5 +15,6 @@
     return [UIColor colorWithRed:198.0/255.0 green:88.0/255.0 blue:54.0/255.0 alpha:1];}
 +(UIColor *) marbleLightGray{
     return [UIColor colorWithRed:193.0/255.0 green:193.0/255.0 blue:193.0/255.0 alpha:1];}
-
++(UIColor *) marbleLightOrange{
+    return [UIColor colorWithRed:255.0/255.0 green:112.0/255.0 blue:69.0/255.0 alpha:1];}
 @end
