@@ -39,9 +39,9 @@
 
 #define QuizTableViewCellHeight 285
 #define QuizTableViewCellDisplayHeight 300
-#define StatusUpdateTableViewCellHeight 90
-#define KeywordUpdateTableViewCellHeight 90
-#define CommentIncrementHeight 20
+#define StatusUpdateTableViewCellHeight 110
+#define KeywordUpdateTableViewCellHeight 110
+#define CommentIncrementHeight 18
 
 #define TABBAR_HEIGHT 49
 #define NAVBAR_HEIGHT 64

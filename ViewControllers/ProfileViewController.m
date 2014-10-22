@@ -47,12 +47,10 @@
 }
 
 -(void)viewWillAppear:(BOOL)animated{
-    NSLog(@"view will appear for %@", _user.name);
     [self setNavbarTitle];
 }
 
 -(void)viewDidAppear:(BOOL)animated{
-    NSLog(@"view did appear for %@", _user.name);
     [self setNavbarTitle];
 }
 
@@ -345,13 +343,17 @@
                                    target: nil action: nil];
     
     [self.navigationItem setBackBarButtonItem: backButton];
+    
+
+    
+    
     NSLog(@"segue %@", [[segue destinationViewController] class]);
     if([[segue destinationViewController] isKindOfClass:[KeywordListViewController class]]){
         KeywordListViewController *keywordListViewController =[segue destinationViewController];
         [keywordListViewController setKeywords:sender];
     } else if([[segue destinationViewController] isKindOfClass:[ProfileViewController class]]){
          if([sender isKindOfClass:[NSArray class]]){
-         ProfileViewController *viewController =[segue destinationViewController];
+             ProfileViewController *viewController =[segue destinationViewController];
              [viewController setName:(NSString *)[sender firstObject] andID:[sender objectAtIndex:1] sentFromTabbar:NO];
          }
     } else if([[segue destinationViewController] isKindOfClass:[KeywordProfileViewController class]]){

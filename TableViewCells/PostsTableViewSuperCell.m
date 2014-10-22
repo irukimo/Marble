@@ -94,18 +94,18 @@
         
     } else if([_cellType isEqualToString:STATUS_UPDATE_CELL_TYPE]){
         if(commentCnt > 2){
-            _viewMoreCommentsBtn = [[UIButton alloc] initWithFrame:CGRectMake(LEFT_ALIGNMENT, StatusUpdateTableViewCellHeight - 45, 200, TEXT_FIELD_HEIGHT)];
-            _commentField = [[UITextField alloc] initWithFrame:CGRectMake(COMMENT_START_X, StatusUpdateTableViewCellHeight-25 + 3*CommentIncrementHeight, 150, TEXT_FIELD_HEIGHT)];
+            _viewMoreCommentsBtn = [[UIButton alloc] initWithFrame:CGRectMake(LEFT_ALIGNMENT, StatusUpdateTableViewCellHeight - 50, 200, TEXT_FIELD_HEIGHT)];
+            _commentField = [[UITextField alloc] initWithFrame:CGRectMake(COMMENT_START_X, StatusUpdateTableViewCellHeight-30 + 3*CommentIncrementHeight, 150, TEXT_FIELD_HEIGHT)];
         } else{
-            _commentField = [[UITextField alloc] initWithFrame:CGRectMake(COMMENT_START_X, StatusUpdateTableViewCellHeight -25 + commentCnt*CommentIncrementHeight, 150, TEXT_FIELD_HEIGHT)];
+            _commentField = [[UITextField alloc] initWithFrame:CGRectMake(COMMENT_START_X, StatusUpdateTableViewCellHeight -30 + commentCnt*CommentIncrementHeight, 150, TEXT_FIELD_HEIGHT)];
         }
         
     } else{
         if(commentCnt > 2){
-            _viewMoreCommentsBtn = [[UIButton alloc] initWithFrame:CGRectMake(LEFT_ALIGNMENT, KeywordUpdateTableViewCellHeight - 45, 200, TEXT_FIELD_HEIGHT)];
-            _commentField = [[UITextField alloc] initWithFrame:CGRectMake(COMMENT_START_X, KeywordUpdateTableViewCellHeight - 25 + 3*CommentIncrementHeight, 150, TEXT_FIELD_HEIGHT)];
+            _viewMoreCommentsBtn = [[UIButton alloc] initWithFrame:CGRectMake(LEFT_ALIGNMENT, KeywordUpdateTableViewCellHeight - 50, 200, TEXT_FIELD_HEIGHT)];
+            _commentField = [[UITextField alloc] initWithFrame:CGRectMake(COMMENT_START_X, KeywordUpdateTableViewCellHeight - 30 + 3*CommentIncrementHeight, 150, TEXT_FIELD_HEIGHT)];
         } else{
-            _commentField = [[UITextField alloc] initWithFrame:CGRectMake(COMMENT_START_X, KeywordUpdateTableViewCellHeight - 25 + commentCnt*CommentIncrementHeight, 150, TEXT_FIELD_HEIGHT)];
+            _commentField = [[UITextField alloc] initWithFrame:CGRectMake(COMMENT_START_X, KeywordUpdateTableViewCellHeight - 30 + commentCnt*CommentIncrementHeight, 150, TEXT_FIELD_HEIGHT)];
         }
         
     }
@@ -147,9 +147,9 @@
     if([_cellType isEqualToString:QUIZ_CELL_TYPE]){
         y = QuizTableViewCellHeight - 25;
     } else if([_cellType isEqualToString:STATUS_UPDATE_CELL_TYPE]){
-        y = StatusUpdateTableViewCellHeight - 25;
+        y = StatusUpdateTableViewCellHeight - 30;
     } else{
-        y = KeywordUpdateTableViewCellHeight - 25;
+        y = KeywordUpdateTableViewCellHeight - 30;
     }
     int i = 0;
     for (NSDictionary *cmt in _comments) {

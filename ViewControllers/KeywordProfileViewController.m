@@ -24,12 +24,26 @@
     //    [self.view addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:_CreateQuizViewController.view action:@selector(endEditing:)]];
     //    self.navigationController.navigationBar.hidden = YES;
     // Do any additional setup after loading the view.
+    self.tableView.contentInset = UIEdgeInsetsMake(5, 0, 5, 0);
+
+}
+
+-(void)viewWillAppear:(BOOL)animated{
+    [self setNavbarTitle];
+}
+
+-(void)viewDidAppear:(BOOL)animated{
+    [self setNavbarTitle];
 }
 
 -(void) setNavbarTitle{
-    NSString *paren = @"\"";
-    NSString *title = [[paren stringByAppendingString:_keyword] stringByAppendingString:paren];
-    [self setTitle:title];
+    UINavigationBar *myNavBar =[self.navigationController navigationBar];
+    [myNavBar setTitleTextAttributes:[Utility getNavigationBarTitleFontDictionary]];
+    [[myNavBar topItem] setTitle:[NSString stringWithFormat:@"\"%@\"", _keyword]];
+    [myNavBar setTranslucent:NO];
+    [myNavBar setBarTintColor:[UIColor marbleOrange]];
+    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
+//    [self setTitle:title];
 }
 
 
