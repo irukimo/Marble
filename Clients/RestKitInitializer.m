@@ -45,6 +45,13 @@
      */
     quizMapping.identificationAttributes = @[@"uuid"];
     
+    RKResponseDescriptor *quizPOSTResponseDescriptor =
+    [RKResponseDescriptor responseDescriptorWithMapping:quizMapping
+                                                 method:RKRequestMethodPOST
+                                            pathPattern:@"quizzes"
+                                                keyPath:nil
+                                            statusCodes:successCode];
+    
     RKResponseDescriptor *quizGETResponseDescriptor =
     [RKResponseDescriptor responseDescriptorWithMapping:quizMapping
                                          method:RKRequestMethodGET
@@ -91,9 +98,9 @@
     // user mapping
     RKEntityMapping *userMapping = [RKEntityMapping mappingForEntityForName:@"User" inManagedObjectStore:managedObjectStore];
     [userMapping addAttributeMappingsFromDictionary:@{@"latest_status": @"status",
-                                                @"fb_id":        @"fbID",
-                                                @"all_profile_keywords": @"keywords",
-                                                @"name":         @"name"}];
+                                                    @"fb_id":        @"fbID",
+                                                    @"all_profile_keywords": @"keywords",
+                                                    @"name":         @"name"}];
     userMapping.identificationAttributes = @[@"fbID"];
     RKResponseDescriptor *userGETResponseDescriptor =
     [RKResponseDescriptor responseDescriptorWithMapping:userMapping
@@ -169,7 +176,8 @@
                                                      keywordUpdateGETResponseDescriptor,
                                                      quizNotifGETResponseDescriptor,
                                                      keywordUpdateNotifGETResponseDescriptor,
-                                                     commentNotifGETResponseDescriptor]];
+                                                     commentNotifGETResponseDescriptor,
+                                                     quizPOSTResponseDescriptor]];
 
     /* Set up request descriptor
      *
