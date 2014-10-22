@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "KeywordListTableViewCell.h"
 
-@interface KeywordListViewController : UITableViewController
+@interface KeywordListViewController : UITableViewController <KeywordListTableViewCellDelegate>
 -(void) setKeywords:(id)keywords;
 @end

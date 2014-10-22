@@ -12,12 +12,14 @@
 #import "KeywordProfileViewController.h"
 
 #define SEND_BUTTON_TAG 116
+#define GOLDEN_LEFT_ALIGNMENT 130
+#define GRAY_Y 95
 
 @interface ProfileViewController ()
 @property (strong, nonatomic) UILabel *nameLabel;
 @property (strong, nonatomic) CreateQuizViewController *createQuizViewController;
 @property (strong, nonatomic) PostsViewController *postsViewController;
-@property (strong, nonatomic) UITextField *statusTextField;
+@property (strong, nonatomic) UITextView *statusTextView;
 @property (strong, nonatomic) UIButton *statusBtn;
 @property (strong, nonatomic) UIButton *viewKeywordBtn;
 @property ( nonatomic) BOOL isSelf;
@@ -92,12 +94,6 @@
 }
 
 
--(void) initiateCreateQuizViewController{
-    _createQuizViewController = [[CreateQuizViewController alloc] init];
-    [_createQuizViewController.view setFrame:CGRectMake(0, 150, self.view.frame.size.width, 200)];
-    [self.view addSubview:_createQuizViewController.view];
-    [_createQuizViewController setDelegate:self];
-}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -108,17 +104,22 @@
     _headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 200)];
     [_headerView setBackgroundColor:[UIColor whiteColor]];
     
-    _nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(135, 15, self.view.frame.size.width, 35)];
+    _nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(GOLDEN_LEFT_ALIGNMENT, 12, self.view.frame.size.width, 35)];
     NSAttributedString *nameString =[[NSAttributedString alloc] initWithString:[Utility getNameToDisplay:_user.name] attributes:[Utility getBigNameFontDictionary]];
     [_nameLabel setAttributedText:nameString];
     
     _viewKeywordBtn = [[UIButton alloc] initWithFrame:CGRectMake(200, 120, 80, 20)];
     [_viewKeywordBtn setTitle:@"more" forState:UIControlStateNormal];
     [_viewKeywordBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    _statusTextField = [[UITextField alloc] initWithFrame:CGRectMake(135, 50, 150, 20)];
-    [_statusTextField setText:@""];
+    
+    
+    _statusTextView = [[UITextView alloc] initWithFrame:CGRectMake(GOLDEN_LEFT_ALIGNMENT - 3, 42, self.view.frame.size.width - GOLDEN_LEFT_ALIGNMENT - 20, 40)];
+    [_statusTextView setText:@""];
+    [_statusTextView setScrollEnabled:NO];
+    [_statusTextView setBackgroundColor:[UIColor clearColor]];
+
     _statusBtn = [[UIButton alloc] initWithFrame:CGRectMake(200, 70, 40, 20)];
-    [_statusTextField setDelegate:self];
+    [_statusTextView setDelegate:self];
     [_statusBtn setTitle:@"send" forState:UIControlStateNormal];
     [_statusBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     
@@ -132,9 +133,25 @@
     if(_isSelf){
         [_headerView addSubview:_statusBtn];
     }
+    [self addGrayStaticLabels];
     [_headerView addSubview:_nameLabel];
-    [_headerView addSubview:_statusTextField];
+    [_headerView addSubview:_statusTextView];
     [_headerView addSubview:_viewKeywordBtn];
+}
+
+-(void)addGrayStaticLabels{
+    NSAttributedString *createdString = [[NSAttributedString alloc] initWithString:@"created" attributes:[Utility getProfileGrayStaticFontDictionary]];
+    NSAttributedString *receivedString = [[NSAttributedString alloc] initWithString:@"received" attributes:[Utility getProfileGrayStaticFontDictionary]];
+    NSAttributedString *solvedString = [[NSAttributedString alloc] initWithString:@"solved" attributes:[Utility getProfileGrayStaticFontDictionary]];
+    UILabel *createdLabel = [[UILabel alloc] initWithFrame:CGRectMake(GOLDEN_LEFT_ALIGNMENT, GRAY_Y, createdString.size.width, createdString.size.height)];
+    UILabel *receivedLabel = [[UILabel alloc] initWithFrame:CGRectMake(GOLDEN_LEFT_ALIGNMENT + createdString.size.width + 15, GRAY_Y, receivedString.size.width, receivedString.size.height)];
+    UILabel *solvedLabel = [[UILabel alloc] initWithFrame:CGRectMake(GOLDEN_LEFT_ALIGNMENT + createdString.size.width + receivedString.size.width + 30, GRAY_Y, solvedString.size.width, solvedString.size.height)];
+    [createdLabel setAttributedText:createdString];
+    [receivedLabel setAttributedText:receivedString];
+    [solvedLabel setAttributedText:solvedString];
+    [_headerView addSubview:createdLabel];
+    [_headerView addSubview:receivedLabel];
+    [_headerView addSubview:solvedLabel];
 }
 
 -(void)setByUserObject:(User *)user sentFromTabbar:(BOOL)isSentFromTabbar {
@@ -177,13 +194,14 @@
 //            [self setTitle:[Utility getNameToDisplay:_user.name]];
 //        }
 //        [self setTitle:[Utility getNameToDisplay:_user.name]];
-        [_statusTextField setEnabled:YES];
+        [_statusTextView setUserInteractionEnabled:YES];
         [_headerView addSubview:_statusBtn];
     } else{
 //        if(!isSentFromTabbar){
 //            [self setTitle:[Utility getNameToDisplay:_user.name]];
 //        }
-        [_statusTextField setEnabled:NO];
+        [_statusTextView setUserInteractionEnabled:NO];
+
         [_statusBtn removeFromSuperview];
     }
     [self getStatus];
@@ -241,6 +259,10 @@
                     y+=33;
                 }
             }
+            CGRect moreFrame = _viewKeywordBtn.frame;
+            moreFrame.origin.x = x;
+            moreFrame.origin.y = y;
+            _viewKeywordBtn.frame = moreFrame;
         }
     }
 }
@@ -249,16 +271,16 @@
     if(!status){
         if(_isSelf){
             NSAttributedString *statusString =[[NSAttributedString alloc] initWithString:@"[update your status...]" attributes:[Utility getPostsViewCommentFontDictionary]];
-            [_statusTextField setAttributedText:statusString];
+            [_statusTextView setAttributedText:statusString];
             return;
         } else{
-            [_statusTextField setText:@""];
+            [_statusTextView setText:@""];
             return;
         }
     }
     NSLog(@"status %@", status);
     NSAttributedString *statusString =[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"\"%@\"",_user.status] attributes:[Utility getProfileStatusFontDictionary]];
-    [_statusTextField setAttributedText:statusString];
+    [_statusTextView setAttributedText:statusString];
 }
 
 -(void) addKeywordLabelAtX:(int)x andY:(int)y withKeyword:(NSAttributedString *)string atIndex:(NSInteger)index{
@@ -284,11 +306,11 @@
 
 -(void) sendStatusBtnClicked
 {
-    NSString *status = _statusTextField.text;
+    NSString *status = _statusTextView.text;
     MBDebug(@"To send status: %@", status);
     [Utility sendThroughRKRoute:@"send_status" withParams:@{@"status": status}];
     [self getStatus];
-    [_statusTextField resignFirstResponder];
+    [_statusTextView resignFirstResponder];
 }
 
 
@@ -374,16 +396,26 @@
     [self performSegueWithIdentifier:@"ProfileViewControllerSegue" sender:infoBundle];
 }
 
-
 #pragma mark -
-#pragma mark UITextField Delegate Methods
-- (void)textFieldDidBeginEditing:(UITextField *)textField{
-    [textField setText:@""];
+#pragma mark TextView Delegate Methods
+
+- (void)textViewDidBeginEditing:(UITextView *) textView
+{
+    [textView setText:@""];
 }
 
-- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+- (void)textViewDidEndEditing:(UITextView *)textView
+{
     [self.view endEditing:YES];
     [self setStatusWithText:_user.status];
+}
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
+    
+    if([text isEqualToString:@"\n"]) {
+        [textView resignFirstResponder];
+        return NO;
+    }
+    
     return YES;
 }
 

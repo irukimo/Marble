@@ -28,6 +28,11 @@
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    [self.view setBackgroundColor:[UIColor marbleLightGray]];
+    [self.tableView setBackgroundColor:[UIColor marbleLightGray]];
+    [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
+    self.tableView.contentInset = UIEdgeInsetsMake(5, 0, 5, 0);
+
 }
 
 #pragma mark - Table view data source
@@ -50,16 +55,16 @@
     }
     
     [cell setKeyword:[_keywordList objectAtIndex:indexPath.row]];
-    
+    cell.delegate = self;
     return cell;
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [self performSegueWithIdentifier:@"KeywordProfileViewControllerSegue" sender:[_keywordList objectAtIndex:indexPath.row]];
+-(void) gotoKeywordProfileWithKeyword:(NSString *)keyword{
+    [self performSegueWithIdentifier:@"KeywordProfileViewControllerSegue" sender:keyword];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 50;
+    return 100;
 }
 
 -(void) setKeywords:(id)keywords{

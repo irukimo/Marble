@@ -8,7 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
-@interface KeywordListTableViewCell : UITableViewCell
+@protocol KeywordListTableViewCellDelegate;
 
+@interface KeywordListTableViewCell : UITableViewCell
+@property (nonatomic, weak) id delegate;
 -(void) setKeyword:(NSString *)keyword;
+@end
+
+@protocol KeywordListTableViewCellDelegate <NSObject>
+-(void) gotoKeywordProfileWithKeyword:(NSString *)keyword;
 @end

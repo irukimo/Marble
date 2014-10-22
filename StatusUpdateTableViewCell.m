@@ -47,8 +47,10 @@
     [_nameButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [_nameButton addTarget:self action:@selector(nameClicked:) forControlEvents:UIControlEventTouchUpInside];
     
-    _statusLabel = [[UILabel alloc] initWithFrame:CGRectMake(NAME_LEFT_ALIGNMENT, NAME_TOP_ALIGNMENT + 17, 150, 20)];
-
+    _statusLabel = [[UILabel alloc] initWithFrame:CGRectMake(NAME_LEFT_ALIGNMENT, NAME_TOP_ALIGNMENT + 20, self.contentView.frame.size.width - NAME_LEFT_ALIGNMENT - 20, 40)];
+    _statusLabel.lineBreakMode = NSLineBreakByWordWrapping;
+    _statusLabel.numberOfLines = 0;
+//    [_statusLabel sizeToFit];
     
     _saidLabel= [[UILabel alloc] initWithFrame:CGRectMake(NAME_LEFT_ALIGNMENT + 30, NAME_TOP_ALIGNMENT, 100, 20)];
     NSAttributedString *saidTextString = [[NSAttributedString alloc] initWithString:@"said:" attributes:[Utility getNotifBlackNormalFontDictionary]];
@@ -75,10 +77,12 @@
     [_nameButton setAttributedTitle:nameString forState:UIControlStateNormal];
     [_nameButton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
     
-    NSAttributedString *statusString = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"\"%@\"",_statusUpdate.status] attributes:[Utility getNotifBlackBoldFontDictionary]];
+    NSAttributedString *statusString = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"\"%@\"",_statusUpdate.status] attributes:[Utility getProfileStatusFontDictionary]];
     [_statusLabel setAttributedText:statusString];
-//    NSString *authorPictureUrl = [NSString stringWithFormat:@"https://graph.facebook.com/%@/picture", fbid];
-//    [_authorPicView setImageWithURL:[NSURL URLWithString:authorPictureUrl] placeholderImage:[UIImage imageNamed:@"login.png"]];
+//    _statusLabel.lineBreakMode = NSLineBreakByWordWrapping;
+//    _statusLabel.numberOfLines = 0;
+    [_statusLabel sizeToFit];
+
     [Utility setUpProfilePictureImageView:_authorPicView byFBID:_statusUpdate.fbID];
     
     CGRect saidFrame = _saidLabel.frame;
@@ -87,6 +91,10 @@
     
     NSAttributedString *timeString = [[NSAttributedString alloc] initWithString:[Utility getDateToShow:_statusUpdate.time inWhole:NO] attributes:[Utility getGraySmallFontDictionary]];
     [_timeLabel setAttributedText:timeString];
+    
+    CGRect timeFrame = _timeLabel.frame;
+    timeFrame.origin.y = _statusLabel.frame.origin.y + _statusLabel.frame.size.height - 2;
+    [_timeLabel setFrame:timeFrame];
 }
 
 -(void)nameClicked:(id)sender{

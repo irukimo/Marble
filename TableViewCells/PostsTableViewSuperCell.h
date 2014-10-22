@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@protocol PostsViewControllerDelegate;
+@protocol PostsTableViewSuperCellDelegate;
 
 @interface PostsTableViewSuperCell : UITableViewCell <UITextFieldDelegate>
 @property (nonatomic, weak) id delegate;
@@ -20,7 +20,7 @@
 @end
 
 
-@protocol PostsViewControllerDelegate <NSObject>
+@protocol PostsTableViewSuperCellDelegate <NSObject>
 
 @required
 

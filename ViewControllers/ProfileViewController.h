@@ -10,7 +10,7 @@
 #import "CreateQuizViewController.h"
 #import "PostsViewController.h"
 
-@interface ProfileViewController : PostsViewController <CreateQuizViewControllerDelegate, UITextFieldDelegate, PostsViewControllerDelegate>
+@interface ProfileViewController : PostsViewController <UITextViewDelegate, PostsViewControllerDelegate>
 @property (strong,nonatomic) User *user;
 -(void)setByUserObject:(User *)user;
 -(void) setName:(NSString *)name andID:(NSString *)fbid sentFromTabbar:(BOOL)isSentFromTabbar;

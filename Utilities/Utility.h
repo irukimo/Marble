@@ -41,7 +41,10 @@ typedef void (^voidBlock)(void);
 + (NSDictionary *)getLightOrangeBoldFontDictionary;
 
 + (NSDictionary *)getBigNameFontDictionary;
++ (NSDictionary *)getProfileGrayStaticFontDictionary;
 + (NSDictionary *)getProfileStatusFontDictionary;
+
+
 
 + (UIButton *)getKeywordButtonAtX:(int)x andY:(int)y andString:(NSAttributedString *)string;
 

@@ -14,7 +14,7 @@
 
 @protocol PostsViewControllerDelegate;
 
-@interface PostsViewController : UITableViewController <NSFetchedResultsControllerDelegate, PostsViewControllerDelegate,UIScrollViewDelegate >
+@interface PostsViewController : UITableViewController <NSFetchedResultsControllerDelegate, PostsTableViewSuperCellDelegate,UIScrollViewDelegate >
 
 @property (strong, nonatomic) NSPredicate *predicate;
 @property (strong, nonatomic) NSDictionary *basicParams;
