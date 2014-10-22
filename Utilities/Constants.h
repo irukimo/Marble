@@ -21,6 +21,9 @@
 
 #define BASE_URL URLMake(PRODUCTION_SERVER)
 
+#define NUM_QUIZZES_PER_PAGE 20
+#define NUM_UPDATES_PER_PAGE 20
+
 #define notificationCellIdentifier @"notificationCellIdentifier"
 
 #define quizTableViewCellIdentifier    @"quizTableViewCellIdentifier"

@@ -59,17 +59,15 @@
                                           path:nil
                                     parameters:params
                                        success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
-                                           _numOfPagesOfQuizzes = [_numOfPagesOfQuizzes increment];
+                                           if ([mappingResult count] >= NUM_QUIZZES_PER_PAGE) {
+                                               _numOfPagesOfQuizzes = [_numOfPagesOfQuizzes increment];
+                                           }
                                            MBDebug(@"Successfully loadded quizzes");
                                            MBDebug(@"%ld quiz(zes) were loaded.", [[mappingResult array] count]);
                                            for (Quiz *quiz in [mappingResult array]) {
                                                [quiz initFBIDs];
                                                MBDebug(@"quiz compare num: %@", quiz.compareNum);
-                                               MBDebug(@"quiz time: %@", quiz.time);
-                         
                                                MBDebug(@"quiz show time: %@", [Utility getDateToShow:quiz.time inWhole:NO]);
-                                               MBDebug(@"quiz show time: %@", [Utility getDateToShow:quiz.time inWhole:YES]);
-
                                                MBDebug(@"quiz popularity: %@", quiz.popularity);
                                            }
                                            
@@ -85,18 +83,16 @@
                                           path:nil
                                     parameters:params
                                        success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
-                                           _numOfPagesOfUpdates = [_numOfPagesOfUpdates increment];
+                                           if ([mappingResult count] >= NUM_UPDATES_PER_PAGE) {
+                                               _numOfPagesOfUpdates = [_numOfPagesOfUpdates increment];
+                                           }
                                            MBDebug(@"Successfully loadded posts");
                                            MBDebug(@"%ld post(s) were loaded.", [[mappingResult array] count]);
                                            
                                            for (Post *post in [mappingResult array]) {
                                                [post initFBIDs];
-//                                               if ([post isKindOfClass:[StatusUpdate class]]){
-//                                                   MBDebug(@"status update: %@", (StatusUpdate *)post);
-//                                               } else if ([post isKindOfClass:[KeywordUpdate class]]) {
-//                                                  MBDebug(@"keyword update: %@", (KeywordUpdate *)post);
-//                                               }
                                            }
+                                           
                                            [Utility saveToPersistenceStore:[RKManagedObjectStore defaultStore].mainQueueManagedObjectContext failureMessage:@"failed to save."];
                                        }
                                        failure:[Utility failureBlockWithAlertMessage:@"Can't connect to the server"
@@ -110,7 +106,6 @@
         [request setPredicate:_predicate];
         
     }
-//    MBDebug(@"predicate: %@", _predicate);
     NSSortDescriptor *sort = [[NSSortDescriptor alloc] initWithKey:@"popularity" ascending:NO];
     request.sortDescriptors = @[sort];
     
@@ -204,7 +199,9 @@
                                           path:nil
                                     parameters:params
                                        success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
-                                           _numOfPagesOfQuizzes = [_numOfPagesOfQuizzes increment];
+                                           if ([mappingResult count] >= NUM_QUIZZES_PER_PAGE) {
+                                               _numOfPagesOfQuizzes = [_numOfPagesOfQuizzes increment];
+                                           }
                                            MBDebug(@"# of pages of quizzes: %@", _numOfPagesOfQuizzes);
                                            MBDebug(@"Refreshing: %ld quiz(zes) were successfully loaded.", [[mappingResult array] count]);
                                            [Utility saveToPersistenceStore:[RKManagedObjectStore defaultStore].mainQueueManagedObjectContext failureMessage:@"failed to save."];
@@ -223,7 +220,9 @@
                                           path:nil
                                     parameters:params
                                        success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
-                                           _numOfPagesOfUpdates = [_numOfPagesOfUpdates increment];
+                                           if ([mappingResult count] >= NUM_UPDATES_PER_PAGE) {
+                                               _numOfPagesOfUpdates = [_numOfPagesOfUpdates increment];
+                                           }
                                            MBDebug(@"# of pages of updates: %@", _numOfPagesOfUpdates);
                                            for (Post *post in [mappingResult array]) {
                                                [post initFBIDs];
@@ -508,7 +507,6 @@
         MBDebug(@"Guess posted");
         [quiz incrementCompareNum];
         [quiz setGuessed:answer];
-//        MBDebug(@"Quiz now: %@", quiz);
     }
                                      failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                          dispatch_async(dispatch_get_main_queue(), ^{
