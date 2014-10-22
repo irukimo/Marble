@@ -18,7 +18,7 @@
 @dynamic fbID1;
 @dynamic fbID2;
 @dynamic fbID3;
-
+@dynamic index;
 
 
 @end

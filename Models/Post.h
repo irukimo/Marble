@@ -19,5 +19,6 @@
 @property (nonatomic, retain) NSString * fbID1;
 @property (nonatomic, retain) NSString * fbID2;
 @property (nonatomic, retain) NSString * fbID3;
+@property (nonatomic, retain) NSNumber * index;
 
 @end

@@ -55,7 +55,7 @@
     RKResponseDescriptor *quizGETResponseDescriptor =
     [RKResponseDescriptor responseDescriptorWithMapping:quizMapping
                                          method:RKRequestMethodGET
-                                    pathPattern:@"quizzes"
+                                    pathPattern:@"posts"
                                         keyPath:@"Quiz"
                                     statusCodes:successCode];
     
@@ -122,7 +122,7 @@
     RKResponseDescriptor *statusUpdateGETResponseDescriptor =
     [RKResponseDescriptor responseDescriptorWithMapping:statusUpdateMapping
                                                  method:RKRequestMethodGET
-                                            pathPattern:@"updates"
+                                            pathPattern:@"posts"
                                                 keyPath:@"Status_Update"
                                             statusCodes:successCode];
     // keyword update mapping
@@ -138,7 +138,7 @@
     RKResponseDescriptor *keywordUpdateGETResponseDescriptor =
     [RKResponseDescriptor responseDescriptorWithMapping:keywordUpdateMapping
                                                  method:RKRequestMethodGET
-                                            pathPattern:@"updates"
+                                            pathPattern:@"posts"
                                                 keyPath:@"Keyword_Update"
                                             statusCodes:successCode];
     
@@ -226,7 +226,7 @@
      *
      */
     //First off, class routes
-    RKRoute *quizGETRoute = [RKRoute routeWithClass:[Quiz class] pathPattern:@"quizzes" method:RKRequestMethodGET];
+//    RKRoute *quizGETRoute = [RKRoute routeWithClass:[Quiz class] pathPattern:@"quizzes" method:RKRequestMethodGET];
 
     RKRoute *quizPOSTRoute = [RKRoute routeWithClass:[Quiz class] pathPattern:@"quizzes" method:RKRequestMethodPOST];
     
@@ -234,7 +234,7 @@
     
     RKRoute *userGETRoute = [RKRoute routeWithClass:[User class] pathPattern:@"user" method:RKRequestMethodGET];
     
-    RKRoute *postGETRoute = [RKRoute routeWithClass:[Post class] pathPattern:@"updates" method:RKRequestMethodGET];
+    RKRoute *postGETRoute = [RKRoute routeWithClass:[Post class] pathPattern:@"posts" method:RKRequestMethodGET];
     
     //Thirdly, named routes
     RKRoute *sendDeviceTokenRoute = [RKRoute routeWithName:@"set_device_token" pathPattern:@"set_device_token" method:RKRequestMethodPOST];
@@ -252,7 +252,7 @@
     RKRoute *setBadgeRoute = [RKRoute routeWithName:@"set_badge" pathPattern:@"set_badge_number" method:RKRequestMethodPOST];
     
     [objectManager.router.routeSet addRoutes:@[// class routes
-                                               quizGETRoute, quizPOSTRoute, /*statusPOSTRoute,*/ postGETRoute, userGETRoute,
+                                               /*quizGETRoute, */quizPOSTRoute, /*statusPOSTRoute,*/ postGETRoute, userGETRoute,
                                                // named routes
                                                sendDeviceTokenRoute, sendCommentRoute, getCommentsRoute,
                                                sendGuessRoute, sendStatusRoute, getNotificationsRoute, setBadgeRoute]];

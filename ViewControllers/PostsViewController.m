@@ -33,6 +33,7 @@
 
 @interface PostsViewController ()
     @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
+    @property (strong, nonatomic) NSPredicate *basePredicate;
     @property (strong, nonatomic) NSNumber *numOfPagesOfQuizzes;
     @property (strong, nonatomic) NSNumber *numOfPagesOfUpdates;
 @end
@@ -52,61 +53,14 @@
     self.numOfPagesOfQuizzes = [NSNumber numberWithInt:1]; // page number starts from 1
     self.numOfPagesOfUpdates = [NSNumber numberWithInt:1];
     
-    // Load quizzes from the server
-    NSString *sessionToken = [KeyChainWrapper getSessionTokenForUser];
-    NSDictionary *params = [NSDictionary dictionaryWithObjects:@[sessionToken, _numOfPagesOfQuizzes] forKeys:@[@"auth_token", @"page"]];
-    [[RKObjectManager sharedManager] getObject:[Quiz alloc]
-                                          path:nil
-                                    parameters:params
-                                       success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
-                                           if ([mappingResult count] >= NUM_QUIZZES_PER_PAGE) {
-                                               _numOfPagesOfQuizzes = [_numOfPagesOfQuizzes increment];
-                                           }
-                                           MBDebug(@"Successfully loadded quizzes");
-                                           MBDebug(@"%ld quiz(zes) were loaded.", [[mappingResult array] count]);
-                                           for (Quiz *quiz in [mappingResult array]) {
-                                               [quiz initFBIDs];
-                                               MBDebug(@"quiz compare num: %@", quiz.compareNum);
-                                               MBDebug(@"quiz show time: %@", [Utility getDateToShow:quiz.time inWhole:NO]);
-                                               MBDebug(@"quiz popularity: %@", quiz.popularity);
-                                           }
-                                           
-                                           [Utility saveToPersistenceStore:[RKManagedObjectStore defaultStore].mainQueueManagedObjectContext failureMessage:@"failed to save."];
-                                       }
-                                       failure:[Utility failureBlockWithAlertMessage:@"Can't connect to the server"
-                                                                               block:^{MBError(@"Cannot load quizzes");}]
-     ];
-    
-    //Load updates from the server
-    params = [NSDictionary dictionaryWithObjects:@[sessionToken, _numOfPagesOfUpdates] forKeys:@[@"auth_token", @"page"]];
-    [[RKObjectManager sharedManager] getObject:[Post alloc]
-                                          path:nil
-                                    parameters:params
-                                       success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
-                                           if ([mappingResult count] >= NUM_UPDATES_PER_PAGE) {
-                                               _numOfPagesOfUpdates = [_numOfPagesOfUpdates increment];
-                                           }
-                                           MBDebug(@"Successfully loadded posts");
-                                           MBDebug(@"%ld post(s) were loaded.", [[mappingResult array] count]);
-                                           
-                                           for (Post *post in [mappingResult array]) {
-                                               [post initFBIDs];
-                                           }
-                                           
-                                           [Utility saveToPersistenceStore:[RKManagedObjectStore defaultStore].mainQueueManagedObjectContext failureMessage:@"failed to save."];
-                                       }
-                                       failure:[Utility failureBlockWithAlertMessage:@"Can't connect to the server"
-                                                                               block:^{MBError(@"Cannot load posts");}]
-     ];
-
+    self.basePredicate = [NSPredicate predicateWithFormat:@"index != 0"];
     
     //set up fetched results controller
     NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"Post"];
-    if(_predicate != nil) {
-        [request setPredicate:_predicate];
-        
-    }
-    NSSortDescriptor *sort = [[NSSortDescriptor alloc] initWithKey:@"popularity" ascending:NO];
+
+    [request setPredicate:[self generateCompoundPredicate]];
+    
+    NSSortDescriptor *sort = [[NSSortDescriptor alloc] initWithKey:@"index" ascending:YES];
     request.sortDescriptors = @[sort];
     
     _fetchedResultsController =
@@ -150,12 +104,22 @@
         // call [tableView.pullToRefreshView stopAnimating] when done
     }];
 
-    self.tableView.contentInset =  UIEdgeInsetsMake(5, 0, 5, 0);
+    self.tableView.contentInset = UIEdgeInsetsMake(5, 0, 5, 0);
 }
 
 -(void)viewDidAppear:(BOOL)animated{
     [self.tableView triggerPullToRefresh];
 }
+
+- (NSPredicate *)generateCompoundPredicate
+{
+    if (self.predicate == nil) {
+        return self.basePredicate;
+    } else {
+        return [NSCompoundPredicate andPredicateWithSubpredicates:@[self.predicate, self.basePredicate]];
+    }
+}
+
 
 -(void) addMarbleButton{
     UIBarButtonItem *rightButton = [[UIBarButtonItem alloc]
@@ -194,26 +158,28 @@
     __weak PostsViewController *weakSelf = self;
     
     NSMutableDictionary *params = [weakSelf generateBasicParams];
-    [params setObject:_numOfPagesOfQuizzes forKey:@"page"];
-    [[RKObjectManager sharedManager] getObject:[Quiz alloc]
-                                          path:nil
-                                    parameters:params
-                                       success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
-                                           if ([mappingResult count] >= NUM_QUIZZES_PER_PAGE) {
-                                               _numOfPagesOfQuizzes = [_numOfPagesOfQuizzes increment];
-                                           }
-                                           MBDebug(@"# of pages of quizzes: %@", _numOfPagesOfQuizzes);
-                                           MBDebug(@"Refreshing: %ld quiz(zes) were successfully loaded.", [[mappingResult array] count]);
-                                           [Utility saveToPersistenceStore:[RKManagedObjectStore defaultStore].mainQueueManagedObjectContext failureMessage:@"failed to save."];
-                                           
-                                           
-                                           [weakSelf.tableView.pullToRefreshView stopAnimating];
-                                       }
-                                       failure:[Utility failureBlockWithAlertMessage:@"Can't connect to the server"
-                                                                               block:^{
-                                                                                   [weakSelf.tableView.pullToRefreshView stopAnimating];
-                                                                                   MBError(@"Cannot load quizzes");}]
-     ];
+//    [params setObject:_numOfPagesOfQuizzes forKey:@"page"];
+//    [[RKObjectManager sharedManager] getObject:[Quiz alloc]
+//                                          path:nil
+//                                    parameters:params
+//                                       success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+//                                           if ([mappingResult count] >= NUM_QUIZZES_PER_PAGE) {
+//                                               _numOfPagesOfQuizzes = [_numOfPagesOfQuizzes increment];
+//                                           }
+//                                           [Post setIndicesAsLoadingMore:[mappingResult array]];
+//                                           
+//                                           MBDebug(@"# of pages of quizzes: %@", _numOfPagesOfQuizzes);
+//                                           MBDebug(@"Refreshing: %ld quiz(zes) were successfully loaded.", [[mappingResult array] count]);
+//                                           [Utility saveToPersistenceStore:[RKManagedObjectStore defaultStore].mainQueueManagedObjectContext failureMessage:@"failed to save."];
+//                                           
+//                                           
+//                                           [weakSelf.tableView.pullToRefreshView stopAnimating];
+//                                       }
+//                                       failure:[Utility failureBlockWithAlertMessage:@"Can't connect to the server"
+//                                                                               block:^{
+//                                                                                   [weakSelf.tableView.pullToRefreshView stopAnimating];
+//                                                                                   MBError(@"Cannot load quizzes");}]
+//     ];
     
     [params setObject:_numOfPagesOfUpdates forKey:@"page"];
     [[RKObjectManager sharedManager] getObject:[Post alloc]
@@ -227,6 +193,8 @@
                                            for (Post *post in [mappingResult array]) {
                                                [post initFBIDs];
                                            }
+                                           [Post setIndicesAsLoadingMore:[mappingResult array]];
+                                           
                                            [Utility saveToPersistenceStore:[RKManagedObjectStore defaultStore].mainQueueManagedObjectContext failureMessage:@"failed to save."];
                                            
                                            [weakSelf.tableView.pullToRefreshView stopAnimating];
@@ -264,18 +232,19 @@
     __weak PostsViewController *weakSelf = self;
     
     [params setObject:[NSNumber numberWithInt:1] forKey:@"page"];
-    [[RKObjectManager sharedManager] getObject:[Quiz alloc]
-                                          path:nil
-                                    parameters:params
-                                       success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
-                                           MBDebug(@"Refreshing: %ld quiz(zes) were successfully loaded.", [[mappingResult array] count]);
-                                           [Utility saveToPersistenceStore:[RKManagedObjectStore defaultStore].mainQueueManagedObjectContext failureMessage:@"failed to save."];
-                                           
-                                           [weakSelf.tableView.pullToRefreshView stopAnimating];
-                                       }
-                                       failure:[Utility failureBlockWithAlertMessage:@"Can't connect to the server"
-                                                                               block:^{MBError(@"Cannot load quizzes");}]
-     ];
+//    [[RKObjectManager sharedManager] getObject:[Quiz alloc]
+//                                          path:nil
+//                                    parameters:params
+//                                       success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+//                                           MBDebug(@"Refreshing: %ld quiz(zes) were successfully loaded.", [[mappingResult array] count]);
+//                                           [Post setIndicesAsRefreshing:[mappingResult array]];
+//                                           
+//                                           [Utility saveToPersistenceStore:[RKManagedObjectStore defaultStore].mainQueueManagedObjectContext failureMessage:@"failed to save."];
+//                                           [weakSelf.tableView.pullToRefreshView stopAnimating];
+//                                       }
+//                                       failure:[Utility failureBlockWithAlertMessage:@"Can't connect to the server"
+//                                                                               block:^{MBError(@"Cannot load quizzes");}]
+//     ];
     
     [[RKObjectManager sharedManager] getObject:[Post alloc]
                                           path:nil
@@ -284,6 +253,7 @@
                                            for (Post *post in [mappingResult array]) {
                                                [post initFBIDs];
                                            }
+                                           [Post setIndicesAsRefreshing:[mappingResult array]];
                                            [Utility saveToPersistenceStore:[RKManagedObjectStore defaultStore].mainQueueManagedObjectContext failureMessage:@"failed to save."];
                                            
                                            [weakSelf.tableView.pullToRefreshView stopAnimating];

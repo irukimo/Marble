@@ -11,5 +11,7 @@
 @interface Post (MBPost)
 
 - (void) initFBIDs;
++ (void)setIndicesAsRefreshing:(NSArray *)posts;
++ (void)setIndicesAsLoadingMore:(NSArray *)posts;
 
 @end
