@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "PostsTableViewSuperCell.h"
+#import "StatusUpdate.h"
 
 @interface StatusUpdateTableViewCell : PostsTableViewSuperCell
-- (void) setName:(NSString *)name andID:(NSString *)fbid andStatus:(NSString *)status;
+- (void) setStatusUpdate:(StatusUpdate *)statusUpdate;
 @end
 

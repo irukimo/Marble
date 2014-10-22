@@ -8,12 +8,12 @@
 
 #import <UIKit/UIKit.h>
 #import "PostsTableViewSuperCell.h"
-
+#import "KeywordUpdate.h"
 
 
 
 @interface KeywordUpdateTableViewCell : PostsTableViewSuperCell
 @property(strong, nonatomic) UIButton *nameButton;
-- (void) setName:(NSString *)name andID:(NSString *)fbid andKeyword:(id)keywords;
+- (void) setKeywordUpdate:(KeywordUpdate *)keywordUpdate;
 @end
 

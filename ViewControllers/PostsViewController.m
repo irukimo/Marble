@@ -357,7 +357,7 @@
             cell = [[StatusUpdateTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:statusTableViewCellIdentifier];
         }
         cell.delegate = self;
-        [cell setName:status.name andID:status.fbID andStatus:status.status];
+        [cell setStatusUpdate:status];
 //        MBDebug(@"status cell: %@", cell);
         MBDebug(@"status update: %@", status);
         [self getCommentsForPost:post];
@@ -368,7 +368,7 @@
         if (!cell){
             cell = [[KeywordUpdateTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:keywordUpdateTableViewCellIdentifier];
         }
-        [cell setName:keywordUpdate.name andID:keywordUpdate.fbID andKeyword: keywordUpdate.keywords];
+        [cell setKeywordUpdate:keywordUpdate];
         MBDebug(@"keyword update: %@", keywordUpdate);
         cell.delegate = self;
         //if keyword comment ready, uncomment

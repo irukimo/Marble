@@ -15,10 +15,10 @@
 @property(strong, nonatomic) UIButton *nameButton;
 @property(strong, nonatomic) UILabel *statusLabel;
 @property (strong, nonatomic) UIImageView *authorPicView;
-@property (strong, nonatomic) NSString *name;
-@property (strong, nonatomic) NSString *fbid;
 @property(strong,nonatomic) NSArray *comments;
 @property(strong, nonatomic) UILabel *saidLabel;
+@property(strong, nonatomic) UILabel *timeLabel;
+@property (strong, nonatomic) StatusUpdate *statusUpdate;
 @end
 
 @implementation StatusUpdateTableViewCell
@@ -41,18 +41,24 @@
 
 
 -(void) addStaticLabels{
+    _timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(NAME_LEFT_ALIGNMENT, NAME_TOP_ALIGNMENT + 34, 70, 20)];
+    
     _nameButton = [[UIButton alloc] initWithFrame:CGRectMake(NAME_LEFT_ALIGNMENT, NAME_TOP_ALIGNMENT, 100, 20)];
     [_nameButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [_nameButton addTarget:self action:@selector(nameClicked:) forControlEvents:UIControlEventTouchUpInside];
-    [self.contentView addSubview:_nameButton];
-
+    
     _statusLabel = [[UILabel alloc] initWithFrame:CGRectMake(NAME_LEFT_ALIGNMENT, NAME_TOP_ALIGNMENT + 17, 150, 20)];
-    [self.contentView addSubview:_statusLabel];
+
     
     _saidLabel= [[UILabel alloc] initWithFrame:CGRectMake(NAME_LEFT_ALIGNMENT + 30, NAME_TOP_ALIGNMENT, 100, 20)];
     NSAttributedString *saidTextString = [[NSAttributedString alloc] initWithString:@"said:" attributes:[Utility getNotifBlackNormalFontDictionary]];
     [_saidLabel setAttributedText:saidTextString];
+    
     [self.contentView addSubview:_saidLabel];
+    [self.contentView addSubview:_timeLabel];
+    [self.contentView addSubview:_statusLabel];
+    [self.contentView addSubview:_nameButton];
+
 }
 
 -(void) initPicView{
@@ -63,28 +69,29 @@
     [self.contentView addSubview:_authorPicView];
 }
 
-- (void) setName:(NSString *)name andID:(NSString *)fbid andStatus:(NSString *)status
-{
-    _name = [name copy];
-    _fbid = [fbid copy];
-    NSAttributedString *nameString = [[NSAttributedString alloc] initWithString:[Utility getNameToDisplay:name] attributes:[Utility getPostsViewNameFontDictionary]];
+- (void) setStatusUpdate:(StatusUpdate *)statusUpdate {
+    _statusUpdate = statusUpdate;
+    NSAttributedString *nameString = [[NSAttributedString alloc] initWithString:[Utility getNameToDisplay:_statusUpdate.name] attributes:[Utility getPostsViewNameFontDictionary]];
     [_nameButton setAttributedTitle:nameString forState:UIControlStateNormal];
     [_nameButton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
     
-    NSAttributedString *statusString = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"\"%@\"", status] attributes:[Utility getNotifBlackBoldFontDictionary]];
+    NSAttributedString *statusString = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"\"%@\"",_statusUpdate.status] attributes:[Utility getNotifBlackBoldFontDictionary]];
     [_statusLabel setAttributedText:statusString];
 //    NSString *authorPictureUrl = [NSString stringWithFormat:@"https://graph.facebook.com/%@/picture", fbid];
 //    [_authorPicView setImageWithURL:[NSURL URLWithString:authorPictureUrl] placeholderImage:[UIImage imageNamed:@"login.png"]];
-    [Utility setUpProfilePictureImageView:_authorPicView byFBID:fbid];
+    [Utility setUpProfilePictureImageView:_authorPicView byFBID:_statusUpdate.fbID];
     
     CGRect saidFrame = _saidLabel.frame;
     saidFrame.origin.x = NAME_LEFT_ALIGNMENT + nameString.size.width + 5;
     [_saidLabel setFrame:saidFrame];
+    
+    NSAttributedString *timeString = [[NSAttributedString alloc] initWithString:[Utility getDateToShow:_statusUpdate.time inWhole:NO] attributes:[Utility getGraySmallFontDictionary]];
+    [_timeLabel setAttributedText:timeString];
 }
 
 -(void)nameClicked:(id)sender{
     if(self.delegate && [self.delegate respondsToSelector:@selector(gotoProfileWithName:andID:)]){
-        [self.delegate gotoProfileWithName:_name andID:_fbid];
+        [self.delegate gotoProfileWithName:_statusUpdate.name andID:_statusUpdate.fbID];
     }
 }
 
