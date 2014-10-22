@@ -21,4 +21,5 @@
     rightBorder.frame = CGRectMake(view.frame.size.width - offset - width, 0, width, 500);
     [view.layer addSublayer:rightBorder];
 }
+
 @end

@@ -18,7 +18,7 @@
 @property (strong, nonatomic) NSString *name;
 @property (strong, nonatomic) NSString *fbid;
 @property(strong,nonatomic) NSArray *comments;
-
+@property(strong, nonatomic) UILabel *saidLabel;
 @end
 
 @implementation StatusUpdateTableViewCell
@@ -41,18 +41,22 @@
 
 
 -(void) addStaticLabels{
-    _nameButton = [[UIButton alloc] initWithFrame:CGRectMake(50, 5, 100, 30)];
+    _nameButton = [[UIButton alloc] initWithFrame:CGRectMake(NAME_LEFT_ALIGNMENT, NAME_TOP_ALIGNMENT, 100, 20)];
     [_nameButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [_nameButton addTarget:self action:@selector(nameClicked:) forControlEvents:UIControlEventTouchUpInside];
     [self.contentView addSubview:_nameButton];
 
-    _statusLabel = [[UILabel alloc] initWithFrame:CGRectMake(200, 5, 150, 30)];
+    _statusLabel = [[UILabel alloc] initWithFrame:CGRectMake(NAME_LEFT_ALIGNMENT, NAME_TOP_ALIGNMENT + 17, 150, 20)];
     [self.contentView addSubview:_statusLabel];
+    
+    _saidLabel= [[UILabel alloc] initWithFrame:CGRectMake(NAME_LEFT_ALIGNMENT + 30, NAME_TOP_ALIGNMENT, 100, 20)];
+    NSAttributedString *saidTextString = [[NSAttributedString alloc] initWithString:@"said:" attributes:[Utility getNotifBlackNormalFontDictionary]];
+    [_saidLabel setAttributedText:saidTextString];
+    [self.contentView addSubview:_saidLabel];
 }
 
 -(void) initPicView{
-    _authorPicView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 10, 44, 44)];
-    _authorPicView.layer.cornerRadius = _authorPicView.frame.size.height/2.0;
+    _authorPicView = [[UIImageView alloc] initWithFrame:CGRectMake(20, 14, 50, 50)];_authorPicView.layer.cornerRadius = _authorPicView.frame.size.height/2.0;
     _authorPicView.layer.masksToBounds = YES;
     [_authorPicView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(nameClicked:)]];
     [_authorPicView setUserInteractionEnabled:YES];
@@ -65,10 +69,17 @@
     _fbid = [fbid copy];
     NSAttributedString *nameString = [[NSAttributedString alloc] initWithString:[Utility getNameToDisplay:name] attributes:[Utility getPostsViewNameFontDictionary]];
     [_nameButton setAttributedTitle:nameString forState:UIControlStateNormal];
-    [_statusLabel setText:[status copy]];
+    [_nameButton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
+    
+    NSAttributedString *statusString = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"\"%@\"", status] attributes:[Utility getNotifBlackBoldFontDictionary]];
+    [_statusLabel setAttributedText:statusString];
 //    NSString *authorPictureUrl = [NSString stringWithFormat:@"https://graph.facebook.com/%@/picture", fbid];
 //    [_authorPicView setImageWithURL:[NSURL URLWithString:authorPictureUrl] placeholderImage:[UIImage imageNamed:@"login.png"]];
     [Utility setUpProfilePictureImageView:_authorPicView byFBID:fbid];
+    
+    CGRect saidFrame = _saidLabel.frame;
+    saidFrame.origin.x = NAME_LEFT_ALIGNMENT + nameString.size.width + 5;
+    [_saidLabel setFrame:saidFrame];
 }
 
 -(void)nameClicked:(id)sender{

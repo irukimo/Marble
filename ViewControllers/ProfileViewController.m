@@ -112,7 +112,7 @@
     _viewKeywordBtn = [[UIButton alloc] initWithFrame:CGRectMake(200, 120, 80, 20)];
     [_viewKeywordBtn setTitle:@"more" forState:UIControlStateNormal];
     [_viewKeywordBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    _statusTextField = [[UITextField alloc] initWithFrame:CGRectMake(135, 50, 100, 20)];
+    _statusTextField = [[UITextField alloc] initWithFrame:CGRectMake(135, 50, 150, 20)];
     [_statusTextField setText:@""];
     _statusBtn = [[UIButton alloc] initWithFrame:CGRectMake(200, 70, 40, 20)];
     [_statusTextField setDelegate:self];
@@ -230,7 +230,6 @@
             int x = 25;
             int y = 125;
             for(NSString *keyword in keywordArray){
-
                 NSAttributedString *keywordString =[[NSAttributedString alloc] initWithString:keyword attributes:[Utility getNotifOrangeNormalFontDictionary]];
                 [self addKeywordLabelAtX:x andY:y withKeyword:keywordString atIndex:[keywordArray indexOfObject:keyword]];
                 x+= keywordString.size.width + 20;
@@ -245,21 +244,22 @@
 
 -(void) setStatusWithText:(NSString *)status{
     if(!status){
-        [_statusTextField setText:@""];
-        return;
+        if(_isSelf){
+            NSAttributedString *statusString =[[NSAttributedString alloc] initWithString:@"[update your status...]" attributes:[Utility getPostsViewCommentFontDictionary]];
+            [_statusTextField setAttributedText:statusString];
+            return;
+        } else{
+            [_statusTextField setText:@""];
+            return;
+        }
     }
+    NSLog(@"status %@", status);
     NSAttributedString *statusString =[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"\"%@\"",_user.status] attributes:[Utility getProfileStatusFontDictionary]];
     [_statusTextField setAttributedText:statusString];
 }
 
 -(void) addKeywordLabelAtX:(int)x andY:(int)y withKeyword:(NSAttributedString *)string atIndex:(NSInteger)index{
-    UIButton *keywordBtn = [[UIButton alloc] initWithFrame:CGRectMake(x, y, string.size.width + 15, string.size.height + 10)];
-    [keywordBtn.layer setBorderColor:[UIColor grayColor].CGColor];
-    [keywordBtn.layer setBorderWidth:1.0f];
-    [keywordBtn.layer setCornerRadius:keywordBtn.frame.size.height/2.0f];
-    [keywordBtn.layer setMasksToBounds:YES];
-    [keywordBtn setContentHorizontalAlignment:UIControlContentHorizontalAlignmentCenter];
-    [keywordBtn setAttributedTitle:string forState:UIControlStateNormal];
+    UIButton *keywordBtn = [Utility getKeywordButtonAtX:x andY:y andString:string];
     [keywordBtn setTag:index];
     [keywordBtn addTarget:self action:@selector(keywordBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
     [_headerView addSubview:keywordBtn];

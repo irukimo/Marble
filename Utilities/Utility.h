@@ -41,6 +41,8 @@ typedef void (^voidBlock)(void);
 + (NSDictionary *)getBigNameFontDictionary;
 + (NSDictionary *)getProfileStatusFontDictionary;
 
++ (UIButton *)getKeywordButtonAtX:(int)x andY:(int)y andString:(NSAttributedString *)string;
+
 //+ (void) setApplicationBadgeNumber:(NSInteger)number;
 
 

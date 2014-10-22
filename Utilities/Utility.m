@@ -231,6 +231,17 @@
     return [NSDictionary dictionaryWithObjectsAndKeys: [UIFont fontWithName:@"OpenSans" size:18],NSFontAttributeName, [UIColor blackColor] ,NSForegroundColorAttributeName, @(-0.5), NSKernAttributeName, nil];
 }
 
++ (UIButton *)getKeywordButtonAtX:(int)x andY:(int)y andString:(NSAttributedString *)string{
+    UIButton *keywordBtn = [[UIButton alloc] initWithFrame:CGRectMake(x, y, string.size.width + 15, string.size.height + 10)];
+    [keywordBtn.layer setBorderColor:[UIColor grayColor].CGColor];
+    [keywordBtn.layer setBorderWidth:1.0f];
+    [keywordBtn.layer setCornerRadius:keywordBtn.frame.size.height/2.0f];
+    [keywordBtn.layer setMasksToBounds:YES];
+    [keywordBtn setContentHorizontalAlignment:UIControlContentHorizontalAlignmentCenter];
+    [keywordBtn setAttributedTitle:string forState:UIControlStateNormal];
+    return keywordBtn;
+}
+
 + (NSString *)getMonthName:(NSInteger)month{
     switch ((int)month) {
         case 1:
