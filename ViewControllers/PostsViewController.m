@@ -34,8 +34,7 @@
 @interface PostsViewController ()
     @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
     @property (strong, nonatomic) NSPredicate *basePredicate;
-    @property (strong, nonatomic) NSNumber *numOfPagesOfQuizzes;
-    @property (strong, nonatomic) NSNumber *numOfPagesOfUpdates;
+    @property (strong, nonatomic) NSNumber *numOfPagesOfPosts;
 @end
 
 @implementation PostsViewController
@@ -50,8 +49,7 @@
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
     // initialize num pages
-    self.numOfPagesOfQuizzes = [NSNumber numberWithInt:1]; // page number starts from 1
-    self.numOfPagesOfUpdates = [NSNumber numberWithInt:1];
+    self.numOfPagesOfPosts = [NSNumber numberWithInt:1];
     
     self.basePredicate = [NSPredicate predicateWithFormat:@"index != 0"];
     
@@ -108,6 +106,7 @@
 }
 
 -(void)viewDidAppear:(BOOL)animated{
+    MBDebug(@"Will call triggerPullToRefresh");
     [self.tableView triggerPullToRefresh];
 }
 
@@ -158,38 +157,16 @@
     __weak PostsViewController *weakSelf = self;
     
     NSMutableDictionary *params = [weakSelf generateBasicParams];
-//    [params setObject:_numOfPagesOfQuizzes forKey:@"page"];
-//    [[RKObjectManager sharedManager] getObject:[Quiz alloc]
-//                                          path:nil
-//                                    parameters:params
-//                                       success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
-//                                           if ([mappingResult count] >= NUM_QUIZZES_PER_PAGE) {
-//                                               _numOfPagesOfQuizzes = [_numOfPagesOfQuizzes increment];
-//                                           }
-//                                           [Post setIndicesAsLoadingMore:[mappingResult array]];
-//                                           
-//                                           MBDebug(@"# of pages of quizzes: %@", _numOfPagesOfQuizzes);
-//                                           MBDebug(@"Refreshing: %ld quiz(zes) were successfully loaded.", [[mappingResult array] count]);
-//                                           [Utility saveToPersistenceStore:[RKManagedObjectStore defaultStore].mainQueueManagedObjectContext failureMessage:@"failed to save."];
-//                                           
-//                                           
-//                                           [weakSelf.tableView.pullToRefreshView stopAnimating];
-//                                       }
-//                                       failure:[Utility failureBlockWithAlertMessage:@"Can't connect to the server"
-//                                                                               block:^{
-//                                                                                   [weakSelf.tableView.pullToRefreshView stopAnimating];
-//                                                                                   MBError(@"Cannot load quizzes");}]
-//     ];
     
-    [params setObject:_numOfPagesOfUpdates forKey:@"page"];
+    [params setObject:_numOfPagesOfPosts forKey:@"page"];
     [[RKObjectManager sharedManager] getObject:[Post alloc]
                                           path:nil
                                     parameters:params
                                        success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
                                            if ([mappingResult count] >= NUM_UPDATES_PER_PAGE) {
-                                               _numOfPagesOfUpdates = [_numOfPagesOfUpdates increment];
+                                               _numOfPagesOfPosts = [_numOfPagesOfPosts increment];
                                            }
-                                           MBDebug(@"# of pages of updates: %@", _numOfPagesOfUpdates);
+                                           MBDebug(@"# of pages of updates: %@", _numOfPagesOfPosts);
                                            for (Post *post in [mappingResult array]) {
                                                [post initFBIDs];
                                            }
@@ -222,9 +199,13 @@
     }
     NSString *sessionToken = [KeyChainWrapper getSessionTokenForUser];
     
-    return [NSMutableDictionary dictionaryWithObjects:@[sessionToken]
+    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjects:@[sessionToken]
                                               forKeys:@[@"auth_token"]];
-
+    
+    if (self.basicParams != nil) {
+        [params addEntriesFromDictionary:self.basicParams];
+    }
+    return params;
 }
 
 - (void) startRefreshing:(NSMutableDictionary *)params
@@ -232,19 +213,6 @@
     __weak PostsViewController *weakSelf = self;
     
     [params setObject:[NSNumber numberWithInt:1] forKey:@"page"];
-//    [[RKObjectManager sharedManager] getObject:[Quiz alloc]
-//                                          path:nil
-//                                    parameters:params
-//                                       success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
-//                                           MBDebug(@"Refreshing: %ld quiz(zes) were successfully loaded.", [[mappingResult array] count]);
-//                                           [Post setIndicesAsRefreshing:[mappingResult array]];
-//                                           
-//                                           [Utility saveToPersistenceStore:[RKManagedObjectStore defaultStore].mainQueueManagedObjectContext failureMessage:@"failed to save."];
-//                                           [weakSelf.tableView.pullToRefreshView stopAnimating];
-//                                       }
-//                                       failure:[Utility failureBlockWithAlertMessage:@"Can't connect to the server"
-//                                                                               block:^{MBError(@"Cannot load quizzes");}]
-//     ];
     
     [[RKObjectManager sharedManager] getObject:[Post alloc]
                                           path:nil

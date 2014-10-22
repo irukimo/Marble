@@ -17,6 +17,7 @@
 @interface PostsViewController : UITableViewController <NSFetchedResultsControllerDelegate, PostsViewControllerDelegate,UIScrollViewDelegate >
 
 @property (strong, nonatomic) NSPredicate *predicate;
+@property (strong, nonatomic) NSDictionary *basicParams;
 @property (nonatomic, weak) id<PostsViewControllerDelegate> delegate;
 - (void) commentPostAtIndexPath:(NSIndexPath *)indexPath withComment:(NSString *)comment;
 -(void) gotoProfileWithName:(NSString *)name andID:(NSString *)fbid;

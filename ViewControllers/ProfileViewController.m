@@ -29,6 +29,8 @@
 
 - (void)viewDidLoad {
     self.predicate = [NSPredicate predicateWithFormat:@"fbID1 == %@ OR fbID2 == %@ OR fbID3 == %@", _user.fbID, _user.fbID, _user.fbID];
+    self.basicParams =  @{@"fb_id": _user.fbID};
+    
     [super viewDidLoad];
     [self prepareHeaderView];
 //    [self initiateCreateQuizViewController];
@@ -51,6 +53,9 @@
 }
 
 -(void)viewDidAppear:(BOOL)animated{
+    MBDebug(@"view did appear for %@", _user.name);
+    [super viewDidAppear:animated];
+
     [self setNavbarTitle];
 }
 
