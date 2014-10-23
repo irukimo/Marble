@@ -13,7 +13,7 @@
 
 @interface StatusUpdateTableViewCell()
 @property(strong, nonatomic) UIButton *nameButton;
-@property(strong, nonatomic) UILabel *statusLabel;
+@property(strong, nonatomic) UITextView *statusTextView;
 @property (strong, nonatomic) UIImageView *authorPicView;
 @property(strong,nonatomic) NSArray *comments;
 @property(strong, nonatomic) UILabel *saidLabel;
@@ -37,6 +37,11 @@
 }
 
 
+-(void) prepareForReuse{
+    _statusTextView.frame = CGRectMake(NAME_LEFT_ALIGNMENT, NAME_TOP_ALIGNMENT + 20, self.contentView.frame.size.width - NAME_LEFT_ALIGNMENT - 20, 40);
+}
+
+
 
 
 
@@ -47,10 +52,10 @@
     [_nameButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [_nameButton addTarget:self action:@selector(nameClicked:) forControlEvents:UIControlEventTouchUpInside];
     
-    _statusLabel = [[UILabel alloc] initWithFrame:CGRectMake(NAME_LEFT_ALIGNMENT, NAME_TOP_ALIGNMENT + 20, self.contentView.frame.size.width - NAME_LEFT_ALIGNMENT - 20, 40)];
-    _statusLabel.lineBreakMode = NSLineBreakByWordWrapping;
-    _statusLabel.numberOfLines = 0;
-//    [_statusLabel sizeToFit];
+    _statusTextView = [[UITextView alloc] initWithFrame:CGRectMake(NAME_LEFT_ALIGNMENT, NAME_TOP_ALIGNMENT + 20, self.contentView.frame.size.width - NAME_LEFT_ALIGNMENT - 20, 40)];
+    [_statusTextView setUserInteractionEnabled:NO];
+    [_statusTextView setEditable:NO];
+//    [_statusTextView sizeToFit];
     
     _saidLabel= [[UILabel alloc] initWithFrame:CGRectMake(NAME_LEFT_ALIGNMENT + 30, NAME_TOP_ALIGNMENT, 100, 20)];
     NSAttributedString *saidTextString = [[NSAttributedString alloc] initWithString:@"said:" attributes:[Utility getNotifBlackNormalFontDictionary]];
@@ -58,7 +63,7 @@
     
     [self.contentView addSubview:_saidLabel];
     [self.contentView addSubview:_timeLabel];
-    [self.contentView addSubview:_statusLabel];
+    [self.contentView addSubview:_statusTextView];
     [self.contentView addSubview:_nameButton];
 
 }
@@ -72,16 +77,17 @@
 }
 
 - (void) setStatusUpdate:(StatusUpdate *)statusUpdate {
+    NSLog(@"status %@", statusUpdate.status);
     _statusUpdate = statusUpdate;
     NSAttributedString *nameString = [[NSAttributedString alloc] initWithString:[Utility getNameToDisplay:_statusUpdate.name] attributes:[Utility getPostsViewNameFontDictionary]];
     [_nameButton setAttributedTitle:nameString forState:UIControlStateNormal];
     [_nameButton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
     
     NSAttributedString *statusString = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"\"%@\"",_statusUpdate.status] attributes:[Utility getProfileStatusFontDictionary]];
-    [_statusLabel setAttributedText:statusString];
-//    _statusLabel.lineBreakMode = NSLineBreakByWordWrapping;
-//    _statusLabel.numberOfLines = 0;
-    [_statusLabel sizeToFit];
+    [_statusTextView setAttributedText:statusString];
+//    _statusTextView.lineBreakMode = NSLineBreakByWordWrapping;
+//    _statusTextView.numberOfLines = 0;
+    [_statusTextView sizeToFit];
 
     [Utility setUpProfilePictureImageView:_authorPicView byFBID:_statusUpdate.fbID];
     
@@ -93,7 +99,7 @@
     [_timeLabel setAttributedText:timeString];
     
     CGRect timeFrame = _timeLabel.frame;
-    timeFrame.origin.y = _statusLabel.frame.origin.y + _statusLabel.frame.size.height - 2;
+    timeFrame.origin.y = _statusTextView.frame.origin.y + _statusTextView.frame.size.height - 2;
     [_timeLabel setFrame:timeFrame];
 }
 

@@ -10,6 +10,7 @@
 #import "FacebookSDK/FacebookSDK.h"
 #import "KeywordListViewController.h"
 #import "KeywordProfileViewController.h"
+#import "SVPullToRefresh.h"
 
 #define SEND_BUTTON_TAG 116
 #define GOLDEN_LEFT_ALIGNMENT 130
@@ -31,6 +32,8 @@
 @property (strong, nonatomic) UILabel *createdNumLabel;
 @property (strong, nonatomic) UILabel *receivedNumLabel;
 @property (strong, nonatomic) UILabel *solvedNumLabel;
+@property (strong, nonatomic) UIView *keywordsView;
+
 @end
 
 @implementation ProfileViewController
@@ -63,6 +66,13 @@
 
 -(void)viewWillAppear:(BOOL)animated{
     [self setNavbarTitle];
+    [self removeAllKeywords];
+}
+
+-(void) removeAllKeywords{
+    for(UIView *view in _keywordsView.subviews){
+        [view removeFromSuperview];
+    }
 }
 
 -(void)viewDidAppear:(BOOL)animated{
@@ -118,7 +128,7 @@
     NSAttributedString *nameString =[[NSAttributedString alloc] initWithString:[Utility getNameToDisplay:_user.name] attributes:[Utility getBigNameFontDictionary]];
     [_nameLabel setAttributedText:nameString];
     
-    _viewKeywordBtn = [[UIButton alloc] initWithFrame:CGRectMake(200, 120, 80, 20)];
+    _viewKeywordBtn = [[UIButton alloc] initWithFrame:CGRectMake(200, 0, 80, 20)];
     [_viewKeywordBtn setTitle:@"more" forState:UIControlStateNormal];
     [_viewKeywordBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     
@@ -144,6 +154,11 @@
     [_viewKeywordBtn addTarget:self action:@selector(viewKeywordBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
     [UIView addLeftBorderOn:_headerView withColor:[UIColor marbleLightGray] andWidth:5 andHeight:0 withOffset:5];
     [UIView addRightBorderOn:_headerView withColor:[UIColor marbleLightGray] andWidth:5 andHeight:0 withOffset:5];
+    
+    _keywordsView = [[UIView alloc] initWithFrame:CGRectMake(25, 125, self.view.frame.size.width, 50)];
+    
+    [_headerView addSubview:_keywordsView];
+    
     [_headerView addSubview:_profilePicView];
     [_headerView.layer setBorderColor:[UIColor marbleLightGray].CGColor];
     [_headerView.layer setBorderWidth:5.0f];
@@ -284,6 +299,7 @@
 }
 
 -(void) displayKeywords{
+    [self removeAllKeywords];
     NSLog(@"_user.keywords %@ for _user %@", _user.keywords, _user.name);
 
     if(!_user.keywords){
@@ -295,8 +311,8 @@
     [_headerView setFrame:headerFrame];
     [self.tableView setTableHeaderView:_headerView];
     
-    int x = 25;
-    int y = 125;
+    int x = 0;
+    int y = 0;
     if([_user.keywords isKindOfClass:[NSString class]]){
         NSString *keyword = (NSString *)_user.keywords;
         NSAttributedString *keywordString =[[NSAttributedString alloc] initWithString:keyword attributes:[Utility getNotifOrangeNormalFontDictionary]];
@@ -312,7 +328,7 @@
             [self addKeywordLabelAtX:x andY:y withKeyword:keywordString atIndex:[keywordArray indexOfObject:keyword]];
             x+= keywordString.size.width + 20;
             if(x>250){
-                x=25;
+                x=0;
                 y+=30;
             }
         }
@@ -321,7 +337,7 @@
     moreFrame.origin.x = x;
     moreFrame.origin.y = y;
     _viewKeywordBtn.frame = moreFrame;
-    [_headerView addSubview:_viewKeywordBtn];
+    [_keywordsView addSubview:_viewKeywordBtn];
 }
 
 -(void) setNoKeywordsSetting{
@@ -352,7 +368,7 @@
     UIButton *keywordBtn = [Utility getKeywordButtonAtX:x andY:y andString:string];
     [keywordBtn setTag:index];
     [keywordBtn addTarget:self action:@selector(keywordBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
-    [_headerView addSubview:keywordBtn];
+    [_keywordsView addSubview:keywordBtn];
 }
 
 -(void) keywordBtnClicked:(id)sender{
@@ -376,6 +392,7 @@
     [Utility sendThroughRKRoute:@"send_status" withParams:@{@"status": status}];
     [self getStatus];
     [_statusTextView resignFirstResponder];
+    [self.tableView triggerPullToRefresh];
 }
 
 
