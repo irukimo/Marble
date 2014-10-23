@@ -7,6 +7,7 @@
 //
 
 #import "KeywordListTableViewCell.h"
+#define KEYWORD_BUTTON_TAG 907
 
 @interface KeywordListTableViewCell()
 @property(strong, nonatomic) UIButton *keywordButton;
@@ -26,6 +27,10 @@
     }
     return self;
 }
+
+-(void)prepareForReuse{
+    [_keywordButton removeFromSuperview];
+}
 -(void) setBorder{
     [self.contentView.layer setBorderColor:[UIColor marbleLightGray].CGColor];
     [self.contentView.layer setBorderWidth:5.0f];
@@ -38,8 +43,8 @@
     _keyword = keyword;
     NSAttributedString *keywordString =[[NSAttributedString alloc] initWithString:keyword attributes:[Utility getNotifOrangeNormalFontDictionary]];
     _keywordButton = [Utility getKeywordButtonAtX:self.contentView.frame.size.width/2.0 - keywordString.size.width/2.0 andY:15 andString:keywordString];
-    [self.contentView addSubview:_keywordButton];
     [_keywordButton addTarget:self action:@selector(keywordButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+    [self.contentView addSubview:_keywordButton];
 }
 
 -(void)keywordButtonClicked:(id)sender{

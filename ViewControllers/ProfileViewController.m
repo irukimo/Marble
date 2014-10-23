@@ -153,7 +153,6 @@
     [self addGrayStaticLabels];
     [_headerView addSubview:_nameLabel];
     [_headerView addSubview:_statusTextView];
-    [_headerView addSubview:_viewKeywordBtn];
 }
 
 -(void)addGrayStaticLabels{
@@ -285,11 +284,12 @@
 }
 
 -(void) displayKeywords{
+    NSLog(@"_user.keywords %@ for _user %@", _user.keywords, _user.name);
+
     if(!_user.keywords){
         [self setNoKeywordsSetting];
         return;
     }
-    NSLog(@"_user.keywords %@ exists", _user.keywords);
     CGRect headerFrame = _headerView.frame;
     headerFrame.size.height = HEADER_VIEW_HEIGHT_WITH_KEYWORDS;
     [_headerView setFrame:headerFrame];
@@ -321,6 +321,7 @@
     moreFrame.origin.x = x;
     moreFrame.origin.y = y;
     _viewKeywordBtn.frame = moreFrame;
+    [_headerView addSubview:_viewKeywordBtn];
 }
 
 -(void) setNoKeywordsSetting{
