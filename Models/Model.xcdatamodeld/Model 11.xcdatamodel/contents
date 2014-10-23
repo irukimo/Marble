@@ -10,7 +10,6 @@
     </entity>
     <entity name="KeywordUpdate" representedClassName="KeywordUpdate" parentEntity="Post" syncable="YES">
         <attribute name="fbID" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="keywords" optional="YES" attributeType="Transformable" valueTransformerName="ArrayTo" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <entity name="Post" representedClassName="Post" isAbstract="YES" syncable="YES">
@@ -19,6 +18,9 @@
         <attribute name="fbID2" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="fbID3" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="index" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="keyword1" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="keyword2" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="keyword3" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="popularity" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="time" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="uuid" optional="YES" attributeType="String" syncable="YES"/>
@@ -48,8 +50,8 @@
     </entity>
     <elements>
         <element name="CommentNotification" positionX="-144" positionY="-45" width="128" height="133"/>
-        <element name="KeywordUpdate" positionX="-126" positionY="-27" width="128" height="88"/>
-        <element name="Post" positionX="-153" positionY="-54" width="128" height="165"/>
+        <element name="KeywordUpdate" positionX="-126" positionY="-27" width="128" height="75"/>
+        <element name="Post" positionX="-153" positionY="-54" width="128" height="210"/>
         <element name="Quiz" positionX="-252" positionY="-151" width="128" height="195"/>
         <element name="StatusUpdate" positionX="-135" positionY="-36" width="128" height="88"/>
         <element name="User" positionX="-54" positionY="-9" width="128" height="105"/>

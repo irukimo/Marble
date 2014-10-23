@@ -18,6 +18,9 @@
 @dynamic fbID1;
 @dynamic fbID2;
 @dynamic fbID3;
+@dynamic keyword1;
+@dynamic keyword2;
+@dynamic keyword3;
 @dynamic index;
 
 

@@ -21,7 +21,7 @@
     [self.comments count];
 }
 
-- (void)initFBIDs
+- (void)initParentAttributes
 {
     if (self.author != nil) {
         [self setFbID1:[NSString stringWithString:self.author]];
@@ -29,7 +29,7 @@
     }
     if (self.option0 != nil) [self setFbID2:[NSString stringWithString:self.option0]];
     if (self.option1 != nil) [self setFbID3:[NSString stringWithString:self.option1]];
-    
+    if (self.keyword != nil) [self setKeyword1:[NSString stringWithString:self.keyword]];
 }
 
 

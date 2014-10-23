@@ -75,7 +75,14 @@
     
     NSString *keywordString;
     NSAttributedString *descString;
+    NSInteger numKeywords = 0;
+    if (_keywordUpdate.keyword1 != nil) numKeywords++;
+    if (_keywordUpdate.keyword2 != nil) numKeywords++;
+    if (_keywordUpdate.keyword3 != nil) numKeywords++;
+    
     if(_keywordUpdate.keywords){
+        
+        
         if([_keywordUpdate.keywords isKindOfClass:[NSString class]]){
             keywordString = (NSString *)_keywordUpdate.keywords;
             descString = [[NSAttributedString alloc] initWithString:@"has 1 new marble:" attributes:[Utility getNotifBlackNormalFontDictionary]];
@@ -83,6 +90,7 @@
             UIButton *keywordButton = [Utility getKeywordButtonAtX:0 andY:0 andString:keywordAttString];
             [keywordButton setTag:-1];
             [_keywordsView addSubview:keywordButton];
+            
         } else if([_keywordUpdate.keywords isKindOfClass:[NSArray class]]){
             NSArray *keywordArray = (NSArray *)_keywordUpdate.keywords;
             if([keywordArray count] > 0){
@@ -91,7 +99,7 @@
                 } else{
                     descString = [[NSAttributedString alloc] initWithString:@"has 1 new marble:" attributes:[Utility getNotifBlackNormalFontDictionary]];
                 }
-                [_descriptionLabel setAttributedText:descString];
+//                [_descriptionLabel setAttributedText:descString];
                 int x = 0;
                 int y = 0;
                 for(NSString *keyword in keywordArray){

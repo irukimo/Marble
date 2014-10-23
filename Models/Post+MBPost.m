@@ -11,7 +11,7 @@
 
 @implementation Post (MBPost)
 
-- (void) initFBIDs{}
+- (void) initParentAttributes{}
 
 + (void)setIndicesAsRefreshing:(NSArray *)posts
 {

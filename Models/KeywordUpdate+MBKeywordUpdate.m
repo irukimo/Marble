@@ -10,13 +10,15 @@
 
 @implementation KeywordUpdate (MBKeywordUpdate)
 
-- (void)initFBIDs
+- (void)initParentAttributes
 {
     MBDebug(@"keyword update init FBIDs");
     if (self.fbID != nil) {
         [self setFbID1:[NSString stringWithString:self.fbID]];
         MBDebug(@"fb ID1: %@", self.fbID1);
     }
+    
 }
+
 
 @end

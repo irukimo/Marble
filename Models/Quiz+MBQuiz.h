@@ -12,6 +12,6 @@
 
 - (void)incrementCompareNum;
 - (void)commmentsNum;
-- (void) initFBIDs;
+- (void)initParentAttributes;
 
 @end

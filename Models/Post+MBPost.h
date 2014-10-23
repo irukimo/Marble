@@ -10,7 +10,7 @@
 
 @interface Post (MBPost)
 
-- (void) initFBIDs;
+- (void) initParentAttributes;
 + (void)setIndicesAsRefreshing:(NSArray *)posts;
 + (void)setIndicesAsLoadingMore:(NSArray *)posts;
 
