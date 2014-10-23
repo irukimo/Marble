@@ -20,6 +20,7 @@
 @property(strong, nonatomic) UILabel *descLabel;
 @property (strong, nonatomic) UIImageView *authorPicView;
 @property (strong, nonatomic) UILabel *timeLabel;
+@property (strong, nonatomic) KeywordUpdate *keywordUpdate;
 @end
 
 @implementation NotificationTableViewCell
@@ -77,9 +78,10 @@
 }
 
 -(void) setKeywordUpdate:(KeywordUpdate *)update{
+    _keywordUpdate = update;
     [self setName:update.name];
     [self setAuthorFBID:update.fbID];
-    NSAttributedString *stringToDisplay = [self generateAttributedStringForKeywordUpdate:update.keywords];
+    NSAttributedString *stringToDisplay = [self generateAttributedStringForKeywordUpdate];
     [self setDesc:stringToDisplay];
     [self setTimeLabelWithDate:update.time];
 
@@ -120,14 +122,26 @@
 }
 
 
--(NSAttributedString *)generateAttributedStringForKeywordUpdate:(NSArray *)keywordArray{
+-(NSAttributedString *)generateAttributedStringForKeywordUpdate{
     NSMutableAttributedString *finalString = [[NSMutableAttributedString alloc] init];
+    
     int i = 0;
-    for(NSString *keyword in keywordArray){
-        NSAttributedString *keywordstring = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"\"%@\"", keyword] attributes:[Utility getNotifOrangeNormalFontDictionary]];
+    if(_keywordUpdate.keyword1){
+        NSAttributedString *keywordstring = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"\"%@\"", _keywordUpdate.keyword1] attributes:[Utility getNotifOrangeNormalFontDictionary]];
         [finalString appendAttributedString:keywordstring];
         i++;
     }
+    if(_keywordUpdate.keyword2){
+        NSAttributedString *keywordstring = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"\"%@\"", _keywordUpdate.keyword2] attributes:[Utility getNotifOrangeNormalFontDictionary]];
+        [finalString appendAttributedString:keywordstring];
+        i++;
+    }
+    if(_keywordUpdate.keyword3){
+        NSAttributedString *keywordstring = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"\"%@\"", _keywordUpdate.keyword3] attributes:[Utility getNotifOrangeNormalFontDictionary]];
+        [finalString appendAttributedString:keywordstring];
+        i++;
+    }
+
     NSAttributedString *descString = [[NSAttributedString alloc] initWithString:@" was added to your profile" attributes:[Utility getNotifBlackNormalFontDictionary]];
     [finalString appendAttributedString:descString];
     return finalString;
