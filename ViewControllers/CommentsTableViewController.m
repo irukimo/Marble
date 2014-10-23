@@ -7,19 +7,32 @@
 //
 
 #import "CommentsTableViewController.h"
+#import "DAKeyboardControl.h"
 
 @interface CommentsTableViewController()
-@property (strong, nonatomic) NSMutableArray *commentsArray;
 
+@property (strong, nonatomic) NSMutableArray *commentsArray;
+@property (strong, nonatomic) UIView *commentTextFieldView;
+@property (strong, nonatomic) UITextField *commentTextField;
+@property(strong, nonatomic) UIButton *commentBotton;
+@property(strong, nonatomic) UIToolbar *toolBar;
+@property (nonatomic) CGRect fixedFrame;
 @end
 
 @implementation CommentsTableViewController
-- (void)viewDidLoad {
+
+
+#pragma mark - View lifecycle
+- (void)viewDidLoad
+{
     [super viewDidLoad];
     _commentsArray = [[NSMutableArray alloc] init];
     [self.view setBackgroundColor:[UIColor clearColor]];
     [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
+    
+    //self.tableView.keyboardDismissMode  = UIScrollViewKeyboardDismissModeInteractive;
 }
+
 
 -(void)setCommentArray:(NSArray *)commentArray{
     _commentsArray = [commentArray copy];

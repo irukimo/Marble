@@ -16,7 +16,6 @@
 
 
 @interface PostsTableViewSuperCell()
-
 @property(strong, nonatomic) UILabel *commentNumLabel;
 @property (strong, nonatomic) NSArray *comments;
 @property(strong, nonatomic) UITextField *commentField;

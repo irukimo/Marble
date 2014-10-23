@@ -12,6 +12,7 @@
 @protocol CommentsTableViewControllerDelegate;
 
 @interface CommentsTableViewController : UITableViewController <CommentsTableViewCellDelegate>
+
 -(void)setCommentArray:(NSArray *)commentArray;
 @property (nonatomic, weak) id<CommentsTableViewControllerDelegate> delegate;
 @end

@@ -11,6 +11,7 @@
 #import "HomeNavigationController.h"
 #import "CommentsTableViewController.h"
 #import "PostsViewController.h"
+#import "DAKeyboardControl.h"
 
 #define AUTO_COMPLETE_SELECT_VIEW_TAG 999
 #define COMMENT_TEXT @"write a comment..."
@@ -46,7 +47,7 @@
     [self registerForKeyboardNotifications];
     self.delegate = self;
     _isCreatingMarble = FALSE;
-
+    [self initKeyboardDismiss];
     
     //set tabbaritem image
     [self setTabBarItemImages];
@@ -65,7 +66,7 @@
 
 
 -(void) setViewFrames{
-    _commentsTableViewFrame = CGRectMake(0, 50, self.view.frame.size.width, self.view.frame.size.height - NAVBAR_HEIGHT - TABBAR_HEIGHT - 50);
+    _commentsTableViewFrame = CGRectMake(0, 50, self.view.frame.size.width, self.view.frame.size.height - NAVBAR_HEIGHT - TABBAR_HEIGHT - 50 );
     _commentFieldViewFrame = CGRectMake(0, 10 + self.view.frame.size.height - TABBAR_HEIGHT - NAVBAR_HEIGHT, self.view.frame.size.width, 100);
 }
 
@@ -96,8 +97,9 @@
     [UIView beginAnimations:nil context:NULL];
     [UIView setAnimationDuration:0.25];
     [UIView setAnimationCurve:_keyboardCurve];
-    _commentFieldView.frame = CGRectMake(_commentFieldViewFrame.origin.x, _commentFieldViewFrame.origin.y - _keyboardSize.height,  _commentFieldViewFrame.size.width ,  _commentFieldViewFrame.size.height);
-    _commentsTableViewController.view.frame = CGRectMake(_commentsTableViewFrame.origin.x, _commentsTableViewFrame.origin.y, _commentsTableViewFrame.size.width, _commentsTableViewFrame.size.height - _keyboardSize.height);
+    // HYJ
+    //_commentFieldView.frame = CGRectMake(_commentFieldViewFrame.origin.x, _commentFieldViewFrame.origin.y - _keyboardSize.height,  _commentFieldViewFrame.size.width ,  _commentFieldViewFrame.size.height);
+    //_commentsTableViewController.view.frame = CGRectMake(_commentsTableViewFrame.origin.x, _commentsTableViewFrame.origin.y, _commentsTableViewFrame.size.width, _commentsTableViewFrame.size.height - _keyboardSize.height);
     [UIView commitAnimations];
     
     /*
@@ -216,7 +218,7 @@
 
 
 -(void) initCommentFieldView{
-    _commentFieldView = [[UIView alloc] initWithFrame:CGRectMake(0, 10 + self.view.frame.size.height - TABBAR_HEIGHT - NAVBAR_HEIGHT, self.view.frame.size.width, 100)];
+    _commentFieldView = [[UIView alloc] initWithFrame:CGRectMake(0, 10 + self.view.frame.size.height - TABBAR_HEIGHT - NAVBAR_HEIGHT - 50, self.view.frame.size.width, 100)];
     _commentBtn = [[UIButton alloc] initWithFrame:CGRectMake(260 , 0, 60, 30)];
     
     [_commentBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -375,6 +377,29 @@
 
 }
 
+
+//HYJ
+-(void)initKeyboardDismiss
+{
+    _commentsWholeView.keyboardTriggerOffset = _commentFieldViewFrame.size.height;
+    [self.view addKeyboardPanningWithFrameBasedActionHandler:^(CGRect keyboardFrameInView, BOOL opening, BOOL closing) {
+        /*
+         Try not to call "self" inside this block (retain cycle).
+         But if you do, make sure to remove DAKeyboardControl
+         when you are done with the view controller by calling:
+         [self.view removeKeyboardControl];
+         */
+        
+        CGRect accessoryViewFrame = _commentFieldView.frame;
+        accessoryViewFrame.origin.y = keyboardFrameInView.origin.y - accessoryViewFrame.size.height;
+        _commentFieldView.frame = accessoryViewFrame;
+        
+        CGRect tableViewFrame = _commentsTableViewFrame;
+        tableViewFrame.size.height = accessoryViewFrame.origin.y;
+        _commentsTableViewFrame = tableViewFrame;
+    } constraintBasedActionHandler:nil];
+    //[self.view removeKeyboardControl];
+}
 
 /*
 #pragma mark - Navigation

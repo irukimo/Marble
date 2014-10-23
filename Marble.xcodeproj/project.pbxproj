@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		20D8096419F8501D00C4F2BD /* DAKeyboardControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 20D8096319F8501D00C4F2BD /* DAKeyboardControl.m */; };
 		50B568EF19E490590050C8EC /* NotifViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 50B568EE19E490590050C8EC /* NotifViewController.m */; };
 		50B5690119E497020050C8EC /* notif-selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B568F919E497020050C8EC /* notif-selected@2x.png */; };
 		50B5690219E497020050C8EC /* notif-unselected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B568FA19E497020050C8EC /* notif-unselected@2x.png */; };
@@ -85,6 +86,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		20D8096219F8501D00C4F2BD /* DAKeyboardControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DAKeyboardControl.h; sourceTree = "<group>"; };
+		20D8096319F8501D00C4F2BD /* DAKeyboardControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DAKeyboardControl.m; sourceTree = "<group>"; };
 		3634F2606FB7FDA06677D4FC /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		50B568ED19E490590050C8EC /* NotifViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotifViewController.h; sourceTree = "<group>"; };
 		50B568EE19E490590050C8EC /* NotifViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotifViewController.m; sourceTree = "<group>"; };
@@ -466,6 +469,8 @@
 		7AF4127619DB518900A470E1 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				20D8096219F8501D00C4F2BD /* DAKeyboardControl.h */,
+				20D8096319F8501D00C4F2BD /* DAKeyboardControl.m */,
 				51F5A74F19E6089D006097EF /* NSNumber+MBNumber.h */,
 				51F5A75019E6089D006097EF /* NSNumber+MBNumber.m */,
 				517C895119DB7E0C005A8407 /* Constants.h */,
@@ -644,6 +649,7 @@
 				7AF4123619D9FB6C00A470E1 /* AppDelegate.m in Sources */,
 				5118902119F09A2B00E62CD4 /* CommentNotification.m in Sources */,
 				517C894D19DB7129005A8407 /* KeyChainWrapper.m in Sources */,
+				20D8096419F8501D00C4F2BD /* DAKeyboardControl.m in Sources */,
 				7AF4127119DA6A8300A470E1 /* SelectPeopleViewCell.m in Sources */,
 				5152F8DF19DCAD86008E99DB /* Model.xcdatamodeld in Sources */,
 				51BB7CBF19F0617300D10F0D /* NotificationTableViewCell.m in Sources */,
