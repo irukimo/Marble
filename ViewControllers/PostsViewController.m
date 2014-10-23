@@ -168,7 +168,7 @@
                                            }
                                            MBDebug(@"# of pages of updates: %@", _numOfPagesOfPosts);
                                            for (Post *post in [mappingResult array]) {
-                                               [post initFBIDs];
+                                               [post initParentAttributes];
                                            }
                                            [Post setIndicesAsLoadingMore:[mappingResult array]];
                                            
@@ -219,7 +219,7 @@
                                     parameters:params
                                        success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
                                            for (Post *post in [mappingResult array]) {
-                                               [post initFBIDs];
+                                               [post initParentAttributes];
                                            }
                                            [Post setIndicesAsRefreshing:[mappingResult array]];
                                            [Utility saveToPersistenceStore:[RKManagedObjectStore defaultStore].mainQueueManagedObjectContext failureMessage:@"failed to save."];

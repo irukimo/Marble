@@ -213,7 +213,7 @@
     [quiz setOption1Name:_option1.name];
     [quiz setOption1:_option1.fbID];
     [quiz setAnswer:answer];
-    [quiz initFBIDs];
+    [quiz initParentAttributes];
     NSLog(@"%@",quiz);
     NSString *sessionToken = [KeyChainWrapper getSessionTokenForUser];
     NSDictionary *params = [NSDictionary dictionaryWithObjects:@[sessionToken] forKeys:@[@"auth_token"]];

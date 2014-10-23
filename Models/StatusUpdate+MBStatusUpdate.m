@@ -11,7 +11,7 @@
 @implementation StatusUpdate (MBStatusUpdate)
 
 
-- (void) initFBIDs
+- (void) initParentAttributes
 {
     MBDebug(@"status update init FBIDs");
     if (self.fbID != nil) {

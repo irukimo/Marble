@@ -11,7 +11,6 @@
 
 @implementation KeywordUpdate
 
-@dynamic keywords;
 @dynamic fbID;
 @dynamic name;
 

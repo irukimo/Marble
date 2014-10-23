@@ -10,6 +10,6 @@
 
 @interface StatusUpdate (MBStatusUpdate)
 
-- (void) initFBIDs;
+- (void) initParentAttributes;
 
 @end

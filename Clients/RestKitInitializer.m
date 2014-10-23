@@ -133,7 +133,9 @@
                                                              @"created_at": @"time",
                                                              @"uuid": @"uuid",
                                                              @"popularity":  @"popularity",
-                                                             @"keywords": @"keywords"}];
+                                                             @"keyword1": @"keyword1",
+                                                             @"keyword2": @"keyword2",
+                                                             @"keyword3": @"keyword3"}];
     keywordUpdateMapping.identificationAttributes = @[@"uuid"];
     RKResponseDescriptor *keywordUpdateGETResponseDescriptor =
     [RKResponseDescriptor responseDescriptorWithMapping:keywordUpdateMapping

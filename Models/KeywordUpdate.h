@@ -13,7 +13,6 @@
 
 @interface KeywordUpdate : Post
 
-@property (nonatomic, retain) id keywords;
 @property (nonatomic, retain) NSString * fbID;
 @property (nonatomic, retain) NSString * name;
 

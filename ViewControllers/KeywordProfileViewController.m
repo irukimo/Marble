@@ -13,14 +13,15 @@
 
 @end
 
-
-
 @implementation KeywordProfileViewController
 
 - (void)viewDidLoad {
+    self.predicate = [NSPredicate predicateWithFormat:@"keyword1 == %@ OR keyword2 == %@ OR keyword3 == %@", _keyword, _keyword, _keyword];
+    self.basicParams =  @{@"keyword": _keyword};
+
     [super viewDidLoad];
     [self setNavbarTitle];
-    self.delegate = self;
+//    self.delegate = self;
     //    [self.view addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:_CreateQuizViewController.view action:@selector(endEditing:)]];
     //    self.navigationController.navigationBar.hidden = YES;
     // Do any additional setup after loading the view.
@@ -33,6 +34,7 @@
 }
 
 -(void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
     [self setNavbarTitle];
 }
 
@@ -45,6 +47,8 @@
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
 //    [self setTitle:title];
 }
+
+
 
 
 

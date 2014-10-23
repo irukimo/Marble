@@ -10,6 +10,6 @@
 
 @interface KeywordUpdate (MBKeywordUpdate)
 
-- (void) initFBIDs;
+- (void) initParentAttributes;
 
 @end
