@@ -14,6 +14,9 @@
 #define SEND_BUTTON_TAG 116
 #define GOLDEN_LEFT_ALIGNMENT 130
 #define GRAY_Y 26
+#define HEADER_VIEW_HEIGHT_WITH_KEYWORDS 195
+#define HEADER_VIEW_HEIGHT_WITHOUT_KEYWORDS 150
+
 
 @interface ProfileViewController ()
 @property (strong, nonatomic) UILabel *nameLabel;
@@ -107,7 +110,7 @@
 }
 
 -(void) prepareHeaderView{
-    int height = (_user.keywords)? 195: 150;
+    int height = (_user.keywords)? HEADER_VIEW_HEIGHT_WITH_KEYWORDS: HEADER_VIEW_HEIGHT_WITHOUT_KEYWORDS;
     _headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, height)];
     [_headerView setBackgroundColor:[UIColor whiteColor]];
     
@@ -150,9 +153,7 @@
     [self addGrayStaticLabels];
     [_headerView addSubview:_nameLabel];
     [_headerView addSubview:_statusTextView];
-    if(_user.keywords){
-        [_headerView addSubview:_viewKeywordBtn];
-    }
+    [_headerView addSubview:_viewKeywordBtn];
 }
 
 -(void)addGrayStaticLabels{
@@ -284,31 +285,50 @@
 }
 
 -(void) displayKeywords{
-    if(_user.keywords){
-
-        if([_user.keywords isKindOfClass:[NSString class]]){
-            NSString *keyword = (NSString *)_user.keywords;
+    if(!_user.keywords){
+        [self setNoKeywordsSetting];
+        return;
+    }
+    NSLog(@"_user.keywords %@ exists", _user.keywords);
+    CGRect headerFrame = _headerView.frame;
+    headerFrame.size.height = HEADER_VIEW_HEIGHT_WITH_KEYWORDS;
+    [_headerView setFrame:headerFrame];
+    [self.tableView setTableHeaderView:_headerView];
+    
+    int x = 25;
+    int y = 125;
+    if([_user.keywords isKindOfClass:[NSString class]]){
+        NSString *keyword = (NSString *)_user.keywords;
+        NSAttributedString *keywordString =[[NSAttributedString alloc] initWithString:keyword attributes:[Utility getNotifOrangeNormalFontDictionary]];
+        [self addKeywordLabelAtX:100 andY:100 withKeyword:keywordString atIndex:-1];
+    } else if([_user.keywords isKindOfClass:[NSArray class]]){
+        NSArray *keywordArray = (NSArray *)_user.keywords;
+        if([keywordArray count] == 0){
+            [self setNoKeywordsSetting];
+            return;
+        }
+        for(NSString *keyword in keywordArray){
             NSAttributedString *keywordString =[[NSAttributedString alloc] initWithString:keyword attributes:[Utility getNotifOrangeNormalFontDictionary]];
-            [self addKeywordLabelAtX:100 andY:100 withKeyword:keywordString atIndex:-1];
-        } else if([_user.keywords isKindOfClass:[NSArray class]]){
-            NSArray *keywordArray = (NSArray *)_user.keywords;
-            int x = 25;
-            int y = 125;
-            for(NSString *keyword in keywordArray){
-                NSAttributedString *keywordString =[[NSAttributedString alloc] initWithString:keyword attributes:[Utility getNotifOrangeNormalFontDictionary]];
-                [self addKeywordLabelAtX:x andY:y withKeyword:keywordString atIndex:[keywordArray indexOfObject:keyword]];
-                x+= keywordString.size.width + 20;
-                if(x>250){
-                    x=25;
-                    y+=30;
-                }
+            [self addKeywordLabelAtX:x andY:y withKeyword:keywordString atIndex:[keywordArray indexOfObject:keyword]];
+            x+= keywordString.size.width + 20;
+            if(x>250){
+                x=25;
+                y+=30;
             }
-            CGRect moreFrame = _viewKeywordBtn.frame;
-            moreFrame.origin.x = x;
-            moreFrame.origin.y = y;
-            _viewKeywordBtn.frame = moreFrame;
         }
     }
+    CGRect moreFrame = _viewKeywordBtn.frame;
+    moreFrame.origin.x = x;
+    moreFrame.origin.y = y;
+    _viewKeywordBtn.frame = moreFrame;
+}
+
+-(void) setNoKeywordsSetting{
+    CGRect headerFrame = _headerView.frame;
+    headerFrame.size.height = HEADER_VIEW_HEIGHT_WITHOUT_KEYWORDS;
+    [_headerView setFrame:headerFrame];
+    [self.tableView setTableHeaderView:_headerView];
+    [_viewKeywordBtn removeFromSuperview];
 }
 
 -(void) setStatusWithText:(NSString *)status{
