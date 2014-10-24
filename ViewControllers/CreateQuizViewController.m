@@ -12,6 +12,7 @@
 #import "User+MBUser.h"
 #import "Quiz.h"
 #import "Quiz+MBQuiz.h"
+#import "Post+MBPost.h"
 #import <QuartzCore/QuartzCore.h>
 
 
@@ -222,9 +223,9 @@
      postObject:quiz
      path:nil
      parameters:params
-     success:[Utility successBlockWithDebugMessage:@"Succcessfully posted the quiz"
-                                             block:^{                                             }]
-     failure:^(RKObjectRequestOperation *operation, NSError *error) {
+     success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+         [Post setIndicesAsRefreshing:[mappingResult array]];
+     } failure:^(RKObjectRequestOperation *operation, NSError *error) {
          [Utility generateAlertWithMessage:@"No network!"];
      }];
     [self shuffleAll:nil];
