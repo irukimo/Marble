@@ -66,7 +66,6 @@
 
 -(void)viewWillAppear:(BOOL)animated{
     [self setNavbarTitle];
-    [self removeAllKeywords];
 }
 
 -(void) removeAllKeywords{
@@ -394,14 +393,11 @@
         [self getStatus];
         [_statusTextView resignFirstResponder];
         [self.tableView triggerPullToRefresh];
-        [_statusBtn setTitle:@"edit" forState:UIControlStateNormal];
     } else{
-        [_statusBtn setTitle:@"send" forState:UIControlStateNormal];
         [_statusTextView becomeFirstResponder];
     }
 
 }
-
 
 
 /*
@@ -496,11 +492,14 @@
     
     //The rounded corner part, where you specify your view's corner radius:
     textView.layer.cornerRadius = 5;
-    textView.clipsToBounds = YES;}
+    textView.clipsToBounds = YES;
+    [_statusBtn setTitle:@"send" forState:UIControlStateNormal];
+}
 
 - (void)textViewDidEndEditing:(UITextView *)textView
 {
     [self.view endEditing:YES];
+    [_statusBtn setTitle:@"edit" forState:UIControlStateNormal];
     [self setStatusWithText:_user.status];
     [textView.layer setBorderWidth:0];
 }

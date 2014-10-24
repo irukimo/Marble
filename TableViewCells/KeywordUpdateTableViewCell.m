@@ -41,7 +41,7 @@
 
 
 -(void)initStaticButtonsAndLabels{
-    _descriptionLabel = [[UILabel alloc] initWithFrame:CGRectMake(NAME_LEFT_ALIGNMENT, NAME_TOP_ALIGNMENT, 150, 20)];
+    _descriptionLabel = [[UILabel alloc] initWithFrame:CGRectMake(NAME_LEFT_ALIGNMENT, NAME_TOP_ALIGNMENT + 1, 150, 20)];
     _nameButton = [[UIButton alloc] initWithFrame:CGRectMake(NAME_LEFT_ALIGNMENT, NAME_TOP_ALIGNMENT, 100, 20)];
     [_nameButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [_nameButton addTarget:self action:@selector(nameClicked:) forControlEvents:UIControlEventTouchUpInside];
@@ -112,7 +112,7 @@
     }
     
     
-    NSAttributedString *descString = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"has %lu new marble:",numKeywords]];
+    NSAttributedString *descString = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"has %lu new marble:",numKeywords] attributes:[Utility getNotifBlackNormalFontDictionary]];
     [_descriptionLabel setAttributedText:descString];
     CGRect descFrame = _descriptionLabel.frame;
     descFrame.origin.x = NAME_LEFT_ALIGNMENT + nameString.size.width + 5;
