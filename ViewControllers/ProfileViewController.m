@@ -147,7 +147,7 @@
 
     _statusBtn = [[UIButton alloc] initWithFrame:CGRectMake(230, 110, 40, 20)];
     [_statusTextView setDelegate:self];
-    [_statusBtn setTitle:@"send" forState:UIControlStateNormal];
+    [_statusBtn setTitle:@"edit" forState:UIControlStateNormal];
     [_statusBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     
     [_statusBtn addTarget:self action:@selector(sendStatusBtnClicked) forControlEvents:UIControlEventTouchUpInside];
@@ -387,12 +387,19 @@
 
 -(void) sendStatusBtnClicked
 {
-    NSString *status = _statusTextView.text;
-    MBDebug(@"To send status: %@", status);
-    [Utility sendThroughRKRoute:@"send_status" withParams:@{@"status": status}];
-    [self getStatus];
-    [_statusTextView resignFirstResponder];
-    [self.tableView triggerPullToRefresh];
+    if([_statusTextView isFirstResponder]){
+        NSString *status = _statusTextView.text;
+        MBDebug(@"To send status: %@", status);
+        [Utility sendThroughRKRoute:@"send_status" withParams:@{@"status": status}];
+        [self getStatus];
+        [_statusTextView resignFirstResponder];
+        [self.tableView triggerPullToRefresh];
+        [_statusBtn setTitle:@"edit" forState:UIControlStateNormal];
+    } else{
+        [_statusBtn setTitle:@"send" forState:UIControlStateNormal];
+        [_statusTextView becomeFirstResponder];
+    }
+
 }
 
 
