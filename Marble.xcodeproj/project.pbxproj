@@ -55,6 +55,7 @@
 		7A48344319EDEFB50029D092 /* SelectKeywordViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A48344219EDEFB50029D092 /* SelectKeywordViewCell.m */; };
 		7AB925B019E3730C00F8229F /* UIColor+MBColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AB925AF19E3730C00F8229F /* UIColor+MBColor.m */; };
 		7AB925B319E374E500F8229F /* ExploreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AB925B219E374E500F8229F /* ExploreViewController.m */; };
+		7ACD18D619FE159300B23DFA /* KeywordView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7ACD18D519FE159300B23DFA /* KeywordView.m */; };
 		7AD2A32E19DE1F9800B200E9 /* User+MBUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AD2A32D19DE1F9800B200E9 /* User+MBUser.m */; };
 		7AD9AF4119F6EB7200A83B59 /* UIView+MBView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AD9AF4019F6EB7200A83B59 /* UIView+MBView.m */; };
 		7AEB9CF619E8572200409276 /* KeywordUpdateTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AEB9CF519E8572200409276 /* KeywordUpdateTableViewCell.m */; };
@@ -179,6 +180,8 @@
 		7AB925AF19E3730C00F8229F /* UIColor+MBColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+MBColor.m"; sourceTree = "<group>"; };
 		7AB925B119E374E500F8229F /* ExploreViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExploreViewController.h; sourceTree = "<group>"; };
 		7AB925B219E374E500F8229F /* ExploreViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExploreViewController.m; sourceTree = "<group>"; };
+		7ACD18D419FE159300B23DFA /* KeywordView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KeywordView.h; path = UIViews/KeywordView.h; sourceTree = "<group>"; };
+		7ACD18D519FE159300B23DFA /* KeywordView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KeywordView.m; path = UIViews/KeywordView.m; sourceTree = "<group>"; };
 		7AD2A32C19DE1F9800B200E9 /* User+MBUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "User+MBUser.h"; sourceTree = "<group>"; };
 		7AD2A32D19DE1F9800B200E9 /* User+MBUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "User+MBUser.m"; sourceTree = "<group>"; };
 		7AD9AF3F19F6EB7200A83B59 /* UIView+MBView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+MBView.h"; sourceTree = "<group>"; };
@@ -349,9 +352,19 @@
 			name = Fonts;
 			sourceTree = "<group>";
 		};
+		7ACD18D319FE154E00B23DFA /* UIViews */ = {
+			isa = PBXGroup;
+			children = (
+				7ACD18D419FE159300B23DFA /* KeywordView.h */,
+				7ACD18D519FE159300B23DFA /* KeywordView.m */,
+			);
+			name = UIViews;
+			sourceTree = "<group>";
+		};
 		7AF4122419D9FB6C00A470E1 = {
 			isa = PBXGroup;
 			children = (
+				7ACD18D319FE154E00B23DFA /* UIViews */,
 				7A261F3119F0ABD500D1E91D /* CollectionViewCells */,
 				7A48343719EC56D60029D092 /* Resources */,
 				50B568F019E4949E0050C8EC /* Icons */,
@@ -687,6 +700,7 @@
 				51F5A75119E6089D006097EF /* NSNumber+MBNumber.m in Sources */,
 				7A48344319EDEFB50029D092 /* SelectKeywordViewCell.m in Sources */,
 				516937A519ECD35D00EE0C0D /* KeywordUpdate+MBKeywordUpdate.m in Sources */,
+				7ACD18D619FE159300B23DFA /* KeywordView.m in Sources */,
 				7AD2A32E19DE1F9800B200E9 /* User+MBUser.m in Sources */,
 				7AF4123319D9FB6C00A470E1 /* main.m in Sources */,
 				7A0E976919DCB194003A9359 /* ProfileViewController.m in Sources */,

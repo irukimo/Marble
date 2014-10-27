@@ -277,6 +277,14 @@
     } else{
         [self setUnselectAll];
     }
+    
+//    if([_quiz.author isEqualToString:[KeyChainWrapper getSelfFBID]]){
+//        if([_quiz.answer isEqualToString:_quiz.option0Name]){
+//            [self chooseOption0];
+//        } else{
+//            [self chooseOption1];
+//        }
+//    }
 }
 
 -(void) displayAlreadyGuessed:(NSString *)personGuessed{

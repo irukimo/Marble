@@ -229,7 +229,7 @@
     
     _createQuizViewController = [[CreateQuizViewController alloc] init];
     _createQuizViewController.delegate = self;
-    _createQuizViewController.view.frame = CGRectMake(0, 0, self.view.frame.size.width, 200);
+    _createQuizViewController.view.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
     _createQuizWholeView = [[UIView alloc] initWithFrame:CGRectMake(0, NAVBAR_HEIGHT, self.view.frame.size.width, self.view.frame.size.height)];
     [_createQuizWholeView addSubview:blackBGView];
     [_createQuizWholeView addSubview:_createQuizViewController.view];
