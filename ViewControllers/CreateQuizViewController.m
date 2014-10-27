@@ -29,7 +29,10 @@ static const CGFloat ChoosePersonButtonVerticalPadding = 20.f;
 @property (strong, nonatomic) UIButton *shuffleAllBtn;
 @property (strong, nonatomic) UIButton *shufflePeopleBtn;
 @property (strong, nonatomic) UITextField *ongoingTextField;
+
 @property (strong, nonatomic) NSString *keywordCurrentValue;
+@property (strong, nonatomic) NSString *keywordStoreValue;
+
 @property (strong, nonatomic) UIButton *chooseName1Btn;
 @property (strong, nonatomic) UIButton *chooseName2Btn;
 @property(nonatomic)CGPoint startPoint;
@@ -120,10 +123,12 @@ static const CGFloat ChoosePersonButtonVerticalPadding = 20.f;
     // and "LIKED" on swipes to the right.
     if (direction == MDCSwipeDirectionLeft) {
         NSLog(@"You noped %@.", self.currentKeyword);
-        [self chooseName2BtnClicked];
+        [self chooseName1BtnClicked];
+    } else if (direction == MDCSwipeDirectionBottom) {
+        NSLog(@"You trash %@.", self.currentKeyword);
     } else {
         NSLog(@"You liked %@.", self.currentKeyword);
-        [self chooseName1BtnClicked];
+        [self chooseName2BtnClicked];
     }
     
     // MDCSwipeToChooseView removes the view from the view hierarchy
@@ -187,7 +192,8 @@ static const CGFloat ChoosePersonButtonVerticalPadding = 20.f;
     KeywordView *keywordView = [[KeywordView alloc] initWithFrame:frame
                                                           keyword:_keywordArray[0]
                                                           options:options];
-    _keywordCurrentValue = _keywordArray[0];
+    _keywordCurrentValue = _keywordStoreValue;
+    _keywordStoreValue = _keywordArray[0];
     [_keywordArray removeObjectAtIndex:0];
     return keywordView;
 }

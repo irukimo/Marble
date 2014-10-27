@@ -47,6 +47,12 @@
  */
 @property (nonatomic, strong) UIView *nopeView;
 
+//Iru
+/*!
+ * The "trash" view, which fades in as the `MDCSwipeToChooseView` is panned to the bottom.
+ */
+@property (nonatomic, strong) UIView *trashView;
+
 /*!
  * The designated initializer takes a `frame` and a set of options to customize
  * the behavior of the view.

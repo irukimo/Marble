@@ -49,6 +49,7 @@ static CGFloat const MDCSwipeToChooseViewLabelWidth = 65.f;
         [self constructImageView];
         [self constructLikedView];
         [self constructNopeView];
+        [self constructTrashView];
         [self setupSwipeToChoose];
     }
     return self;
@@ -85,10 +86,22 @@ static CGFloat const MDCSwipeToChooseViewLabelWidth = 65.f;
     [self.imageView addSubview:self.likedView];
 }
 
+//Iru for trash view
+- (void)constructTrashView {
+    CGRect frame = CGRectMake(MDCSwipeToChooseViewHorizontalPadding,
+                              MDCSwipeToChooseViewTopPadding,
+                              CGRectGetMidX(_imageView.bounds),
+                              MDCSwipeToChooseViewLabelWidth);
+    self.trashView = [[UIView alloc] initWithFrame:frame];
+    [self.trashView constructBorderedLabelWithText:@"trash"
+                                             color:[UIColor blackColor]
+                                             angle:self.options.likedRotationAngle];
+    self.trashView.alpha = 0.f;
+    [self.imageView addSubview:self.trashView];
+}
+
 //Iru changed NopeImageView to NopeView
 - (void)constructNopeView {
-    
-    NSLog(@"construct nope view with text %@", self.options.nopeText);
     CGFloat width = CGRectGetMidX(self.imageView.bounds);
     CGFloat xOrigin = CGRectGetMaxX(_imageView.bounds) - width - MDCSwipeToChooseViewHorizontalPadding;
     self.nopeView = [[UIImageView alloc] initWithFrame:CGRectMake(xOrigin,
@@ -109,17 +122,25 @@ static CGFloat const MDCSwipeToChooseViewLabelWidth = 65.f;
 
     __block UIView *likedImageView = self.likedView;
     __block UIView *nopeImageView = self.nopeView;
+    __block UIView *trashImageView = self.trashView;
     __weak MDCSwipeToChooseView *weakself = self;
     options.onPan = ^(MDCPanState *state) {
         if (state.direction == MDCSwipeDirectionNone) {
             likedImageView.alpha = 0.f;
             nopeImageView.alpha = 0.f;
+            trashImageView.alpha = 0.f;
         } else if (state.direction == MDCSwipeDirectionLeft) {
             likedImageView.alpha = 0.f;
             nopeImageView.alpha = state.thresholdRatio;
+            trashImageView.alpha = 0.f;
         } else if (state.direction == MDCSwipeDirectionRight) {
             likedImageView.alpha = state.thresholdRatio;
             nopeImageView.alpha = 0.f;
+            trashImageView.alpha = 0.f;
+        } else if (state.direction == MDCSwipeDirectionBottom) {
+            likedImageView.alpha = 0.f;
+            nopeImageView.alpha = 0.f;
+            trashImageView.alpha = state.thresholdRatio;
         }
 
         if (weakself.options.onPan) {

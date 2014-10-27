@@ -121,6 +121,12 @@ const void * const MDCViewStateKey = &MDCViewStateKey;
             [self mdc_exitSuperviewFromTranslation:translation];
             break;
         }
+        case MDCSwipeDirectionBottom: {
+            CGPoint translation = MDCCGPointSubtract(self.center,
+                                                     self.mdc_viewState.originalCenter);
+            [self mdc_exitSuperviewFromTranslation:translation];
+            break;
+        }
         case MDCSwipeDirectionNone:
             [self mdc_returnToOriginalCenter];
             [self mdc_executeOnPanBlockForTranslation:CGPointZero];
@@ -167,13 +173,22 @@ const void * const MDCViewStateKey = &MDCViewStateKey;
 
 - (void)mdc_executeOnPanBlockForTranslation:(CGPoint)translation {
     if (self.mdc_options.onPan) {
-        CGFloat thresholdRatio = MIN(1.f, fabsf(translation.x)/self.mdc_options.threshold);
-
+        CGFloat thresholdRatio = 0.f;
         MDCSwipeDirection direction = MDCSwipeDirectionNone;
-        if (translation.x > 0.f) {
+        
+        //Iru added direction
+        //adjust how far down should display trash
+        if(translation.y > 120.f) {
+            direction = MDCSwipeDirectionBottom;
+            //minus the same number
+            thresholdRatio = MIN(1.f, fabsf(translation.y - 120.f)/self.mdc_options.threshold);
+        } else if (translation.x > 0.f) {
             direction = MDCSwipeDirectionRight;
+            thresholdRatio = MIN(1.f, fabsf(translation.x)/self.mdc_options.threshold);
         } else if (translation.x < 0.f) {
             direction = MDCSwipeDirectionLeft;
+            thresholdRatio = MIN(1.f, fabsf(translation.x)/self.mdc_options.threshold);
+            
         }
 
         MDCPanState *state = [MDCPanState new];
@@ -217,6 +232,9 @@ const void * const MDCViewStateKey = &MDCViewStateKey;
         return MDCSwipeDirectionRight;
     } else if (self.center.x < self.mdc_viewState.originalCenter.x - self.mdc_options.threshold) {
         return MDCSwipeDirectionLeft;
+    //Iru added directionBottom
+    } else if (self.center.y > self.mdc_viewState.originalCenter.x + self.mdc_options.threshold + 100){
+        return MDCSwipeDirectionBottom;
     } else {
         return MDCSwipeDirectionNone;
     }
