@@ -22,10 +22,6 @@
     [super viewDidLoad];
     //    NSManagedObjectContext *context = [[RKManagedObjectStore defaultStore].mainQueueManagedObjectContext];
     
-    //    _peopleArray = [NSArray arrayWithObjects:@"Peanut",@"Wen Shaw",  nil];
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     [self.view setBackgroundColor:[UIColor marbleLightGray]];
@@ -54,7 +50,7 @@
         cell = [[KeywordListTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:keywordListTableViewCellIdentifier];
     }
     
-    [cell setKeyword:[_keywordList objectAtIndex:indexPath.row]];
+    [cell setKeyword:[[_keywordList objectAtIndex:indexPath.row] objectAtIndex:1]];
     cell.delegate = self;
     return cell;
 }

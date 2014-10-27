@@ -241,6 +241,8 @@
     //Thirdly, named routes
     RKRoute *sendDeviceTokenRoute = [RKRoute routeWithName:@"set_device_token" pathPattern:@"set_device_token" method:RKRequestMethodPOST];
     
+    RKRoute *getKeywordRoute = [RKRoute routeWithName:@"get_keyword" pathPattern:@"keyword" method:RKRequestMethodGET];
+    
     RKRoute *sendCommentRoute = [RKRoute routeWithName:@"send_comment" pathPattern:@"comments" method:RKRequestMethodPOST];
     
     RKRoute *getCommentsRoute = [RKRoute routeWithName:@"get_comments" pathPattern:@"comments" method:RKRequestMethodGET];
@@ -257,7 +259,7 @@
                                                /*quizGETRoute, */quizPOSTRoute, /*statusPOSTRoute,*/ postGETRoute, userGETRoute,
                                                // named routes
                                                sendDeviceTokenRoute, sendCommentRoute, getCommentsRoute,
-                                               sendGuessRoute, sendStatusRoute, getNotificationsRoute, setBadgeRoute]];
+                                               sendGuessRoute, sendStatusRoute, getNotificationsRoute, setBadgeRoute, getKeywordRoute]];
 
 
 }

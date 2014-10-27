@@ -313,7 +313,7 @@
     int x = 0;
     int y = 0;
     if([_user.keywords isKindOfClass:[NSString class]]){
-        NSString *keyword = (NSString *)_user.keywords;
+        NSString *keyword = (NSString *)[_user.keywords objectAtIndex:1];
         NSAttributedString *keywordString =[[NSAttributedString alloc] initWithString:keyword attributes:[Utility getNotifOrangeNormalFontDictionary]];
         [self addKeywordLabelAtX:100 andY:100 withKeyword:keywordString atIndex:-1];
     } else if([_user.keywords isKindOfClass:[NSArray class]]){
@@ -322,9 +322,10 @@
             [self setNoKeywordsSetting];
             return;
         }
-        for(NSString *keyword in keywordArray){
+        for(NSArray *obj in keywordArray){
+            NSString *keyword = obj[1];
             NSAttributedString *keywordString =[[NSAttributedString alloc] initWithString:keyword attributes:[Utility getNotifOrangeNormalFontDictionary]];
-            [self addKeywordLabelAtX:x andY:y withKeyword:keywordString atIndex:[keywordArray indexOfObject:keyword]];
+            [self addKeywordLabelAtX:x andY:y withKeyword:keywordString atIndex:[keywordArray indexOfObject:obj]];
             x+= keywordString.size.width + 20;
             if(x>250){
                 x=0;
@@ -375,6 +376,7 @@
     if([sender tag] == -1){
         keyword = (NSString *)_user.keywords;
     } else{
+        MBDebug(@"SELECTED KEYWORD: %@", [_user.keywords objectAtIndex:[sender tag]]);
         keyword = [_user.keywords objectAtIndex:[sender tag]];
     }
     [self performSegueWithIdentifier:@"KeywordProfileViewControllerSegue" sender:keyword];
@@ -470,7 +472,7 @@
          }
     } else if([[segue destinationViewController] isKindOfClass:[KeywordProfileViewController class]]){
         KeywordProfileViewController *viewController =[segue destinationViewController];
-        [viewController setKeyword:sender];
+        [viewController setKeyword:[sender objectAtIndex:1]];
     }
 }
 

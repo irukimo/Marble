@@ -9,6 +9,10 @@
 #import "KeywordProfileViewController.h"
 
 @interface KeywordProfileViewController()
+@property (strong, nonatomic) NSDictionary *ranking;
+@property (strong, nonatomic) NSString *creatorName;
+@property (strong, nonatomic) NSString *creatorFBID;
+@property (strong, nonatomic) NSString *timePlayed;
 @property (strong, nonatomic) UIView *headerView;
 @property (strong, nonatomic) UIView *creatorView;
 @property (strong, nonatomic) UIView *timesPlayedView;
@@ -30,6 +34,51 @@
     self.tableView.contentInset = UIEdgeInsetsMake(5, 0, 5, 0);
     [self prepareHeaderView];
     self.tableView.tableHeaderView = _headerView;
+    [self getKeywordFromServer];
+}
+
+- (void)getKeywordFromServer
+{
+    if (![KeyChainWrapper isSessionTokenValid]) {
+        return;
+    }
+    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjects:@[_keyword, [KeyChainWrapper getSessionTokenForUser]]
+                                                                     forKeys:@[@"keyword", @"auth_token"]];
+    
+    NSMutableURLRequest *request = [[RKObjectManager sharedManager]
+                                    requestWithPathForRouteNamed:@"get_keyword"
+                                    object:self
+                                    parameters:params];
+    
+    RKHTTPRequestOperation *operation = [[RKHTTPRequestOperation alloc] initWithRequest:request];
+    [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+        MBDebug(@"Fetched keyword");
+        NSDictionary *keyword = (NSDictionary *)[NSJSONSerialization JSONObjectWithData:responseObject
+                                                                       options:NSJSONReadingMutableContainers
+                                                                         error:nil];
+        _creatorFBID = [keyword valueForKeyPath:@"creator.fb_id"];
+        _creatorName = [keyword valueForKeyPath:@"creator.name"];
+        _timePlayed = [keyword valueForKey:@"times"];
+        MBDebug(@"Creator info: %@, %@", _creatorName, _creatorFBID);
+        MBDebug(@"Time played: %@", _timePlayed);
+        MBDebug(@"Ranking: %@", [keyword valueForKey:@"ranking"]);
+        NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+        for (NSArray *obj in [keyword valueForKey:@"ranking"]){
+            [dict setValue:@{@"name": [obj[1] valueForKey:@"name"],
+                             @"fbID": [obj[1] valueForKey:@"fb_id"]} forKey:obj[0]];
+        }
+        _ranking = dict;
+        MBDebug(@"Real Ranking: %@", _ranking);
+    }
+                                     failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                         ASYNC({
+                                             [Utility generateAlertWithMessage:@"Network problem"];
+                                         });
+                                         MBError(@"Cannot fetch keyword!");
+                                     }];
+    
+    NSOperationQueue *operationQueue = [NSOperationQueue new];
+    [operationQueue addOperation:operation];
 }
 
 -(void) prepareHeaderView{
@@ -73,7 +122,6 @@
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
 //    [self setTitle:title];
 }
-
 
 
 
