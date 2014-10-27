@@ -73,7 +73,7 @@ static const CGFloat ChoosePersonButtonVerticalPadding = 20.f;
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self addTextFields];
-//    [self addShuffleButtons];
+    [self addShuffleButtons];
 //    [self addPeopleButtons];
     [self initFBProfilePicViews];
 //    [self addLockBtns];
@@ -120,8 +120,10 @@ static const CGFloat ChoosePersonButtonVerticalPadding = 20.f;
     // and "LIKED" on swipes to the right.
     if (direction == MDCSwipeDirectionLeft) {
         NSLog(@"You noped %@.", self.currentKeyword);
+        [self chooseName2BtnClicked];
     } else {
         NSLog(@"You liked %@.", self.currentKeyword);
+        [self chooseName1BtnClicked];
     }
     
     // MDCSwipeToChooseView removes the view from the view hierarchy
@@ -155,7 +157,7 @@ static const CGFloat ChoosePersonButtonVerticalPadding = 20.f;
     // It would be trivial to download these from a web service
     // as needed, but for the purposes of this sample app we'll
     // simply store them in memory.
-    return @[@"demanding", @"humorous", @"what the heck", @"why not?",@"demanding", @"humorous", @"what the heck", @"why not?"];
+    return @[@"demanding", @"humorous", @"what the heck", @"why not?",@"demanding", @"humorous", @"what the heck", @"why not?",@"demanding", @"humorous", @"what the heck", @"why not?",@"demanding", @"humorous", @"what the heck", @"why not?"];
 }
 
 - (KeywordView *)popPersonViewWithFrame:(CGRect)frame {
@@ -185,6 +187,7 @@ static const CGFloat ChoosePersonButtonVerticalPadding = 20.f;
     KeywordView *keywordView = [[KeywordView alloc] initWithFrame:frame
                                                           keyword:_keywordArray[0]
                                                           options:options];
+    _keywordCurrentValue = _keywordArray[0];
     [_keywordArray removeObjectAtIndex:0];
     return keywordView;
 }
@@ -481,14 +484,14 @@ static const CGFloat ChoosePersonButtonVerticalPadding = 20.f;
 
 
 
-/*
+
 -(void)addShuffleButtons{
-    _shuffleAllBtn = [[UIButton alloc] initWithFrame:CGRectMake(100, 150, 100, 50)];
+    _shuffleAllBtn = [[UIButton alloc] initWithFrame:CGRectMake(100, 400, 100, 50)];
     [_shuffleAllBtn setTitle:@"shuffle" forState:UIControlStateNormal];
-    [_shuffleAllBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [_shuffleAllBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [self.view addSubview:_shuffleAllBtn];
     [_shuffleAllBtn addTarget:self action:@selector(shuffleAll:) forControlEvents:UIControlEventTouchUpInside];
-}*/
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -496,12 +499,12 @@ static const CGFloat ChoosePersonButtonVerticalPadding = 20.f;
 }
 
 
-/*
+
 - (void)shuffleAll:(id)sender {
-    if(!_keywordIsLocked){
-        [_keywordTextField setText:[KeyChainWrapper getARandomKeyword]];
-        _keywordCurrentValue = [_keywordTextField text];
-    }
+//    if(!_keywordIsLocked){
+//        [_keywordTextField setText:[KeyChainWrapper getARandomKeyword]];
+//        _keywordCurrentValue = [_keywordTextField text];
+//    }
     
     NSArray *randomUser;
     NSMutableArray *existingUsers = [[NSMutableArray alloc] init];
@@ -509,14 +512,14 @@ static const CGFloat ChoosePersonButtonVerticalPadding = 20.f;
     if (_option1 != nil) [existingUsers addObject:_option1];
     [User getRandomUsersThisMany:2 inThisArray:&randomUser inManagedObjectContext:[RKManagedObjectStore defaultStore].mainQueueManagedObjectContext existingUsers:existingUsers];
     if([randomUser count] >= 2) {
-        if(!_option0IsLocked){
+//        if(!_option0IsLocked){
             [self setOption0:[randomUser firstObject]];
-        }
-        if(!_option1IsLocked){
+//        }
+//        if(!_option1IsLocked){
             [self setOption1:[randomUser objectAtIndex:1]];
-        }
+//        }
     }
-}*/
+}
 
 
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
