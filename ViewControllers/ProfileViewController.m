@@ -366,6 +366,10 @@
     [_createdNumLabel setAttributedText:createdAttributedString];
     [_receivedNumLabel setAttributedText:receivedAttributedString];
     [_solvedNumLabel setAttributedText:solvedAttributedString];
+
+    [_createdNumLabel setTextAlignment:NSTextAlignmentCenter];
+    [_receivedNumLabel setTextAlignment:NSTextAlignmentCenter];
+    [_solvedNumLabel setTextAlignment:NSTextAlignmentCenter];
 }
 
 -(void) setStatusWithText:(NSString *)status{
