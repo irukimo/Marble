@@ -325,12 +325,13 @@
         for(NSArray *obj in keywordArray){
             NSString *keyword = obj[1];
             NSAttributedString *keywordString =[[NSAttributedString alloc] initWithString:keyword attributes:[Utility getNotifOrangeNormalFontDictionary]];
-            [self addKeywordLabelAtX:x andY:y withKeyword:keywordString atIndex:[keywordArray indexOfObject:obj]];
-            x+= keywordString.size.width + 20;
-            if(x>250){
+            int tempX = x + keywordString.size.width + 20;
+            if(tempX >290){
                 x=0;
                 y+=30;
             }
+            [self addKeywordLabelAtX:x andY:y withKeyword:keywordString atIndex:[keywordArray indexOfObject:obj]];
+            x += keywordString.size.width + 20; 
         }
     }
     CGRect moreFrame = _viewKeywordBtn.frame;

@@ -190,6 +190,11 @@
 }
 
 -(void) marbleButtonClickedWithUser:(User *)user orKeyword:(NSString *)keyword{
+    if(_isCreatingMarble){
+        [_createQuizWholeView removeFromSuperview];
+        _isCreatingMarble = FALSE;
+        return;
+    }
     [_createQuizViewController setOption0Option1];
     if(user){
         [_createQuizViewController setOption0:user];
@@ -199,13 +204,8 @@
     } else{
         [_createQuizViewController resetAllOptions];
     }
-    if(_isCreatingMarble){
-        [_createQuizWholeView removeFromSuperview];
-        _isCreatingMarble = FALSE;
-    } else{
-        [self.view addSubview:_createQuizWholeView];
-        _isCreatingMarble = TRUE;
-    }
+    [self.view addSubview:_createQuizWholeView];
+    _isCreatingMarble = TRUE;
 }
 
 -(void) viewMoreComments:(NSArray *)commentArray atIndexPath:(NSIndexPath *)indexPath calledBy:(id)viewController{

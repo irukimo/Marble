@@ -272,19 +272,19 @@
     NSAttributedString *timeString = [[NSAttributedString alloc] initWithString:[Utility getDateToShow:quiz.time inWhole:NO] attributes:[Utility getGraySmallFontDictionary]];
     [_timeLabel setAttributedText:timeString];
     
+    //To prevent self guessing, and show the answer you guessed.
+    if([_quiz.author isEqualToString:[KeyChainWrapper getSelfFBID]]){
+        [self displayAlreadyGuessed:_quiz.answer];
+        return;
+    }
+    
     if(_quiz.guessed){
         [self displayAlreadyGuessed:_quiz.guessed];
     } else{
         [self setUnselectAll];
     }
     
-//    if([_quiz.author isEqualToString:[KeyChainWrapper getSelfFBID]]){
-//        if([_quiz.answer isEqualToString:_quiz.option0Name]){
-//            [self chooseOption0];
-//        } else{
-//            [self chooseOption1];
-//        }
-//    }
+
 }
 
 -(void) displayAlreadyGuessed:(NSString *)personGuessed{
