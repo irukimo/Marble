@@ -101,7 +101,9 @@
     //_commentFieldView.frame = CGRectMake(_commentFieldViewFrame.origin.x, _commentFieldViewFrame.origin.y - _keyboardSize.height,  _commentFieldViewFrame.size.width ,  _commentFieldViewFrame.size.height);
     //_commentsTableViewController.view.frame = CGRectMake(_commentsTableViewFrame.origin.x, _commentsTableViewFrame.origin.y, _commentsTableViewFrame.size.width, _commentsTableViewFrame.size.height - _keyboardSize.height);
     [UIView commitAnimations];
-    
+    [ scrollToRowAtIndexPath:nil
+                          atScrollPosition:UITableViewScrollPositionBottom
+                                  animated:YES];
     /*
     UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, kbSize.height, 0.0);
     _commentsWholeView.contentInset = contentInsets;
@@ -195,6 +197,9 @@
     _commentsTableViewController.view.frame = _commentsTableViewFrame;
     [_commentsTableViewController setCommentArray:commentArray];
     [self.view addSubview:_commentsWholeView];
+    
+    // adjust keyboard trigger offset
+    self.view.keyboardTriggerOffset = _commentFieldViewFrame.size.height-TABBAR_HEIGHT;
 }
 
 -(void) updateComments:(NSArray *)commentArray{
@@ -254,6 +259,30 @@
     [_commentsWholeView addSubview:_commentFieldView];
 }
 
+//HYJ
+-(void)initKeyboardDismiss
+{
+    self.view.keyboardTriggerOffset = 0;
+    
+    [self.view addKeyboardPanningWithFrameBasedActionHandler:^(CGRect keyboardFrameInView, BOOL opening, BOOL closing) {
+        /*
+         Try not to call "self" inside this block (retain cycle).
+         But if you do, make sure to remove DAKeyboardControl
+         when you are done with the view controller by calling:
+         [self.view removeKeyboardControl];
+         */
+        
+        CGRect accessoryViewFrame = _commentFieldView.frame;
+        accessoryViewFrame.origin.y = keyboardFrameInView.origin.y - accessoryViewFrame.size.height;
+        _commentFieldView.frame = accessoryViewFrame;
+        
+        //CGRect tableViewFrame = _commentsTableViewFrame;
+        //tableViewFrame.size.height = accessoryViewFrame.origin.y;
+        //_commentsTableViewFrame = tableViewFrame;
+    } constraintBasedActionHandler:nil];
+    //[self.view removeKeyboardControl];
+}
+
 -(void) commentPostClicked:(id)sender{
     if([_callerViewController isKindOfClass:[PostsViewController class]]){
         PostsViewController *postsViewController = _callerViewController;
@@ -264,6 +293,9 @@
 
 -(void)cancelCommentsTableView{
     [_commentsWholeView removeFromSuperview];
+    
+    // adjust keyboard trigger offset
+    self.view.keyboardTriggerOffset = 0;
 }
 
 -(void) prepareSelectPeopleViewController{
@@ -342,7 +374,6 @@
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField{
     [textField setText:@""];
-    
 //    if(_delegate && [_delegate respondsToSelector:@selector(presentCellWithKeywordOn:)]){
 //        [_delegate presentCellWithKeywordOn:textField];
 //    }
@@ -375,30 +406,6 @@
         [postsViewController gotoProfileWithName:name andID:fbid];
     }
 
-}
-
-
-//HYJ
--(void)initKeyboardDismiss
-{
-    _commentsWholeView.keyboardTriggerOffset = _commentFieldViewFrame.size.height;
-    [self.view addKeyboardPanningWithFrameBasedActionHandler:^(CGRect keyboardFrameInView, BOOL opening, BOOL closing) {
-        /*
-         Try not to call "self" inside this block (retain cycle).
-         But if you do, make sure to remove DAKeyboardControl
-         when you are done with the view controller by calling:
-         [self.view removeKeyboardControl];
-         */
-        
-        CGRect accessoryViewFrame = _commentFieldView.frame;
-        accessoryViewFrame.origin.y = keyboardFrameInView.origin.y - accessoryViewFrame.size.height;
-        _commentFieldView.frame = accessoryViewFrame;
-        
-        CGRect tableViewFrame = _commentsTableViewFrame;
-        tableViewFrame.size.height = accessoryViewFrame.origin.y;
-        _commentsTableViewFrame = tableViewFrame;
-    } constraintBasedActionHandler:nil];
-    //[self.view removeKeyboardControl];
 }
 
 /*
