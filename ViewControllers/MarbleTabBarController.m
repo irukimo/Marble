@@ -101,9 +101,6 @@
     //_commentFieldView.frame = CGRectMake(_commentFieldViewFrame.origin.x, _commentFieldViewFrame.origin.y - _keyboardSize.height,  _commentFieldViewFrame.size.width ,  _commentFieldViewFrame.size.height);
     //_commentsTableViewController.view.frame = CGRectMake(_commentsTableViewFrame.origin.x, _commentsTableViewFrame.origin.y, _commentsTableViewFrame.size.width, _commentsTableViewFrame.size.height - _keyboardSize.height);
     [UIView commitAnimations];
-    [ scrollToRowAtIndexPath:nil
-                          atScrollPosition:UITableViewScrollPositionBottom
-                                  animated:YES];
     /*
     UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, kbSize.height, 0.0);
     _commentsWholeView.contentInset = contentInsets;

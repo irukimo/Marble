@@ -12,11 +12,6 @@
 @interface CommentsTableViewController()
 
 @property (strong, nonatomic) NSMutableArray *commentsArray;
-@property (strong, nonatomic) UIView *commentTextFieldView;
-@property (strong, nonatomic) UITextField *commentTextField;
-@property(strong, nonatomic) UIButton *commentBotton;
-@property(strong, nonatomic) UIToolbar *toolBar;
-@property (nonatomic) CGRect fixedFrame;
 @end
 
 @implementation CommentsTableViewController
@@ -31,6 +26,14 @@
     [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     
     //self.tableView.keyboardDismissMode  = UIScrollViewKeyboardDismissModeInteractive;
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillShow)
+                                                 name:UIKeyboardDidShowNotification
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillRecede:)
+                                                 name:UIKeyboardWillHideNotification
+                                               object:nil];
 }
 
 
@@ -50,6 +53,17 @@
     
     [self.tableView setContentOffset:CGPointMake(0, yOffset) animated:YES];
 }
+
+- (void)keyboardWillShow
+{
+    self.tableView.frame = CGRectMake(self.tableView.frame.origin.x, self.tableView.frame.origin.y, self.tableView.frame.size.width, self.tableView.frame.size.height - KEYBOARD_HEIGHT);
+    
+}
+- (void)keyboardWillRecede:(NSNotification*)notification
+{
+    self.tableView.frame = CGRectMake(self.tableView.frame.origin.x, self.tableView.frame.origin.y, self.tableView.frame.size.width, self.tableView.frame.size.height + KEYBOARD_HEIGHT);
+}
+
 
 #pragma mark - Table view data source
 
