@@ -10,6 +10,7 @@
 #import "NotificationTableViewCell.h"
 #import "KeyChainWrapper.h"
 #import "ClientManager.h"
+#import "SinglePostViewController.h"
 
 @interface NotifViewController ()
 
@@ -110,6 +111,9 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    id post = [_notifications objectAtIndex:indexPath.row];
+    [self performSegueWithIdentifier:@"SinglePostViewControllerSegue" sender:post];
+
 //    User *personSelected = [_notifications objectAtIndex:indexPath.row];
 //    if(_delegate && [_delegate respondsToSelector:@selector(selectedPerson:)]){
 //        [_delegate selectedPerson:personSelected];
@@ -132,14 +136,18 @@
 
 
 
-/*
+
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if([[segue destinationViewController] isKindOfClass:[SinglePostViewController class]]){
+        SinglePostViewController *vc = (SinglePostViewController *)[segue destinationViewController];
+        [vc setSinglePost:sender];
+    }
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
 }
-*/
+
 
 @end

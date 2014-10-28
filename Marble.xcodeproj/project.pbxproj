@@ -53,6 +53,7 @@
 		7A48343B19EC56E80029D092 /* OpenSans-Semibold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7A48343919EC56E80029D092 /* OpenSans-Semibold.ttf */; };
 		7A48344019EC9B940029D092 /* PostsTableViewSuperCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A48343F19EC9B940029D092 /* PostsTableViewSuperCell.m */; };
 		7A48344319EDEFB50029D092 /* SelectKeywordViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A48344219EDEFB50029D092 /* SelectKeywordViewCell.m */; };
+		7AB610EC1A000765001C792D /* SinglePostViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AB610EB1A000765001C792D /* SinglePostViewController.m */; };
 		7AB925B019E3730C00F8229F /* UIColor+MBColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AB925AF19E3730C00F8229F /* UIColor+MBColor.m */; };
 		7AB925B319E374E500F8229F /* ExploreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AB925B219E374E500F8229F /* ExploreViewController.m */; };
 		7ACD18D619FE159300B23DFA /* KeywordView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7ACD18D519FE159300B23DFA /* KeywordView.m */; };
@@ -176,6 +177,8 @@
 		7A48343F19EC9B940029D092 /* PostsTableViewSuperCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PostsTableViewSuperCell.m; path = TableViewCells/PostsTableViewSuperCell.m; sourceTree = "<group>"; };
 		7A48344119EDEFB50029D092 /* SelectKeywordViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SelectKeywordViewCell.h; path = TableViewCells/SelectKeywordViewCell.h; sourceTree = "<group>"; };
 		7A48344219EDEFB50029D092 /* SelectKeywordViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SelectKeywordViewCell.m; path = TableViewCells/SelectKeywordViewCell.m; sourceTree = "<group>"; };
+		7AB610EA1A000765001C792D /* SinglePostViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SinglePostViewController.h; sourceTree = "<group>"; };
+		7AB610EB1A000765001C792D /* SinglePostViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SinglePostViewController.m; sourceTree = "<group>"; };
 		7AB925AE19E3730C00F8229F /* UIColor+MBColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+MBColor.h"; sourceTree = "<group>"; };
 		7AB925AF19E3730C00F8229F /* UIColor+MBColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+MBColor.m"; sourceTree = "<group>"; };
 		7AB925B119E374E500F8229F /* ExploreViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExploreViewController.h; sourceTree = "<group>"; };
@@ -463,6 +466,8 @@
 				7A10A56919EF23BB006A2CED /* CommentsTableViewController.m */,
 				7A261F2E19F0AB4B00D1E91D /* ExploreCollectionViewController.h */,
 				7A261F2F19F0AB4B00D1E91D /* ExploreCollectionViewController.m */,
+				7AB610EA1A000765001C792D /* SinglePostViewController.h */,
+				7AB610EB1A000765001C792D /* SinglePostViewController.m */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -716,6 +721,7 @@
 				517C895019DB7DB4005A8407 /* RestKitInitializer.m in Sources */,
 				7AEB9CFC19E9B3B500409276 /* KeywordProfileViewController.m in Sources */,
 				516937A219ECCD5600EE0C0D /* Post.m in Sources */,
+				7AB610EC1A000765001C792D /* SinglePostViewController.m in Sources */,
 				7AF4126B19DA2EC200A470E1 /* PostsViewController.m in Sources */,
 				7A0E976C19DCB389003A9359 /* MarbleTabBarController.m in Sources */,
 				7AF4127F19DB62C600A470E1 /* Utility.m in Sources */,

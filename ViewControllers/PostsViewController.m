@@ -432,6 +432,10 @@
     NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:buttonPosition];
     Quiz *quiz = [_fetchedResultsController objectAtIndexPath:indexPath];
     MBDebug(@"Answer to send with guess: %@", answer);
+    [self sendGuessForQuiz:quiz andAnswer:answer];
+}
+
+-(void)sendGuessForQuiz:(Quiz *)quiz andAnswer:(NSString *)answer{
     NSMutableDictionary *params = [NSMutableDictionary
                                    dictionaryWithObjects:@[quiz.uuid, answer, [KeyChainWrapper getSessionTokenForUser]]
                                    forKeys:@[@"quiz_uuid", @"answer", @"auth_token"]];
@@ -457,12 +461,18 @@
     [operationQueue addOperation:operation];
 }
 
+
+
 - (void) commentPost:(id)sender withComment:(NSString *)comment
 {
     CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.tableView];
     NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:buttonPosition];
     Post *post = [_fetchedResultsController objectAtIndexPath:indexPath];
+    [self commentPostForPost:post withComment:comment];
 
+}
+
+-(void)commentPostForPost:(Post *)post withComment:(NSString *)comment{
     MBDebug(@"%@", comment);
     [Utility sendThroughRKRoute:@"send_comment" withParams:@{@"post_uuid": post.uuid, @"comment": comment}
                    successBlock:^{ [self getCommentsForPost:post]; }

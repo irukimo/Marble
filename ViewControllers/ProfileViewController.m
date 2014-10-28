@@ -337,6 +337,11 @@
             x += keywordString.size.width + 20; 
         }
     }
+    if(x >260){
+        x=0;
+        y+=30;
+    }
+    MBDebug(@"moreframe %d %d", x, y);
     CGRect moreFrame = _viewKeywordBtn.frame;
     moreFrame.origin.x = x;
     moreFrame.origin.y = y;

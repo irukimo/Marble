@@ -13,7 +13,7 @@
 #define MBError NSLog
 #define URLMake(IP) (@"http://" IP @":4567/")
 
-//#define PRODUCTION_SERVER @"172.20.10.9"
+//#define PRODUCTION_SERVER @"192.168.2.34"
 #define PRODUCTION_SERVER @"localhost"
 
 #define ASYNC(...) dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{ __VA_ARGS__ })
@@ -29,6 +29,12 @@
 #define quizTableViewCellIdentifier    @"quizTableViewCellIdentifier"
 #define statusTableViewCellIdentifier  @"statusTableViewCellIdentifier"
 #define keywordUpdateTableViewCellIdentifier @"keywordUpdateTableViewCellIdentifier"
+
+#define singlePostQuizTableViewCellIdentifier    @"singlePostQuizTableViewCellIdentifier"
+#define singlePostStatusTableViewCellIdentifier  @"singlePostStatusTableViewCellIdentifier"
+#define singlePostKeywordUpdateTableViewCellIdentifier @"singlePostKeywordUpdateTableViewCellIdentifier"
+
+
 #define keywordListTableViewCellIdentifier @"keywordListTableViewCellIdentifier"
 
 #define selectKeywordViewCellIdentifier @"selectKeywordViewCellIdentifier"

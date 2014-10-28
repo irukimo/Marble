@@ -12,13 +12,15 @@
 +(void) addLeftBorderOn:(UIView *)view withColor:(UIColor *)color andWidth:(int)width andHeight:(int)height withOffset:(int) offset{
     CALayer *leftBorder = [CALayer layer];
     leftBorder.backgroundColor = color.CGColor;
-    leftBorder.frame = CGRectMake(offset, 0, width, 500);
+    int displayheight = (height < 500)? 500: height;
+    leftBorder.frame = CGRectMake(offset, 0, width, displayheight);
     [view.layer addSublayer:leftBorder];
 }
 +(void) addRightBorderOn:(UIView *)view withColor:(UIColor *)color andWidth:(int)width andHeight:(int)height withOffset:(int) offset{
     CALayer *rightBorder = [CALayer layer];
     rightBorder.backgroundColor = color.CGColor;
-    rightBorder.frame = CGRectMake(view.frame.size.width - offset - width, 0, width, 500);
+    int displayheight = (height < 500)? 500: height;
+    rightBorder.frame = CGRectMake(view.frame.size.width - offset - width, 0, width, displayheight);
     [view.layer addSublayer:rightBorder];
 }
 

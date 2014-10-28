@@ -22,6 +22,7 @@
 @property(strong, nonatomic) UITextField *commentField;
 @property(strong, nonatomic) UIButton *commentBtn;
 @property(strong, nonatomic) UIButton *viewMoreCommentsBtn;
+@property( nonatomic) BOOL isSinglePostSoExpandComments;
 @end
 
 @implementation PostsTableViewSuperCell
@@ -32,6 +33,7 @@
     if (self) {
         self.selectionStyle = UITableViewCellSelectionStyleNone;
         [self setBorder];
+        _isSinglePostSoExpandComments = ([reuseIdentifier isEqualToString:singlePostKeywordUpdateTableViewCellIdentifier] || [reuseIdentifier isEqualToString:singlePostQuizTableViewCellIdentifier] || [reuseIdentifier isEqualToString:singlePostStatusTableViewCellIdentifier])? TRUE: FALSE;
         // Initialization code
     }
     return self;
@@ -51,6 +53,7 @@
         [UIView addRightBorderOn:self.contentView withColor:[UIColor marbleLightGray] andWidth:5 andHeight:QuizTableViewCellDisplayHeight withOffset:5];
     }
 }
+
 
 -(void)prepareForReuse{
     [super prepareForReuse];
@@ -85,7 +88,7 @@
 -(void) addCommentTextField{
     NSUInteger commentCnt = [_comments count];
     if([_cellType isEqualToString:QUIZ_CELL_TYPE]){
-        if(commentCnt > 2){
+        if(!_isSinglePostSoExpandComments && commentCnt > 2){
             _viewMoreCommentsBtn = [[UIButton alloc] initWithFrame:CGRectMake(LEFT_ALIGNMENT, QuizTableViewCellHeight - 45, 50, TEXT_FIELD_HEIGHT)];
             _commentField = [[UITextField alloc] initWithFrame:CGRectMake(COMMENT_START_X, QuizTableViewCellHeight - 25 + 3*CommentIncrementHeight, 150, TEXT_FIELD_HEIGHT)];
         } else{
@@ -93,7 +96,7 @@
         }
         
     } else if([_cellType isEqualToString:STATUS_UPDATE_CELL_TYPE]){
-        if(commentCnt > 2){
+        if(!_isSinglePostSoExpandComments && commentCnt > 2){
             _viewMoreCommentsBtn = [[UIButton alloc] initWithFrame:CGRectMake(LEFT_ALIGNMENT, StatusUpdateTableViewCellHeight - 50, 50, TEXT_FIELD_HEIGHT)];
             _commentField = [[UITextField alloc] initWithFrame:CGRectMake(COMMENT_START_X, StatusUpdateTableViewCellHeight-30 + 3*CommentIncrementHeight, 150, TEXT_FIELD_HEIGHT)];
         } else{
@@ -101,7 +104,7 @@
         }
         
     } else{
-        if(commentCnt > 2){
+        if(!_isSinglePostSoExpandComments && commentCnt > 2){
             _viewMoreCommentsBtn = [[UIButton alloc] initWithFrame:CGRectMake(LEFT_ALIGNMENT, KeywordUpdateTableViewCellHeight - 50, 50, TEXT_FIELD_HEIGHT)];
             _commentField = [[UITextField alloc] initWithFrame:CGRectMake(COMMENT_START_X, KeywordUpdateTableViewCellHeight - 30 + 3*CommentIncrementHeight, 150, TEXT_FIELD_HEIGHT)];
         } else{
@@ -153,7 +156,7 @@
     }
     int i = 0;
     for (NSDictionary *cmt in _comments) {
-        if(i > 2){
+        if(!_isSinglePostSoExpandComments && i > 2){
             return;
         }
         [self addCommentAtY:(y+i*CommentIncrementHeight) withName:[cmt valueForKey:@"name"] andID:[cmt valueForKey:@"fb_id"] andComment:[cmt valueForKey:@"comment"] atCommentIndex:[_comments indexOfObject:cmt]];

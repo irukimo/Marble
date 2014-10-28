@@ -21,6 +21,8 @@
 @property (nonatomic, weak) id<PostsViewControllerDelegate> delegate;
 - (void) commentPostAtIndexPath:(NSIndexPath *)indexPath withComment:(NSString *)comment;
 -(void) gotoProfileWithName:(NSString *)name andID:(NSString *)fbid;
+-(void)sendGuessForQuiz:(Quiz *)quiz andAnswer:(NSString *)answer;
+-(void)commentPostForPost:(Post *)post withComment:(NSString *)comment;
 @end
 
 
