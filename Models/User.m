@@ -15,5 +15,8 @@
 @dynamic name;
 @dynamic status;
 @dynamic keywords;
+@dynamic received;
+@dynamic created;
+@dynamic solved;
 
 @end

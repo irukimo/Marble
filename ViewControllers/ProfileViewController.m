@@ -291,11 +291,14 @@
          if([_user isKindOfClass:[User class]]){
              [self setStatusWithText:_user.status];
              [self displayKeywords];
+             [self setNumbersWithReceived:_user.received withCreated:_user.created withSolved:_user.solved];
          }
      } failure:^(RKObjectRequestOperation *operation, NSError *error) {
          MBDebug(@"failed to get status");
      }];
 }
+
+
 
 -(void) displayKeywords{
     [self removeAllKeywords];
@@ -347,6 +350,17 @@
     [_headerView setFrame:headerFrame];
     [self.tableView setTableHeaderView:_headerView];
     [_viewKeywordBtn removeFromSuperview];
+}
+
+- (void) setNumbersWithReceived:(NSNumber *)received withCreated:(NSNumber *)created withSolved:(NSNumber *)solved
+{
+    NSAttributedString *createdAttributedString = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@", created] attributes:[Utility getNotifBlackNormalFontDictionary]];
+    NSAttributedString *receivedAttributedString = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@", received] attributes:[Utility getNotifBlackNormalFontDictionary]];
+    NSAttributedString *solvedAttributedString = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@", solved] attributes:[Utility getNotifBlackNormalFontDictionary]];
+    
+    [_createdNumLabel setAttributedText:createdAttributedString];
+    [_receivedNumLabel setAttributedText:receivedAttributedString];
+    [_solvedNumLabel setAttributedText:solvedAttributedString];
 }
 
 -(void) setStatusWithText:(NSString *)status{
