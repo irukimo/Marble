@@ -374,10 +374,10 @@
 -(void) keywordBtnClicked:(id)sender{
     NSString *keyword;
     if([sender tag] == -1){
-        keyword = (NSString *)_user.keywords;
+        keyword = (NSString *)[_user.keywords objectAtIndex:1];
     } else{
         MBDebug(@"SELECTED KEYWORD: %@", [_user.keywords objectAtIndex:[sender tag]]);
-        keyword = [_user.keywords objectAtIndex:[sender tag]];
+        keyword = [[_user.keywords objectAtIndex:[sender tag]] objectAtIndex:1];
     }
     [self performSegueWithIdentifier:@"KeywordProfileViewControllerSegue" sender:keyword];
 }
@@ -472,7 +472,7 @@
          }
     } else if([[segue destinationViewController] isKindOfClass:[KeywordProfileViewController class]]){
         KeywordProfileViewController *viewController =[segue destinationViewController];
-        [viewController setKeyword:[sender objectAtIndex:1]];
+        [viewController setKeyword:sender];
     }
 }
 
