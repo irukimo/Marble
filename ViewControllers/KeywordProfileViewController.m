@@ -65,6 +65,7 @@
         NSDictionary *keyword = (NSDictionary *)[NSJSONSerialization JSONObjectWithData:responseObject
                                                                        options:NSJSONReadingMutableContainers
                                                                          error:nil];
+        MBDebug(@"HEY KEYWORD: %@", keyword);
         _creatorFBID = [keyword valueForKeyPath:@"creator.fb_id"];
         _creatorName = [keyword valueForKeyPath:@"creator.name"];
         _timePlayed = [keyword valueForKey:@"times"];
@@ -79,6 +80,7 @@
         _ranking = dict;
         [self updateRanking];
         MBDebug(@"Real Ranking: %@", _ranking);
+        MBDebug(@"0th: %@", [[_ranking objectForKey:@0] objectForKey:@"fbID"]);
     }
                                      failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                          ASYNC({

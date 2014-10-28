@@ -28,7 +28,31 @@
     [self.tableView setBackgroundColor:[UIColor marbleLightGray]];
     [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     self.tableView.contentInset = UIEdgeInsetsMake(5, 0, 5, 0);
-
+    
+    for (NSArray *obj in _keywordList) {
+        MBDebug(@"KEYWORDLIST: keyword: %@", [obj objectAtIndex:1]);
+        NSDictionary *dict = [obj objectAtIndex:2];
+        /* each keyword:
+          * [
+          *   times played,
+          *   keyword,
+          *   { 
+          *     after: {fb_id: xxxx, name: xxxx, rank: (number)},
+          *     self: (number),
+          *     before: {fb_id: xxxx, name: xxxx, rank: (number)}
+          *   }
+          * ]
+          * NOTE: after/before might correspond to nil value.
+          */
+        for (NSString *key in dict) {
+            if ([key isEqualToString:@"self"]) {
+                MBDebug(@"self ranking: %@", [dict objectForKey:key]);
+            } else {
+                MBDebug(@"other ranking: %@, %@", key, [dict objectForKey:key]);
+            }
+        }
+    }
+    
 }
 
 #pragma mark - Table view data source
