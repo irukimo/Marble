@@ -23,6 +23,7 @@
 -(void) gotoProfileWithName:(NSString *)name andID:(NSString *)fbid;
 -(void)sendGuessForQuiz:(Quiz *)quiz andAnswer:(NSString *)answer;
 -(void)commentPostForPost:(Post *)post withComment:(NSString *)comment;
+- (NSMutableDictionary *)generateBasicParams;
 @end
 
 

@@ -274,6 +274,9 @@
     }
     else if (type == NSFetchedResultsChangeUpdate) {
         
+//        [self.tableView
+//         reloadRowsAtIndexPaths:@[indexPath]
+//         withRowAnimation:UITableViewRowAnimationAutomatic];
         
     } else if (type == NSFetchedResultsChangeMove) {
         [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
@@ -484,7 +487,7 @@
     
     MBDebug(@"%@", comment);
     [Utility sendThroughRKRoute:@"send_comment" withParams:@{@"post_uuid": post.uuid, @"comment": comment}
-                   successBlock:^{ [self getCommentsForPost:post]; }
+                   successBlock:^{  }
                    failureBlock:nil];
 }
 

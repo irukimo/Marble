@@ -12,6 +12,7 @@
 #import "KeywordUpdateTableViewCell.h"
 #import "CommentNotification.h"
 #import "PostsTableViewSuperCell.h"
+#import "Post+MBPost.h"
 
 @interface SinglePostViewController()
 @property (strong, nonatomic) Post *mustBePost;
@@ -25,6 +26,9 @@
 //    [super viewDidLoad];
     [self.view setBackgroundColor:[UIColor marbleLightGray]];
     [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
+    
+    
+
 }
 
 -(void) viewWillAppear:(BOOL)animated{
@@ -136,6 +140,31 @@
     _postWithoutClass = post;
     if(![_postWithoutClass isKindOfClass:[CommentNotification class]]){
         _mustBePost = post;
+    } else {
+        __weak PostsViewController *weakSelf = self;
+        
+        NSMutableDictionary *params = [weakSelf generateBasicParams];
+        
+        [[RKObjectManager sharedManager] getObject:[Post alloc]
+                                              path:nil
+                                        parameters:params
+                                           success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+                                               for (Post *post in [mappingResult array]) {
+                                                   [post initParentAttributes];
+                                                   _mustBePost = post;
+                                               }
+                                               [Post setIndicesAsLoadingMore:[mappingResult array]];
+                                               
+                                               [Utility saveToPersistenceStore:[RKManagedObjectStore defaultStore].mainQueueManagedObjectContext failureMessage:@"failed to save."];
+                                               MBDebug(@"Fetched single post: %@", _mustBePost);
+                                               _postWithoutClass = nil;
+                                               [self.tableView reloadData];
+                                           }
+                                           failure:[Utility failureBlockWithAlertMessage:@"Can't connect to the server"
+                                                                                   block:^{
+                                                                                       MBError(@"Cannot load updates");}]
+         ];
+
     }
 }
 
