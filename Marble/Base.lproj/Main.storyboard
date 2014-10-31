@@ -250,7 +250,7 @@
                         <segue destination="llQ-Fe-6WM" kind="relationship" relationship="viewControllers" id="T2q-bc-WMb"/>
                         <segue destination="Ie5-uJ-VHW" kind="relationship" relationship="viewControllers" id="cgk-ob-Rt5"/>
                         <segue destination="P4Y-Ru-Xd7" kind="relationship" relationship="viewControllers" id="Kn5-0o-dTq"/>
-                        <segue destination="c9W-Nv-Saz" kind="presentation" identifier="CreateQuizViewControllerSegue" id="GQR-qk-Z6P"/>
+                        <segue destination="c9W-Nv-Saz" kind="presentation" identifier="CreateQuizViewControllerSegue" animates="NO" id="GQR-qk-Z6P"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vmU-jj-EPg" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -266,6 +266,7 @@
                         <viewControllerLayoutGuide type="bottom" id="X6U-Bz-EdH"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="xNb-Fo-PB1">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -405,6 +406,7 @@
                         <viewControllerLayoutGuide type="bottom" id="Ccl-44-VXv"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="IR5-FO-YTN">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Dummy view controller" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="V5e-xi-gul">

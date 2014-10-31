@@ -12,16 +12,23 @@
 #import <MDCSwipeToChoose/MDCSwipeToChoose.h>
 #import "KeywordView.h"
 
+@protocol CreateQuizViewControllerDelegate;
 
-@interface CreateQuizViewController : UIViewController <UITextFieldDelegate,MDCSwipeToChooseDelegate,SelectKeywordViewControllerDelegate,SelectPeopleViewControllerDelegate>
+
+
+@interface CreateQuizViewController : UIViewController <UITextFieldDelegate,MDCSwipeToChooseDelegate,SelectKeywordViewControllerDelegate,SelectPeopleViewControllerDelegate, KeywordViewDelegate>
 -(void) setUser:(User *)user;
 -(void) setKeyword:(NSString *)keyword;
 -(void) setOption0:(User *)option0;
 -(void) resetAllOptions;
 -(void) setOption0Option1;
+@property (nonatomic, weak) id<CreateQuizViewControllerDelegate> delegate;
 
 @property (nonatomic, strong) NSString *currentKeyword;
 @property (nonatomic, strong) KeywordView *frontCardView;
 @property (nonatomic, strong) KeywordView *backCardView;
+@end
+
+@protocol CreateQuizViewControllerDelegate <NSObject>
 @end
 

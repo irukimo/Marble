@@ -8,16 +8,18 @@
 
 
 #import "CreateQuizViewController.h"
-
+#import "MarbleTabBarController.h"
 #import "FacebookSDK/FacebookSDK.h"
 #import "User+MBUser.h"
 #import "Quiz.h"
 #import "Quiz+MBQuiz.h"
 #import "Post+MBPost.h"
 #import <QuartzCore/QuartzCore.h>
+#import "UIImage+ImageEffects.h"
 
 #define AUTO_COMPLETE_SELECT_VIEW_TAG 999
 
+static const CGFloat animationDuration = 0.5;
 static const CGFloat ChoosePersonButtonHorizontalPadding = 80.f;
 static const CGFloat ChoosePersonButtonVerticalPadding = 20.f;
 
@@ -50,7 +52,8 @@ static const CGFloat ChoosePersonButtonVerticalPadding = 20.f;
 @property (strong, nonatomic) FBProfilePictureView *option1PicView;
 
 
-
+@property(strong, nonatomic) UIView *mainView;
+@property(strong,nonatomic) UIView *maskForDismissingTextField;
 /*
 @property (strong, nonatomic) UIButton *keywordLockBtn;
 @property (strong, nonatomic) UIButton *option0LockBtn;
@@ -62,9 +65,17 @@ static const CGFloat ChoosePersonButtonVerticalPadding = 20.f;
 
 
 @property (nonatomic, strong) NSMutableArray *keywordArray;
+
+
+@property UIView *blurMask;
+@property UIImageView *blurredBgImage;
+
 @end
 
+
+
 @implementation CreateQuizViewController
+
 
 -(instancetype) init{
     self = [super init];
@@ -78,11 +89,22 @@ static const CGFloat ChoosePersonButtonVerticalPadding = 20.f;
 }
 
 
-
+-(void)viewWillAppear:(BOOL)animated{
+    [_mainView setAlpha:0];
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationDuration:animationDuration];
+    [_mainView setAlpha:1];
+    [UIView commitAnimations];
+}
 
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    //put original view at background first
+    [self.view addSubview:[self generateBackgroundView]];
+    //everything is in mainView
+    [self.view addSubview:[self generateMainView]];
     
     _keywordArray = [[self defaultKeyword] mutableCopy];
     
@@ -104,36 +126,122 @@ static const CGFloat ChoosePersonButtonVerticalPadding = 20.f;
     [self initSwipeFunction];
     [self initExitButton];
     
+    [self generateMaskForDismissingTextField];
+    
     [self setOption0Option1];
+    
+    [self createBlurredView];
+    
+    NSLog(@"ran did load");
+}
+
+-(void)generateMaskForDismissingTextField{
+    _maskForDismissingTextField = [[UIView alloc] initWithFrame:self.view.frame];
+    [_maskForDismissingTextField setBackgroundColor:[UIColor clearColor]];
+    [_maskForDismissingTextField addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedView)]];
+    [_maskForDismissingTextField setTag:AUTO_COMPLETE_SELECT_VIEW_TAG];
+    [_maskForDismissingTextField setUserInteractionEnabled:YES];
+}
+
+-(UIImageView *)generateBackgroundView{
+    UIImageView *bgView = [[UIImageView alloc]initWithFrame:self.view.frame];
+    if(_delegate && [_delegate isKindOfClass:[MarbleTabBarController class]]){
+        MarbleTabBarController *vc = (MarbleTabBarController *)_delegate;
+        bgView.image = [self takeSnapshotOfView:vc.view withReductionFactor:0.5];
+    }
+    return bgView;
+}
+
+-(UIView *)generateMainView{
+    _mainView = [[UIView alloc] initWithFrame:self.view.frame];
+    _blurredBgImage = [[UIImageView  alloc] initWithFrame:self.view.frame];
+    [_blurredBgImage setContentMode:UIViewContentModeScaleToFill];
+    [_mainView addSubview:_blurredBgImage];
+    [_blurredBgImage addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(exitButtonClicked:)]];
+    [_blurredBgImage setUserInteractionEnabled:YES];
+    [_mainView setAlpha:0];
+    return _mainView;
+}
+
+-(void)createBlurredView{
+    /*:::::::::::::::::::::::: Create Blurred View ::::::::::::::::::::::::::*/
+    
+    // Blurred with UIImage+ImageEffects
+    if(_delegate && [_delegate isKindOfClass:[MarbleTabBarController class]]){
+        MarbleTabBarController *vc = (MarbleTabBarController *)_delegate;
+        _blurredBgImage.image = [self blurWithImageEffects:[self takeSnapshotOfView:vc.view withReductionFactor:1]];
+    }
+
+    
+    // Blurred with Core Image
+    // blurredBgImage.image = [self blurWithCoreImage:[self takeSnapshotOfView:[self createContentView]]];
+    
+    // Blurring with GPUImage framework
+    // blurredBgImage.image = [self blurWithGPUImage:[self takeSnapshotOfView:[self createContentView]]];
+    
+    /*::::::::::::::::::: Create Mask for Blurred View :::::::::::::::::::::*/
+    //Iru: we don't need mask
+//    _blurMask = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - 50, self.view.frame.size.width, 50)];
+//    _blurMask.backgroundColor = [UIColor whiteColor];
+//    _blurredBgImage.layer.mask = _blurMask.layer;
+    
 
 }
 
--(void) prepareSelectPeopleViewController{
+- (UIImage *)blurWithImageEffects:(UIImage *)image
+{
+    return [image applyBlurWithRadius:15 tintColor:[UIColor colorWithWhite:1 alpha:0.2] saturationDeltaFactor:1.5 maskImage:nil];
+}
+- (UIImage *)takeSnapshotOfView:(UIView *)view withReductionFactor:(CGFloat)factor
+{
+    CGFloat reductionFactor = factor;
+    UIGraphicsBeginImageContext(CGSizeMake(view.frame.size.width/reductionFactor, view.frame.size.height/reductionFactor));
+    [view drawViewHierarchyInRect:CGRectMake(0, 0, view.frame.size.width/reductionFactor, view.frame.size.height/reductionFactor) afterScreenUpdates:YES];
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    return image;
+}
+
+-(void) addMaskAndPrepareSelectPeopleViewController{
+    [_mainView addSubview:_maskForDismissingTextField];
     _selectPeopleViewController = [[SelectPeopleViewController alloc] init];
     //    _selectPeopleViewController.view.frame = CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y + 200, self.view.bounds.size.width, 100);
     _selectPeopleViewController.view.frame = [self getSearchRect];
     _selectPeopleViewController.view.tag = AUTO_COMPLETE_SELECT_VIEW_TAG;
     _selectPeopleViewController.delegate = self;
-    [self.view addSubview:_selectPeopleViewController.view];
+    [_mainView addSubview:_selectPeopleViewController.view];
 }
 
--(void) prepareSelectKeywordViewController{
+-(void) addMaskAndPrepareSelectKeywordViewController{
+    [_mainView addSubview:_maskForDismissingTextField];
     _selectKeywordViewController = [[SelectKeywordViewController alloc] init];
     //    _selectPeopleViewController.view.frame = CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y + 200, self.view.bounds.size.width, 100);
-    _selectKeywordViewController.view.frame = [self getSearchRect];   _selectKeywordViewController.view.tag = AUTO_COMPLETE_SELECT_VIEW_TAG;
+    CGRect searchFrame = [self getSearchRect];
+    searchFrame.origin.y = searchFrame.origin.y + 30;
+    _selectKeywordViewController.view.frame = searchFrame;
+    _selectKeywordViewController.view.tag = AUTO_COMPLETE_SELECT_VIEW_TAG;
     _selectKeywordViewController.delegate = self;
-    [self.view addSubview:_selectKeywordViewController.view];
+    [_mainView addSubview:_selectKeywordViewController.view];
 }
 
 -(void)initExitButton{
     UIButton *exitButton = [[UIButton alloc] initWithFrame:CGRectMake(280, 20, 20, 20)];
     [exitButton setTitle:@"X" forState:UIControlStateNormal];
     [exitButton addTarget:self action:@selector(exitButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:exitButton];
+    [_mainView addSubview:exitButton];
 }
 
 -(void)exitButtonClicked:(id)sender{
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [UIView animateWithDuration:animationDuration
+                          delay:0
+                        options: (UIViewAnimationOptions)UIViewAnimationCurveLinear
+                     animations:^{
+                        [_mainView setAlpha:0];
+                             }
+                     completion:^(BOOL finished){
+                        [self dismissViewControllerAnimated:NO completion:nil];
+                             }];
 }
 
 -(void)initSwipeFunction{
@@ -141,13 +249,13 @@ static const CGFloat ChoosePersonButtonVerticalPadding = 20.f;
     // Display the first ChoosePersonView in front. Users can swipe to indicate
     // whether they like or dislike the person displayed.
     self.frontCardView = [self popPersonViewWithFrame:[self frontCardViewFrame]];
-    [self.view addSubview:self.frontCardView];
+    [_mainView addSubview:self.frontCardView];
     
     // Display the second ChoosePersonView in back. This view controller uses
     // the MDCSwipeToChooseDelegate protocol methods to update the front and
     // back views after each user swipe.
     self.backCardView = [self popPersonViewWithFrame:[self backCardViewFrame]];
-    [self.view insertSubview:self.backCardView belowSubview:self.frontCardView];
+    [_mainView insertSubview:self.backCardView belowSubview:self.frontCardView];
     
     // Add buttons to programmatically swipe the view left or right.
     // See the `nopeFrontCardView` and `likeFrontCardView` methods.
@@ -184,7 +292,7 @@ static const CGFloat ChoosePersonButtonVerticalPadding = 20.f;
     if ((self.backCardView = [self popPersonViewWithFrame:[self backCardViewFrame]])) {
         // Fade the back card into view.
         self.backCardView.alpha = 0.f;
-        [self.view insertSubview:self.backCardView belowSubview:self.frontCardView];
+        [_mainView insertSubview:self.backCardView belowSubview:self.frontCardView];
         [UIView animateWithDuration:0.5
                               delay:0.0
                             options:UIViewAnimationOptionCurveEaseInOut
@@ -237,6 +345,7 @@ static const CGFloat ChoosePersonButtonVerticalPadding = 20.f;
     KeywordView *keywordView = [[KeywordView alloc] initWithFrame:frame
                                                           keyword:_keywordArray[0]
                                                           options:options];
+    keywordView.delegate = self;
     _keywordCurrentValue = _keywordStoreValue;
     _keywordStoreValue = _keywordArray[0];
     [_keywordArray removeObjectAtIndex:0];
@@ -251,8 +360,8 @@ static const CGFloat ChoosePersonButtonVerticalPadding = 20.f;
     CGFloat bottomPadding = 300.f;
     return CGRectMake(horizontalPadding,
                       topPadding,
-                      CGRectGetWidth(self.view.frame) - (horizontalPadding * 2),
-                      CGRectGetHeight(self.view.frame) - bottomPadding);
+                      CGRectGetWidth(_mainView.frame) - (horizontalPadding * 2),
+                      CGRectGetHeight(_mainView.frame) - bottomPadding);
 }
 
 - (CGRect)backCardViewFrame {
@@ -279,14 +388,14 @@ static const CGFloat ChoosePersonButtonVerticalPadding = 20.f;
     [button addTarget:self
                action:@selector(nopeFrontCardView)
      forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:button];
+    [_mainView addSubview:button];
 }
 
 // Create and add the "like" button.
 - (void)constructLikedButton {
     UIButton *button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     UIImage *image = [UIImage imageNamed:@"liked"];
-    button.frame = CGRectMake(CGRectGetMaxX(self.view.frame) - image.size.width - ChoosePersonButtonHorizontalPadding,
+    button.frame = CGRectMake(CGRectGetMaxX(_mainView.frame) - image.size.width - ChoosePersonButtonHorizontalPadding,
                               CGRectGetMaxY(self.backCardView.frame) + ChoosePersonButtonVerticalPadding,
                               image.size.width,
                               image.size.height);
@@ -298,7 +407,7 @@ static const CGFloat ChoosePersonButtonVerticalPadding = 20.f;
     [button addTarget:self
                action:@selector(likeFrontCardView)
      forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:button];
+    [_mainView addSubview:button];
 }
 
 #pragma mark Control Events
@@ -328,9 +437,9 @@ static const CGFloat ChoosePersonButtonVerticalPadding = 20.f;
     [_option0LockBtn addTarget:self action:@selector(option0LockBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
     [_option1LockBtn addTarget:self action:@selector(option1LockBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
 
-    [self.view addSubview:_keywordLockBtn];
-    [self.view addSubview:_option0LockBtn];
-    [self.view addSubview:_option1LockBtn];
+    [_mainView addSubview:_keywordLockBtn];
+    [_mainView addSubview:_option0LockBtn];
+    [_mainView addSubview:_option1LockBtn];
 }*/
 
 
@@ -341,11 +450,19 @@ static const CGFloat ChoosePersonButtonVerticalPadding = 20.f;
     _option0PicView.layer.cornerRadius = _option0PicView.frame.size.width/2.0;
     _option0PicView.layer.masksToBounds = YES;
     _option1PicView.layer.cornerRadius = _option1PicView.frame.size.width/2.0;
-    [_option0PicView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(chooseName1BtnClicked)]];
-    [_option1PicView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(chooseName2BtnClicked)]];
+    [_option0PicView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(option0PicViewClicked)]];
+    [_option1PicView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(option1PicViewClicked)]];
     _option1PicView.layer.masksToBounds = YES;
-    [self.view addSubview:_option0PicView];
-    [self.view addSubview:_option1PicView];
+    [_mainView addSubview:_option0PicView];
+    [_mainView addSubview:_option1PicView];
+}
+
+-(void)option0PicViewClicked{
+    [_option0NameTextField becomeFirstResponder];
+}
+
+-(void)option1PicViewClicked{
+    [_option1NameTextField becomeFirstResponder];
 }
 
 
@@ -436,8 +553,8 @@ static const CGFloat ChoosePersonButtonVerticalPadding = 20.f;
     [_chooseName2Btn addTarget:self action:@selector(chooseName2BtnClicked) forControlEvents:UIControlEventTouchUpInside];
     [_chooseName1Btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [_chooseName2Btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [self.view addSubview:_chooseName1Btn];
-    [self.view addSubview:_chooseName2Btn];
+    [_mainView addSubview:_chooseName1Btn];
+    [_mainView addSubview:_chooseName2Btn];
 }*/
 
 -(void)chooseName1BtnClicked{
@@ -500,9 +617,9 @@ static const CGFloat ChoosePersonButtonVerticalPadding = 20.f;
 //    
 //    _name2CurrentValue = @"胖仔";
 //    [_option1NameTextField setText:_name2CurrentValue];
-//    [self.view addSubview:_keywordTextField];
-    [self.view addSubview:_option0NameTextField];
-    [self.view addSubview:_option1NameTextField];
+//    [_mainView addSubview:_keywordTextField];
+    [_mainView addSubview:_option0NameTextField];
+    [_mainView addSubview:_option1NameTextField];
     
     /*
     [_keywordTextField setBorderStyle:UITextBorderStyleNone];
@@ -541,7 +658,7 @@ static const CGFloat ChoosePersonButtonVerticalPadding = 20.f;
     _shuffleAllBtn = [[UIButton alloc] initWithFrame:CGRectMake(100, 450, 100, 50)];
     [_shuffleAllBtn setTitle:@"shuffle" forState:UIControlStateNormal];
     [_shuffleAllBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [self.view addSubview:_shuffleAllBtn];
+    [_mainView addSubview:_shuffleAllBtn];
     [_shuffleAllBtn addTarget:self action:@selector(shuffleAll:) forControlEvents:UIControlEventTouchUpInside];
 }
 
@@ -577,7 +694,7 @@ static const CGFloat ChoosePersonButtonVerticalPadding = 20.f;
 //-(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
 //    NSLog(@"got touched!");
 //    UITouch *touch = [touches anyObject];
-//    _startPoint = [touch locationInView:self.view];
+//    _startPoint = [touch locationInView:_mainView];
 //}
 
 /*
@@ -615,23 +732,24 @@ static const CGFloat ChoosePersonButtonVerticalPadding = 20.f;
 }
 
 -(void) tappedView{
-//    CGPoint tappedPoint = [recognizer locationInView:self.view];
+//    CGPoint tappedPoint = [recognizer locationInView:_mainView];
 //    CGRect searchFrame = [self getSearchRect];
 //    if(CGRectContainsPoint(searchFrame, tappedPoint)){
 //        return;
 //    }
-    [self.view endEditing:YES];
+    [_mainView endEditing:YES];
     [self presentData];
 }
 
 -(CGRect)getSearchRect{
-    return CGRectMake(0, 150, self.view.bounds.size.width, 200);
+    return CGRectMake(0, 150, _mainView.bounds.size.width, 200);
 }
 
 #pragma mark -
 #pragma mark UITextField Delegate Methods
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    MBDebug(@"return clicked");
     //    if (textField == _keywordTextField) {
     //    [textField resignFirstResponder];
     //    if(self.delegate){
@@ -657,6 +775,33 @@ static const CGFloat ChoosePersonButtonVerticalPadding = 20.f;
 
 }
 
+- (void)textFieldDidEndEditing:(UITextField *)textField{
+    for(id view in _mainView.subviews){
+        if([view tag] == AUTO_COMPLETE_SELECT_VIEW_TAG){
+            [view removeFromSuperview];
+        }
+    }
+    if(textField!=_option0NameTextField && textField!=_option1NameTextField){
+        if([textField.text isEqualToString:@""]){
+            _frontCardView.keyword = _keywordCurrentValue;
+        } else{
+            _keywordCurrentValue = textField.text;
+        }
+    }
+}
+
+- (void)textFieldDidBeginEditing:(UITextField *)textField{
+    [self presentAndEmptyData:textField];
+    _ongoingTextField = textField;
+    if(textField == _option0NameTextField || textField == _option1NameTextField){
+        [self addMaskAndPrepareSelectPeopleViewController];
+    } else{
+        [self addMaskAndPrepareSelectKeywordViewController];
+    }
+}
+
+
+//not a delegate method, need to set fire
 -(void)textFieldDidChange :(UITextField *)textField{
     if(textField == _option1NameTextField || textField == _option0NameTextField){
         NSArray *arrayOfUsers;
@@ -671,23 +816,6 @@ static const CGFloat ChoosePersonButtonVerticalPadding = 20.f;
     }
 }
 
-- (void)textFieldDidEndEditing:(UITextField *)textField{
-    for(id view in self.view.subviews){
-        if([view tag] == AUTO_COMPLETE_SELECT_VIEW_TAG){
-            [view removeFromSuperview];
-        }
-    }
-}
-
-- (void)textFieldDidBeginEditing:(UITextField *)textField{
-    [self presentAndEmptyData:textField];
-    _ongoingTextField = textField;
-    if(textField == _option0NameTextField || textField == _option1NameTextField){
-        [self prepareSelectPeopleViewController];
-    } else{
-        [self prepareSelectKeywordViewController];
-    }
-}
 
 -(void) presentAndEmptyData:(UITextField *)textField{
     [self presentData];

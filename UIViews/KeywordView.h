@@ -8,8 +8,13 @@
 
 #import "MDCSwipeToChooseView.h"
 
+@protocol KeywordViewDelegate <NSObject>
+-(void)textFieldDidChange :(UITextField *)textField;
+@end
+
 @interface KeywordView : MDCSwipeToChooseView
 @property (strong, nonatomic) NSString *keyword;
+@property(weak, nonatomic) id<KeywordViewDelegate, UITextFieldDelegate> delegate;
 - (instancetype)initWithFrame:(CGRect)frame
                       keyword:(NSString *)keyword
                       options:(MDCSwipeToChooseViewOptions *)options;

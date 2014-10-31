@@ -11,7 +11,7 @@
 #import "CommentsTableViewController.h"
 
 
-@interface MarbleTabBarController : UITabBarController <UITabBarControllerDelegate,   UITextFieldDelegate, CommentsTableViewControllerDelegate>
+@interface MarbleTabBarController : UITabBarController <UITabBarControllerDelegate,   UITextFieldDelegate, CommentsTableViewControllerDelegate, CreateQuizViewControllerDelegate>
 -(void) marbleButtonClickedWithUser:(User *)user orKeyword:(NSString *)keyword;
 -(void) viewMoreComments:(NSArray *)commentArray atIndexPath:(NSIndexPath *)indexPath calledBy:(id)viewController;
 -(void) updateComments:(NSArray *)commentArray;

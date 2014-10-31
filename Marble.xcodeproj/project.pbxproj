@@ -55,6 +55,7 @@
 		7A48344319EDEFB50029D092 /* SelectKeywordViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A48344219EDEFB50029D092 /* SelectKeywordViewCell.m */; };
 		7AB610EC1A000765001C792D /* SinglePostViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AB610EB1A000765001C792D /* SinglePostViewController.m */; };
 		7AB610EE1A02B060001C792D /* menu-addpost@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7AB610ED1A02B060001C792D /* menu-addpost@2x.png */; };
+		7AB610F31A03FE3B001C792D /* UIImage+ImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AB610F21A03FE3B001C792D /* UIImage+ImageEffects.m */; };
 		7AB925B019E3730C00F8229F /* UIColor+MBColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AB925AF19E3730C00F8229F /* UIColor+MBColor.m */; };
 		7AB925B319E374E500F8229F /* ExploreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AB925B219E374E500F8229F /* ExploreViewController.m */; };
 		7ACD18D619FE159300B23DFA /* KeywordView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7ACD18D519FE159300B23DFA /* KeywordView.m */; };
@@ -181,6 +182,7 @@
 		7AB610EA1A000765001C792D /* SinglePostViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SinglePostViewController.h; sourceTree = "<group>"; };
 		7AB610EB1A000765001C792D /* SinglePostViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SinglePostViewController.m; sourceTree = "<group>"; };
 		7AB610ED1A02B060001C792D /* menu-addpost@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menu-addpost@2x.png"; sourceTree = "<group>"; };
+		7AB610F21A03FE3B001C792D /* UIImage+ImageEffects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ImageEffects.m"; sourceTree = "<group>"; };
 		7AB925AE19E3730C00F8229F /* UIColor+MBColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+MBColor.h"; sourceTree = "<group>"; };
 		7AB925AF19E3730C00F8229F /* UIColor+MBColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+MBColor.m"; sourceTree = "<group>"; };
 		7AB925B119E374E500F8229F /* ExploreViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExploreViewController.h; sourceTree = "<group>"; };
@@ -189,6 +191,7 @@
 		7ACD18D519FE159300B23DFA /* KeywordView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KeywordView.m; path = UIViews/KeywordView.m; sourceTree = "<group>"; };
 		7AD2A32C19DE1F9800B200E9 /* User+MBUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "User+MBUser.h"; sourceTree = "<group>"; };
 		7AD2A32D19DE1F9800B200E9 /* User+MBUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "User+MBUser.m"; sourceTree = "<group>"; };
+		7AD323201A03FE5800C5C83B /* UIImage+ImageEffects.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIImage+ImageEffects.h"; sourceTree = "<group>"; };
 		7AD9AF3F19F6EB7200A83B59 /* UIView+MBView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+MBView.h"; sourceTree = "<group>"; };
 		7AD9AF4019F6EB7200A83B59 /* UIView+MBView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+MBView.m"; sourceTree = "<group>"; };
 		7AEB9CF419E8572200409276 /* KeywordUpdateTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KeywordUpdateTableViewCell.h; path = TableViewCells/KeywordUpdateTableViewCell.h; sourceTree = "<group>"; };
@@ -527,6 +530,8 @@
 				519CB25B19F59688001E1C1A /* NSMutableArray+Shuffling.m */,
 				7AD9AF3F19F6EB7200A83B59 /* UIView+MBView.h */,
 				7AD9AF4019F6EB7200A83B59 /* UIView+MBView.m */,
+				7AD323201A03FE5800C5C83B /* UIImage+ImageEffects.h */,
+				7AB610F21A03FE3B001C792D /* UIImage+ImageEffects.m */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -689,6 +694,7 @@
 			files = (
 				51BB7CB419EF221A00D10F0D /* Quiz.h in Sources */,
 				51BB7CB519EF221A00D10F0D /* Quiz.m in Sources */,
+				7AB610F31A03FE3B001C792D /* UIImage+ImageEffects.m in Sources */,
 				516937AE19EF07BF00EE0C0D /* User.h in Sources */,
 				516937AF19EF07BF00EE0C0D /* User.m in Sources */,
 				51706D3419E88F0B005010E6 /* StatusUpdate.h in Sources */,

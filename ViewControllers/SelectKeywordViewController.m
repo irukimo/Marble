@@ -23,6 +23,7 @@
 }
 
 -(void) displaySearchResult:(NSArray *)arrayOfKeywords{
+    MBDebug(@"array %@", arrayOfKeywords);
     _keywordArray = [arrayOfKeywords copy];
     [self.tableView reloadData];
 }

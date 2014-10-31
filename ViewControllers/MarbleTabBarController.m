@@ -55,7 +55,6 @@
         [v.tabBarItem setTitleTextAttributes:selectedFont forState:UIControlStateHighlighted];
         v.tabBarItem.image = [v.tabBarItem.image imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
         v.tabBarItem.selectedImage = [v.tabBarItem.selectedImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-        
     }
     
     // Do any additional setup after loading the view.
@@ -66,11 +65,10 @@
         NSString *badgeValue = [NSString stringWithFormat:@"%ld", (long)[UIApplication sharedApplication].applicationIconBadgeNumber];
         [[[[self tabBar] items] lastObject] setBadgeValue:badgeValue];
     }
-    
 }
 
 -(void)viewWillAppear:(BOOL)animated{
-        [self addCenterButtonWithImage:[UIImage imageNamed:@"menu-addpost.png"] highlightImage:nil];
+    [self addCenterButtonWithImage:[UIImage imageNamed:@"menu-addpost.png"] highlightImage:nil];
 }
 #pragma mark - add center button
 -(void)willAppearIn:(UINavigationController *)navigationController
@@ -100,6 +98,10 @@
     }
     
     [self.view addSubview:button];
+    
+    //disable dummy tabbar item
+    NSArray *tabItems = self.tabBar.items;
+    [[tabItems objectAtIndex:2] setEnabled:NO];
 }
 #pragma mark - center button function
 -(void)centerButtonTap:(id)sender{
@@ -379,13 +381,16 @@
 
 
 #pragma mark - Navigation
-/*
+
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-
+    if([[segue destinationViewController] isKindOfClass:[CreateQuizViewController class]]){
+        CreateQuizViewController *vc = (CreateQuizViewController *)[segue destinationViewController];
+        vc.delegate = self;
+    }
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
-}*/
+}
 
 
 @end
