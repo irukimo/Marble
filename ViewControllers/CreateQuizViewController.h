@@ -5,16 +5,15 @@
 //  Created by Iru on 9/29/14.
 //  Copyright (c) 2014 Orrzs Inc. All rights reserved.
 //
-
+#import "SelectKeywordViewController.h"
+#import "SelectPeopleViewController.h"
 #import <UIKit/UIKit.h>
 #import "User+MBUser.h"
 #import <MDCSwipeToChoose/MDCSwipeToChoose.h>
 #import "KeywordView.h"
 
-@protocol CreateQuizViewControllerDelegate;
 
-@interface CreateQuizViewController : UIViewController <UITextFieldDelegate,MDCSwipeToChooseDelegate>
-@property (nonatomic, weak) id<CreateQuizViewControllerDelegate> delegate;
+@interface CreateQuizViewController : UIViewController <UITextFieldDelegate,MDCSwipeToChooseDelegate,SelectKeywordViewControllerDelegate,SelectPeopleViewControllerDelegate>
 -(void) setUser:(User *)user;
 -(void) setKeyword:(NSString *)keyword;
 -(void) setOption0:(User *)option0;
@@ -26,12 +25,3 @@
 @property (nonatomic, strong) KeywordView *backCardView;
 @end
 
-@protocol CreateQuizViewControllerDelegate <NSObject>
-
-- (void)shouldDisplayPeople:(CreateQuizViewController*)viewController withPeople:(NSArray *)people;
-- (void)backToNormal:(CreateQuizViewController*)viewController;
-- (void)shouldDisplayKeywords:(CreateQuizViewController*)viewController withKeywords:(NSArray *)keywords;
-- (void)gotSearchUsersResult:(NSArray *)arrayOfUsers;
-- (void)gotSearchKeywordsResult:(NSArray *)arrayOfKeywords;
-
-@end

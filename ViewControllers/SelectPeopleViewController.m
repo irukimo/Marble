@@ -65,6 +65,7 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    MBDebug(@"selected cell");
     User *personSelected = [_peopleArray objectAtIndex:indexPath.row];
     if(_delegate && [_delegate respondsToSelector:@selector(selectedPerson:)]){
         [_delegate selectedPerson:personSelected];

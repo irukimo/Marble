@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "User.h"
 
 @protocol SelectPeopleViewControllerDelegate;
 
@@ -18,7 +19,7 @@
 
 @protocol SelectPeopleViewControllerDelegate <NSObject>
 
-- (void)selectedPerson:(NSString *)person;
+- (void)selectedPerson:(User *)person;
 
 
 @end

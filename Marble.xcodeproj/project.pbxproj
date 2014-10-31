@@ -54,6 +54,7 @@
 		7A48344019EC9B940029D092 /* PostsTableViewSuperCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A48343F19EC9B940029D092 /* PostsTableViewSuperCell.m */; };
 		7A48344319EDEFB50029D092 /* SelectKeywordViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A48344219EDEFB50029D092 /* SelectKeywordViewCell.m */; };
 		7AB610EC1A000765001C792D /* SinglePostViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AB610EB1A000765001C792D /* SinglePostViewController.m */; };
+		7AB610EE1A02B060001C792D /* menu-addpost@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7AB610ED1A02B060001C792D /* menu-addpost@2x.png */; };
 		7AB925B019E3730C00F8229F /* UIColor+MBColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AB925AF19E3730C00F8229F /* UIColor+MBColor.m */; };
 		7AB925B319E374E500F8229F /* ExploreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AB925B219E374E500F8229F /* ExploreViewController.m */; };
 		7ACD18D619FE159300B23DFA /* KeywordView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7ACD18D519FE159300B23DFA /* KeywordView.m */; };
@@ -179,6 +180,7 @@
 		7A48344219EDEFB50029D092 /* SelectKeywordViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SelectKeywordViewCell.m; path = TableViewCells/SelectKeywordViewCell.m; sourceTree = "<group>"; };
 		7AB610EA1A000765001C792D /* SinglePostViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SinglePostViewController.h; sourceTree = "<group>"; };
 		7AB610EB1A000765001C792D /* SinglePostViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SinglePostViewController.m; sourceTree = "<group>"; };
+		7AB610ED1A02B060001C792D /* menu-addpost@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menu-addpost@2x.png"; sourceTree = "<group>"; };
 		7AB925AE19E3730C00F8229F /* UIColor+MBColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+MBColor.h"; sourceTree = "<group>"; };
 		7AB925AF19E3730C00F8229F /* UIColor+MBColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+MBColor.m"; sourceTree = "<group>"; };
 		7AB925B119E374E500F8229F /* ExploreViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExploreViewController.h; sourceTree = "<group>"; };
@@ -272,6 +274,7 @@
 				50B5690B19E4AA260050C8EC /* login.png */,
 				50B568FF19E497020050C8EC /* explore-unselected@2x.png */,
 				50B5690019E497020050C8EC /* explore-selected@2x.png */,
+				7AB610ED1A02B060001C792D /* menu-addpost@2x.png */,
 			);
 			name = Icons;
 			sourceTree = "<group>";
@@ -621,6 +624,7 @@
 			files = (
 				50B5690519E497020050C8EC /* home-selected@2x.png in Resources */,
 				50B5690119E497020050C8EC /* notif-selected@2x.png in Resources */,
+				7AB610EE1A02B060001C792D /* menu-addpost@2x.png in Resources */,
 				7AF4123C19D9FB6C00A470E1 /* Main.storyboard in Resources */,
 				50B5690219E497020050C8EC /* notif-unselected@2x.png in Resources */,
 				50B5690719E497020050C8EC /* explore-unselected@2x.png in Resources */,

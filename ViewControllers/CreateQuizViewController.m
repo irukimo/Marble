@@ -8,6 +8,7 @@
 
 
 #import "CreateQuizViewController.h"
+
 #import "FacebookSDK/FacebookSDK.h"
 #import "User+MBUser.h"
 #import "Quiz.h"
@@ -15,6 +16,7 @@
 #import "Post+MBPost.h"
 #import <QuartzCore/QuartzCore.h>
 
+#define AUTO_COMPLETE_SELECT_VIEW_TAG 999
 
 static const CGFloat ChoosePersonButtonHorizontalPadding = 80.f;
 static const CGFloat ChoosePersonButtonVerticalPadding = 20.f;
@@ -23,6 +25,10 @@ static const CGFloat ChoosePersonButtonVerticalPadding = 20.f;
 //#import "TouchTextField.h"
 
 @interface CreateQuizViewController ()
+
+@property (strong, nonatomic) SelectPeopleViewController *selectPeopleViewController;
+@property (strong, nonatomic) SelectKeywordViewController *selectKeywordViewController;
+
 //@property (strong, nonatomic) UITextField *keywordTextField;
 @property (strong, nonatomic) UITextField *option0NameTextField;
 @property (strong, nonatomic) UITextField *option1NameTextField;
@@ -42,6 +48,8 @@ static const CGFloat ChoosePersonButtonVerticalPadding = 20.f;
 @property (strong, nonatomic) User *option1;
 @property (strong, nonatomic) FBProfilePictureView *option0PicView;
 @property (strong, nonatomic) FBProfilePictureView *option1PicView;
+
+
 
 /*
 @property (strong, nonatomic) UIButton *keywordLockBtn;
@@ -63,8 +71,8 @@ static const CGFloat ChoosePersonButtonVerticalPadding = 20.f;
     if (self) {
         // This view controller maintains a list of ChoosePersonView
         // instances to display.
-        _keywordArray = [[self defaultKeyword] mutableCopy];
-        [self.view setBackgroundColor:[UIColor whiteColor]];
+
+
     }
     return self;
 }
@@ -75,20 +83,57 @@ static const CGFloat ChoosePersonButtonVerticalPadding = 20.f;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    _keywordArray = [[self defaultKeyword] mutableCopy];
+    
+    [self.view setBackgroundColor:[UIColor whiteColor]];
+    
     [self addTextFields];
     [self addShuffleButtons];
 //    [self addPeopleButtons];
     [self initFBProfilePicViews];
 //    [self addLockBtns];
 //    [self.view setAlpha:0.5f];
-    [self.view setBackgroundColor:[UIColor marbleOrange]];
     
     
-    [self.view addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedView)]];
+//    [self.view addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedView:)]];
+    
     [self recordData];
     [self setCurrentUserValues];
     
     [self initSwipeFunction];
+    [self initExitButton];
+    
+    [self setOption0Option1];
+
+}
+
+-(void) prepareSelectPeopleViewController{
+    _selectPeopleViewController = [[SelectPeopleViewController alloc] init];
+    //    _selectPeopleViewController.view.frame = CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y + 200, self.view.bounds.size.width, 100);
+    _selectPeopleViewController.view.frame = [self getSearchRect];
+    _selectPeopleViewController.view.tag = AUTO_COMPLETE_SELECT_VIEW_TAG;
+    _selectPeopleViewController.delegate = self;
+    [self.view addSubview:_selectPeopleViewController.view];
+}
+
+-(void) prepareSelectKeywordViewController{
+    _selectKeywordViewController = [[SelectKeywordViewController alloc] init];
+    //    _selectPeopleViewController.view.frame = CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y + 200, self.view.bounds.size.width, 100);
+    _selectKeywordViewController.view.frame = [self getSearchRect];   _selectKeywordViewController.view.tag = AUTO_COMPLETE_SELECT_VIEW_TAG;
+    _selectKeywordViewController.delegate = self;
+    [self.view addSubview:_selectKeywordViewController.view];
+}
+
+-(void)initExitButton{
+    UIButton *exitButton = [[UIButton alloc] initWithFrame:CGRectMake(280, 20, 20, 20)];
+    [exitButton setTitle:@"X" forState:UIControlStateNormal];
+    [exitButton addTarget:self action:@selector(exitButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:exitButton];
+}
+
+-(void)exitButtonClicked:(id)sender{
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 -(void)initSwipeFunction{
@@ -202,7 +247,7 @@ static const CGFloat ChoosePersonButtonVerticalPadding = 20.f;
 
 - (CGRect)frontCardViewFrame {
     CGFloat horizontalPadding = 20.f;
-    CGFloat topPadding = 100.f;
+    CGFloat topPadding = 150.f;
     CGFloat bottomPadding = 300.f;
     return CGRectMake(horizontalPadding,
                       topPadding,
@@ -291,8 +336,8 @@ static const CGFloat ChoosePersonButtonVerticalPadding = 20.f;
 
 
 -(void) initFBProfilePicViews{
-    _option0PicView = [[FBProfilePictureView alloc] initWithFrame:CGRectMake(60, 10, 60, 60)];
-    _option1PicView = [[FBProfilePictureView alloc] initWithFrame:CGRectMake(200,10, 60, 60)];
+    _option0PicView = [[FBProfilePictureView alloc] initWithFrame:CGRectMake(60, 50, 60, 60)];
+    _option1PicView = [[FBProfilePictureView alloc] initWithFrame:CGRectMake(200,50, 60, 60)];
     _option0PicView.layer.cornerRadius = _option0PicView.frame.size.width/2.0;
     _option0PicView.layer.masksToBounds = YES;
     _option1PicView.layer.cornerRadius = _option1PicView.frame.size.width/2.0;
@@ -353,6 +398,7 @@ static const CGFloat ChoosePersonButtonVerticalPadding = 20.f;
         [_option0NameTextField setAttributedText:nameString];
         return;
     }
+    MBDebug(@"setoption0 %@", option0.name);
     _option0 = option0;
     _option0PicView.profileID = _option0.fbID;
     NSAttributedString *nameString = [[NSAttributedString alloc] initWithString:[Utility getNameToDisplay:_option0.name] attributes:[Utility getCreateQuizNameFontDictionary]];
@@ -441,8 +487,8 @@ static const CGFloat ChoosePersonButtonVerticalPadding = 20.f;
 
 -(void)addTextFields{
 //    _keywordTextField = [[UITextField alloc] initWithFrame:CGRectMake(80, 20, 150, 40)];
-    _option0NameTextField = [[UITextField alloc] initWithFrame:CGRectMake(10, 60, 120, 50)];
-    _option1NameTextField = [[UITextField alloc] initWithFrame:CGRectMake(200, 60, 120, 50)];
+    _option0NameTextField = [[UITextField alloc] initWithFrame:CGRectMake(10, 110, 120, 50)];
+    _option1NameTextField = [[UITextField alloc] initWithFrame:CGRectMake(200, 110, 120, 50)];
     _keywordCurrentValue = @"yay";
 //    [_keywordTextField setText:_keywordCurrentValue];
 //    [_keywordTextField setTextAlignment:NSTextAlignmentCenter];
@@ -492,7 +538,7 @@ static const CGFloat ChoosePersonButtonVerticalPadding = 20.f;
 
 
 -(void)addShuffleButtons{
-    _shuffleAllBtn = [[UIButton alloc] initWithFrame:CGRectMake(100, 400, 100, 50)];
+    _shuffleAllBtn = [[UIButton alloc] initWithFrame:CGRectMake(100, 450, 100, 50)];
     [_shuffleAllBtn setTitle:@"shuffle" forState:UIControlStateNormal];
     [_shuffleAllBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [self.view addSubview:_shuffleAllBtn];
@@ -528,11 +574,11 @@ static const CGFloat ChoosePersonButtonVerticalPadding = 20.f;
 }
 
 
--(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
-    NSLog(@"got touched!");
-    UITouch *touch = [touches anyObject];
-    _startPoint = [touch locationInView:self.view];
-}
+//-(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
+//    NSLog(@"got touched!");
+//    UITouch *touch = [touches anyObject];
+//    _startPoint = [touch locationInView:self.view];
+//}
 
 /*
  #pragma mark - Navigation
@@ -569,13 +615,22 @@ static const CGFloat ChoosePersonButtonVerticalPadding = 20.f;
 }
 
 -(void) tappedView{
+//    CGPoint tappedPoint = [recognizer locationInView:self.view];
+//    CGRect searchFrame = [self getSearchRect];
+//    if(CGRectContainsPoint(searchFrame, tappedPoint)){
+//        return;
+//    }
     [self.view endEditing:YES];
     [self presentData];
 }
 
+-(CGRect)getSearchRect{
+    return CGRectMake(0, 150, self.view.bounds.size.width, 200);
+}
+
 #pragma mark -
 #pragma mark UITextField Delegate Methods
-/*
+
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     //    if (textField == _keywordTextField) {
     //    [textField resignFirstResponder];
@@ -584,7 +639,7 @@ static const CGFloat ChoosePersonButtonVerticalPadding = 20.f;
     //    }
     
     // Alert style
- 
+ /*
     if(textField == _keywordTextField){
         [textField resignFirstResponder];
         if(_delegate && [_delegate respondsToSelector:@selector(backToNormal:)]){
@@ -596,8 +651,11 @@ static const CGFloat ChoosePersonButtonVerticalPadding = 20.f;
         [Utility generateAlertWithMessage:@"請選一個朋友"];
         return YES;
     }
+    */
+    [self tappedView];
+    return  NO;
 
-}*/
+}
 
 -(void)textFieldDidChange :(UITextField *)textField{
     if(textField == _option1NameTextField || textField == _option0NameTextField){
@@ -606,39 +664,28 @@ static const CGFloat ChoosePersonButtonVerticalPadding = 20.f;
                  returnThisManyUsers:10 inThisArray:&arrayOfUsers
               inManagedObjectContext:[RKManagedObjectStore defaultStore].mainQueueManagedObjectContext
                        existingUsers:nil];
-        if(_delegate && [_delegate respondsToSelector:@selector(gotSearchUsersResult:)]){
-            [_delegate gotSearchUsersResult:arrayOfUsers];
-        }
+        [_selectPeopleViewController displaySearchResult:arrayOfUsers];
     } else{
         NSArray *arrayOfKeywords = [KeyChainWrapper searchKeywordThatContains:[textField text] returnThisManyKeywords:10];
-        if(_delegate && [_delegate respondsToSelector:@selector(gotSearchKeywordsResult:)]){
-            [_delegate gotSearchKeywordsResult:arrayOfKeywords];
-        }
+        [_selectKeywordViewController displaySearchResult:arrayOfKeywords];
     }
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField{
-    if(_delegate && [_delegate respondsToSelector:@selector(backToNormal:)]){
-        [_delegate backToNormal:self];
+    for(id view in self.view.subviews){
+        if([view tag] == AUTO_COMPLETE_SELECT_VIEW_TAG){
+            [view removeFromSuperview];
+        }
     }
-    
-    /*
-    if(textField == _keywordTextField && ![textField.text isEqualToString:@""] ){
-        [self recordData];
-    }*/
 }
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField{
     [self presentAndEmptyData:textField];
     _ongoingTextField = textField;
     if(textField == _option0NameTextField || textField == _option1NameTextField){
-        if(self.delegate && [_delegate respondsToSelector:@selector(shouldDisplayPeople:withPeople:)]){
-            [self.delegate shouldDisplayPeople:self withPeople:nil];
-        }
+        [self prepareSelectPeopleViewController];
     } else{
-        if(_delegate && [_delegate respondsToSelector:@selector(shouldDisplayKeywords:withKeywords:)]){
-            [_delegate shouldDisplayKeywords:self withKeywords:nil];
-        }
+        [self prepareSelectKeywordViewController];
     }
 }
 
@@ -655,6 +702,21 @@ static const CGFloat ChoosePersonButtonVerticalPadding = 20.f;
     [self setOption0:nil];
     [self setOption1:nil];
 //    [_keywordTextField setText:_keywordCurrentValue];
+}
+
+#pragma mark -
+#pragma mark SelectPeopleViewController Delegate Methods
+- (void)selectedPerson:(User *)user{
+    MBDebug(@"setoption %@", user.name);
+    [self setUser:user];
+}
+
+
+#pragma mark -
+#pragma mark SelectKeywordViewController Delegate Methods
+- (void)selectedKeyword:(NSString *)keyword{
+    NSLog(@"tabbar got selected");
+    [self setKeyword:keyword];
 }
 
 @end

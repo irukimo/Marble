@@ -13,13 +13,9 @@
 #import "CommentsTableViewController.h"
 #import "PostsViewController.h"
 
-#define AUTO_COMPLETE_SELECT_VIEW_TAG 999
 #define COMMENT_TEXT @"write a comment..."
 
 @interface MarbleTabBarController ()
-@property (strong, nonatomic) CreateQuizViewController *createQuizViewController;
-@property (strong, nonatomic) SelectPeopleViewController *selectPeopleViewController;
-@property (strong, nonatomic) SelectKeywordViewController *selectKeywordViewController;
 @property (strong, nonatomic) CommentsTableViewController *commentsTableViewController;
 @property (strong, nonatomic) UIButton *cancelButton;
 @property (strong, nonatomic) UIView *createQuizWholeView;
@@ -42,7 +38,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setViewFrames];
-    [self initCreateQuizView];
+//    [self initCreateQuizView];
     [self initCommentsTableView];
     [self registerForKeyboardNotifications];
     self.delegate = self;
@@ -72,6 +68,45 @@
     }
     
 }
+
+-(void)viewWillAppear:(BOOL)animated{
+        [self addCenterButtonWithImage:[UIImage imageNamed:@"menu-addpost.png"] highlightImage:nil];
+}
+#pragma mark - add center button
+-(void)willAppearIn:(UINavigationController *)navigationController
+{
+
+    
+}
+// Create a custom UIButton and add it to the center of our tab bar
+-(void) addCenterButtonWithImage:(UIImage*)buttonImage highlightImage:(UIImage*)highlightImage
+{
+    UIButton* button = [UIButton buttonWithType:UIButtonTypeCustom];
+    button.autoresizingMask = UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleTopMargin;
+    button.frame = CGRectMake(0.0, 0.0, buttonImage.size.width, buttonImage.size.height);
+    [button setBackgroundImage:buttonImage forState:UIControlStateNormal];
+    [button setBackgroundImage:highlightImage forState:UIControlStateHighlighted];
+    
+    [button addTarget:self action:@selector(centerButtonTap:) forControlEvents:UIControlEventTouchUpInside];
+    
+    CGFloat heightDifference = buttonImage.size.height - self.tabBar.frame.size.height;
+    if (heightDifference < 0)
+        button.center = self.tabBar.center;
+    else
+    {
+        CGPoint center = self.tabBar.center;
+        center.y = center.y - heightDifference/2.0;
+        button.center = center;
+    }
+    
+    [self.view addSubview:button];
+}
+#pragma mark - center button function
+-(void)centerButtonTap:(id)sender{
+    [self performSegueWithIdentifier:@"CreateQuizViewControllerSegue" sender:sender];
+}
+
+
 
 
 -(void) setViewFrames{
@@ -149,10 +184,10 @@
     UIViewController *secondVC = [self.customizableViewControllers objectAtIndex:1];
     [secondVC.tabBarItem setImage:[UIImage imageNamed:@"explore-unselected.png"]];
     [secondVC.tabBarItem setSelectedImage:[UIImage imageNamed:@"explore-selected.png"]];
-    UIViewController *thirdVC = [self.customizableViewControllers objectAtIndex:2];
+    UIViewController *thirdVC = [self.customizableViewControllers objectAtIndex:3];
     [thirdVC.tabBarItem setImage:[UIImage imageNamed:@"user-unselected.png"]];
     [thirdVC.tabBarItem setSelectedImage:[UIImage imageNamed:@"user-selected.png"]];
-    UIViewController *fourthVC = [self.customizableViewControllers objectAtIndex:3];
+    UIViewController *fourthVC = [self.customizableViewControllers objectAtIndex:4];
     [fourthVC.tabBarItem setImage:[UIImage imageNamed:@"notif-unselected.png"]];
     [fourthVC.tabBarItem setSelectedImage:[UIImage imageNamed:@"notif-selected.png"]];
 }
@@ -190,6 +225,7 @@
 }
 
 -(void) marbleButtonClickedWithUser:(User *)user orKeyword:(NSString *)keyword{
+    /*
     if(_isCreatingMarble){
         [_createQuizWholeView removeFromSuperview];
         _isCreatingMarble = FALSE;
@@ -206,6 +242,7 @@
     }
     [self.view addSubview:_createQuizWholeView];
     _isCreatingMarble = TRUE;
+     */
 }
 
 -(void) viewMoreComments:(NSArray *)commentArray atIndexPath:(NSIndexPath *)indexPath calledBy:(id)viewController{
@@ -221,20 +258,6 @@
     [_commentsTableViewController setCommentArray:commentArray];
 }
 
--(void)initCreateQuizView{
-    UIView *blackBGView = [[UIView alloc] initWithFrame:CGRectMake(0, NAVBAR_HEIGHT, self.view.frame.size.width, self.view.frame.size.height)];
-    [blackBGView setBackgroundColor:[UIColor colorWithWhite:0 alpha:0.8f]];
-    UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(closeMarbleWholeView)];
-    [blackBGView addGestureRecognizer:singleTap];
-    
-    _createQuizViewController = [[CreateQuizViewController alloc] init];
-    _createQuizViewController.delegate = self;
-    _createQuizViewController.view.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
-    _createQuizWholeView = [[UIView alloc] initWithFrame:CGRectMake(0, NAVBAR_HEIGHT, self.view.frame.size.width, self.view.frame.size.height)];
-    [_createQuizWholeView addSubview:blackBGView];
-    [_createQuizWholeView addSubview:_createQuizViewController.view];
-
-}
 
 -(void)closeMarbleWholeView{
     [_createQuizWholeView removeFromSuperview];
@@ -291,29 +314,12 @@
     [_commentsWholeView removeFromSuperview];
 }
 
--(void) prepareSelectPeopleViewController{
-    _selectPeopleViewController = [[SelectPeopleViewController alloc] init];
-    //    _selectPeopleViewController.view.frame = CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y + 200, self.view.bounds.size.width, 100);
-    _selectPeopleViewController.view.frame = CGRectMake(0, 150, self.view.bounds.size.width, 200);
-    _selectPeopleViewController.view.tag = AUTO_COMPLETE_SELECT_VIEW_TAG;
-    _selectPeopleViewController.delegate = self;
-    [_createQuizWholeView addSubview:_selectPeopleViewController.view];
-}
 
--(void) prepareSelectKeywordViewController{
-    _selectKeywordViewController = [[SelectKeywordViewController alloc] init];
-    //    _selectPeopleViewController.view.frame = CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y + 200, self.view.bounds.size.width, 100);
-    _selectKeywordViewController.view.frame = CGRectMake(0, 150, self.view.bounds.size.width, 200);
-    _selectKeywordViewController.view.tag = AUTO_COMPLETE_SELECT_VIEW_TAG;
-    _selectKeywordViewController.delegate = self;
-    [_createQuizWholeView addSubview:_selectKeywordViewController.view];
-}
 
 
 #pragma mark -
 #pragma mark CreateQuizViewController Delegate Methods
 - (void)shouldDisplayPeople:(CreateQuizViewController *)viewController withPeople:(NSArray *)people{
-    [self prepareSelectPeopleViewController];
     //    [_selectPeopleViewController setPeopleArray:people];
     //    _createQuizViewController.view.frame = CGRectMake(self.view.frame.origin.x, 50,
     //                                                self.view.bounds.size.width, _createQuizViewController.view.frame.size.height);
@@ -321,44 +327,12 @@
 }
 
 - (void)shouldDisplayKeywords:(CreateQuizViewController *)viewController withKeywords:(NSArray *)keywords{
-    [self prepareSelectKeywordViewController];
     //    _createQuizViewController.view.frame = CGRectMake(self.view.frame.origin.x, 50,
     //                                                self.view.bounds.size.width, _createQuizViewController.view.frame.size.height);
 }
 
-- (void)backToNormal:(CreateQuizViewController *)viewController{
-    for(id view in _createQuizWholeView.subviews){
-        if([view tag] == AUTO_COMPLETE_SELECT_VIEW_TAG){
-            [view removeFromSuperview];
-        }
-    }
-    //    NSLog(@"backtonormal");
-    //    _createQuizViewController.view.frame = CGRectMake(self.view.frame.origin.x, 65,
-    //                                                self.view.bounds.size.width, _createQuizViewController.view.frame.size.height);
-    
-}
-
-- (void)gotSearchUsersResult:(NSArray *)arrayOfUsers{
-    [_selectPeopleViewController displaySearchResult:arrayOfUsers];
-}
-
-- (void)gotSearchKeywordsResult:(NSArray *)arrayOfKeywords{
-    [_selectKeywordViewController displaySearchResult:arrayOfKeywords];
-}
-
-#pragma mark -
-#pragma mark SelectPeopleViewController Delegate Methods
-- (void)selectedPerson:(User *)user{
-    [_createQuizViewController setUser:user];
-}
 
 
-#pragma mark -
-#pragma mark SelectKeywordViewController Delegate Methods
-- (void)selectedKeyword:(NSString *)keyword{
-    NSLog(@"tabbar got selected");
-    [_createQuizViewController setKeyword:keyword];
-}
 
 #pragma mark -
 #pragma mark UITextField Delegate Methods
@@ -403,14 +377,15 @@
 }
 
 
-/*
-#pragma mark - Navigation
 
+#pragma mark - Navigation
+/*
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
-}
-*/
+}*/
+
 
 @end

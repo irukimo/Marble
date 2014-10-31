@@ -49,16 +49,36 @@
     _user = user;
     NSAttributedString *nameString = [[NSAttributedString alloc] initWithString:[Utility getNameToDisplay:_user.name] attributes:[Utility getLightOrangeBoldFontDictionary]];
     [_nameLabel setAttributedText:nameString];
-
+    /*
+     (
+     1,
+     demanding,
+     {
+     after =             {
+     "fb_id" = 100000111455904;
+     name = "\U8607\U5c0f\U676d";
+     rank = 7;
+     };
+     before =             {
+     "fb_id" = 1413171627;
+     name = "Rosanna WenYen Hsu";
+     rank = 5;
+     };
+     self = 6;
+     }
+     )
+     */
     if(_user.keywords){
         if([_user.keywords isKindOfClass:[NSString class]]){
+            NSLog(@"it is string");
             NSString *string = (NSString *)_user.keywords;
             NSAttributedString *keywordString = [[NSAttributedString alloc] initWithString:string attributes:[Utility getWhiteCommentFontDictionary]];
             [_keywordLabel setAttributedText:keywordString];
         } else if([_user.keywords isKindOfClass:[NSArray class]]){
+            NSLog(@"it is array user %@ array %@", user.name, _user.keywords);
             NSArray *keywordArray = (NSArray *)_user.keywords;
             if([keywordArray count] > 0){
-                NSAttributedString *keywordString = [[NSAttributedString alloc] initWithString:keywordArray[0] attributes:[Utility getWhiteCommentFontDictionary]];
+                NSAttributedString *keywordString = [[NSAttributedString alloc] initWithString:keywordArray[0][1] attributes:[Utility getWhiteCommentFontDictionary]];
                 [_keywordLabel setAttributedText:keywordString];
             }
         }
