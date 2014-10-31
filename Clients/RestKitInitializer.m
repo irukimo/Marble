@@ -98,9 +98,9 @@
     // user mapping
     RKEntityMapping *userMapping = [RKEntityMapping mappingForEntityForName:@"User" inManagedObjectStore:managedObjectStore];
     [userMapping addAttributeMappingsFromDictionary:@{@"latest_status": @"status",
-                                                    @"fb_id":        @"fbID",
+                                                    @"fb_id":              @"fbID",
                                                     @"all_profile_keywords": @"keywords",
-                                                    @"num_keywords_created":  @"created",
+                                                    @"num_comparison_created":  @"created",
                                                     @"num_keywords_received": @"received",
                                                     @"num_quizzes_solved":    @"solved",
                                                     @"name":         @"name"}];
