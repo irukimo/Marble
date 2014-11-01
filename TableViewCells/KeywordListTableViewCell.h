@@ -7,12 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "User.h"
 
 @protocol KeywordListTableViewCellDelegate;
 
 @interface KeywordListTableViewCell : UITableViewCell
 @property (nonatomic, weak) id delegate;
 -(void) setKeyword:(NSString *)keyword;
+@property (strong, nonatomic) User *subject;
 @end
 
 @protocol KeywordListTableViewCellDelegate <NSObject>

@@ -489,6 +489,7 @@
     if([[segue destinationViewController] isKindOfClass:[KeywordListViewController class]]){
         KeywordListViewController *keywordListViewController =[segue destinationViewController];
         [keywordListViewController setKeywords:sender];
+        keywordListViewController.subject = _user;
     } else if([[segue destinationViewController] isKindOfClass:[ProfileViewController class]]){
          if([sender isKindOfClass:[NSArray class]]){
              ProfileViewController *viewController =[segue destinationViewController];

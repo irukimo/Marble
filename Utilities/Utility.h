@@ -56,4 +56,7 @@ typedef void (^voidBlock)(void);
                successBlock:(voidBlock)successBlock failureBlock:(voidBlock)failureBlock;
 
 + (void) setUpProfilePictureImageView:(UIImageView *)view byFBID:(NSString *)fbID;
+
++ (NSString *)getRankingFullString:(NSNumber *)number;
+
 @end

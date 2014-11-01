@@ -11,4 +11,5 @@
 
 @interface KeywordListViewController : UITableViewController <KeywordListTableViewCellDelegate>
 -(void) setKeywords:(id)keywords;
+@property (strong, nonatomic) User *subject;
 @end

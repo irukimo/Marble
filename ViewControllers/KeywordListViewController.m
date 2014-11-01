@@ -10,9 +10,13 @@
 #import "KeywordListTableViewCell.h"
 #import "KeywordProfileViewController.h"
 
+static const int EXPAND_HEIGHT = 150;
+static const int UNEXPAND_HEIGHT  = 60;
+
 @interface KeywordListViewController ()
 
 @property (strong, nonatomic) NSMutableArray *keywordList;
+@property (strong, nonatomic) NSIndexPath *ongoingPath;
 
 @end
 
@@ -28,6 +32,8 @@
     [self.tableView setBackgroundColor:[UIColor marbleLightGray]];
     [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     self.tableView.contentInset = UIEdgeInsetsMake(5, 0, 5, 0);
+    
+    _ongoingPath = [NSIndexPath indexPathForRow:0 inSection:0];
     
     for (NSArray *obj in _keywordList) {
         MBDebug(@"KEYWORDLIST: keyword: %@", [obj objectAtIndex:1]);
@@ -57,6 +63,17 @@
 
 #pragma mark - Table view data source
 
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    if([_ongoingPath isEqual:indexPath]){
+        _ongoingPath = nil;
+    } else{
+        _ongoingPath = indexPath;
+    }
+    [self.tableView beginUpdates];
+    [self.tableView endUpdates];
+}
+
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     // Return the number of sections.
     return 1;
@@ -73,8 +90,8 @@
     if (!cell){
         cell = [[KeywordListTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:keywordListTableViewCellIdentifier];
     }
-    
-    [cell setKeyword:[[_keywordList objectAtIndex:indexPath.row] objectAtIndex:1]];
+    cell.subject = _subject;
+    [cell setKeyword:[_keywordList objectAtIndex:indexPath.row]];
     cell.delegate = self;
     return cell;
 }
@@ -84,7 +101,10 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 100;
+    if([indexPath isEqual:_ongoingPath]){
+        return EXPAND_HEIGHT;
+    }
+    return UNEXPAND_HEIGHT;
 }
 
 -(void) setKeywords:(id)keywords{

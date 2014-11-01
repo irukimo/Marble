@@ -364,4 +364,42 @@
         
     }
 }
+
+
++(NSString *)getRankingFullString:(NSNumber *)number{
+    int numberInt = [number intValue];
+    int lastDigit = numberInt % 10;
+    NSString *postfix;
+    MBDebug(@"last digit%d", lastDigit);
+    switch (lastDigit) {
+        case 0:
+        case 4:
+        case 5:
+        case 6:
+        case 7:
+        case 8:
+        case 9:{
+            postfix = @"th";
+            break;
+        }
+        case 1:{
+            postfix = @"st";
+            break;
+        }
+        case 2:{
+            postfix = @"nd";
+            break;
+        }
+        case 3:{
+            postfix = @"rd";
+            break;
+        }
+        default:{
+            postfix = @"th";
+            break;
+        }
+    }
+    MBDebug(@"whatispostfix%@", postfix);
+    return [[NSString stringWithFormat:@"%@",number] stringByAppendingString:postfix];
+}
 @end
