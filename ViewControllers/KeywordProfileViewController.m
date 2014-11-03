@@ -22,9 +22,14 @@
 @property (strong, nonatomic) UIImageView *rank2ImageView;
 @property (strong, nonatomic) UIImageView *rank3ImageView;
 
+@property (strong, nonatomic) UIImageView *creatorImageView;
+@property (strong, nonatomic) UIButton *creatorNameButton;
+
 @property (strong, nonatomic) UIButton *rank1NameButton;
 @property (strong, nonatomic) UIButton *rank2NameButton;
 @property (strong, nonatomic) UIButton *rank3NameButton;
+
+@property(strong, nonatomic) UILabel *timePlayedLabel;
 @end
 
 @implementation KeywordProfileViewController
@@ -78,6 +83,7 @@
                              RANKING_FBID_KEY: [obj[1] valueForKey:@"fb_id"]} forKey:obj[0]];
         }
         _ranking = dict;
+        [self updateLabels];
         [self updateRanking];
         MBDebug(@"Real Ranking: %@", _ranking);
         MBDebug(@"0th: %@", [[_ranking objectForKey:@0] objectForKey:@"fbID"]);
@@ -94,20 +100,69 @@
 }
 
 -(void) prepareHeaderView{
-    _headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 200)];
+    _headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 190)];
     [_headerView setBackgroundColor:[UIColor whiteColor]];
     
     [UIView addLeftBorderOn:_headerView withColor:[UIColor marbleLightGray] andWidth:5 andHeight:0 withOffset:5];
     [UIView addRightBorderOn:_headerView withColor:[UIColor marbleLightGray] andWidth:5 andHeight:0 withOffset:5];
     [_headerView.layer setBorderColor:[UIColor marbleLightGray].CGColor];
     [_headerView.layer setBorderWidth:5.0f];
+    
+    int lineX = 190;
+    int lineY = 120;
+    int lineWidth = 2;
+    
+    UIView *vertiLine = [[UIView alloc] initWithFrame:CGRectMake(lineX, 0, lineWidth, _headerView.frame.size.height)];
+    [vertiLine setBackgroundColor:[UIColor marbleLightGray]];
+    [_headerView addSubview:vertiLine];
+    UIView *horizLine = [[UIView alloc] initWithFrame:CGRectMake(lineX, lineY, _headerView.frame.size.width - lineX, lineWidth)];
+    [horizLine setBackgroundColor:[UIColor marbleLightGray]];
+    [_headerView addSubview:horizLine];
+    
+    NSAttributedString *overallString = [[NSAttributedString alloc] initWithString:@"overall friend ranking" attributes:[Utility getNotifBlackNormalFontDictionary]];
+    UILabel *overallLabel = [[UILabel alloc] initWithFrame:CGRectMake(35, 10, 150, 20)];
+    [overallLabel setAttributedText:overallString];
+    [_headerView addSubview:overallLabel];
+    
+    NSAttributedString *createdByString = [[NSAttributedString alloc] initWithString:@"created by" attributes:[Utility getNotifBlackNormalFontDictionary]];
+    UILabel *createdByLabel = [[UILabel alloc] initWithFrame:CGRectMake(220, 10, 100, 20)];
+    [createdByLabel setAttributedText:createdByString];
+    [_headerView addSubview:createdByLabel];
+    
+    _creatorImageView = [[UIImageView alloc] initWithFrame:CGRectMake(220, 30, 58, 58)];
+    [_creatorImageView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(creatorNameButtonClicked:)]];
+    [_creatorImageView setUserInteractionEnabled:YES];
+    _creatorImageView.layer.cornerRadius = _creatorImageView.frame.size.width/2.0f;
+    _creatorImageView.layer.masksToBounds = YES;
+    _creatorNameButton = [[UIButton alloc] initWithFrame:CGRectMake(lineX, 90, self.view.frame.size.width - lineX - 10, 20)];
+    [_creatorNameButton addTarget:self action:@selector(creatorNameButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+    [_headerView addSubview:_creatorNameButton];
+    [_headerView addSubview:_creatorImageView];
+    
+    NSAttributedString *timesPlayedString = [[NSAttributedString alloc] initWithString:@"times played" attributes:[Utility getProfileGrayStaticFontDictionary]];
+    UILabel *timesPlayedStringLabel = [[UILabel alloc] initWithFrame:CGRectMake(200, 150, 100, 20)];
+    [timesPlayedStringLabel setAttributedText:timesPlayedString];
+    [timesPlayedStringLabel setTextAlignment:NSTextAlignmentCenter];
+    [_headerView addSubview:timesPlayedStringLabel];
+    
+    _timePlayedLabel = [[UILabel alloc] initWithFrame:CGRectMake(200, 140, 100, 20)];
+    [_headerView addSubview:_timePlayedLabel];
+    
 }
 
 -(void) initRankingUI{
     const int RANKING_Y_START = 35;
-    const int IMAGE_LEFT_ALIGN = 60;
+    const int IMAGE_LEFT_ALIGN = 50;
     const int RANKING_Y_INCREMENT = 50;
     const int IMAGE_SIZE = 40;
+    
+    for(int i = 0; i < 3; i++) {
+        NSAttributedString *rankNum = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"#%d",i+1] attributes:[Utility getNotifBlackBoldFontDictionary]];
+        UILabel *rankLabel = [[UILabel alloc] initWithFrame:CGRectMake(30, RANKING_Y_START + i*RANKING_Y_INCREMENT + 12, 20, 20)];
+        [rankLabel setAttributedText:rankNum];
+        [_headerView addSubview:rankLabel];
+    }
+    
     _rank1NameButton = [[UIButton alloc] initWithFrame:CGRectMake(IMAGE_LEFT_ALIGN + IMAGE_SIZE + 3, RANKING_Y_START + 10, 100, 20)];
     [_rank1NameButton setTag:0];
     _rank2NameButton = [[UIButton alloc] initWithFrame:CGRectMake(IMAGE_LEFT_ALIGN + IMAGE_SIZE + 3, RANKING_Y_START + RANKING_Y_INCREMENT + 10, 100, 20)];
@@ -170,6 +225,20 @@
 //    [self setTitle:title];
 }
 
+-(void)updateLabels{
+    if(_creatorFBID){
+        [Utility setUpProfilePictureImageView:_creatorImageView byFBID:_creatorFBID];
+    }
+    if(_creatorName){
+        NSAttributedString *creatorNameString = [[NSAttributedString alloc] initWithString:_creatorName attributes:[Utility getPostsViewNameFontDictionary]];
+        [_creatorNameButton setAttributedTitle:creatorNameString forState:UIControlStateNormal];
+    }
+    if(_timePlayed){
+        NSAttributedString *timeplayString = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@", _timePlayed] attributes:[Utility getNotifBlackNormalFontDictionary]];
+        [_timePlayedLabel setAttributedText:timeplayString];
+        [_timePlayedLabel setTextAlignment:NSTextAlignmentCenter];
+    }
+}
 
 -(void)updateRanking{
     [self updateRankingImageViews];
@@ -194,17 +263,17 @@
 -(void)updateRankingNameButton{
     NSString *rank1Name = [[_ranking objectForKey:@0] objectForKey:RANKING_NAME_KEY];
     if(rank1Name){
-        NSAttributedString *rank1NameString = [[NSAttributedString alloc] initWithString:rank1Name attributes:[Utility getPostsViewNameFontDictionary]];
+        NSAttributedString *rank1NameString = [[NSAttributedString alloc] initWithString:[Utility getNameToDisplay:rank1Name] attributes:[Utility getPostsViewNameFontDictionary]];
         [_rank1NameButton setAttributedTitle:rank1NameString forState:UIControlStateNormal];
     }
     NSString *rank2Name = [[_ranking objectForKey:@1] objectForKey:RANKING_NAME_KEY];
     if(rank2Name){
-        NSAttributedString *rank2NameString = [[NSAttributedString alloc] initWithString:rank2Name attributes:[Utility getPostsViewNameFontDictionary]];
+        NSAttributedString *rank2NameString = [[NSAttributedString alloc] initWithString:[Utility getNameToDisplay:rank2Name] attributes:[Utility getPostsViewNameFontDictionary]];
         [_rank2NameButton setAttributedTitle:rank2NameString forState:UIControlStateNormal];
     }
     NSString *rank3Name = [[_ranking objectForKey:@2] objectForKey:RANKING_NAME_KEY];
     if(rank3Name){
-        NSAttributedString *rank3NameString = [[NSAttributedString alloc] initWithString:rank3Name attributes:[Utility getPostsViewNameFontDictionary]];
+        NSAttributedString *rank3NameString = [[NSAttributedString alloc] initWithString:[Utility getNameToDisplay:rank3Name] attributes:[Utility getPostsViewNameFontDictionary]];
         [_rank3NameButton setAttributedTitle:rank3NameString forState:UIControlStateNormal];
     }
 
@@ -225,6 +294,13 @@
     NSArray *infoBundle = [NSArray arrayWithObjects:name,fbid, nil];
     [self performSegueWithIdentifier:@"ProfileViewControllerSegue" sender:infoBundle];
 }
+
+
+-(void)creatorNameButtonClicked:(id)sender{
+    NSArray *infoBundle = [NSArray arrayWithObjects:_creatorName,_creatorFBID, nil];
+    [self performSegueWithIdentifier:@"ProfileViewControllerSegue" sender:infoBundle];
+}
+
 
 
 -(void) setKeyword:(NSString *)keyword{
