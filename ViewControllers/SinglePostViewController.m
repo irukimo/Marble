@@ -45,13 +45,13 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     unsigned long height;
-    if ([_postWithoutClass isKindOfClass:[CommentNotification class]] || [_postWithoutClass isKindOfClass:[Quiz class]]){
+    if ([_mustBePost isKindOfClass:[Quiz class]]){
         if(!_mustBePost.comments){
             height = QuizTableViewCellDisplayHeight;
         } else{
             height = QuizTableViewCellDisplayHeight + [_mustBePost.comments count]*CommentIncrementHeight;
         }
-    } else if([_postWithoutClass isKindOfClass:[StatusUpdate class]]){
+    } else if([_mustBePost isKindOfClass:[StatusUpdate class]]){
         if(!_mustBePost.comments){
             height = StatusUpdateTableViewCellHeight;
         } else{
@@ -74,6 +74,9 @@
         QuizTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:quizTableViewCellIdentifier];
         if (!cell){
             cell = [[QuizTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:quizTableViewCellIdentifier];
+        }
+        if(_mustBePost){
+            [cell setQuiz:(Quiz *)_mustBePost];
         }
         _cell = cell;
         return cell;

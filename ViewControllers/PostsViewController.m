@@ -80,8 +80,6 @@
     
     [self setMyTableView];
     self.tableView.keyboardDismissMode  = UIScrollViewKeyboardDismissModeInteractive;
-    [self addMarbleButton];
-
     [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
 
     
@@ -120,14 +118,6 @@
 }
 
 
--(void) addMarbleButton{
-    UIBarButtonItem *rightButton = [[UIBarButtonItem alloc]
-                                    initWithTitle: @"+"
-                                    style: UIBarButtonItemStyleBordered
-                                    target:self action: @selector(marbleButtonClicked:)];
-    
-    [self.navigationItem setRightBarButtonItem:rightButton];
-}
 
 -(void) marbleButtonClicked:(id)sender{
     if([self.tabBarController isKindOfClass:[MarbleTabBarController class]]){
