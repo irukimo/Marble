@@ -36,11 +36,21 @@
 -(void) initProfilePic{
     _authorPicView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.contentView.frame.size.width, self.contentView.frame.size.height)];
     [self.contentView addSubview:_authorPicView];
+    
+    CGRect picframe = _authorPicView.frame;
+    picframe.origin.y = picframe.size.height/2;
+    picframe.size.height = picframe.size.height/2;
+
+    CAGradientLayer *gradient = [CAGradientLayer layer];
+    gradient.frame = picframe;
+    gradient.colors = [NSArray arrayWithObjects:(id)[[UIColor clearColor] CGColor],(id)[[UIColor colorWithWhite:0 alpha:0.5] CGColor], nil];
+    
+    [_authorPicView.layer addSublayer:gradient];
 }
 
 -(void) initStaticLabels{
-    _nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 80, self.contentView.frame.size.width, 20)];
-    _keywordLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 99, self.contentView.frame.size.width, 20)];
+    _nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, 90, self.contentView.frame.size.width, 20)];
+    _keywordLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, 105, self.contentView.frame.size.width, 20)];
     [self.contentView addSubview:_nameLabel];
     [self.contentView addSubview:_keywordLabel];
 }
@@ -83,10 +93,11 @@
             }
         }
     }
-//    NSString *authorPictureUrl = [NSString stringWithFormat:@"https://graph.facebook.com/%@/picture?width=%lu&height=%lu", _user.fbID,(unsigned long)width , (unsigned long)width];
-//    [_authorPicView setImageWithURL:[NSURL URLWithString:authorPictureUrl] placeholderImage:[UIImage imageNamed:@"login.png"]];
-    [Utility setUpProfilePictureImageView:_authorPicView byFBID:_user.fbID];
+    NSString *authorPictureUrl = [NSString stringWithFormat:@"https://graph.facebook.com/%@/picture?width=%lu&height=%lu", _user.fbID,(unsigned long)self.contentView.frame.size.width*2 , (unsigned long)self.contentView.frame.size.height*2 ];
+    [_authorPicView setImageWithURL:[NSURL URLWithString:authorPictureUrl] placeholderImage:[UIImage imageNamed:@"login.png"]];
+//    [Utility setUpProfilePictureImageView:_authorPicView byFBID:_user.fbID];
 }
+
 
 -(void)setCellName:(NSString *)name andID:(NSString *)fbid{
     [_nameLabel setText:name];
