@@ -25,7 +25,6 @@
     [self.view setBackgroundColor:[UIColor clearColor]];
     [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     
-    //self.tableView.keyboardDismissMode  = UIScrollViewKeyboardDismissModeInteractive;
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWillShow)
                                                  name:UIKeyboardDidShowNotification
@@ -56,12 +55,15 @@
 
 - (void)keyboardWillShow
 {
-    self.tableView.frame = CGRectMake(self.tableView.frame.origin.x, self.tableView.frame.origin.y, self.tableView.frame.size.width, self.tableView.frame.size.height - KEYBOARD_HEIGHT);
+    [self.tableView setContentInset:UIEdgeInsetsMake(0,0,/*KEYBOARD_HEIGHT*/254,0)];
+    // auto scroll to bottom
+    CGPoint bottomOffset = CGPointMake(0, self.tableView.contentSize.height - self.tableView.bounds.size.height + KEYBOARD_HEIGHT);
+    [self.tableView setContentOffset:bottomOffset animated:YES];
     
 }
 - (void)keyboardWillRecede:(NSNotification*)notification
 {
-    self.tableView.frame = CGRectMake(self.tableView.frame.origin.x, self.tableView.frame.origin.y, self.tableView.frame.size.width, self.tableView.frame.size.height + KEYBOARD_HEIGHT);
+    [self.tableView setContentInset:UIEdgeInsetsMake(0,0,0,0)];
 }
 
 

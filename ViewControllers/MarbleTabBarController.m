@@ -67,7 +67,7 @@
 
 -(void) setViewFrames{
     _commentsTableViewFrame = CGRectMake(0, 50, self.view.frame.size.width, self.view.frame.size.height - NAVBAR_HEIGHT - TABBAR_HEIGHT - 50 );
-    _commentFieldViewFrame = CGRectMake(0, 10 + self.view.frame.size.height - TABBAR_HEIGHT - NAVBAR_HEIGHT, self.view.frame.size.width, 100);
+    _commentFieldViewFrame = CGRectMake(0, /*10 +*/ self.view.frame.size.height - TABBAR_HEIGHT - NAVBAR_HEIGHT, self.view.frame.size.width, 100);
 }
 
 
@@ -201,6 +201,10 @@
 
 -(void) updateComments:(NSArray *)commentArray{
     [_commentsTableViewController setCommentArray:commentArray];
+    
+    // auto scroll to bottom
+    CGPoint bottomOffset = CGPointMake(0, _commentsTableViewController.tableView.contentSize.height - _commentsTableViewController.tableView.bounds.size.height + KEYBOARD_HEIGHT);
+    [_commentsTableViewController.tableView setContentOffset:bottomOffset animated:YES];
 }
 
 -(void)initCreateQuizView{
@@ -220,16 +224,17 @@
 
 
 -(void) initCommentFieldView{
-    _commentFieldView = [[UIView alloc] initWithFrame:CGRectMake(0, 10 + self.view.frame.size.height - TABBAR_HEIGHT - NAVBAR_HEIGHT - 50, self.view.frame.size.width, 100)];
-    _commentBtn = [[UIButton alloc] initWithFrame:CGRectMake(260 , 0, 60, 30)];
+    _commentFieldView = [[UIView alloc] initWithFrame:CGRectMake(0, /*10 +*/ self.view.frame.size.height - TABBAR_HEIGHT - NAVBAR_HEIGHT - 50, self.view.frame.size.width, 100)];
+    _commentBtn = [[UIButton alloc] initWithFrame:CGRectMake(260 , /*0*/10, 60, 30)];
     
     [_commentBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [_commentBtn setTitle:@"send" forState:UIControlStateNormal];
     [_commentBtn addTarget:self action:@selector(commentPostClicked:) forControlEvents:UIControlEventTouchUpInside];
     
-    _commentField = [[UITextField alloc] initWithFrame:CGRectMake(10, 0, 250, 30)];
+    _commentField = [[UITextField alloc] initWithFrame:CGRectMake(10, /*0*/10, 250, 30)];
     _commentField.delegate = self;
     [_commentField setBorderStyle:UITextBorderStyleRoundedRect];
+    [_commentFieldView setBackgroundColor:[UIColor blackColor]];
     NSAttributedString *defaultText = [[NSAttributedString alloc] initWithString:COMMENT_TEXT attributes:[Utility getWriteACommentFontDictionary]];
     [_commentField setAttributedText:defaultText];
     [_commentFieldView addSubview:_commentField];
@@ -270,12 +275,9 @@
          */
         
         CGRect accessoryViewFrame = _commentFieldView.frame;
-        accessoryViewFrame.origin.y = keyboardFrameInView.origin.y - accessoryViewFrame.size.height;
+        accessoryViewFrame.origin.y = keyboardFrameInView.origin.y - accessoryViewFrame.size.height - 14;
         _commentFieldView.frame = accessoryViewFrame;
-        
-        //CGRect tableViewFrame = _commentsTableViewFrame;
-        //tableViewFrame.size.height = accessoryViewFrame.origin.y;
-        //_commentsTableViewFrame = tableViewFrame;
+
     } constraintBasedActionHandler:nil];
     //[self.view removeKeyboardControl];
 }
@@ -284,7 +286,7 @@
     if([_callerViewController isKindOfClass:[PostsViewController class]]){
         PostsViewController *postsViewController = _callerViewController;
         [postsViewController commentPostAtIndexPath:_commentIndexPath withComment:[_commentField text]];
-    }
+        }
 }
 
 
