@@ -14,6 +14,7 @@
     leftBorder.backgroundColor = color.CGColor;
     int displayheight = (height < 500)? 500: height;
     leftBorder.frame = CGRectMake(offset, 0, width, displayheight);
+    [leftBorder setZPosition:-100];
     [view.layer addSublayer:leftBorder];
 }
 +(void) addRightBorderOn:(UIView *)view withColor:(UIColor *)color andWidth:(int)width andHeight:(int)height withOffset:(int) offset{
@@ -21,6 +22,7 @@
     rightBorder.backgroundColor = color.CGColor;
     int displayheight = (height < 500)? 500: height;
     rightBorder.frame = CGRectMake(view.frame.size.width - offset - width, 0, width, displayheight);
+    [rightBorder setZPosition:-200];
     [view.layer addSublayer:rightBorder];
 }
 

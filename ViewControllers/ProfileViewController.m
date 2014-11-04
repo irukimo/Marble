@@ -165,7 +165,7 @@
     
     [_headerView addSubview:_profilePicView];
     [_headerView.layer setBorderColor:[UIColor marbleLightGray].CGColor];
-    [_headerView.layer setBorderWidth:5.0f];
+    [_headerView.layer setBorderWidth:CELL_UNIVERSAL_PADDING/2.0f];
     if(_isSelf){
         [_headerView addSubview:_statusBtn];
     }

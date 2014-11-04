@@ -11,7 +11,7 @@
 #import "User+MBUser.h"
 #define CORRECT_WRONG_ICON_TAG 768
 #define WORD_SEPARATION 5
-#define OPTION_SQUARE_WIDTH 123
+#define OPTION_SQUARE_WIDTH 138
 
 
 @interface QuizTableViewCell()
@@ -69,8 +69,8 @@
 
 
 -(void) initPicViews{
-    _option0PicView = [[UIImageView alloc] initWithFrame:CGRectMake(30, 115, OPTION_SQUARE_WIDTH, OPTION_SQUARE_WIDTH)];
-    _option1PicView = [[UIImageView alloc] initWithFrame:CGRectMake(165, 115, OPTION_SQUARE_WIDTH, OPTION_SQUARE_WIDTH)];
+    _option0PicView = [[UIImageView alloc] initWithFrame:CGRectMake(12, 115, OPTION_SQUARE_WIDTH, OPTION_SQUARE_WIDTH)];
+    _option1PicView = [[UIImageView alloc] initWithFrame:CGRectMake(169, 115, OPTION_SQUARE_WIDTH, OPTION_SQUARE_WIDTH)];
     _authorPicView = [[UIImageView alloc] initWithFrame:CGRectMake(20, 14, 50, 50)];
     _authorPicView.layer.cornerRadius = _authorPicView.frame.size.width/2.0;
     _authorPicView.layer.masksToBounds = YES;
@@ -96,7 +96,7 @@
     [self.contentView addSubview:_option1WrongIcon];
     [self.contentView addSubview:_option1CorrectIcon];
     [self.contentView addSubview:_authorPicView];
-
+    
 }
 -(void) initCorrectWrongIcons{
     _option0CorrectIcon = [[UILabel alloc] initWithFrame:_option0PicView.frame];
@@ -256,7 +256,8 @@
     _option1Name = [quiz.option1Name copy];
     _answerName = [quiz.answer copy];
     _keyword = [quiz.keyword copy];
-    [_compareNumLabel setText:[NSString stringWithFormat:@"%@", quiz.compareNum]];
+    NSAttributedString *compareString = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@", quiz.compareNum] attributes:[Utility getNotifBlackNormalFontDictionary]];
+    [_compareNumLabel setAttributedText:compareString];
     
     [self setupProfileViews];
     [self setupNameButtons];

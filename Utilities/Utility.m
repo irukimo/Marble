@@ -223,9 +223,7 @@
     return paragraphStyle;
 }
 
-+ (NSDictionary *)getCreateQuizNameFontDictionary{
-    return [NSDictionary dictionaryWithObjectsAndKeys: [UIFont fontWithName:@"OpenSans-Semibold" size:18],NSFontAttributeName, [UIColor marbleOrange] ,NSForegroundColorAttributeName, @(-0.5), NSKernAttributeName, nil];
-}
+
 
 + (NSDictionary *)getBigNameFontDictionary{
     return [NSDictionary dictionaryWithObjectsAndKeys: [UIFont fontWithName:@"OpenSans-Semibold" size:23],NSFontAttributeName, [UIColor marbleOrange] ,NSForegroundColorAttributeName, @(-0.5), NSKernAttributeName,nil];
@@ -239,10 +237,16 @@
     return [NSDictionary dictionaryWithObjectsAndKeys: [UIFont fontWithName:@"OpenSans" size:13],NSFontAttributeName, [UIColor grayColor] ,NSForegroundColorAttributeName, @(-0.5), NSKernAttributeName,  nil];
 }
 
-+ (NSDictionary *)getCreateQuizSuperBigKeywordFont{
++ (NSDictionary *)getCreateQuizSuperBigKeywordFontDictionary{
     return [NSDictionary dictionaryWithObjectsAndKeys: [UIFont fontWithName:@"OpenSans-Semibold" size:25],NSFontAttributeName, [UIColor marbleOrange] ,NSForegroundColorAttributeName, @(-0.5), NSKernAttributeName, nil];
 }
 
++ (NSDictionary *)getCreateQuizNameFontDictionary{
+    return [NSDictionary dictionaryWithObjectsAndKeys: [UIFont fontWithName:@"OpenSans-Semibold" size:18],NSFontAttributeName, [UIColor marbleOrange] ,NSForegroundColorAttributeName, @(-0.5), NSKernAttributeName, nil];
+}
++ (NSDictionary *)getCreateQuizShuffleButtonFontDictionary{
+    return [NSDictionary dictionaryWithObjectsAndKeys: [UIFont fontWithName:@"OpenSans-Semibold" size:18],NSFontAttributeName, [UIColor whiteColor] ,NSForegroundColorAttributeName, @(-0.5), NSKernAttributeName, nil];
+}
 
 
 
@@ -340,20 +344,28 @@
 }
 
 + (void) setUpProfilePictureImageView:(UIImageView *)view byFBID:(NSString *)fbID {
+    [view setTag:[view tag]+1];
+    NSUInteger tag = [view tag];
     NSUInteger width = view.frame.size.width*2;
     NSUInteger height = view.frame.size.height*2;
     NSString *fileName = [NSString stringWithFormat:@"%@w%luh%lu.png", fbID, width, height];
     NSString *filePath = [NSTemporaryDirectory() stringByAppendingPathComponent:fileName];
     NSData *imageData = [[NSData alloc] initWithContentsOfFile:filePath];
     if(imageData){
-        [view setImage:[UIImage imageWithData:imageData]];
+        if(tag == [view tag]){
+            [view setImage:[UIImage imageWithData:imageData]];
+        }
         MBDebug(@"found photo!!!! %@", fileName);
     } else {
         NSURL *picURL = [NSURL URLWithString:[NSString stringWithFormat:@"https://graph.facebook.com/%@/picture?width=%lu&height=%lu", fbID, (unsigned long)width, (unsigned long)height]];
         [view setImageWithURLRequest:[NSURLRequest requestWithURL:picURL]
                     placeholderImage:[UIImage imageNamed:@"login.png"]
                              success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
-                                 MAINQ([view setImage:image];);
+                                 MAINQ(
+                                       if(tag == [view tag]){
+                                           [view setImage:image];
+                                       }
+                                       );
                                  ASYNC({
                                      NSData *data = UIImagePNGRepresentation(image);
                                      BOOL succeed = [data writeToFile:filePath atomically:YES];

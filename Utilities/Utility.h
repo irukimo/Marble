@@ -36,14 +36,17 @@ typedef void (^voidBlock)(void);
 + (NSDictionary *)getNotifOrangeNormalFontDictionary;
 + (NSDictionary *)getNotifBlackNormalFontDictionary;
 + (NSDictionary *)getGraySmallFontDictionary;
-+ (NSDictionary *)getCreateQuizNameFontDictionary;
+
 
 + (NSDictionary *)getLightOrangeBoldFontDictionary;
 
 + (NSDictionary *)getBigNameFontDictionary;
 + (NSDictionary *)getProfileGrayStaticFontDictionary;
 + (NSDictionary *)getProfileStatusFontDictionary;
-+ (NSDictionary *)getCreateQuizSuperBigKeywordFont;
+
++ (NSDictionary *)getCreateQuizSuperBigKeywordFontDictionary;
++ (NSDictionary *)getCreateQuizShuffleButtonFontDictionary;
++ (NSDictionary *)getCreateQuizNameFontDictionary;
 
 
 

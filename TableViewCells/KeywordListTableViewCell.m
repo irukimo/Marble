@@ -88,15 +88,12 @@ static const NSString *nameKey = @"name";
     [_rank3NameButton addTarget:self action:@selector(rankNameButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     
     _rank1ImageView = [[UIImageView alloc] initWithFrame:CGRectMake(IMAGE_LEFT_ALIGN, RANKING_Y_START, IMAGE_SIZE, IMAGE_SIZE)];
-    [_rank1ImageView setTag:0];
     _rank2ImageView = [[UIImageView alloc] initWithFrame:CGRectMake(IMAGE_LEFT_ALIGN + RANKING_X_INCREMENT , RANKING_Y_START -BIG_IMAGE_SIZE + IMAGE_SIZE, BIG_IMAGE_SIZE   , BIG_IMAGE_SIZE)];
-    [_rank2ImageView setTag:1];
     _rank3ImageView = [[UIImageView alloc] initWithFrame:CGRectMake(IMAGE_LEFT_ALIGN + RANKING_X_INCREMENT*2 +BIG_IMAGE_SIZE - IMAGE_SIZE, RANKING_Y_START , IMAGE_SIZE, IMAGE_SIZE)];
-    [_rank3ImageView setTag:2];
     
-    [_rank1ImageView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(rankNameButtonClicked:)]];
-    [_rank2ImageView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(rankNameButtonClicked:)]];
-    [_rank3ImageView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(rankNameButtonClicked:)]];
+    [_rank1ImageView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(rank1NameButtonClicked)]];
+    [_rank2ImageView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(rank2NameButtonClicked)]];
+    [_rank3ImageView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(rank3NameButtonClicked)]];
     
     [_rank1ImageView setUserInteractionEnabled:YES];
     [_rank2ImageView setUserInteractionEnabled:YES];
@@ -119,16 +116,18 @@ static const NSString *nameKey = @"name";
     [self.contentView addSubview:_expandView];
 }
 
+-(void)rank1NameButtonClicked{
+    [self rankNameButtonClicked:_rank1NameButton];
+}
+-(void)rank2NameButtonClicked{
+    [self rankNameButtonClicked:_rank2NameButton];
+}
+-(void)rank3NameButtonClicked{
+    [self rankNameButtonClicked:_rank3NameButton];
+}
 
 -(void)rankNameButtonClicked:(id)sender{
-    int rankNum;
-    if([sender isKindOfClass:[UIGestureRecognizer class]]){
-        UIGestureRecognizer *gestureRecognizer = (UIGestureRecognizer *)sender;
-        UIImageView *imageView = (UIImageView *)gestureRecognizer.view;
-        rankNum = (int)[imageView tag];
-    } else{
-        rankNum = (int)[sender tag];
-    }
+    int rankNum = (int)[sender tag];
     NSArray *infoBundle;
     switch (rankNum) {
         case 0:{
@@ -142,6 +141,7 @@ static const NSString *nameKey = @"name";
             break;
         }
         case 2:{
+
             NSString *name = [[_rankingDic objectForKey:@"after"] objectForKey:nameKey];
             NSString *fbid = [[_rankingDic objectForKey:@"after"] objectForKey:fbidKey];
             infoBundle = [NSArray arrayWithObjects:name,fbid, nil];
@@ -149,6 +149,9 @@ static const NSString *nameKey = @"name";
         }
         default:
             break;
+    }
+    if([infoBundle count]<2){
+        return;
     }
     if(self.delegate && [self.delegate respondsToSelector:@selector(gotoProfile:)]){
         [self.delegate gotoProfile:infoBundle];

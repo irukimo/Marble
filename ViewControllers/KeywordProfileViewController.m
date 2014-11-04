@@ -179,15 +179,12 @@
     [_rank3NameButton addTarget:self action:@selector(rankNameButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     
     _rank1ImageView = [[UIImageView alloc] initWithFrame:CGRectMake(IMAGE_LEFT_ALIGN, RANKING_Y_START, IMAGE_SIZE, IMAGE_SIZE)];
-    [_rank1ImageView setTag:0];
     _rank2ImageView = [[UIImageView alloc] initWithFrame:CGRectMake(IMAGE_LEFT_ALIGN, RANKING_Y_START + RANKING_Y_INCREMENT, IMAGE_SIZE, IMAGE_SIZE)];
-    [_rank2ImageView setTag:1];
     _rank3ImageView = [[UIImageView alloc] initWithFrame:CGRectMake(IMAGE_LEFT_ALIGN, RANKING_Y_START + 2*RANKING_Y_INCREMENT, IMAGE_SIZE, IMAGE_SIZE)];
-    [_rank3ImageView setTag:2];
     
-    [_rank1ImageView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(rankNameButtonClicked:)]];
-    [_rank2ImageView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(rankNameButtonClicked:)]];
-    [_rank3ImageView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(rankNameButtonClicked:)]];
+    [_rank1ImageView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(rank1NameButtonClicked)]];
+    [_rank2ImageView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(rank2NameButtonClicked)]];
+    [_rank3ImageView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(rank3NameButtonClicked)]];
     
     [_rank1ImageView setUserInteractionEnabled:YES];
     [_rank2ImageView setUserInteractionEnabled:YES];
@@ -284,15 +281,23 @@
 
 }
 
+-(void)rank1NameButtonClicked{
+    id sender;
+    [sender setTag:0];
+    [self rankNameButtonClicked:sender];
+}
+-(void)rank2NameButtonClicked{
+    id sender;
+    [sender setTag:1];
+    [self rankNameButtonClicked:sender];
+}
+-(void)rank3NameButtonClicked{
+    id sender;
+    [sender setTag:2];
+    [self rankNameButtonClicked:sender];
+}
 -(void)rankNameButtonClicked:(id)sender{
-    int rankNum;
-    if([sender isKindOfClass:[UIGestureRecognizer class]]){
-        UIGestureRecognizer *gestureRecognizer = (UIGestureRecognizer *)sender;
-        UIImageView *imageView = (UIImageView *)gestureRecognizer.view;
-        rankNum = (int)[imageView tag];
-    } else{
-        rankNum = (int)[sender tag];
-    }
+    int rankNum = (int)[sender tag];
     NSNumber *number = [[NSNumber alloc] initWithInt:rankNum];
     NSString *name = [[_ranking objectForKey:number] objectForKey:RANKING_NAME_KEY];
     NSString *fbid = [[_ranking objectForKey:number] objectForKey:RANKING_FBID_KEY];

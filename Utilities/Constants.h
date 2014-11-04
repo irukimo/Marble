@@ -43,8 +43,8 @@
 
 #define exploreCollectionViewCellIdentifier @"exploreCollectionViewCellIdentifier"
 
-#define QuizTableViewCellHeight 285
-#define QuizTableViewCellDisplayHeight 300
+#define QuizTableViewCellHeight 300
+#define QuizTableViewCellDisplayHeight 310
 #define StatusUpdateTableViewCellHeight 110
 #define KeywordUpdateTableViewCellHeight 110
 #define CommentIncrementHeight 18
@@ -58,6 +58,8 @@
 #define LEFT_ALIGNMENT 25
 #define NAME_LEFT_ALIGNMENT 75
 #define NAME_TOP_ALIGNMENT 16
+
+#define CELL_UNIVERSAL_PADDING 16
 
 #define QUIZ_CELL_TYPE @"quiz_cell_type"
 #define STATUS_UPDATE_CELL_TYPE @"status_update_cell_type"

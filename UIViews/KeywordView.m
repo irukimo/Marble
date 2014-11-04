@@ -33,7 +33,7 @@
 
 -(void)setKeyword:(NSString *)keyword{
     _keyword = keyword;
-    NSAttributedString *keywordString = [[NSAttributedString alloc] initWithString:_keyword attributes:[Utility getCreateQuizSuperBigKeywordFont]];
+    NSAttributedString *keywordString = [[NSAttributedString alloc] initWithString:_keyword attributes:[Utility getCreateQuizSuperBigKeywordFontDictionary]];
     [_keywordTextField setAttributedText:keywordString];
     [_keywordTextField setTextAlignment:NSTextAlignmentCenter];
 }

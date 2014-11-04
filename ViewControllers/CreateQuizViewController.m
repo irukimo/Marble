@@ -36,7 +36,6 @@ static const int picY = 75;
 //@property (strong, nonatomic) UITextField *keywordTextField;
 @property (strong, nonatomic) UITextField *option0NameTextField;
 @property (strong, nonatomic) UITextField *option1NameTextField;
-@property (strong, nonatomic) UIButton *shuffleAllBtn;
 @property (strong, nonatomic) UIButton *shufflePeopleBtn;
 @property (strong, nonatomic) UITextField *ongoingTextField;
 
@@ -113,7 +112,7 @@ static const int picY = 75;
     [self.view setBackgroundColor:[UIColor whiteColor]];
     
     [self addTextFields];
-    [self addShuffleButtons];
+    [self addShufflePeopleButton];
 //    [self addPeopleButtons];
     [self initFBProfilePicViews];
 //    [self addLockBtns];
@@ -694,12 +693,16 @@ static const int picY = 75;
 
 
 
--(void)addShuffleButtons{
-    _shuffleAllBtn = [[UIButton alloc] initWithFrame:CGRectMake(100, 450, 100, 50)];
-    [_shuffleAllBtn setTitle:@"shuffle" forState:UIControlStateNormal];
-    [_shuffleAllBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [_mainView addSubview:_shuffleAllBtn];
-    [_shuffleAllBtn addTarget:self action:@selector(shuffleAll:) forControlEvents:UIControlEventTouchUpInside];
+-(void)addShufflePeopleButton{
+    _shufflePeopleBtn = [[UIButton alloc] initWithFrame:CGRectMake(80, 420, 170, 50)];
+    NSAttributedString *shuffleString = [[NSAttributedString alloc] initWithString:@"shuffle friends" attributes:[Utility getCreateQuizShuffleButtonFontDictionary]];
+    [_shufflePeopleBtn setAttributedTitle:shuffleString forState:UIControlStateNormal];
+    [_shufflePeopleBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [_mainView addSubview:_shufflePeopleBtn];
+    [_shufflePeopleBtn addTarget:self action:@selector(shufflePeople:) forControlEvents:UIControlEventTouchUpInside];
+    [_shufflePeopleBtn setBackgroundColor:[UIColor marbleOrange]];
+    [_shufflePeopleBtn.layer setCornerRadius:_shufflePeopleBtn.frame.size.height/2.0];
+    [_shufflePeopleBtn.layer setMasksToBounds:YES];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -709,11 +712,7 @@ static const int picY = 75;
 
 
 
-- (void)shuffleAll:(id)sender {
-//    if(!_keywordIsLocked){
-//        [_keywordTextField setText:[KeyChainWrapper getARandomKeyword]];
-//        _keywordCurrentValue = [_keywordTextField text];
-//    }
+- (void)shufflePeople:(id)sender {
     
     NSArray *randomUser;
     NSMutableArray *existingUsers = [[NSMutableArray alloc] init];
@@ -721,12 +720,8 @@ static const int picY = 75;
     if (_option1 != nil) [existingUsers addObject:_option1];
     [User getRandomUsersThisMany:2 inThisArray:&randomUser inManagedObjectContext:[RKManagedObjectStore defaultStore].mainQueueManagedObjectContext existingUsers:existingUsers];
     if([randomUser count] >= 2) {
-//        if(!_option0IsLocked){
             [self setOption0:[randomUser firstObject]];
-//        }
-//        if(!_option1IsLocked){
             [self setOption1:[randomUser objectAtIndex:1]];
-//        }
     }
 }
 

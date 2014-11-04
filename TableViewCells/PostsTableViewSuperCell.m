@@ -33,6 +33,7 @@
     if (self) {
         self.selectionStyle = UITableViewCellSelectionStyleNone;
         [self setBorder];
+        self.clipsToBounds = YES;
         _isSinglePostSoExpandComments = ([reuseIdentifier isEqualToString:singlePostKeywordUpdateTableViewCellIdentifier] || [reuseIdentifier isEqualToString:singlePostQuizTableViewCellIdentifier] || [reuseIdentifier isEqualToString:singlePostStatusTableViewCellIdentifier])? TRUE: FALSE;
         // Initialization code
     }
@@ -41,16 +42,16 @@
 
 -(void) setBorder{
     [self.contentView.layer setBorderColor:[UIColor marbleLightGray].CGColor];
-    [self.contentView.layer setBorderWidth:5.0f];
+    [self.contentView.layer setBorderWidth:CELL_UNIVERSAL_PADDING/2.0];
     if([_cellType isEqualToString:QUIZ_CELL_TYPE]){
-        [UIView addLeftBorderOn:self.contentView withColor:[UIColor marbleLightGray] andWidth:5 andHeight:QuizTableViewCellDisplayHeight withOffset:5];
-        [UIView addRightBorderOn:self.contentView withColor:[UIColor marbleLightGray] andWidth:5 andHeight:QuizTableViewCellDisplayHeight withOffset:5];
+        [UIView addLeftBorderOn:self.contentView withColor:[UIColor marbleLightGray] andWidth:CELL_UNIVERSAL_PADDING/2.0 andHeight:QuizTableViewCellDisplayHeight withOffset:CELL_UNIVERSAL_PADDING/2.0];
+        [UIView addRightBorderOn:self.contentView withColor:[UIColor marbleLightGray] andWidth:CELL_UNIVERSAL_PADDING/2.0 andHeight:QuizTableViewCellDisplayHeight withOffset:CELL_UNIVERSAL_PADDING/2.0];
     } else if([_cellType isEqualToString:STATUS_UPDATE_CELL_TYPE]){
-        [UIView addLeftBorderOn:self.contentView withColor:[UIColor marbleLightGray] andWidth:5 andHeight:StatusUpdateTableViewCellHeight withOffset:5];
-        [UIView addRightBorderOn:self.contentView withColor:[UIColor marbleLightGray] andWidth:5 andHeight:QuizTableViewCellDisplayHeight withOffset:5];
+        [UIView addLeftBorderOn:self.contentView withColor:[UIColor marbleLightGray] andWidth:CELL_UNIVERSAL_PADDING/2.0 andHeight:StatusUpdateTableViewCellHeight withOffset:CELL_UNIVERSAL_PADDING/2.0];
+        [UIView addRightBorderOn:self.contentView withColor:[UIColor marbleLightGray] andWidth:CELL_UNIVERSAL_PADDING/2.0 andHeight:QuizTableViewCellDisplayHeight withOffset:CELL_UNIVERSAL_PADDING/2.0];
     } else{
-       [UIView addLeftBorderOn:self.contentView withColor:[UIColor marbleLightGray] andWidth:5 andHeight:KeywordUpdateTableViewCellHeight withOffset:5];
-        [UIView addRightBorderOn:self.contentView withColor:[UIColor marbleLightGray] andWidth:5 andHeight:QuizTableViewCellDisplayHeight withOffset:5];
+       [UIView addLeftBorderOn:self.contentView withColor:[UIColor marbleLightGray] andWidth:CELL_UNIVERSAL_PADDING/2.0 andHeight:KeywordUpdateTableViewCellHeight withOffset:CELL_UNIVERSAL_PADDING/2.0];
+        [UIView addRightBorderOn:self.contentView withColor:[UIColor marbleLightGray] andWidth:CELL_UNIVERSAL_PADDING/2.0 andHeight:QuizTableViewCellDisplayHeight withOffset:CELL_UNIVERSAL_PADDING/2.0];
     }
 }
 
@@ -137,7 +138,8 @@
 -(void)setCommentsForPostSuperCell:(NSArray *)comments{
     [self removeAllCommentRelatedUIs];
     _comments = [comments copy];
-    [_commentNumLabel setText:[NSString stringWithFormat:@"%lu", (unsigned long)[_comments count]]];
+    NSAttributedString *commentString = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"%lu", (unsigned long)[_comments count]] attributes:[Utility getNotifBlackNormalFontDictionary]];
+    [_commentNumLabel setAttributedText:commentString];
     [self showComments];
     [self addCommentTextField];
 }

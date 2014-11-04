@@ -100,7 +100,7 @@
         // call [tableView.pullToRefreshView stopAnimating] when done
     }];
 
-    self.tableView.contentInset = UIEdgeInsetsMake(5, 0, 5, 0);
+//    self.tableView.contentInset = UIEdgeInsetsMake(CELL_UNIVERSAL_PADDING/2.0, 0, CELL_UNIVERSAL_PADDING/2.0, 0);
 }
 
 -(void)viewDidAppear:(BOOL)animated{
