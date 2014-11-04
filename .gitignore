@@ -15,4 +15,4 @@ profile
 *.out
 
 #Let's ignore Pods directory for now
-Libraries/*
+Libraries/FacebookSDK/*
