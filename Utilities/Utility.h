@@ -43,6 +43,7 @@ typedef void (^voidBlock)(void);
 + (NSDictionary *)getBigNameFontDictionary;
 + (NSDictionary *)getProfileGrayStaticFontDictionary;
 + (NSDictionary *)getProfileStatusFontDictionary;
++ (NSDictionary *)getCreateQuizSuperBigKeywordFont;
 
 
 

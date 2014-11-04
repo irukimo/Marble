@@ -22,6 +22,8 @@
 static const CGFloat animationDuration = 0.5;
 static const CGFloat ChoosePersonButtonHorizontalPadding = 80.f;
 static const CGFloat ChoosePersonButtonVerticalPadding = 20.f;
+static const int picviewSize = 112;
+static const int picY = 75;
 
 
 //#import "TouchTextField.h"
@@ -48,8 +50,8 @@ static const CGFloat ChoosePersonButtonVerticalPadding = 20.f;
 @property (strong, nonatomic) NSString *currentUserfbID;
 @property (strong, nonatomic) User *option0;
 @property (strong, nonatomic) User *option1;
-@property (strong, nonatomic) FBProfilePictureView *option0PicView;
-@property (strong, nonatomic) FBProfilePictureView *option1PicView;
+@property (strong, nonatomic) UIImageView *option0PicView;
+@property (strong, nonatomic) UIImageView *option1PicView;
 
 
 @property(strong, nonatomic) UIView *mainView;
@@ -202,7 +204,8 @@ static const CGFloat ChoosePersonButtonVerticalPadding = 20.f;
 
 - (UIImage *)blurWithImageEffects:(UIImage *)image
 {
-    return [image applyBlurWithRadius:15 tintColor:[UIColor colorWithWhite:1 alpha:0.2] saturationDeltaFactor:1.5 maskImage:nil];
+//    return [image applyBlurWithRadius:15 tintColor:[UIColor colorWithWhite:1 alpha:0.2] saturationDeltaFactor:1.5 maskImage:nil];
+    return [image applyBlurWithRadius:3 tintColor:[UIColor colorWithWhite:1 alpha:0.7] saturationDeltaFactor:1 maskImage:nil];
 }
 - (UIImage *)takeSnapshotOfView:(UIView *)view withReductionFactor:(CGFloat)factor
 {
@@ -230,11 +233,17 @@ static const CGFloat ChoosePersonButtonVerticalPadding = 20.f;
     _selectKeywordViewController = [[SelectKeywordViewController alloc] init];
     //    _selectPeopleViewController.view.frame = CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y + 200, self.view.bounds.size.width, 100);
     CGRect searchFrame = [self getSearchRect];
-    searchFrame.origin.y = searchFrame.origin.y + 30;
+//    searchFrame.origin.y = searchFrame.origin.y ;
     _selectKeywordViewController.view.frame = searchFrame;
     _selectKeywordViewController.view.tag = AUTO_COMPLETE_SELECT_VIEW_TAG;
     _selectKeywordViewController.delegate = self;
     [_mainView addSubview:_selectKeywordViewController.view];
+    
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationDuration:0.25];
+    [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
+    _frontCardView.frame = [self frontCardViewFrameWhenEditing];
+    [UIView commitAnimations];
 }
 
 -(void)initExitButton{
@@ -361,19 +370,33 @@ static const CGFloat ChoosePersonButtonVerticalPadding = 20.f;
     _keywordCurrentValue = _keywordStoreValue;
     _keywordStoreValue = _keywordArray[0];
     [_keywordArray removeObjectAtIndex:0];
+    [self checkIfNeedMoreKeyword];
     return keywordView;
 }
 
+-(void)checkIfNeedMoreKeyword{
+    if([_keywordArray count] < 2){
+        [_keywordArray addObject:[KeyChainWrapper getARandomKeyword]];
+    }
+}
 #pragma mark View Contruction
 
 - (CGRect)frontCardViewFrame {
-    CGFloat horizontalPadding = 20.f;
-    CGFloat topPadding = 150.f;
-    CGFloat bottomPadding = 300.f;
+    CGFloat horizontalPadding = 35.f;
+    CGFloat topPadding = 230.f;
+    CGFloat bottomPadding = 400.f;
     return CGRectMake(horizontalPadding,
                       topPadding,
                       CGRectGetWidth(_mainView.frame) - (horizontalPadding * 2),
                       CGRectGetHeight(_mainView.frame) - bottomPadding);
+}
+
+- (CGRect)frontCardViewFrameWhenEditing {
+    CGRect frontFrame = [self frontCardViewFrame];
+    return CGRectMake(frontFrame.origin.x,
+                      frontFrame.origin.y -170.f,
+                      CGRectGetWidth(frontFrame),
+                      CGRectGetHeight(frontFrame));
 }
 
 - (CGRect)backCardViewFrame {
@@ -457,14 +480,16 @@ static const CGFloat ChoosePersonButtonVerticalPadding = 20.f;
 
 
 -(void) initFBProfilePicViews{
-    _option0PicView = [[FBProfilePictureView alloc] initWithFrame:CGRectMake(60, 50, 60, 60)];
-    _option1PicView = [[FBProfilePictureView alloc] initWithFrame:CGRectMake(200,50, 60, 60)];
+    _option0PicView = [[UIImageView alloc] initWithFrame:CGRectMake(40, picY, picviewSize, picviewSize)];
+    _option1PicView = [[UIImageView alloc] initWithFrame:CGRectMake(170,picY, picviewSize, picviewSize)];
     _option0PicView.layer.cornerRadius = _option0PicView.frame.size.width/2.0;
     _option0PicView.layer.masksToBounds = YES;
     _option1PicView.layer.cornerRadius = _option1PicView.frame.size.width/2.0;
     [_option0PicView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(option0PicViewClicked)]];
     [_option1PicView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(option1PicViewClicked)]];
     _option1PicView.layer.masksToBounds = YES;
+    [_option0PicView setUserInteractionEnabled:YES];
+    [_option1PicView setUserInteractionEnabled:YES];
     [_mainView addSubview:_option0PicView];
     [_mainView addSubview:_option1PicView];
 }
@@ -523,32 +548,37 @@ static const CGFloat ChoosePersonButtonVerticalPadding = 20.f;
 
 -(void) setOption0:(User *)option0{
     if(!option0){
-        NSAttributedString *nameString = [[NSAttributedString alloc] initWithString:[Utility getNameToDisplay:_option0.name] attributes:[Utility getCreateQuizNameFontDictionary]];
-        [_option0NameTextField setAttributedText:nameString];
+        [self setThisNameTextField:_option0NameTextField withName:_option0.name];
         return;
     }
     MBDebug(@"setoption0 %@", option0.name);
     _option0 = option0;
-    _option0PicView.profileID = _option0.fbID;
-    NSAttributedString *nameString = [[NSAttributedString alloc] initWithString:[Utility getNameToDisplay:_option0.name] attributes:[Utility getCreateQuizNameFontDictionary]];
-    [_option0NameTextField setAttributedText:nameString];
+    [Utility setUpProfilePictureImageView:_option0PicView byFBID:_option0.fbID];
+    [self setThisNameTextField:_option0NameTextField withName:_option0.name];
+    
     [_frontCardView changeNopeTextTo:[Utility getNameToDisplay:_option0.name]];
     [_backCardView changeNopeTextTo:[Utility getNameToDisplay:_option0.name]];
 }
 
 -(void) setOption1:(User *)option1{
     if(!option1){
-        NSAttributedString *nameString = [[NSAttributedString alloc] initWithString:[Utility getNameToDisplay:_option1.name] attributes:[Utility getCreateQuizNameFontDictionary]];
-        [_option1NameTextField setAttributedText:nameString];
+        [self setThisNameTextField:_option1NameTextField withName:_option1.name];
         return;
     }
     _option1 = option1;
-    _option1PicView.profileID = _option1.fbID;
-    NSAttributedString *nameString = [[NSAttributedString alloc] initWithString:[Utility getNameToDisplay:_option1.name] attributes:[Utility getCreateQuizNameFontDictionary]];
-    [_option1NameTextField setAttributedText:nameString];
+    [Utility setUpProfilePictureImageView:_option1PicView byFBID:_option1.fbID];
+    [self setThisNameTextField:_option1NameTextField withName:_option1.name];
+    
     [_frontCardView changeLikedTextTo:[Utility getNameToDisplay:_option1.name]];
     [_backCardView changeLikedTextTo:[Utility getNameToDisplay:_option1.name]];
 }
+
+-(void)setThisNameTextField:(UITextField *)textfield withName:(NSString *)name{
+    NSAttributedString *nameString = [[NSAttributedString alloc] initWithString:[Utility getNameToDisplay:name] attributes:[Utility getCreateQuizNameFontDictionary]];
+    [textfield setAttributedText:nameString];
+    [textfield setTextAlignment:NSTextAlignmentCenter];
+}
+
 
 -(void)setCurrentUserValues{
     _currentUserName = [KeyChainWrapper getSelfName];
@@ -616,8 +646,8 @@ static const CGFloat ChoosePersonButtonVerticalPadding = 20.f;
 
 -(void)addTextFields{
 //    _keywordTextField = [[UITextField alloc] initWithFrame:CGRectMake(80, 20, 150, 40)];
-    _option0NameTextField = [[UITextField alloc] initWithFrame:CGRectMake(10, 110, 120, 50)];
-    _option1NameTextField = [[UITextField alloc] initWithFrame:CGRectMake(200, 110, 120, 50)];
+    _option0NameTextField = [[UITextField alloc] initWithFrame:CGRectMake(30, picY + picviewSize+3, 120, 30)];
+    _option1NameTextField = [[UITextField alloc] initWithFrame:CGRectMake(170, picY + picviewSize+3, 120, 30)];
     _keywordCurrentValue = @"yay";
 //    [_keywordTextField setText:_keywordCurrentValue];
 //    [_keywordTextField setTextAlignment:NSTextAlignmentCenter];
@@ -645,8 +675,6 @@ static const CGFloat ChoosePersonButtonVerticalPadding = 20.f;
     
     [_option0NameTextField setBorderStyle:UITextBorderStyleNone];
     [_option1NameTextField setBorderStyle:UITextBorderStyleNone];
-    [_option0NameTextField setTextAlignment:NSTextAlignmentCenter];
-    [_option1NameTextField setTextAlignment:NSTextAlignmentCenter];
     [_option0NameTextField setDelegate:self];
     [_option1NameTextField setDelegate:self];
     [_option0NameTextField addTarget:self
@@ -737,10 +765,9 @@ static const CGFloat ChoosePersonButtonVerticalPadding = 20.f;
     NSLog(@"keyword set %@", keyword);
     _keywordCurrentValue = [keyword copy];
     _frontCardView.keyword = keyword;
-    /*
-    [_keywordTextField setText:_keywordCurrentValue];
-    [_keywordTextField endEditing:YES];
-     */
+    
+    
+    [_ongoingTextField endEditing:YES];
     [self recordData];
 }
 
@@ -755,7 +782,8 @@ static const CGFloat ChoosePersonButtonVerticalPadding = 20.f;
 }
 
 -(CGRect)getSearchRect{
-    return CGRectMake(0, 150, _mainView.bounds.size.width, 200);
+    return CGRectMake(0, picviewSize+picY+40
+                      , _mainView.bounds.size.width, 200);
 }
 
 #pragma mark -
@@ -800,6 +828,11 @@ static const CGFloat ChoosePersonButtonVerticalPadding = 20.f;
         } else{
             _keywordCurrentValue = textField.text;
         }
+        [UIView beginAnimations:nil context:NULL];
+        [UIView setAnimationDuration:0.25];
+        [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
+        _frontCardView.frame = [self frontCardViewFrame];
+        [UIView commitAnimations];
     }
 }
 
@@ -833,6 +866,7 @@ static const CGFloat ChoosePersonButtonVerticalPadding = 20.f;
 -(void) presentAndEmptyData:(UITextField *)textField{
     [self presentData];
     [textField setText:@""];
+    [textField setTextAlignment:NSTextAlignmentCenter];
 }
 
 -(void) recordData{

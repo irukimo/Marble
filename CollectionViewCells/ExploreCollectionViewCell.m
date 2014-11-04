@@ -93,9 +93,9 @@
             }
         }
     }
-    NSString *authorPictureUrl = [NSString stringWithFormat:@"https://graph.facebook.com/%@/picture?width=%lu&height=%lu", _user.fbID,(unsigned long)self.contentView.frame.size.width*2 , (unsigned long)self.contentView.frame.size.height*2 ];
-    [_authorPicView setImageWithURL:[NSURL URLWithString:authorPictureUrl] placeholderImage:[UIImage imageNamed:@"login.png"]];
-//    [Utility setUpProfilePictureImageView:_authorPicView byFBID:_user.fbID];
+//    NSString *authorPictureUrl = [NSString stringWithFormat:@"https://graph.facebook.com/%@/picture?width=%lu&height=%lu", _user.fbID,(unsigned long)self.contentView.frame.size.width*2 , (unsigned long)self.contentView.frame.size.height*2 ];
+//    [_authorPicView setImageWithURL:[NSURL URLWithString:authorPictureUrl] placeholderImage:[UIImage imageNamed:@"login.png"]];
+    [Utility setUpProfilePictureImageView:_authorPicView byFBID:_user.fbID];
 }
 
 

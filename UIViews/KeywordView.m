@@ -33,14 +33,16 @@
 
 -(void)setKeyword:(NSString *)keyword{
     _keyword = keyword;
-    [_keywordTextField setText:_keyword];
+    NSAttributedString *keywordString = [[NSAttributedString alloc] initWithString:_keyword attributes:[Utility getCreateQuizSuperBigKeywordFont]];
+    [_keywordTextField setAttributedText:keywordString];
+    [_keywordTextField setTextAlignment:NSTextAlignmentCenter];
 }
 
 
 - (void)constructInformationView {
-    _keywordTextField = [[UITextField alloc] initWithFrame:CGRectMake(10, 10, 100, 20)];
+    _keywordTextField = [[UITextField alloc] initWithFrame:CGRectMake(0, self.frame.size.height/2 - 20, self.frame.size.width, 40)];
     _keywordTextField.delegate = _delegate;
-    [_keywordTextField setText:_keyword];
+    [self setKeyword:_keyword];
     [_keywordTextField addTarget:_delegate
                               action:@selector(textFieldDidChange:)
                     forControlEvents:UIControlEventEditingChanged];
