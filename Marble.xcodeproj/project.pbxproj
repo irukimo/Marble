@@ -60,6 +60,7 @@
 		7AB925B319E374E500F8229F /* ExploreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AB925B219E374E500F8229F /* ExploreViewController.m */; };
 		7ACD18D619FE159300B23DFA /* KeywordView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7ACD18D519FE159300B23DFA /* KeywordView.m */; };
 		7AD2A32E19DE1F9800B200E9 /* User+MBUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AD2A32D19DE1F9800B200E9 /* User+MBUser.m */; };
+		7AD323241A0988DB00C5C83B /* DAKeyboardControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AD323231A0988DB00C5C83B /* DAKeyboardControl.m */; };
 		7AD9AF4119F6EB7200A83B59 /* UIView+MBView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AD9AF4019F6EB7200A83B59 /* UIView+MBView.m */; };
 		7AEB9CF619E8572200409276 /* KeywordUpdateTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AEB9CF519E8572200409276 /* KeywordUpdateTableViewCell.m */; };
 		7AEB9CF919E9B37100409276 /* KeywordListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AEB9CF819E9B37100409276 /* KeywordListViewController.m */; };
@@ -192,6 +193,8 @@
 		7AD2A32C19DE1F9800B200E9 /* User+MBUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "User+MBUser.h"; sourceTree = "<group>"; };
 		7AD2A32D19DE1F9800B200E9 /* User+MBUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "User+MBUser.m"; sourceTree = "<group>"; };
 		7AD323201A03FE5800C5C83B /* UIImage+ImageEffects.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIImage+ImageEffects.h"; sourceTree = "<group>"; };
+		7AD323221A0988DB00C5C83B /* DAKeyboardControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DAKeyboardControl.h; path = Libraries/DAKeyboardControl.h; sourceTree = "<group>"; };
+		7AD323231A0988DB00C5C83B /* DAKeyboardControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DAKeyboardControl.m; path = Libraries/DAKeyboardControl.m; sourceTree = "<group>"; };
 		7AD9AF3F19F6EB7200A83B59 /* UIView+MBView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+MBView.h"; sourceTree = "<group>"; };
 		7AD9AF4019F6EB7200A83B59 /* UIView+MBView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+MBView.m"; sourceTree = "<group>"; };
 		7AEB9CF419E8572200409276 /* KeywordUpdateTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KeywordUpdateTableViewCell.h; path = TableViewCells/KeywordUpdateTableViewCell.h; sourceTree = "<group>"; };
@@ -370,9 +373,19 @@
 			name = UIViews;
 			sourceTree = "<group>";
 		};
+		7AD323211A0988CE00C5C83B /* Libraries */ = {
+			isa = PBXGroup;
+			children = (
+				7AD323221A0988DB00C5C83B /* DAKeyboardControl.h */,
+				7AD323231A0988DB00C5C83B /* DAKeyboardControl.m */,
+			);
+			name = Libraries;
+			sourceTree = "<group>";
+		};
 		7AF4122419D9FB6C00A470E1 = {
 			isa = PBXGroup;
 			children = (
+				7AD323211A0988CE00C5C83B /* Libraries */,
 				7ACD18D319FE154E00B23DFA /* UIViews */,
 				7A261F3119F0ABD500D1E91D /* CollectionViewCells */,
 				7A48343719EC56D60029D092 /* Resources */,
@@ -726,6 +739,7 @@
 				7A261F3719F1A8FB00D1E91D /* ExploreNavigationController.m in Sources */,
 				7AFF5BC119E7631F00CFD35D /* StatusUpdateTableViewCell.m in Sources */,
 				7A10A56A19EF23BB006A2CED /* CommentsTableViewController.m in Sources */,
+				7AD323241A0988DB00C5C83B /* DAKeyboardControl.m in Sources */,
 				51DF106E19E460E00021C3F9 /* ArrayToDataTransformer.m in Sources */,
 				7A261F3019F0AB4B00D1E91D /* ExploreCollectionViewController.m in Sources */,
 				517C895019DB7DB4005A8407 /* RestKitInitializer.m in Sources */,

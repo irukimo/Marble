@@ -19,6 +19,15 @@
     _commentsArray = [[NSMutableArray alloc] init];
     [self.view setBackgroundColor:[UIColor clearColor]];
     [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillShow)
+                                                 name:UIKeyboardDidShowNotification
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillRecede:)
+                                                 name:UIKeyboardWillHideNotification
+                                               object:nil];
 }
 
 -(void)setCommentArray:(NSArray *)commentArray{
@@ -37,6 +46,21 @@
     
     [self.tableView setContentOffset:CGPointMake(0, yOffset) animated:YES];
 }
+
+- (void)keyboardWillShow
+{
+    [self.tableView setContentInset:UIEdgeInsetsMake(0,0,/*KEYBOARD_HEIGHT*/254,0)];
+    // auto scroll to bottom
+    CGPoint bottomOffset = CGPointMake(0, self.tableView.contentSize.height - self.tableView.bounds.size.height + KEYBOARD_HEIGHT);
+    [self.tableView setContentOffset:bottomOffset animated:YES];
+    
+}
+- (void)keyboardWillRecede:(NSNotification*)notification
+{
+    [self.tableView setContentInset:UIEdgeInsetsMake(0,0,0,0)];
+}
+
+
 
 #pragma mark - Table view data source
 
