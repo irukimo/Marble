@@ -9,9 +9,8 @@
 #import "KeywordListViewController.h"
 #import "KeywordListTableViewCell.h"
 #import "KeywordProfileViewController.h"
+#import "ProfileViewController.h"
 
-static const int EXPAND_HEIGHT = 150;
-static const int UNEXPAND_HEIGHT  = 60;
 
 @interface KeywordListViewController ()
 
@@ -96,15 +95,19 @@ static const int UNEXPAND_HEIGHT  = 60;
     return cell;
 }
 
+-(void)gotoProfile:(id)sender{
+    [self performSegueWithIdentifier:@"ProfileViewControllerSegue" sender:sender];
+}
+
 -(void) gotoKeywordProfileWithKeyword:(NSString *)keyword{
     [self performSegueWithIdentifier:@"KeywordProfileViewControllerSegue" sender:keyword];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if([indexPath isEqual:_ongoingPath]){
-        return EXPAND_HEIGHT;
+        return KEYWORD_LIST_CELL_EXPAND_HEIGHT;
     }
-    return UNEXPAND_HEIGHT;
+    return KEYWORD_LIST_CELL_UNEXPAND_HEIGHT;
 }
 
 -(void) setKeywords:(id)keywords{
@@ -134,6 +137,11 @@ static const int UNEXPAND_HEIGHT  = 60;
     if([segue.destinationViewController isKindOfClass:[KeywordProfileViewController class]]){
         KeywordProfileViewController *vc = segue.destinationViewController;
         [vc setKeyword:sender];
+    } else if([[segue destinationViewController] isKindOfClass:[ProfileViewController class]]){
+        if([sender isKindOfClass:[NSArray class]]){
+            ProfileViewController *viewController =[segue destinationViewController];
+            [viewController setName:(NSString *)[sender firstObject] andID:[sender objectAtIndex:1] sentFromTabbar:NO];
+        }
     }
 }
 

@@ -11,6 +11,7 @@
 #import "KeywordListViewController.h"
 #import "KeywordProfileViewController.h"
 #import "SVPullToRefresh.h"
+#import "MarbleTabBarController.h"
 
 #define SEND_BUTTON_TAG 116
 #define GOLDEN_LEFT_ALIGNMENT 130
@@ -77,6 +78,10 @@
 -(void)viewDidAppear:(BOOL)animated{
     MBDebug(@"view did appear for %@", _user.name);
     [self setNavbarTitle];
+    if([self.tabBarController isKindOfClass:[MarbleTabBarController class]]){
+        MarbleTabBarController *tabbarcontroller = (MarbleTabBarController *)self.tabBarController;
+        tabbarcontroller.lookingAtEitherUserOrKeyword = _user;
+    }
 }
 
 -(void) viewKeywordBtnClicked:(id)sender{

@@ -23,6 +23,7 @@
 -(void) resetAllOptions;
 -(void) setOption0Option1;
 @property (nonatomic, weak) id<CreateQuizViewControllerDelegate> delegate;
+@property (strong,nonatomic) id lookingAtEitherUserOrKeyword;
 
 @property (nonatomic, strong) NSString *currentKeyword;
 @property (nonatomic, strong) KeywordView *frontCardView;

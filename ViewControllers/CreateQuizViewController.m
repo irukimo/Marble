@@ -129,10 +129,22 @@ static const CGFloat ChoosePersonButtonVerticalPadding = 20.f;
     [self generateMaskForDismissingTextField];
     
     [self setOption0Option1];
+    [self seeIfDisplayLookingAt];
     
     [self createBlurredView];
     
     NSLog(@"ran did load");
+}
+
+-(void)seeIfDisplayLookingAt{
+    if(!_lookingAtEitherUserOrKeyword){
+        return;
+    }
+    if([_lookingAtEitherUserOrKeyword isKindOfClass:[User class]]){
+        [self setOption0:(User *)_lookingAtEitherUserOrKeyword];
+    }else if([_lookingAtEitherUserOrKeyword isKindOfClass:[NSString class]]){
+        [self setKeyword:(NSString *)_lookingAtEitherUserOrKeyword];
+    }
 }
 
 -(void)generateMaskForDismissingTextField{
@@ -724,6 +736,7 @@ static const CGFloat ChoosePersonButtonVerticalPadding = 20.f;
 -(void) setKeyword:(NSString *)keyword{
     NSLog(@"keyword set %@", keyword);
     _keywordCurrentValue = [keyword copy];
+    _frontCardView.keyword = keyword;
     /*
     [_keywordTextField setText:_keywordCurrentValue];
     [_keywordTextField endEditing:YES];

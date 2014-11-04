@@ -9,8 +9,10 @@
 #import "KeywordListTableViewCell.h"
 #define KEYWORD_BUTTON_TAG 907
 
-static const int EXPAND_HEIGHT = 150;
-static const int UNEXPAND_HEIGHT  = 70;
+
+static const NSString *fbidKey = @"fb_id";
+static const NSString *nameKey = @"name";
+
 
 @interface KeywordListTableViewCell()
 @property(strong, nonatomic) UIButton *keywordButton;
@@ -50,13 +52,19 @@ static const int UNEXPAND_HEIGHT  = 70;
 -(void)generateStaticUI{
     _timesPlayedLabel = [[UILabel alloc] initWithFrame:CGRectMake(280, 15, 50, 15)];
     [self.contentView addSubview:_timesPlayedLabel];
-    _selfRankingLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, 18, 50, 15)];
-    [self.contentView addSubview:_selfRankingLabel];
-    _placeLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, 30, 50, 15)];
+
     NSAttributedString *placeString = [[NSAttributedString alloc] initWithString:@"place" attributes:[Utility getProfileGrayStaticFontDictionary]];
+    _placeLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, 30, placeString.size.width, 15)];
     [_placeLabel setAttributedText:placeString];
     [self.contentView addSubview:_placeLabel];
     
+    _selfRankingLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, 18, placeString.size.width, 15)];
+    [self.contentView addSubview:_selfRankingLabel];
+    [_selfRankingLabel setTextAlignment:NSTextAlignmentCenter];
+    
+    UIView *grayLine = [[UIView alloc] initWithFrame:CGRectMake(0, KEYWORD_LIST_CELL_UNEXPAND_HEIGHT - 5, self.contentView.frame.size.width, 1)];
+    [grayLine setBackgroundColor:[UIColor marbleLightGray]];
+    [self.contentView addSubview:grayLine];
     [self addThreeRanking];
 }
 
@@ -121,11 +129,30 @@ static const int UNEXPAND_HEIGHT  = 70;
     } else{
         rankNum = (int)[sender tag];
     }
-//    NSNumber *number = [[NSNumber alloc] initWithInt:rankNum];
-//    NSString *name = [[_ranking objectForKey:number] objectForKey:RANKING_NAME_KEY];
-//    NSString *fbid = [[_ranking objectForKey:number] objectForKey:RANKING_FBID_KEY];
-//    NSArray *infoBundle = [NSArray arrayWithObjects:name,fbid, nil];
-//    [self performSegueWithIdentifier:@"ProfileViewControllerSegue" sender:infoBundle];
+    NSArray *infoBundle;
+    switch (rankNum) {
+        case 0:{
+            NSString *name = [[_rankingDic objectForKey:@"before"] objectForKey:nameKey];
+            NSString *fbid = [[_rankingDic objectForKey:@"before"] objectForKey:fbidKey];
+            infoBundle = [NSArray arrayWithObjects:name,fbid, nil];
+            break;
+        }
+        case 1:{
+            infoBundle = [NSArray arrayWithObjects:_subject.name,_subject.fbID, nil];
+            break;
+        }
+        case 2:{
+            NSString *name = [[_rankingDic objectForKey:@"after"] objectForKey:nameKey];
+            NSString *fbid = [[_rankingDic objectForKey:@"after"] objectForKey:fbidKey];
+            infoBundle = [NSArray arrayWithObjects:name,fbid, nil];
+            break;
+        }
+        default:
+            break;
+    }
+    if(self.delegate && [self.delegate respondsToSelector:@selector(gotoProfile:)]){
+        [self.delegate gotoProfile:infoBundle];
+    }
 }
 
 
@@ -170,13 +197,19 @@ static const int UNEXPAND_HEIGHT  = 70;
 -(void)displayRanking:(NSDictionary *)rankingDic{
     _rankingDic = rankingDic;
     NSNumber *selfRanking = [rankingDic objectForKey:@"self"];
-    NSAttributedString *selfRankingString = [[NSAttributedString alloc] initWithString:[Utility getRankingFullString:selfRanking] attributes:[Utility getNotifBlackNormalFontDictionary]];
+    NSAttributedString *selfRankingString;
+    if(![_rankingDic objectForKey:@"after"]){
+        selfRankingString = [[NSAttributedString alloc] initWithString:@"Last" attributes:[Utility getNotifBlackNormalFontDictionary]];
+    }else{
+        selfRankingString = [[NSAttributedString alloc] initWithString:[Utility getRankingFullString:selfRanking] attributes:[Utility getNotifBlackNormalFontDictionary]];
+    }
     [_selfRankingLabel setAttributedText:selfRankingString];
+    [_selfRankingLabel setTextAlignment:NSTextAlignmentCenter];
     [self updateRankingImageViewsAndPlaces];
 }
 
 -(void)updateRankingImageViewsAndPlaces{
-    NSString *rank1fbID = [[_rankingDic objectForKey:@"before"] objectForKey:@"fb_id"];
+    NSString *rank1fbID = [[_rankingDic objectForKey:@"before"] objectForKey:fbidKey];
     if(rank1fbID){
         [Utility setUpProfilePictureImageView:_rank1ImageView byFBID:rank1fbID];
     }
@@ -184,7 +217,7 @@ static const int UNEXPAND_HEIGHT  = 70;
     if(rank2fbID){
         [Utility setUpProfilePictureImageView:_rank2ImageView byFBID:rank2fbID];
     }
-    NSString *rank3fbID = [[_rankingDic objectForKey:@"after"] objectForKey:@"fb_id"];
+    NSString *rank3fbID = [[_rankingDic objectForKey:@"after"] objectForKey:fbidKey];
     if(rank3fbID){
         [Utility setUpProfilePictureImageView:_rank3ImageView byFBID:rank3fbID];
     }

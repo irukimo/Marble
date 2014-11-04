@@ -7,6 +7,7 @@
 //
 
 #import "HomeNavigationController.h"
+#import "MarbleTabBarController.h"
 
 @interface HomeNavigationController ()
 
@@ -27,6 +28,10 @@
 
 -(void)backToRoot{
     [self popToRootViewControllerAnimated:NO];
+    if([self.tabBarController isKindOfClass:[MarbleTabBarController class]]){
+        MarbleTabBarController *tabbarcontroller = (MarbleTabBarController *)self.tabBarController;
+        tabbarcontroller.lookingAtEitherUserOrKeyword = nil;
+    }
 }
 
 

@@ -19,4 +19,5 @@
 
 @protocol KeywordListTableViewCellDelegate <NSObject>
 -(void) gotoKeywordProfileWithKeyword:(NSString *)keyword;
+-(void) gotoProfile:(id)sender;
 @end

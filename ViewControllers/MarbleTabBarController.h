@@ -12,6 +12,7 @@
 
 
 @interface MarbleTabBarController : UITabBarController <UITabBarControllerDelegate,   UITextFieldDelegate, CommentsTableViewControllerDelegate, CreateQuizViewControllerDelegate>
+@property (strong,nonatomic) id lookingAtEitherUserOrKeyword;
 -(void) marbleButtonClickedWithUser:(User *)user orKeyword:(NSString *)keyword;
 -(void) viewMoreComments:(NSArray *)commentArray atIndexPath:(NSIndexPath *)indexPath calledBy:(id)viewController;
 -(void) updateComments:(NSArray *)commentArray;

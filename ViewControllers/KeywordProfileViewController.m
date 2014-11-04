@@ -7,6 +7,7 @@
 //
 
 #import "KeywordProfileViewController.h"
+#import "MarbleTabBarController.h"
 
 #define RANKING_NAME_KEY @"name"
 #define RANKING_FBID_KEY @"fbid"
@@ -213,6 +214,10 @@
 
 -(void)viewDidAppear:(BOOL)animated{
     [self setNavbarTitle];
+    if([self.tabBarController isKindOfClass:[MarbleTabBarController class]]){
+        MarbleTabBarController *tabbarcontroller = (MarbleTabBarController *)self.tabBarController;
+        tabbarcontroller.lookingAtEitherUserOrKeyword = _keyword;
+    }
 }
 
 -(void) setNavbarTitle{

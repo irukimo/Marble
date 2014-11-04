@@ -387,6 +387,7 @@
     if([[segue destinationViewController] isKindOfClass:[CreateQuizViewController class]]){
         CreateQuizViewController *vc = (CreateQuizViewController *)[segue destinationViewController];
         vc.delegate = self;
+        vc.lookingAtEitherUserOrKeyword = _lookingAtEitherUserOrKeyword;
     }
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
