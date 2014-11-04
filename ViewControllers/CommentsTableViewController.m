@@ -10,6 +10,9 @@
 
 @interface CommentsTableViewController()
 @property (strong, nonatomic) NSMutableArray *commentsArray;
+@property (nonatomic) CGSize keyboardSize;
+@property (nonatomic) UIViewAnimationCurve keyboardCurve;
+
 
 @end
 
@@ -21,8 +24,8 @@
     [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(keyboardWillShow)
-                                                 name:UIKeyboardDidShowNotification
+                                             selector:@selector(keyboardWillShow:)
+                                                 name:UIKeyboardWillShowNotification
                                                object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWillRecede:)
@@ -47,17 +50,27 @@
     [self.tableView setContentOffset:CGPointMake(0, yOffset) animated:YES];
 }
 
-- (void)keyboardWillShow
+- (void)keyboardWillShow:(NSNotification*)notification
 {
-    [self.tableView setContentInset:UIEdgeInsetsMake(0,0,/*KEYBOARD_HEIGHT*/254,0)];
+    NSDictionary* info = [notification userInfo];
+    _keyboardSize = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
+    _keyboardCurve = [info[UIKeyboardAnimationCurveUserInfoKey] integerValue];
+    [self.tableView setContentInset:UIEdgeInsetsMake(0,0,/*KEYBOARD_HEIGHT*/_keyboardSize.height,0)];
     // auto scroll to bottom
-    CGPoint bottomOffset = CGPointMake(0, self.tableView.contentSize.height - self.tableView.bounds.size.height + KEYBOARD_HEIGHT);
+    CGPoint bottomOffset = CGPointMake(0, self.tableView.contentSize.height - self.tableView.bounds.size.height + _keyboardSize.height);
     [self.tableView setContentOffset:bottomOffset animated:YES];
     
 }
 - (void)keyboardWillRecede:(NSNotification*)notification
 {
+    NSDictionary* info = [notification userInfo];
+    _keyboardSize = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
+    _keyboardCurve = [info[UIKeyboardAnimationCurveUserInfoKey] integerValue];
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationDuration:0.25];
+//    [UIView setAnimationCurve:_keyboardCurve];
     [self.tableView setContentInset:UIEdgeInsetsMake(0,0,0,0)];
+    [UIView commitAnimations];
 }
 
 

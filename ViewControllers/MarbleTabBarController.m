@@ -31,7 +31,7 @@
 @property ( nonatomic) CGRect commentsTableViewFrame;
 @property (nonatomic) CGRect commentFieldViewFrame;
 @property (weak, nonatomic) id callerViewController;
-@property (strong, nonatomic) NSIndexPath *commentIndexPath;
+@property (strong, nonatomic) Post *commentingOnPost;
 @property (nonatomic) NSUInteger commentNum;
 @end
 
@@ -254,8 +254,8 @@
      */
 }
 
--(void) viewMoreComments:(NSArray *)commentArray atIndexPath:(NSIndexPath *)indexPath calledBy:(id)viewController{
-    _commentIndexPath = indexPath;
+-(void) viewMoreComments:(NSArray *)commentArray forPost:(Post *)post calledBy:(id)viewController{
+    _commentingOnPost = post;
     _callerViewController = viewController;
     _commentFieldView.frame = _commentFieldViewFrame;
     _commentsTableViewController.view.frame = _commentsTableViewFrame;
@@ -264,7 +264,7 @@
     
     //HYJ
     // adjust keyboard trigger offset
-    self.view.keyboardTriggerOffset = _commentFieldViewFrame.size.height-TABBAR_HEIGHT;
+//    self.view.keyboardTriggerOffset = _commentFieldViewFrame.size.height-TABBAR_HEIGHT;
 
 }
 
@@ -273,7 +273,7 @@
     
     //HYJ
     // auto scroll to bottom
-    CGPoint bottomOffset = CGPointMake(0, _commentsTableViewController.tableView.contentSize.height - _commentsTableViewController.tableView.bounds.size.height + KEYBOARD_HEIGHT);
+    CGPoint bottomOffset = CGPointMake(0, _commentsTableViewController.tableView.contentSize.height - _commentsTableViewController.tableView.bounds.size.height + _keyboardSize.height);
     [_commentsTableViewController.tableView setContentOffset:bottomOffset animated:YES];
 
 }
@@ -336,7 +336,7 @@
          */
         
         CGRect accessoryViewFrame = _commentFieldView.frame;
-        accessoryViewFrame.origin.y = keyboardFrameInView.origin.y - accessoryViewFrame.size.height - 14;
+        accessoryViewFrame.origin.y = keyboardFrameInView.origin.y - accessoryViewFrame.size.height - 5;
         _commentFieldView.frame = accessoryViewFrame;
         
     } constraintBasedActionHandler:nil];
@@ -347,7 +347,7 @@
 -(void) commentPostClicked:(id)sender{
     if([_callerViewController isKindOfClass:[PostsViewController class]]){
         PostsViewController *postsViewController = _callerViewController;
-        [postsViewController commentPostAtIndexPath:_commentIndexPath withComment:[_commentField text]];
+        [postsViewController commentPostForPost:_commentingOnPost withComment:[_commentField text]];
     }
 }
 

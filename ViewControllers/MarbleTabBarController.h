@@ -9,11 +9,12 @@
 #import <UIKit/UIKit.h>
 #import "CreateQuizViewController.h"
 #import "CommentsTableViewController.h"
+#import "Post.h"
 
 
 @interface MarbleTabBarController : UITabBarController <UITabBarControllerDelegate,   UITextFieldDelegate, CommentsTableViewControllerDelegate, CreateQuizViewControllerDelegate>
 @property (strong,nonatomic) id lookingAtEitherUserOrKeyword;
 -(void) marbleButtonClickedWithUser:(User *)user orKeyword:(NSString *)keyword;
--(void) viewMoreComments:(NSArray *)commentArray atIndexPath:(NSIndexPath *)indexPath calledBy:(id)viewController;
+-(void) viewMoreComments:(NSArray *)commentArray forPost:(Post *)post calledBy:(id)viewController;
 -(void) updateComments:(NSArray *)commentArray;
 @end

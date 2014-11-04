@@ -399,7 +399,7 @@
     Post *post = [_fetchedResultsController objectAtIndexPath:indexPath];
     if([self.tabBarController isKindOfClass:[MarbleTabBarController class]]){
         MarbleTabBarController *tabbarcontroller = (MarbleTabBarController *)self.tabBarController;
-        [tabbarcontroller viewMoreComments:post.comments atIndexPath:indexPath calledBy:self];
+        [tabbarcontroller viewMoreComments:post.comments forPost:post calledBy:self];
     }
 }
 
