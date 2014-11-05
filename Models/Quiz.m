@@ -14,7 +14,8 @@
 @dynamic answer;
 @dynamic author;
 @dynamic authorName;
-@dynamic compareNum;
+@dynamic option0Num;
+@dynamic option1Num;
 @dynamic keyword;
 @dynamic option0;
 @dynamic option0Name;

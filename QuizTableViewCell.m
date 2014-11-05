@@ -9,6 +9,8 @@
 #import "QuizTableViewCell.h"
 #import "FacebookSDK/FacebookSDK.h"
 #import "User+MBUser.h"
+#import "Quiz+MBQuiz.h"
+
 #define CORRECT_WRONG_ICON_TAG 768
 #define WORD_SEPARATION 5
 #define OPTION_SQUARE_WIDTH 138
@@ -256,9 +258,9 @@
     _option1Name = [quiz.option1Name copy];
     _answerName = [quiz.answer copy];
     _keyword = [quiz.keyword copy];
-    NSAttributedString *compareString = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@", quiz.compareNum] attributes:[Utility getNotifBlackNormalFontDictionary]];
+    NSAttributedString *compareString = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@", [quiz compareNum]] attributes:[Utility getNotifBlackNormalFontDictionary]];
     [_compareNumLabel setAttributedText:compareString];
-    
+
     [self setupProfileViews];
     [self setupNameButtons];
     NSAttributedString *keywordString = [[NSAttributedString alloc] initWithString:_quiz.keyword attributes:[Utility getNotifOrangeNormalFontDictionary]];

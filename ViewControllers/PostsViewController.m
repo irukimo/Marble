@@ -440,7 +440,7 @@
     RKHTTPRequestOperation *operation = [[RKHTTPRequestOperation alloc] initWithRequest:request];
     [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
         MBDebug(@"Guess posted");
-        [quiz incrementCompareNum];
+        [quiz incrementCompareNum:answer];
         [quiz setGuessed:answer];
     }
                                      failure:^(AFHTTPRequestOperation *operation, NSError *error) {

@@ -16,7 +16,8 @@
 @property (nonatomic, retain) NSString * answer;
 @property (nonatomic, retain) NSString * author;
 @property (nonatomic, retain) NSString * authorName;
-@property (nonatomic, retain) NSNumber * compareNum;
+@property (nonatomic, retain) NSNumber * option0Num;
+@property (nonatomic, retain) NSNumber * option1Num;
 @property (nonatomic, retain) NSString * keyword;
 @property (nonatomic, retain) NSString * option0;
 @property (nonatomic, retain) NSString * option0Name;

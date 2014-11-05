@@ -37,7 +37,8 @@
                                                 @"option1_name":        @"option1Name",
                                                 @"answer":             @"answer",
                                                 @"created_at":               @"time",
-                                                @"compare_num":        @"compareNum",
+                                                @"option0_num":        @"option0Num",
+                                                @"option1_num":        @"option1Num",
                                                       @"popularity":  @"popularity",
                                                       @"answered_before": @"guessed"}];
     

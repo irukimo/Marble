@@ -10,7 +10,8 @@
 
 @interface Quiz (MBQuiz)
 
-- (void)incrementCompareNum;
+- (void)incrementCompareNum:(NSString *)answer;
+- (NSNumber *)compareNum;
 - (void)commmentsNum;
 - (void)initParentAttributes;
 

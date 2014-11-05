@@ -11,9 +11,18 @@
 
 @implementation Quiz (MBQuiz)
 
-- (void)incrementCompareNum
+- (void)incrementCompareNum:(NSString *)answer
 {
-    [self setCompareNum:[[self compareNum] increment]];
+    if ([answer isEqualToString:self.option0Name]) {
+        [self setOption0Num:[[self option0Num] increment]];
+    } else {
+        [self setOption1Num:[[self option1Num] increment]];
+    }
+}
+
+- (NSNumber *)compareNum
+{
+    return [NSNumber numberWithInt:[self.option0Num intValue] + [self.option0Num intValue]];
 }
 
 - (void)commmentsNum

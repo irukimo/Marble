@@ -30,13 +30,14 @@
         <attribute name="answer" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="author" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="authorName" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="compareNum" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="guessed" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="keyword" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="option0" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="option0Name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="option0Num" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="option1" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="option1Name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="option1Num" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
     </entity>
     <entity name="StatusUpdate" representedClassName="StatusUpdate" parentEntity="Post" syncable="YES">
         <attribute name="fbID" optional="YES" attributeType="String" syncable="YES"/>
@@ -56,7 +57,7 @@
         <element name="CommentNotification" positionX="-144" positionY="-45" width="128" height="150"/>
         <element name="KeywordUpdate" positionX="-126" positionY="-27" width="128" height="75"/>
         <element name="Post" positionX="-153" positionY="-54" width="128" height="210"/>
-        <element name="Quiz" positionX="-252" positionY="-151" width="128" height="195"/>
+        <element name="Quiz" positionX="-252" positionY="-151" width="128" height="210"/>
         <element name="StatusUpdate" positionX="-135" positionY="-36" width="128" height="88"/>
         <element name="User" positionX="-54" positionY="-9" width="128" height="150"/>
     </elements>
