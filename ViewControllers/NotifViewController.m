@@ -71,7 +71,7 @@
 -(void) fetchNotifcations{
     _userName = [KeyChainWrapper getSelfName];
     _userFBID = [KeyChainWrapper getSelfFBID];
-    
+    [_notifications removeAllObjects];
     NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"KeywordUpdate"];
     [request setPredicate:[NSPredicate predicateWithFormat:@"fbID == %@", _userFBID]];
 

@@ -467,7 +467,7 @@
 
 -(void)commentPostForPost:(Post *)post withComment:(NSString *)comment{
     MBDebug(@"%@", comment);
-    [Utility sendThroughRKRoute:@"send_comment" withParams:@{@"post_uuid": post.uuid, @"comment": comment}
+    [Utility sendThroughRKRoute:@"send_comment" withParams:@{@"post_uuid": post.uuid, @"comment": comment, @"uuid": [Utility generateUUID]}
                    successBlock:^{ [self getCommentsForPost:post]; }
                    failureBlock:nil];
 }
@@ -476,10 +476,11 @@
     Post *post = [_fetchedResultsController objectAtIndexPath:indexPath];
     
     MBDebug(@"%@", comment);
-    [Utility sendThroughRKRoute:@"send_comment" withParams:@{@"post_uuid": post.uuid, @"comment": comment}
+    [Utility sendThroughRKRoute:@"send_comment" withParams:@{@"post_uuid": post.uuid, @"comment": comment, @"uuid": [Utility generateUUID]}
                    successBlock:^{  }
                    failureBlock:nil];
 }
+
 
 - (void)getCommentsForPost:(Post *)post
 {

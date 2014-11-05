@@ -145,29 +145,48 @@
         _mustBePost = post;
     } else {
         __weak PostsViewController *weakSelf = self;
+        CommentNotification *object = (CommentNotification *)_postWithoutClass;
         
-        NSMutableDictionary *params = [weakSelf generateBasicParams];
+        NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Post"];
+        [request setPredicate:[NSPredicate predicateWithFormat:@"uuid = %@", object.postUUID]];
+        NSArray *match = [[RKManagedObjectStore defaultStore].mainQueueManagedObjectContext executeFetchRequest:request error:nil];
         
-        [[RKObjectManager sharedManager] getObject:[Post alloc]
-                                              path:nil
-                                        parameters:params
-                                           success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
-                                               for (Post *post in [mappingResult array]) {
-                                                   [post initParentAttributes];
-                                                   _mustBePost = post;
-                                               }
-                                               [Post setIndicesAsLoadingMore:[mappingResult array]];
-                                               
-                                               [Utility saveToPersistenceStore:[RKManagedObjectStore defaultStore].mainQueueManagedObjectContext failureMessage:@"failed to save."];
-                                               MBDebug(@"Fetched single post: %@", _mustBePost);
-                                               _postWithoutClass = nil;
-                                               [self.tableView reloadData];
-                                           }
-                                           failure:[Utility failureBlockWithAlertMessage:@"Can't connect to the server"
-                                                                                   block:^{
-                                                                                       MBError(@"Cannot load updates");}]
-         ];
+        if ([match count] > 1) {
+            MBError(@"ERROR: there are two posts that have the same uuid %@", object.postUUID);
+        } else if ([match count] == 1) {
+            _mustBePost = [match firstObject];
+            _postWithoutClass = nil;
+            MBDebug(@"Found the single post: %@", _mustBePost);
+            if(_mustBePost.comments){
+                [_cell setCommentsForPostSuperCell:_mustBePost.comments];
+            }else{
+                [self getCommentsForPost:_mustBePost];
+            }
+            [self.tableView reloadData];
+        } else {
+            NSMutableDictionary *params = [weakSelf generateBasicParams];
+            [params setValue:object.postUUID forKey:@"post_uuid"];
+            [[RKObjectManager sharedManager] getObject:[Post alloc]
+                                                  path:nil
+                                            parameters:params
+                                               success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+                                                   for (Post *post in [mappingResult array]) {
+                                                       [post initParentAttributes];
+                                                       _mustBePost = post;
+                                                   }
+                                                   [Post setIndicesAsLoadingMore:[mappingResult array]];
 
+                                                   
+                                                   [Utility saveToPersistenceStore:[RKManagedObjectStore defaultStore].mainQueueManagedObjectContext failureMessage:@"failed to save."];
+                                                   MBDebug(@"Fetched single post: %@", _mustBePost);
+                                                   _postWithoutClass = nil;
+                                                   [self.tableView reloadData];
+                                               }
+                                               failure:[Utility failureBlockWithAlertMessage:@"Can't connect to the server"
+                                                                                       block:^{
+                                                                                           MBError(@"Cannot load updates");}]
+             ];
+        }
     }
 }
 

@@ -17,5 +17,6 @@
 @dynamic type;
 @dynamic time;
 @dynamic postUUID;
+@dynamic uuid;
 
 @end

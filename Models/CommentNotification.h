@@ -18,5 +18,6 @@
 @property (nonatomic, retain) NSString * type;
 @property (nonatomic, retain) NSDate * time;
 @property (nonatomic, retain) NSString * postUUID;
+@property (nonatomic, retain) NSString * uuid;
 
 @end

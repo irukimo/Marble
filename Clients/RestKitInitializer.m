@@ -163,8 +163,11 @@
                                                                  @"name": @"commenterName",
                                                                  @"comment": @"comment",
                                                                  @"post_uuid": @"postUUID",
-                                                                 @"type": @"type"
+                                                                 @"type": @"type",
+                                                                 @"uuid": @"uuid"
                                                                  }];
+    commentNotificationMapping.identificationAttributes = @[@"uuid"];
+    
     RKResponseDescriptor *commentNotifGETResponseDescriptor =
     [RKResponseDescriptor responseDescriptorWithMapping:commentNotificationMapping
                                                  method:RKRequestMethodGET
