@@ -106,7 +106,7 @@
 }
 
 -(void) prepareHeaderView{
-    _headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 190)];
+    _headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 195)];
     [_headerView setBackgroundColor:[UIColor whiteColor]];
     
     [UIView addLeftBorderOn:_headerView withColor:[UIColor marbleLightGray] andWidth:CELL_UNIVERSAL_PADDING/2.0f andHeight:0 withOffset:CELL_UNIVERSAL_PADDING/2.0f];
