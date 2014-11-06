@@ -349,7 +349,8 @@ static const int picY = 75;
     // based on how far the user has panned the front card view.
     MDCSwipeToChooseViewOptions *options = [MDCSwipeToChooseViewOptions new];
     options.delegate = self;
-    options.threshold = 160.f;
+    //was originally 160
+    options.threshold = 100.f;
     options.nopeText = [Utility getNameToDisplay:_option0.name];
     options.likedText = [Utility getNameToDisplay:_option1.name];
     options.onPan = ^(MDCPanState *state){

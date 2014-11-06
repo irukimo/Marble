@@ -60,11 +60,16 @@ static CGFloat const MDCSwipeToChooseViewLabelWidth = 65.f;
 - (void)setupView {
     self.backgroundColor = [UIColor clearColor];
     self.layer.cornerRadius = 5.f;
-    self.layer.borderWidth = 2.f;
-    self.layer.borderColor = [UIColor colorWith8BitRed:220.f
-                                                 green:220.f
-                                                  blue:220.f
-                                                 alpha:1.f].CGColor;
+    self.layer.borderWidth = 0.5f;
+    self.layer.borderColor = [UIColor blackColor].CGColor;
+//    self.layer.borderColor = [UIColor colorWith8BitRed:220.f
+//                                                 green:220.f
+//                                                  blue:220.f
+//                                                 alpha:1.f].CGColor;
+    self.layer.shadowColor = [UIColor lightGrayColor].CGColor;
+    self.layer.shadowOpacity = 0.9f;
+    self.layer.shadowRadius = 5;
+    self.layer.shadowOffset = CGSizeMake(0, 2);
 }
 
 - (void)constructImageView {

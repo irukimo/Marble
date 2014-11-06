@@ -276,11 +276,11 @@
             </objects>
             <point key="canvasLocation" x="609" y="-744.75"/>
         </scene>
-        <!--探索-->
+        <!--Explore-->
         <scene sceneID="8ng-Hf-2ON">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="ySs-3s-vSM" customClass="ExploreNavigationController" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="探索" id="afi-Mb-oOR"/>
+                    <tabBarItem key="tabBarItem" title="Explore" id="afi-Mb-oOR"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="ZMd-xi-hiZ">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -295,11 +295,11 @@
             </objects>
             <point key="canvasLocation" x="1611" y="-601.5"/>
         </scene>
-        <!--我-->
+        <!--Me-->
         <scene sceneID="BN6-M8-m4z">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Ie5-uJ-VHW" customClass="ProfileNavigationController" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="我" id="hOd-oV-qys"/>
+                    <tabBarItem key="tabBarItem" title="Me" id="hOd-oV-qys"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="c9D-GB-k9s">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -348,11 +348,11 @@
             </objects>
             <point key="canvasLocation" x="2613" y="72.75"/>
         </scene>
-        <!--首頁-->
+        <!--Home-->
         <scene sceneID="yrB-uh-HpJ">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="LW7-nv-j5O" customClass="HomeNavigationController" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="首頁" id="mPf-BB-lbg"/>
+                    <tabBarItem key="tabBarItem" title="Home" id="mPf-BB-lbg"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="ORR-VL-RWz">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -438,11 +438,11 @@
             </objects>
             <point key="canvasLocation" x="489" y="839.25"/>
         </scene>
-        <!--通知-->
+        <!--Notification-->
         <scene sceneID="kNB-3t-feD">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="P4Y-Ru-Xd7" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="通知" id="N61-fo-hJt"/>
+                    <tabBarItem key="tabBarItem" title="Notification" id="N61-fo-hJt"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Wep-66-kb1">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -459,7 +459,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="v5G-4B-QKO"/>
+        <segue reference="QqU-52-yxv"/>
         <segue reference="Tug-mV-Zac"/>
     </inferredMetricsTieBreakers>
 </document>

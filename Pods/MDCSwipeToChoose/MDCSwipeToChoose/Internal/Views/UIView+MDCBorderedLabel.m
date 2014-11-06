@@ -33,17 +33,23 @@
 - (void)constructBorderedLabelWithText:(NSString *)text
                                  color:(UIColor *)color
                                  angle:(CGFloat)angle {
-    self.layer.borderColor = color.CGColor;
-    self.layer.borderWidth = 5.f;
-    self.layer.cornerRadius = 10.f;
 
-    UILabel *label = [[UILabel alloc] initWithFrame:self.bounds];
-    label.text = [text uppercaseString];
-    label.textAlignment = NSTextAlignmentCenter;
-    label.font = [UIFont fontWithName:@"HelveticaNeue-CondensedBlack"
-                                 size:48.f];
-    label.textColor = color;
-    [self addSubview:label];
+    
+    if(text){
+        int borderWidth = 5;
+        NSDictionary *fontDic = [NSDictionary dictionaryWithObjectsAndKeys: [UIFont fontWithName:@"OpenSans-Semibold" size:23],NSFontAttributeName, color ,NSForegroundColorAttributeName, @(-0.5), NSKernAttributeName, nil];
+        NSAttributedString *nameString = [[NSAttributedString alloc] initWithString:text attributes:fontDic];
+
+        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(self.bounds.origin.x, self.bounds.origin.y, nameString.size.width + 2 * borderWidth + 3, self.bounds.size.height)];
+        [label setAttributedText:nameString];
+        [label setTextAlignment:NSTextAlignmentCenter];
+        label.layer.borderColor = color.CGColor;
+        label.layer.borderWidth = borderWidth;
+        label.layer.cornerRadius = 10.f;
+        [self addSubview:label];
+    }
+    
+
 
     self.transform = CGAffineTransformRotate(CGAffineTransformIdentity,
                                              MDCDegreesToRadians(angle));
