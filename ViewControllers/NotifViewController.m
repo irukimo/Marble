@@ -78,14 +78,16 @@
     [self fetch:request andAddToNotifications:_notifications];
     
     request = [[NSFetchRequest alloc] initWithEntityName:@"Quiz"];
-    [request setPredicate:[NSPredicate predicateWithFormat:@"option0 == %@ OR option1 == %@", _userFBID, _userFBID]];
+    [request setPredicate:[NSPredicate predicateWithFormat:@"(option0 == %@ OR option1 == %@) AND author != %@", _userFBID, _userFBID, _userFBID]];
     
     [self fetch:request andAddToNotifications:_notifications];
 
     request = [[NSFetchRequest alloc] initWithEntityName:@"CommentNotification"];
-
+    [request setPredicate:[NSPredicate predicateWithFormat:@"commenterFBID != %@", _userFBID]];
+    
     [self fetch:request andAddToNotifications:_notifications];
     MBDebug(@"Fetched Notfication coming: %@", _notifications);
+    [_notifications sortUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"time" ascending:NO]]];
     [self.tableView reloadData];
 }
 

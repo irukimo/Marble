@@ -83,6 +83,7 @@
         MarbleTabBarController *tabbarcontroller = (MarbleTabBarController *)self.tabBarController;
         tabbarcontroller.lookingAtEitherUserOrKeyword = _user;
     }
+    [super viewDidAppear:animated];
 }
 
 -(void) viewKeywordBtnClicked:(id)sender{
