@@ -13,7 +13,7 @@
 #define MBError NSLog
 #define URLMake(IP) (@"http://" IP @":4567/")
 
-//#define PRODUCTION_SERVER @"192.168.2.39"
+//#define PRODUCTION_SERVER @"192.168.0.105"
 #define PRODUCTION_SERVER @"localhost"
 
 #define ASYNC(...) dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{ __VA_ARGS__ })
@@ -23,6 +23,8 @@
 
 #define NUM_QUIZZES_PER_PAGE 20
 #define NUM_UPDATES_PER_PAGE 20
+
+#define MARBLE_IMAGE_NAME @"marble.png"
 
 #define notificationCellIdentifier @"notificationCellIdentifier"
 
@@ -43,8 +45,8 @@
 
 #define exploreCollectionViewCellIdentifier @"exploreCollectionViewCellIdentifier"
 
-#define QuizTableViewCellHeight 300
-#define QuizTableViewCellDisplayHeight 310
+#define QuizTableViewCellHeight 305
+#define QuizTableViewCellDisplayHeight 315
 #define StatusUpdateTableViewCellHeight 110
 #define KeywordUpdateTableViewCellHeight 110
 #define CommentIncrementHeight 18

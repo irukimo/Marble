@@ -57,7 +57,7 @@
 
 
 -(void)prepareForReuse{
-    [super prepareForReuse];
+//    [super prepareForReuse];
     [self removeAllCommentRelatedUIs];
 }
 

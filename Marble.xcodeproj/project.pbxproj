@@ -61,6 +61,9 @@
 		7ACD18D619FE159300B23DFA /* KeywordView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7ACD18D519FE159300B23DFA /* KeywordView.m */; };
 		7AD2A32E19DE1F9800B200E9 /* User+MBUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AD2A32D19DE1F9800B200E9 /* User+MBUser.m */; };
 		7AD323241A0988DB00C5C83B /* DAKeyboardControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AD323231A0988DB00C5C83B /* DAKeyboardControl.m */; };
+		7AD323271A09B10800C5C83B /* wrong.png in Resources */ = {isa = PBXBuildFile; fileRef = 7AD323251A09B10800C5C83B /* wrong.png */; };
+		7AD323281A09B10800C5C83B /* correct.png in Resources */ = {isa = PBXBuildFile; fileRef = 7AD323261A09B10800C5C83B /* correct.png */; };
+		7AD3232A1A0AA9E700C5C83B /* marble.png in Resources */ = {isa = PBXBuildFile; fileRef = 7AD323291A0AA9E700C5C83B /* marble.png */; };
 		7AD9AF4119F6EB7200A83B59 /* UIView+MBView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AD9AF4019F6EB7200A83B59 /* UIView+MBView.m */; };
 		7AEB9CF619E8572200409276 /* KeywordUpdateTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AEB9CF519E8572200409276 /* KeywordUpdateTableViewCell.m */; };
 		7AEB9CF919E9B37100409276 /* KeywordListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AEB9CF819E9B37100409276 /* KeywordListViewController.m */; };
@@ -195,6 +198,9 @@
 		7AD323201A03FE5800C5C83B /* UIImage+ImageEffects.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIImage+ImageEffects.h"; sourceTree = "<group>"; };
 		7AD323221A0988DB00C5C83B /* DAKeyboardControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DAKeyboardControl.h; path = Libraries/DAKeyboardControl.h; sourceTree = "<group>"; };
 		7AD323231A0988DB00C5C83B /* DAKeyboardControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DAKeyboardControl.m; path = Libraries/DAKeyboardControl.m; sourceTree = "<group>"; };
+		7AD323251A09B10800C5C83B /* wrong.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = wrong.png; path = Icons/wrong.png; sourceTree = "<group>"; };
+		7AD323261A09B10800C5C83B /* correct.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = correct.png; path = Icons/correct.png; sourceTree = "<group>"; };
+		7AD323291A0AA9E700C5C83B /* marble.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = marble.png; path = Icons/marble.png; sourceTree = "<group>"; };
 		7AD9AF3F19F6EB7200A83B59 /* UIView+MBView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+MBView.h"; sourceTree = "<group>"; };
 		7AD9AF4019F6EB7200A83B59 /* UIView+MBView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+MBView.m"; sourceTree = "<group>"; };
 		7AEB9CF419E8572200409276 /* KeywordUpdateTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KeywordUpdateTableViewCell.h; path = TableViewCells/KeywordUpdateTableViewCell.h; sourceTree = "<group>"; };
@@ -271,6 +277,9 @@
 		50B568F019E4949E0050C8EC /* Icons */ = {
 			isa = PBXGroup;
 			children = (
+				7AD323291A0AA9E700C5C83B /* marble.png */,
+				7AD323251A09B10800C5C83B /* wrong.png */,
+				7AD323261A09B10800C5C83B /* correct.png */,
 				50B568F919E497020050C8EC /* notif-selected@2x.png */,
 				50B568FA19E497020050C8EC /* notif-unselected@2x.png */,
 				50B568FB19E497020050C8EC /* user-selected@2x.png */,
@@ -650,9 +659,12 @@
 				50B5690419E497020050C8EC /* user-unselected@2x.png in Resources */,
 				50B5690319E497020050C8EC /* user-selected@2x.png in Resources */,
 				50B5690619E497020050C8EC /* home-unselected@2x.png in Resources */,
+				7AD3232A1A0AA9E700C5C83B /* marble.png in Resources */,
 				50B5690C19E4AA260050C8EC /* login.png in Resources */,
 				50B5690819E497020050C8EC /* explore-selected@2x.png in Resources */,
+				7AD323271A09B10800C5C83B /* wrong.png in Resources */,
 				7A48343A19EC56E80029D092 /* OpenSans-Regular.ttf in Resources */,
+				7AD323281A09B10800C5C83B /* correct.png in Resources */,
 				7A48343B19EC56E80029D092 /* OpenSans-Semibold.ttf in Resources */,
 				7AF4123E19D9FB6C00A470E1 /* Images.xcassets in Resources */,
 			);
