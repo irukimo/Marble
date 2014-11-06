@@ -15,7 +15,7 @@
 
 #define SEND_BUTTON_TAG 116
 #define GOLDEN_LEFT_ALIGNMENT 130
-#define GRAY_Y 26
+#define GRAY_Y 30
 #define HEADER_VIEW_HEIGHT_WITH_KEYWORDS 195
 #define HEADER_VIEW_HEIGHT_WITHOUT_KEYWORDS 150
 
@@ -89,7 +89,7 @@
 }
 
 -(void) initFBProfilePicViews{
-    _profilePicView = [[FBProfilePictureView alloc] initWithFrame:CGRectMake(20, 15, 100, 100)];
+    _profilePicView = [[FBProfilePictureView alloc] initWithFrame:CGRectMake(25, 20, 100, 100)];
     _profilePicView.layer.cornerRadius = _profilePicView.frame.size.width/2.0f;
     _profilePicView.layer.masksToBounds = YES;
     _profilePicView.profileID = _user.fbID;
@@ -128,16 +128,24 @@
     _headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, height)];
     [_headerView setBackgroundColor:[UIColor whiteColor]];
     
-    _nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(GOLDEN_LEFT_ALIGNMENT, 43, self.view.frame.size.width, 35)];
-    NSAttributedString *nameString =[[NSAttributedString alloc] initWithString:[Utility getNameToDisplay:_user.name] attributes:[Utility getBigNameFontDictionary]];
-    [_nameLabel setAttributedText:nameString];
+    _nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(GOLDEN_LEFT_ALIGNMENT + 10, 50, self.view.frame.size.width, 35)];
+    if(_isSelf || _user.status){
+        [_nameLabel removeFromSuperview];
+        
+    }else{
+        NSAttributedString *nameString =[[NSAttributedString alloc] initWithString:[Utility getNameToDisplay:_user.name] attributes:[Utility getBigNameFontDictionary]];
+        [_nameLabel setAttributedText:nameString];
+        [_headerView addSubview:_nameLabel];
+    }
     
-    _viewKeywordBtn = [[UIButton alloc] initWithFrame:CGRectMake(200, 0, 80, 20)];
-    [_viewKeywordBtn setTitle:@"more" forState:UIControlStateNormal];
+    _viewKeywordBtn = [[UIButton alloc] initWithFrame:CGRectMake(200, 4, 80, 20)];
+    NSAttributedString *moreString = [[NSAttributedString alloc] initWithString:@"more" attributes:[Utility getProfileMoreFontDictionary]];
+    [_viewKeywordBtn setAttributedTitle:moreString forState:UIControlStateNormal];
+    [_viewKeywordBtn setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
     [_viewKeywordBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     
     
-    _statusTextView = [[UITextView alloc] initWithFrame:CGRectMake(GOLDEN_LEFT_ALIGNMENT - 3, 70, self.view.frame.size.width - GOLDEN_LEFT_ALIGNMENT - 20, 40)];
+    _statusTextView = [[UITextView alloc] initWithFrame:CGRectMake(GOLDEN_LEFT_ALIGNMENT - 3, 50, self.view.frame.size.width - GOLDEN_LEFT_ALIGNMENT - 20, 40)];
     [_statusTextView setText:@""];
     [_statusTextView setScrollEnabled:NO];
     [_statusTextView setBackgroundColor:[UIColor clearColor]];
@@ -149,38 +157,37 @@
         [_statusTextView setUserInteractionEnabled:NO];
     }
 
-    _statusBtn = [[UIButton alloc] initWithFrame:CGRectMake(230, 110, 40, 20)];
+    _statusBtn = [[UIButton alloc] initWithFrame:CGRectMake(240, 95, 40, 20)];
     [_statusTextView setDelegate:self];
     [_statusBtn setTitle:@"edit" forState:UIControlStateNormal];
     [_statusBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     
     [_statusBtn addTarget:self action:@selector(sendStatusBtnClicked) forControlEvents:UIControlEventTouchUpInside];
     [_viewKeywordBtn addTarget:self action:@selector(viewKeywordBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
-    [UIView addLeftBorderOn:_headerView withColor:[UIColor marbleLightGray] andWidth:5 andHeight:0 withOffset:5];
-    [UIView addRightBorderOn:_headerView withColor:[UIColor marbleLightGray] andWidth:5 andHeight:0 withOffset:5];
+    [UIView addLeftBorderOn:_headerView withColor:[UIColor marbleLightGray] andWidth:CELL_UNIVERSAL_PADDING/2.0 andHeight:0 withOffset:CELL_UNIVERSAL_PADDING/2.0];
+    [UIView addRightBorderOn:_headerView withColor:[UIColor marbleLightGray] andWidth:CELL_UNIVERSAL_PADDING/2.0 andHeight:0 withOffset:CELL_UNIVERSAL_PADDING/2.0];
     
-    _keywordsView = [[UIView alloc] initWithFrame:CGRectMake(25, 125, self.view.frame.size.width, 50)];
+    _keywordsView = [[UIView alloc] initWithFrame:CGRectMake(25, 130, self.view.frame.size.width, 50)];
     
     [_headerView addSubview:_keywordsView];
     
     [_headerView addSubview:_profilePicView];
     [_headerView.layer setBorderColor:[UIColor marbleLightGray].CGColor];
-    [_headerView.layer setBorderWidth:CELL_UNIVERSAL_PADDING/2.0f];
+    [_headerView.layer setBorderWidth:CELL_UNIVERSAL_PADDING/2.0];
     if(_isSelf){
         [_headerView addSubview:_statusBtn];
     }
     [self addGrayStaticLabels];
-    [_headerView addSubview:_nameLabel];
     [_headerView addSubview:_statusTextView];
 }
 
 -(void)addGrayStaticLabels{
-    NSAttributedString *createdString = [[NSAttributedString alloc] initWithString:@"created" attributes:[Utility getProfileGrayStaticFontDictionary]];
+    NSAttributedString *createdString = [[NSAttributedString alloc] initWithString:@"compared" attributes:[Utility getProfileGrayStaticFontDictionary]];
     NSAttributedString *receivedString = [[NSAttributedString alloc] initWithString:@"received" attributes:[Utility getProfileGrayStaticFontDictionary]];
-    NSAttributedString *solvedString = [[NSAttributedString alloc] initWithString:@"solved" attributes:[Utility getProfileGrayStaticFontDictionary]];
+    NSAttributedString *solvedString = [[NSAttributedString alloc] initWithString:@"correct" attributes:[Utility getProfileGrayStaticFontDictionary]];
     UILabel *createdLabel = [[UILabel alloc] initWithFrame:CGRectMake(GOLDEN_LEFT_ALIGNMENT, GRAY_Y, createdString.size.width, createdString.size.height)];
-    UILabel *receivedLabel = [[UILabel alloc] initWithFrame:CGRectMake(GOLDEN_LEFT_ALIGNMENT + createdString.size.width + 15, GRAY_Y, receivedString.size.width, receivedString.size.height)];
-    UILabel *solvedLabel = [[UILabel alloc] initWithFrame:CGRectMake(GOLDEN_LEFT_ALIGNMENT + createdString.size.width + receivedString.size.width + 30, GRAY_Y, solvedString.size.width, solvedString.size.height)];
+    UILabel *receivedLabel = [[UILabel alloc] initWithFrame:CGRectMake(GOLDEN_LEFT_ALIGNMENT + createdString.size.width + 12, GRAY_Y, receivedString.size.width, receivedString.size.height)];
+    UILabel *solvedLabel = [[UILabel alloc] initWithFrame:CGRectMake(GOLDEN_LEFT_ALIGNMENT + createdString.size.width + receivedString.size.width + 24, GRAY_Y, solvedString.size.width, solvedString.size.height)];
     [createdLabel setAttributedText:createdString];
     [receivedLabel setAttributedText:receivedString];
     [solvedLabel setAttributedText:solvedString];
@@ -233,9 +240,14 @@
 }
 
 -(void) setUserInformation:(BOOL) isSentFromTabbar{
-    
-    NSAttributedString *nameString =[[NSAttributedString alloc] initWithString:[Utility getNameToDisplay:_user.name] attributes:[Utility getBigNameFontDictionary]];
-    [_nameLabel setAttributedText:nameString];
+    if(_isSelf || _user.status){
+        [_nameLabel removeFromSuperview];
+
+    }else{
+        NSAttributedString *nameString =[[NSAttributedString alloc] initWithString:[Utility getNameToDisplay:_user.name] attributes:[Utility getBigNameFontDictionary]];
+        [_nameLabel setAttributedText:nameString];
+        [_headerView addSubview:_nameLabel];
+    }
     NSLog(@"profilename %@", _user.name);
     
     NSString *selfFBID = [KeyChainWrapper getSelfFBID];

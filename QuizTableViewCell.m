@@ -157,11 +157,11 @@
     [_option0PicView.layer addSublayer:_gradient1];
     [_option1PicView.layer addSublayer:_gradient2];
     
-    CGRect marbleNumFrame = CGRectMake(OPTION_SQUARE_WIDTH - 30, OPTION_SQUARE_WIDTH - 30, 30, 30);
+    CGRect marbleNumFrame = CGRectMake(OPTION_SQUARE_WIDTH - 20, OPTION_SQUARE_WIDTH - 30, 30, 30);
     _marbleNum0Label = [[UILabel alloc] initWithFrame:marbleNumFrame];
     _marbleNum1Label = [[UILabel alloc] initWithFrame:marbleNumFrame];
     
-    CGRect marbleFrame = CGRectMake(OPTION_SQUARE_WIDTH-55, OPTION_SQUARE_WIDTH-25, MARBLE_ON_PIC_WIDTH, MARBLE_ON_PIC_WIDTH);
+    CGRect marbleFrame = CGRectMake(OPTION_SQUARE_WIDTH-45, OPTION_SQUARE_WIDTH-25, MARBLE_ON_PIC_WIDTH, MARBLE_ON_PIC_WIDTH);
     UIImageView *marbleImage1 = [[UIImageView alloc] initWithFrame:marbleFrame];
     UIImageView *marbleImage2 = [[UIImageView alloc] initWithFrame:marbleFrame];
     [marbleImage1 setImage:[UIImage imageNamed:MARBLE_IMAGE_NAME]];
@@ -399,9 +399,9 @@
         }
     }
     [self addGradientAndMarbleNum];
-    NSAttributedString *num1String = [[NSAttributedString alloc] initWithString:@"23" attributes:[Utility getWhiteCommentFontDictionary]];
+    NSAttributedString *num1String = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@",_quiz.option0Num] attributes:[Utility getWhiteCommentFontDictionary]];
     [_marbleNum0Label setAttributedText:num1String];
-    NSAttributedString *num2String = [[NSAttributedString alloc] initWithString:@"25" attributes:[Utility getWhiteCommentFontDictionary]];
+    NSAttributedString *num2String = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@",_quiz.option1Num] attributes:[Utility getWhiteCommentFontDictionary]];
     [_marbleNum1Label setAttributedText:num2String];
     
 }
