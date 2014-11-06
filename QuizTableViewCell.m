@@ -395,17 +395,19 @@
         [_option0PicView.layer addSublayer:_maskLayer];
         [_option1PicView setAlpha:0.9];
     }
-    if([personGuessed isEqualToString:_quiz.option0Name]){
-        if([personGuessed isEqualToString:_quiz.answer]){
-            [self.contentView addSubview:_option0CorrectIcon];
-        }else{
-            [self.contentView addSubview:_option0WrongIcon];
-        }
-    } else{
-        if([personGuessed isEqualToString:_quiz.answer]){
-            [self.contentView addSubview:_option1CorrectIcon];
-        }else{
-            [self.contentView addSubview:_option1WrongIcon];
+    if(![_quiz.author isEqualToString:[KeyChainWrapper getSelfFBID]]){
+        if([personGuessed isEqualToString:_quiz.option0Name]){
+            if([personGuessed isEqualToString:_quiz.answer]){
+                [self.contentView addSubview:_option0CorrectIcon];
+            }else{
+                [self.contentView addSubview:_option0WrongIcon];
+            }
+        } else{
+            if([personGuessed isEqualToString:_quiz.answer]){
+                [self.contentView addSubview:_option1CorrectIcon];
+            }else{
+                [self.contentView addSubview:_option1WrongIcon];
+            }
         }
     }
     [self addGradientAndMarbleNum];

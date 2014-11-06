@@ -53,6 +53,7 @@
     self.delegate = self;
     //profileview
     self.tableView.tableHeaderView = _headerView;
+    [self.tableView.tableHeaderView setClipsToBounds:YES];
     [self.tableView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedTableView)]];
     
 }
@@ -129,7 +130,7 @@
     [_headerView setBackgroundColor:[UIColor whiteColor]];
     
     _nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(GOLDEN_LEFT_ALIGNMENT + 10, 50, self.view.frame.size.width, 35)];
-    if(_isSelf || _user.status){
+    if(_isSelf == true || _user.status){
         [_nameLabel removeFromSuperview];
         
     }else{
@@ -240,7 +241,7 @@
 }
 
 -(void) setUserInformation:(BOOL) isSentFromTabbar{
-    if(_isSelf || _user.status){
+    if(_isSelf == true || _user.status){
         [_nameLabel removeFromSuperview];
 
     }else{
@@ -309,6 +310,9 @@
              [self setStatusWithText:_user.status];
              [self displayKeywords];
              [self setNumbersWithReceived:_user.received withCreated:_user.created withSolved:_user.solved];
+             if(_user.status){
+                 [_nameLabel removeFromSuperview];
+             }
          }
      } failure:^(RKObjectRequestOperation *operation, NSError *error) {
          MBDebug(@"failed to get status");

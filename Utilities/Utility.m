@@ -363,7 +363,7 @@
     } else {
         NSURL *picURL = [NSURL URLWithString:[NSString stringWithFormat:@"https://graph.facebook.com/%@/picture?width=%lu&height=%lu", fbID, (unsigned long)width, (unsigned long)height]];
         [view setImageWithURLRequest:[NSURLRequest requestWithURL:picURL]
-                    placeholderImage:[UIImage imageNamed:@"login.png"]
+                    placeholderImage:nil
                              success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
                                  MAINQ(
                                        if(tag == [view tag]){

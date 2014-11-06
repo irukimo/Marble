@@ -379,19 +379,19 @@
         }
     } else if([post isKindOfClass:[StatusUpdate class]]){
         if(!post.comments){
-            return StatusUpdateTableViewCellHeight;
+            return StatusUpdateTableViewCellDisplayHeight;
         } else if([post.comments count] > 2){
-            return StatusUpdateTableViewCellHeight + 3*CommentIncrementHeight;
+            return StatusUpdateTableViewCellDisplayHeight + 3*CommentIncrementHeight;
         } else{
-            return StatusUpdateTableViewCellHeight + [post.comments count]*CommentIncrementHeight;
+            return StatusUpdateTableViewCellDisplayHeight + [post.comments count]*CommentIncrementHeight;
         }
     } else{
         if(!post.comments){
-            return KeywordUpdateTableViewCellHeight;
+            return KeywordUpdateTableViewCellDisplayHeight;
         } else if([post.comments count] > 2){
-            return KeywordUpdateTableViewCellHeight + 3*CommentIncrementHeight;
+            return KeywordUpdateTableViewCellDisplayHeight + 3*CommentIncrementHeight;
         } else{
-            return KeywordUpdateTableViewCellHeight + [post.comments count]*CommentIncrementHeight;
+            return KeywordUpdateTableViewCellDisplayHeight + [post.comments count]*CommentIncrementHeight;
         }
     }
 }

@@ -25,8 +25,9 @@
 #define NUM_UPDATES_PER_PAGE 20
 
 #define MARBLE_IMAGE_NAME @"marble.png"
-#define HEART_IMAGE_NAME @"marble.png"
-#define EMPTY_HEART_IMAGE_NAME @"marble.png"
+#define HEART_IMAGE_NAME @"heart.png"
+#define EMPTY_HEART_IMAGE_NAME @"heart-empty.png"
+#define COMMENT_ICON_IMAGE_NAME @"comment.png"
 
 
 #define notificationCellIdentifier @"notificationCellIdentifier"
@@ -52,6 +53,8 @@
 #define QuizTableViewCellDisplayHeight 315
 #define StatusUpdateTableViewCellHeight 110
 #define KeywordUpdateTableViewCellHeight 110
+#define StatusUpdateTableViewCellDisplayHeight 115
+#define KeywordUpdateTableViewCellDisplayHeight 115
 #define CommentIncrementHeight 18
 
 #define KEYWORD_LIST_CELL_EXPAND_HEIGHT 155

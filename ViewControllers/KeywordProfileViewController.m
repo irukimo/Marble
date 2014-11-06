@@ -31,6 +31,10 @@
 @property (strong, nonatomic) UIButton *rank3NameButton;
 
 @property(strong, nonatomic) UILabel *timePlayedLabel;
+@property(strong, nonatomic) UILabel *rank0Label;
+@property(strong, nonatomic) UILabel *rank1Label;
+@property(strong, nonatomic) UILabel *rank2Label;
+
 @end
 
 @implementation KeywordProfileViewController
@@ -45,10 +49,11 @@
     //    [self.view addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:_CreateQuizViewController.view action:@selector(endEditing:)]];
     //    self.navigationController.navigationBar.hidden = YES;
     // Do any additional setup after loading the view.
-    self.tableView.contentInset = UIEdgeInsetsMake(5, 0, 5, 0);
+    self.tableView.contentInset = UIEdgeInsetsMake( CELL_UNIVERSAL_PADDING/2.0f, 0, CELL_UNIVERSAL_PADDING/2.0f, 0);
     [self prepareHeaderView];
     [self initRankingUI];
     self.tableView.tableHeaderView = _headerView;
+    [self.tableView.tableHeaderView setClipsToBounds:YES];
     [self getKeywordFromServer];
 }
 
@@ -104,10 +109,10 @@
     _headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 190)];
     [_headerView setBackgroundColor:[UIColor whiteColor]];
     
-    [UIView addLeftBorderOn:_headerView withColor:[UIColor marbleLightGray] andWidth:5 andHeight:0 withOffset:5];
-    [UIView addRightBorderOn:_headerView withColor:[UIColor marbleLightGray] andWidth:5 andHeight:0 withOffset:5];
+    [UIView addLeftBorderOn:_headerView withColor:[UIColor marbleLightGray] andWidth:CELL_UNIVERSAL_PADDING/2.0f andHeight:0 withOffset:CELL_UNIVERSAL_PADDING/2.0f];
+    [UIView addRightBorderOn:_headerView withColor:[UIColor marbleLightGray] andWidth:CELL_UNIVERSAL_PADDING/2.0f andHeight:0 withOffset:CELL_UNIVERSAL_PADDING/2.0f];
     [_headerView.layer setBorderColor:[UIColor marbleLightGray].CGColor];
-    [_headerView.layer setBorderWidth:5.0f];
+    [_headerView.layer setBorderWidth:CELL_UNIVERSAL_PADDING/2.0f];
     
     int lineX = 190;
     int lineY = 120;
@@ -121,12 +126,12 @@
     [_headerView addSubview:horizLine];
     
     NSAttributedString *overallString = [[NSAttributedString alloc] initWithString:@"overall friend ranking" attributes:[Utility getNotifBlackNormalFontDictionary]];
-    UILabel *overallLabel = [[UILabel alloc] initWithFrame:CGRectMake(35, 10, 150, 20)];
+    UILabel *overallLabel = [[UILabel alloc] initWithFrame:CGRectMake(35, 15, 150, 20)];
     [overallLabel setAttributedText:overallString];
     [_headerView addSubview:overallLabel];
     
     NSAttributedString *createdByString = [[NSAttributedString alloc] initWithString:@"created by" attributes:[Utility getNotifBlackNormalFontDictionary]];
-    UILabel *createdByLabel = [[UILabel alloc] initWithFrame:CGRectMake(220, 10, 100, 20)];
+    UILabel *createdByLabel = [[UILabel alloc] initWithFrame:CGRectMake(220, 15, 100, 20)];
     [createdByLabel setAttributedText:createdByString];
     [_headerView addSubview:createdByLabel];
     
@@ -146,22 +151,37 @@
     [timesPlayedStringLabel setTextAlignment:NSTextAlignmentCenter];
     [_headerView addSubview:timesPlayedStringLabel];
     
-    _timePlayedLabel = [[UILabel alloc] initWithFrame:CGRectMake(200, 140, 100, 20)];
+    _timePlayedLabel = [[UILabel alloc] initWithFrame:CGRectMake(200, 136, 100, 20)];
     [_headerView addSubview:_timePlayedLabel];
     
 }
 
 -(void) initRankingUI{
-    const int RANKING_Y_START = 35;
+    const int RANKING_Y_START = 40;
     const int IMAGE_LEFT_ALIGN = 50;
     const int RANKING_Y_INCREMENT = 50;
     const int IMAGE_SIZE = 40;
     
     for(int i = 0; i < 3; i++) {
         NSAttributedString *rankNum = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"#%d",i+1] attributes:[Utility getNotifBlackBoldFontDictionary]];
-        UILabel *rankLabel = [[UILabel alloc] initWithFrame:CGRectMake(30, RANKING_Y_START + i*RANKING_Y_INCREMENT + 12, 20, 20)];
-        [rankLabel setAttributedText:rankNum];
-        [_headerView addSubview:rankLabel];
+        switch (i) {
+            case 0:
+                _rank0Label = [[UILabel alloc] initWithFrame:CGRectMake(30, RANKING_Y_START + i*RANKING_Y_INCREMENT + 12, 20, 20)];
+                [_rank0Label setAttributedText:rankNum];
+                [_headerView addSubview:_rank0Label];
+                break;
+            case 1:
+                _rank1Label = [[UILabel alloc] initWithFrame:CGRectMake(30, RANKING_Y_START + i*RANKING_Y_INCREMENT + 12, 20, 20)];
+                [_rank1Label setAttributedText:rankNum];
+                [_headerView addSubview:_rank1Label];
+                break;
+            default:
+                _rank2Label = [[UILabel alloc] initWithFrame:CGRectMake(30, RANKING_Y_START + i*RANKING_Y_INCREMENT + 12, 20, 20)];
+                [_rank2Label setAttributedText:rankNum];
+                [_headerView addSubview:_rank2Label];
+                break;
+                break;
+        }
     }
     
     _rank1NameButton = [[UIButton alloc] initWithFrame:CGRectMake(IMAGE_LEFT_ALIGN + IMAGE_SIZE + 3, RANKING_Y_START + 10, 100, 20)];
@@ -230,6 +250,8 @@
 -(void)updateLabels{
     if(_creatorFBID){
         [Utility setUpProfilePictureImageView:_creatorImageView byFBID:_creatorFBID];
+    } else{
+        [_creatorImageView setImage:[UIImage imageNamed:MARBLE_IMAGE_NAME]];
     }
     if(_creatorName){
         NSAttributedString *creatorNameString = [[NSAttributedString alloc] initWithString:_creatorName attributes:[Utility getPostsViewNameFontDictionary]];
@@ -251,14 +273,20 @@
     NSString *rank1fbID = [[_ranking objectForKey:@0] objectForKey:RANKING_FBID_KEY];
     if(rank1fbID){
         [Utility setUpProfilePictureImageView:_rank1ImageView byFBID:rank1fbID];
+    }else{
+        [_rank0Label setHidden:YES];
     }
     NSString *rank2fbID = [[_ranking objectForKey:@1] objectForKey:RANKING_FBID_KEY];
     if(rank2fbID){
         [Utility setUpProfilePictureImageView:_rank2ImageView byFBID:rank2fbID];
+    }else{
+        [_rank1Label setHidden:YES];
     }
     NSString *rank3fbID = [[_ranking objectForKey:@2] objectForKey:RANKING_FBID_KEY];
     if(rank3fbID){
         [Utility setUpProfilePictureImageView:_rank3ImageView byFBID:rank3fbID];
+    }else{
+        [_rank2Label setHidden:YES];
     }
 }
 

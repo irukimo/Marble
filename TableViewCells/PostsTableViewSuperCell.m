@@ -75,15 +75,25 @@
 
 
 -(void) initializeAccordingToType{
+    int commentIconX = 250;
+    int commentNumX = 280;
+    int commentIconWidth = 30;
+    UIButton *commentIconBtn;
     if([_cellType isEqualToString:QUIZ_CELL_TYPE]){
-        _commentNumLabel = [[UILabel alloc] initWithFrame:CGRectMake(280, QuizTableViewCellHeight - 45, 50, 20)];
+        _commentNumLabel = [[UILabel alloc] initWithFrame:CGRectMake(commentNumX, QuizTableViewCellHeight - 45, 50, 20)];
+        commentIconBtn = [[UIButton alloc] initWithFrame:CGRectMake(commentIconX, QuizTableViewCellHeight - 45 - 5, commentIconWidth, commentIconWidth)];
     } else if([_cellType isEqualToString:STATUS_UPDATE_CELL_TYPE]){
-        _commentNumLabel = [[UILabel alloc] initWithFrame:CGRectMake(280, 15, 50, 20)];
+        _commentNumLabel = [[UILabel alloc] initWithFrame:CGRectMake(commentNumX, StatusUpdateTableViewCellHeight - 48, 50, 20)];
+        commentIconBtn = [[UIButton alloc] initWithFrame:CGRectMake(commentIconX, StatusUpdateTableViewCellHeight - 48- 5, commentIconWidth, commentIconWidth)];
     } else{
-        _commentNumLabel = [[UILabel alloc] initWithFrame:CGRectMake(280, 15, 50, 20)];
+        _commentNumLabel = [[UILabel alloc] initWithFrame:CGRectMake(commentNumX, KeywordUpdateTableViewCellHeight - 48, 50, 20)];
+        commentIconBtn = [[UIButton alloc] initWithFrame:CGRectMake(commentIconX, KeywordUpdateTableViewCellHeight - 48- 5, commentIconWidth, commentIconWidth)];
     }
     [_commentNumLabel setText:@"comment"];
+    [commentIconBtn setImage:[UIImage imageNamed:COMMENT_ICON_IMAGE_NAME] forState:UIControlStateNormal];
+    [commentIconBtn addTarget:self action:@selector(viewMoreCommentsBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
     [self.contentView addSubview:_commentNumLabel];
+    [self.contentView addSubview:commentIconBtn];
 }
 
 -(void) addCommentTextField{

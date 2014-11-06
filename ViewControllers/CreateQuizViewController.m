@@ -125,7 +125,7 @@ static const int picY = 75;
     [self setCurrentUserValues];
     
     [self initSwipeFunction];
-    [self initExitButton];
+//    [self initExitButton];
     
     [self generateMaskForDismissingTextField];
     

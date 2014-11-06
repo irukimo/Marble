@@ -99,7 +99,7 @@
     [_timeLabel setAttributedText:timeString];
     
     CGRect timeFrame = _timeLabel.frame;
-    timeFrame.origin.y = _statusTextView.frame.origin.y + _statusTextView.frame.size.height - 2;
+    timeFrame.origin.y = _statusTextView.frame.origin.y + _statusTextView.frame.size.height - 5;
     [_timeLabel setFrame:timeFrame];
 }
 

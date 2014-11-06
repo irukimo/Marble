@@ -31,6 +31,8 @@ static const NSString *nameKey = @"name";
 @property (strong, nonatomic) UIButton *rank3NameButton;
 
 @property (strong, nonatomic) UIView *expandView;
+
+@property (strong, nonatomic) UIButton *heartButton;
 @end
 
 
@@ -50,13 +52,19 @@ static const NSString *nameKey = @"name";
 }
 
 -(void)generateStaticUI{
-    _timesPlayedLabel = [[UILabel alloc] initWithFrame:CGRectMake(250, 25, 50, 15)];
+    int statsStartX = 215;
+    _timesPlayedLabel = [[UILabel alloc] initWithFrame:CGRectMake(statsStartX + 25, 25, 30, 15)];
     [self.contentView addSubview:_timesPlayedLabel];
     
     
-    UIImageView *marbleImage = [[UIImageView alloc] initWithFrame:CGRectMake(225, 22, 20, 20)];
+    UIImageView *marbleImage = [[UIImageView alloc] initWithFrame:CGRectMake(statsStartX, 22, 20, 20)];
     [marbleImage setImage:[UIImage imageNamed:MARBLE_IMAGE_NAME]];
     [self.contentView addSubview:marbleImage];
+    
+    _heartButton = [[UIButton alloc] initWithFrame:CGRectMake(statsStartX + 45, 22, 20, 20)];
+    [_heartButton setImage:[UIImage imageNamed:EMPTY_HEART_IMAGE_NAME] forState:UIControlStateNormal];
+    [_heartButton addTarget:self action:@selector(heartButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+    [self.contentView addSubview:_heartButton];
 
 
     NSAttributedString *placeString = [[NSAttributedString alloc] initWithString:@"place" attributes:[Utility getProfileGrayStaticFontDictionary]];
@@ -72,6 +80,10 @@ static const NSString *nameKey = @"name";
     [grayLine setBackgroundColor:[UIColor marbleLightGray]];
     [self.contentView addSubview:grayLine];
     [self addThreeRanking];
+}
+
+-(void)heartButtonClicked:(id)sender{
+    [_heartButton setImage:[UIImage imageNamed:HEART_IMAGE_NAME] forState:UIControlStateNormal];
 }
 
 -(void)addThreeRanking{
