@@ -263,7 +263,13 @@
          withRowAnimation:UITableViewRowAnimationAutomatic];
     }
     else if (type == NSFetchedResultsChangeUpdate) {
-        
+        PostsTableViewSuperCell *cell = (PostsTableViewSuperCell *)[self.tableView cellForRowAtIndexPath:indexPath];
+        if ([cell isKindOfClass:[QuizTableViewCell class]]) {
+            QuizTableViewCell *quizCell = (QuizTableViewCell *)cell;
+            Quiz *quiz = (Quiz *)anObject;
+            MBDebug(@"quiz compare num to update: %@", quiz.compareNum);
+            [quizCell setCompareNum:quiz.compareNum option0Num:quiz.option0Num option1Num:quiz.option1Num];
+        }
 //        [self.tableView
 //         reloadRowsAtIndexPaths:@[indexPath]
 //         withRowAnimation:UITableViewRowAnimationAutomatic];
@@ -442,6 +448,7 @@
         MBDebug(@"Guess posted");
         [quiz incrementCompareNum:answer];
         [quiz setGuessed:answer];
+
     }
                                      failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                          dispatch_async(dispatch_get_main_queue(), ^{

@@ -219,7 +219,6 @@
     if(self.delegate && [self.delegate respondsToSelector:@selector(sendGuess:withAnswer:)]){
         [self.delegate sendGuess:_option0PicView withAnswer:_option0Name];
     }
-
 }
 
 -(void)chooseOption1{
@@ -329,6 +328,17 @@
     // Configure the view for the selected state
 }
 
+- (void) setCompareNum:(NSNumber *)compareNum option0Num:(NSNumber *)option0Num option1Num:(NSNumber *)option1Num
+{
+    NSAttributedString *compareString = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@", compareNum] attributes:[Utility getNotifBlackNormalFontDictionary]];
+    [_compareNumLabel setAttributedText:compareString];
+
+    NSAttributedString *num1String = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@", option0Num] attributes:[Utility getWhiteCommentFontDictionary]];
+    [_marbleNum0Label setAttributedText:num1String];
+    
+    NSAttributedString *num2String = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@", option1Num] attributes:[Utility getWhiteCommentFontDictionary]];
+    [_marbleNum1Label setAttributedText:num2String];
+}
 
 -(void) setQuiz:(Quiz *)quiz{
     _quiz = quiz;

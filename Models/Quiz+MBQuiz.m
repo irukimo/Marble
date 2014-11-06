@@ -22,7 +22,7 @@
 
 - (NSNumber *)compareNum
 {
-    return [NSNumber numberWithInt:[self.option0Num intValue] + [self.option0Num intValue]];
+    return [NSNumber numberWithInt:[self.option0Num intValue] + [self.option1Num intValue]];
 }
 
 - (void)commmentsNum
