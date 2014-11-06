@@ -50,26 +50,32 @@ static const NSString *nameKey = @"name";
 }
 
 -(void)generateStaticUI{
-    _timesPlayedLabel = [[UILabel alloc] initWithFrame:CGRectMake(280, 15, 50, 15)];
+    _timesPlayedLabel = [[UILabel alloc] initWithFrame:CGRectMake(250, 25, 50, 15)];
     [self.contentView addSubview:_timesPlayedLabel];
+    
+    
+    UIImageView *marbleImage = [[UIImageView alloc] initWithFrame:CGRectMake(225, 22, 20, 20)];
+    [marbleImage setImage:[UIImage imageNamed:MARBLE_IMAGE_NAME]];
+    [self.contentView addSubview:marbleImage];
+
 
     NSAttributedString *placeString = [[NSAttributedString alloc] initWithString:@"place" attributes:[Utility getProfileGrayStaticFontDictionary]];
-    _placeLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, 30, placeString.size.width, 15)];
+    _placeLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 33, placeString.size.width, 15)];
     [_placeLabel setAttributedText:placeString];
     [self.contentView addSubview:_placeLabel];
     
-    _selfRankingLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, 18, placeString.size.width, 15)];
+    _selfRankingLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 21, placeString.size.width, 15)];
     [self.contentView addSubview:_selfRankingLabel];
     [_selfRankingLabel setTextAlignment:NSTextAlignmentCenter];
     
-    UIView *grayLine = [[UIView alloc] initWithFrame:CGRectMake(0, KEYWORD_LIST_CELL_UNEXPAND_HEIGHT - 5, self.contentView.frame.size.width, 1)];
+    UIView *grayLine = [[UIView alloc] initWithFrame:CGRectMake(0, KEYWORD_LIST_CELL_UNEXPAND_HEIGHT - CELL_UNIVERSAL_PADDING/2.0, self.contentView.frame.size.width, 1)];
     [grayLine setBackgroundColor:[UIColor marbleLightGray]];
     [self.contentView addSubview:grayLine];
     [self addThreeRanking];
 }
 
 -(void)addThreeRanking{
-    _expandView = [[UIView alloc] initWithFrame:CGRectMake(0, 70, self.contentView.frame.size.width, 70)];
+    _expandView = [[UIView alloc] initWithFrame:CGRectMake(0, 78, self.contentView.frame.size.width, 70)];
     const int RANKING_Y_START = 0;
     const int IMAGE_LEFT_ALIGN = 85;
     const int RANKING_X_INCREMENT = 50;
@@ -164,9 +170,9 @@ static const NSString *nameKey = @"name";
 }
 -(void) setBorder{
     [self.contentView.layer setBorderColor:[UIColor marbleLightGray].CGColor];
-    [self.contentView.layer setBorderWidth:5.0f];
-    [UIView addLeftBorderOn:self.contentView withColor:[UIColor marbleLightGray] andWidth:5 andHeight:QuizTableViewCellDisplayHeight withOffset:5];
-    [UIView addRightBorderOn:self.contentView withColor:[UIColor marbleLightGray] andWidth:5 andHeight:QuizTableViewCellDisplayHeight withOffset:5];
+    [self.contentView.layer setBorderWidth:CELL_UNIVERSAL_PADDING/2.0];
+    [UIView addLeftBorderOn:self.contentView withColor:[UIColor marbleLightGray] andWidth:CELL_UNIVERSAL_PADDING/2.0 andHeight:QuizTableViewCellDisplayHeight withOffset:CELL_UNIVERSAL_PADDING/2.0];
+    [UIView addRightBorderOn:self.contentView withColor:[UIColor marbleLightGray] andWidth:CELL_UNIVERSAL_PADDING/2.0 andHeight:QuizTableViewCellDisplayHeight withOffset:CELL_UNIVERSAL_PADDING/2.0];
 }
 
 
@@ -185,7 +191,7 @@ static const NSString *nameKey = @"name";
      */
     _keyword = [keywordArray objectAtIndex:1];
     NSAttributedString *keywordString =[[NSAttributedString alloc] initWithString:_keyword attributes:[Utility getNotifOrangeNormalFontDictionary]];
-    _keywordButton = [Utility getKeywordButtonAtX:50 andY:15 andString:keywordString];
+    _keywordButton = [Utility getKeywordButtonAtX:55 andY:20 andString:keywordString];
     [_keywordButton addTarget:self action:@selector(keywordButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     [self.contentView addSubview:_keywordButton];
     
@@ -201,10 +207,14 @@ static const NSString *nameKey = @"name";
     _rankingDic = rankingDic;
     NSNumber *selfRanking = [rankingDic objectForKey:@"self"];
     NSAttributedString *selfRankingString;
-    if(![_rankingDic objectForKey:@"after"]){
+    if(![_rankingDic objectForKey:@"after"] && [_rankingDic objectForKey:@"before"]){
         selfRankingString = [[NSAttributedString alloc] initWithString:@"Last" attributes:[Utility getNotifBlackNormalFontDictionary]];
     }else{
-        selfRankingString = [[NSAttributedString alloc] initWithString:[Utility getRankingFullString:selfRanking] attributes:[Utility getNotifBlackNormalFontDictionary]];
+        if(selfRanking){
+            selfRankingString = [[NSAttributedString alloc] initWithString:[Utility getRankingFullString:selfRanking] attributes:[Utility getNotifBlackNormalFontDictionary]];
+        }else{
+            selfRankingString = [[NSAttributedString alloc] initWithString:[Utility getRankingFullString:[NSNumber numberWithInt:1]] attributes:[Utility getNotifBlackNormalFontDictionary]];
+        }
     }
     [_selfRankingLabel setAttributedText:selfRankingString];
     [_selfRankingLabel setTextAlignment:NSTextAlignmentCenter];
@@ -234,6 +244,9 @@ static const NSString *nameKey = @"name";
     NSNumber *rank2Number = [_rankingDic objectForKey:@"self"];
     if(rank2Number){
         NSAttributedString *rank2NameString = [[NSAttributedString alloc] initWithString:[Utility getRankingFullString:rank2Number] attributes:[Utility getPostsViewNameFontDictionary]];
+        [_rank2NameButton setAttributedTitle:rank2NameString forState:UIControlStateNormal];
+    } else{
+        NSAttributedString *rank2NameString = [[NSAttributedString alloc] initWithString:[Utility getRankingFullString:[NSNumber numberWithInt:1]] attributes:[Utility getPostsViewNameFontDictionary]];
         [_rank2NameButton setAttributedTitle:rank2NameString forState:UIControlStateNormal];
     }
     NSNumber *rank3Number = [[_rankingDic objectForKey:@"after"] objectForKey:@"rank"];    if(rank3Number){
