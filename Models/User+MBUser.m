@@ -26,6 +26,12 @@
     NSMutableArray *keywords = [NSMutableArray arrayWithArray:self.keywords];
     NSMutableArray *keyword = [NSMutableArray arrayWithArray:[keywords objectAtIndex:(NSUInteger)index]];
     [keyword setObject:[NSNumber numberWithBool:hearted] atIndexedSubscript:3];
+    NSInteger numLikes = [[keyword objectAtIndex:4] integerValue];
+    if (hearted) {
+        [keyword setObject:[NSNumber numberWithInteger:(numLikes + 1)] atIndexedSubscript:4];
+    } else {
+        [keyword setObject:[NSNumber numberWithInteger:(numLikes - 1)] atIndexedSubscript:4];
+    }
     [keywords setObject:keyword atIndexedSubscript:(NSUInteger)index];
     [self setKeywords:keywords];
     [Utility saveToPersistenceStore:[RKManagedObjectStore defaultStore].mainQueueManagedObjectContext failureMessage:nil];
