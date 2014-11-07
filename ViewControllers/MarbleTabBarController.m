@@ -288,15 +288,16 @@
 
 -(void) initCommentFieldView{
     _commentFieldView = [[UIView alloc] initWithFrame:CGRectMake(0, 10 + self.view.frame.size.height - TABBAR_HEIGHT - NAVBAR_HEIGHT, self.view.frame.size.width, 100)];
-    _commentBtn = [[UIButton alloc] initWithFrame:CGRectMake(260 , 0, 60, 30)];
+    _commentBtn = [[UIButton alloc] initWithFrame:CGRectMake(270 , -2, 35, 35)];
     
     [_commentBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [_commentBtn setTitle:@"send" forState:UIControlStateNormal];
+    [_commentBtn setImage:[UIImage imageNamed:@"send-no-border.png"] forState:UIControlStateNormal];
     [_commentBtn addTarget:self action:@selector(commentPostClicked:) forControlEvents:UIControlEventTouchUpInside];
     
     _commentField = [[UITextField alloc] initWithFrame:CGRectMake(10, 0, 250, 30)];
     _commentField.delegate = self;
     [_commentField setBorderStyle:UITextBorderStyleRoundedRect];
+    _commentField.returnKeyType = UIReturnKeySend;
     NSAttributedString *defaultText = [[NSAttributedString alloc] initWithString:COMMENT_TEXT attributes:[Utility getWriteACommentFontDictionary]];
     [_commentField setAttributedText:defaultText];
     [_commentFieldView addSubview:_commentField];
@@ -346,10 +347,14 @@
 
 
 -(void) commentPostClicked:(id)sender{
+    if([[_commentField text] isEqualToString:@""]){
+        return;
+    }
     if([_callerViewController isKindOfClass:[PostsViewController class]]){
         PostsViewController *postsViewController = _callerViewController;
         [postsViewController commentPostForPost:_commentingOnPost withComment:[_commentField text]];
     }
+    [_commentField setText:@""];
 }
 
 
@@ -394,7 +399,7 @@
 //    }
 }
 - (void)textFieldDidEndEditing:(UITextField *)textField{
-//    [textField setText:COMMENT_TEXT];
+    [textField setText:COMMENT_TEXT];
 //    if(_delegate && [_delegate respondsToSelector:@selector(endPresentingCellWithKeywordOn)]){
 //        [_delegate endPresentingCellWithKeywordOn];
 //    }
@@ -402,13 +407,13 @@
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
-    [self.view endEditing:YES];
-    [UIView beginAnimations:nil context:NULL];
-    [UIView setAnimationDuration:0.25];
-    [UIView setAnimationCurve:_keyboardCurve];
-    _commentFieldView.frame = _commentFieldViewFrame;
-    _commentsTableViewController.view.frame = _commentsTableViewFrame;
-    [UIView commitAnimations];
+    [self commentPostClicked:textField];
+//    [UIView beginAnimations:nil context:NULL];
+//    [UIView setAnimationDuration:0.25];
+//    [UIView setAnimationCurve:_keyboardCurve];
+//    _commentFieldView.frame = _commentFieldViewFrame;
+//    _commentsTableViewController.view.frame = _commentsTableViewFrame;
+//    [UIView commitAnimations];
     return YES;
 }
  

@@ -53,15 +53,15 @@
         }
     } else if([_mustBePost isKindOfClass:[StatusUpdate class]]){
         if(!_mustBePost.comments){
-            height = StatusUpdateTableViewCellHeight;
+            height = StatusUpdateTableViewCellDisplayHeight;
         } else{
-            height = StatusUpdateTableViewCellHeight + [_mustBePost.comments count]*CommentIncrementHeight;
+            height = StatusUpdateTableViewCellDisplayHeight + [_mustBePost.comments count]*CommentIncrementHeight;
         }
     } else{
         if(!_mustBePost.comments){
-            height = KeywordUpdateTableViewCellHeight;
+            height = KeywordUpdateTableViewCellDisplayHeight;
         } else{
-            height = KeywordUpdateTableViewCellHeight + [_mustBePost.comments count]*CommentIncrementHeight;
+            height = KeywordUpdateTableViewCellDisplayHeight + [_mustBePost.comments count]*CommentIncrementHeight;
         }
     }
     [UIView addLeftBorderOn:self.tableView withColor:[UIColor marbleLightGray] andWidth:5 andHeight:(int)height withOffset:5];

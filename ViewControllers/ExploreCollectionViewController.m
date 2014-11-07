@@ -41,6 +41,10 @@
     [_searchTextField resignFirstResponder];
 }
 
+-(void)viewWillAppear:(BOOL)animated{
+    [self setNavbarTitle];
+}
+
 
 -(void) initSearchResults{
     [_searchTextField setText:@""];
@@ -75,13 +79,17 @@
 //}
 
 -(void) initSearchTextField{
-    _searchTextField = [[UITextField alloc] initWithFrame:CGRectMake(SPACING, 12, self.view.frame.size.width - 2*SPACING, 26)];
+    _searchTextField = [[UITextField alloc] initWithFrame:CGRectMake(SPACING + 26, 12, self.view.frame.size.width - 2*SPACING - 26, 26)];
     [_searchTextField setBackgroundColor:[UIColor colorWithWhite:0.9 alpha:1]];
     _searchTextField.delegate = self;
     
     [_searchTextField addTarget:self
                           action:@selector(textFieldDidChange:)
                 forControlEvents:UIControlEventEditingChanged];
+    UIImageView *searchIcon = [[UIImageView alloc] initWithFrame:CGRectMake(SPACING, 12, 26, 26)];
+    [searchIcon setBackgroundColor:[UIColor colorWithWhite:0.9 alpha:1]];
+    [searchIcon setImage:[UIImage imageNamed:@"explore-unselected.png"]];
+    [self.view addSubview:searchIcon];
     [self.view addSubview:_searchTextField];
 }
 

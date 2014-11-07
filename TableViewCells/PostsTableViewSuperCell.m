@@ -128,6 +128,7 @@
     NSAttributedString *defaultText = [[NSAttributedString alloc] initWithString:COMMENT_DEFAULT_TEXT attributes:[Utility getWriteACommentFontDictionary]];
     [_commentField setAttributedText:defaultText];
     [_commentField setTextAlignment:NSTextAlignmentLeft];
+    _commentField.returnKeyType = UIReturnKeySend;
     [self.contentView addSubview:_commentField];
     if(commentCnt > 2){
         _viewMoreCommentsBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
@@ -213,16 +214,19 @@
 
 -(void) commentPostClicked:(id)sender{
     MBDebug(@"comment quiz clicked!");
+    if([_commentField.text isEqualToString:@""]){
+        return;
+    }
     if(_delegate && [_delegate respondsToSelector:@selector(commentPost:withComment:)]){
         [_delegate commentPost:sender withComment:_commentField.text];
     }
 }
 
 -(void) addCommentBtnAtY:(int)y{
-    _commentBtn = [[UIButton alloc] initWithFrame:CGRectMake(COMMENT_START_X + 110 , y, 50, 30)];
-    
-    [_commentBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [_commentBtn setTitle:@"send" forState:UIControlStateNormal];
+    _commentBtn = [[UIButton alloc] initWithFrame:CGRectMake(COMMENT_START_X + 110 , y, 30, 30)];
+    [_commentBtn setImage:[UIImage imageNamed:@"send-border.png"] forState:UIControlStateNormal];
+//    [_commentBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+//    [_commentBtn setTitle:@"send" forState:UIControlStateNormal];
     [_commentBtn addTarget:self action:@selector(commentPostClicked:) forControlEvents:UIControlEventTouchUpInside];
     [_commentBtn setTag:COMMENT_BTN_TAG];
     [self.contentView addSubview:_commentBtn];
@@ -241,7 +245,7 @@
 - (void)textFieldDidBeginEditing:(UITextField *)textField{
     [textField setText:@""];
     [textField setBorderStyle:UITextBorderStyleRoundedRect];
-    [self addCommentBtnAtY:textField.frame.origin.y];
+    [self addCommentBtnAtY:textField.frame.origin.y - 2];
     [textField setFrame:CGRectMake(textField.frame.origin.x - TEXT_FIELD_DISPLACEMENT, textField.frame.origin.y, textField.frame.size.width, textField.frame.size.height)];
     if(_delegate && [_delegate respondsToSelector:@selector(presentCellWithKeywordOn:)]){
         [_delegate presentCellWithKeywordOn:textField];
@@ -259,6 +263,7 @@
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [self commentPostClicked:textField];
     [self.contentView endEditing:YES];
     return YES;
 }

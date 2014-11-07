@@ -57,7 +57,6 @@
 		7AB610EE1A02B060001C792D /* menu-addpost@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7AB610ED1A02B060001C792D /* menu-addpost@2x.png */; };
 		7AB610F31A03FE3B001C792D /* UIImage+ImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AB610F21A03FE3B001C792D /* UIImage+ImageEffects.m */; };
 		7AB925B019E3730C00F8229F /* UIColor+MBColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AB925AF19E3730C00F8229F /* UIColor+MBColor.m */; };
-		7AB925B319E374E500F8229F /* ExploreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AB925B219E374E500F8229F /* ExploreViewController.m */; };
 		7ACD18D619FE159300B23DFA /* KeywordView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7ACD18D519FE159300B23DFA /* KeywordView.m */; };
 		7AD2A32E19DE1F9800B200E9 /* User+MBUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AD2A32D19DE1F9800B200E9 /* User+MBUser.m */; };
 		7AD323241A0988DB00C5C83B /* DAKeyboardControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AD323231A0988DB00C5C83B /* DAKeyboardControl.m */; };
@@ -68,6 +67,8 @@
 		7AD3232E1A0C1C5500C5C83B /* heart-empty.png in Resources */ = {isa = PBXBuildFile; fileRef = 7AD3232C1A0C1C5500C5C83B /* heart-empty.png */; };
 		7AD323301A0C296600C5C83B /* comment.png in Resources */ = {isa = PBXBuildFile; fileRef = 7AD3232F1A0C296600C5C83B /* comment.png */; };
 		7AD323321A0C3B2D00C5C83B /* trash.png in Resources */ = {isa = PBXBuildFile; fileRef = 7AD323311A0C3B2D00C5C83B /* trash.png */; };
+		7AD323351A0C4DB100C5C83B /* send-no-border.png in Resources */ = {isa = PBXBuildFile; fileRef = 7AD323331A0C4DB100C5C83B /* send-no-border.png */; };
+		7AD323361A0C4DB100C5C83B /* send-border.png in Resources */ = {isa = PBXBuildFile; fileRef = 7AD323341A0C4DB100C5C83B /* send-border.png */; };
 		7AD9AF4119F6EB7200A83B59 /* UIView+MBView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AD9AF4019F6EB7200A83B59 /* UIView+MBView.m */; };
 		7AEB9CF619E8572200409276 /* KeywordUpdateTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AEB9CF519E8572200409276 /* KeywordUpdateTableViewCell.m */; };
 		7AEB9CF919E9B37100409276 /* KeywordListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AEB9CF819E9B37100409276 /* KeywordListViewController.m */; };
@@ -193,8 +194,6 @@
 		7AB610F21A03FE3B001C792D /* UIImage+ImageEffects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ImageEffects.m"; sourceTree = "<group>"; };
 		7AB925AE19E3730C00F8229F /* UIColor+MBColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+MBColor.h"; sourceTree = "<group>"; };
 		7AB925AF19E3730C00F8229F /* UIColor+MBColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+MBColor.m"; sourceTree = "<group>"; };
-		7AB925B119E374E500F8229F /* ExploreViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExploreViewController.h; sourceTree = "<group>"; };
-		7AB925B219E374E500F8229F /* ExploreViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExploreViewController.m; sourceTree = "<group>"; };
 		7ACD18D419FE159300B23DFA /* KeywordView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KeywordView.h; path = UIViews/KeywordView.h; sourceTree = "<group>"; };
 		7ACD18D519FE159300B23DFA /* KeywordView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KeywordView.m; path = UIViews/KeywordView.m; sourceTree = "<group>"; };
 		7AD2A32C19DE1F9800B200E9 /* User+MBUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "User+MBUser.h"; sourceTree = "<group>"; };
@@ -209,6 +208,8 @@
 		7AD3232C1A0C1C5500C5C83B /* heart-empty.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "heart-empty.png"; path = "Icons/heart-empty.png"; sourceTree = "<group>"; };
 		7AD3232F1A0C296600C5C83B /* comment.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = comment.png; path = Icons/comment.png; sourceTree = "<group>"; };
 		7AD323311A0C3B2D00C5C83B /* trash.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = trash.png; path = Icons/trash.png; sourceTree = "<group>"; };
+		7AD323331A0C4DB100C5C83B /* send-no-border.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "send-no-border.png"; path = "Icons/send-no-border.png"; sourceTree = "<group>"; };
+		7AD323341A0C4DB100C5C83B /* send-border.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "send-border.png"; path = "Icons/send-border.png"; sourceTree = "<group>"; };
 		7AD9AF3F19F6EB7200A83B59 /* UIView+MBView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+MBView.h"; sourceTree = "<group>"; };
 		7AD9AF4019F6EB7200A83B59 /* UIView+MBView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+MBView.m"; sourceTree = "<group>"; };
 		7AEB9CF419E8572200409276 /* KeywordUpdateTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KeywordUpdateTableViewCell.h; path = TableViewCells/KeywordUpdateTableViewCell.h; sourceTree = "<group>"; };
@@ -285,6 +286,8 @@
 		50B568F019E4949E0050C8EC /* Icons */ = {
 			isa = PBXGroup;
 			children = (
+				7AD323331A0C4DB100C5C83B /* send-no-border.png */,
+				7AD323341A0C4DB100C5C83B /* send-border.png */,
 				7AD323311A0C3B2D00C5C83B /* trash.png */,
 				7AD3232F1A0C296600C5C83B /* comment.png */,
 				7AD3232B1A0C1C5500C5C83B /* heart.png */,
@@ -492,8 +495,6 @@
 				7AF4125719D9FFB800A470E1 /* HomeViewController.m */,
 				7A0E976A19DCB389003A9359 /* MarbleTabBarController.h */,
 				7A0E976B19DCB389003A9359 /* MarbleTabBarController.m */,
-				7AB925B119E374E500F8229F /* ExploreViewController.h */,
-				7AB925B219E374E500F8229F /* ExploreViewController.m */,
 				7AF4126C19DA672500A470E1 /* SelectPeopleViewController.h */,
 				7AF4126D19DA672500A470E1 /* SelectPeopleViewController.m */,
 				7AFF5BBC19E59AEA00CFD35D /* SelectKeywordViewController.h */,
@@ -675,6 +676,7 @@
 				50B5690619E497020050C8EC /* home-unselected@2x.png in Resources */,
 				7AD3232A1A0AA9E700C5C83B /* marble.png in Resources */,
 				50B5690C19E4AA260050C8EC /* login.png in Resources */,
+				7AD323351A0C4DB100C5C83B /* send-no-border.png in Resources */,
 				7AD323301A0C296600C5C83B /* comment.png in Resources */,
 				50B5690819E497020050C8EC /* explore-selected@2x.png in Resources */,
 				7AD323271A09B10800C5C83B /* wrong.png in Resources */,
@@ -683,6 +685,7 @@
 				7AD3232D1A0C1C5500C5C83B /* heart.png in Resources */,
 				7A48343B19EC56E80029D092 /* OpenSans-Semibold.ttf in Resources */,
 				7AF4123E19D9FB6C00A470E1 /* Images.xcassets in Resources */,
+				7AD323361A0C4DB100C5C83B /* send-border.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -789,7 +792,6 @@
 				7A0E977219DCD8BB003A9359 /* ProfileNavigationController.m in Sources */,
 				7AF4126119DA035400A470E1 /* CreateQuizViewController.m in Sources */,
 				517C894A19DB706C005A8407 /* ClientManager.m in Sources */,
-				7AB925B319E374E500F8229F /* ExploreViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
