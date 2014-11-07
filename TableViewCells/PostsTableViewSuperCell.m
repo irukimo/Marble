@@ -23,6 +23,7 @@
 @property(strong, nonatomic) UIButton *commentBtn;
 @property(strong, nonatomic) UIButton *viewMoreCommentsBtn;
 @property( nonatomic) BOOL isSinglePostSoExpandComments;
+@property (strong, nonatomic) UIView *whiteView;
 @end
 
 @implementation PostsTableViewSuperCell
@@ -41,8 +42,9 @@
 }
 
 -(void) setBorder{
-    [self.contentView.layer setBorderColor:[UIColor marbleLightGray].CGColor];
-    [self.contentView.layer setBorderWidth:CELL_UNIVERSAL_PADDING/2.0];
+    [self setBackgroundColor:[UIColor marbleLightGray]];
+//    [self.contentView.layer setBorderColor:[UIColor marbleLightGray].CGColor];
+//    [self.contentView.layer setBorderWidth:CELL_UNIVERSAL_PADDING/2.0];
     if([_cellType isEqualToString:QUIZ_CELL_TYPE]){
         [UIView addLeftBorderOn:self.contentView withColor:[UIColor marbleLightGray] andWidth:CELL_UNIVERSAL_PADDING/2.0 andHeight:QuizTableViewCellDisplayHeight withOffset:CELL_UNIVERSAL_PADDING/2.0];
         [UIView addRightBorderOn:self.contentView withColor:[UIColor marbleLightGray] andWidth:CELL_UNIVERSAL_PADDING/2.0 andHeight:QuizTableViewCellDisplayHeight withOffset:CELL_UNIVERSAL_PADDING/2.0];
@@ -75,6 +77,17 @@
 
 
 -(void) initializeAccordingToType{
+    _whiteView = [[UIView alloc] init];
+    [self resizeWhiteBackground];
+    [_whiteView setBackgroundColor:[UIColor whiteColor]];
+    _whiteView.layer.shadowColor = [UIColor colorWithWhite:0 alpha:0.2].CGColor;
+    _whiteView.layer.shadowRadius = 2.f;
+    _whiteView.layer.shadowOpacity = 1.f;
+    _whiteView.layer.shadowOffset = CGSizeMake(0, 0);
+    [self.contentView addSubview:_whiteView];
+    
+    
+    
     int commentIconX = 250;
     int commentNumX = 280;
     int commentIconWidth = 30;
@@ -94,6 +107,10 @@
     [commentIconBtn addTarget:self action:@selector(viewMoreCommentsBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
     [self.contentView addSubview:_commentNumLabel];
     [self.contentView addSubview:commentIconBtn];
+}
+
+-(void)resizeWhiteBackground{
+    _whiteView.frame = CGRectMake(CELL_UNIVERSAL_PADDING, CELL_UNIVERSAL_PADDING/2.0f, self.bounds.size.width - 2*CELL_UNIVERSAL_PADDING, self.bounds.size.height - CELL_UNIVERSAL_PADDING);
 }
 
 -(void) addCommentTextField{
@@ -153,6 +170,7 @@
     [_commentNumLabel setAttributedText:commentString];
     [self showComments];
     [self addCommentTextField];
+    [self resizeWhiteBackground];
 }
 
 -(void) showComments{

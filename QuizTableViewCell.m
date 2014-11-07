@@ -72,10 +72,10 @@
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        [self initPicViews];
-        [self addStaticLabels];
         self.cellType = QUIZ_CELL_TYPE;
         [super initializeAccordingToType];
+        [self initPicViews];
+        [self addStaticLabels];
         // Initialization code
     }
     return self;

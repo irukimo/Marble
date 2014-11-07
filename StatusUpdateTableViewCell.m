@@ -27,10 +27,10 @@
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        [self addStaticLabels];
-        [self initPicView];
         self.cellType = STATUS_UPDATE_CELL_TYPE;
         [super initializeAccordingToType];
+        [self addStaticLabels];
+        [self initPicView];
         // Initialization code
     }
     return self;

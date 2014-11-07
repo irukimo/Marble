@@ -22,12 +22,13 @@
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
+        self.cellType = KEYWORD_UPDATE_CELL_TYPE;
+        [super initializeAccordingToType];
         [self initStaticButtonsAndLabels];
 
         [self initProfilePic];
         [self initKeywordsView];
-        self.cellType = KEYWORD_UPDATE_CELL_TYPE;
-        [super initializeAccordingToType];
+
         // Initialization code
     }
     return self;
