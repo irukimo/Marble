@@ -65,6 +65,7 @@
 }
 
 - (void) setKeywordUpdate:(KeywordUpdate *)keywordUpdate{
+    [self resizeWhiteBackground:0];
     _keywordUpdate = keywordUpdate;
     
     NSAttributedString *nameString;

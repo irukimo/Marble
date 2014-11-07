@@ -341,6 +341,7 @@
 }
 
 -(void) setQuiz:(Quiz *)quiz{
+    [self resizeWhiteBackground:0];
     _quiz = quiz;
     _authorName = [quiz.authorName copy];
     _option0Name = [quiz.option0Name copy];

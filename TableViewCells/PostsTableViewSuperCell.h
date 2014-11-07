@@ -16,6 +16,7 @@
 -(void)setCommentsForPostSuperCell:(NSArray *)comments;
 -(void) initializeAccordingToType;
 -(void) addCommentAtY:(int)y withName:(NSString *)name andID:(NSString *)fbid andComment:(NSString *)comment;
+-(void)resizeWhiteBackground:(int)height;
 
 @end
 

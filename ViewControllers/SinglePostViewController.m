@@ -64,8 +64,10 @@
             height = KeywordUpdateTableViewCellDisplayHeight + [_mustBePost.comments count]*CommentIncrementHeight;
         }
     }
-    [UIView addLeftBorderOn:self.tableView withColor:[UIColor marbleLightGray] andWidth:5 andHeight:(int)height withOffset:5];
-    [UIView addRightBorderOn:self.tableView withColor:[UIColor marbleLightGray] andWidth:5 andHeight:(int)height withOffset:5];
+//    [UIView addLeftBorderOn:self.tableView withColor:[UIColor marbleLightGray] andWidth:5 andHeight:(int)height withOffset:5];
+//    [UIView addRightBorderOn:self.tableView withColor:[UIColor marbleLightGray] andWidth:5 andHeight:(int)height withOffset:5];
+    MBDebug(@"heightfor %lu", height);
+    [_cell resizeWhiteBackground:(int)height];
     return height;
 }
 
@@ -78,7 +80,11 @@
         if(_mustBePost){
             [cell setQuiz:(Quiz *)_mustBePost];
         }
+        cell.delegate = self;
         _cell = cell;
+        if(_mustBePost.comments){
+            [_cell setCommentsForPostSuperCell:_mustBePost.comments];
+        }
         return cell;
     }
     
@@ -121,8 +127,6 @@
     
     if(_mustBePost.comments){
         [_cell setCommentsForPostSuperCell:_mustBePost.comments];
-    }else{
-        [self getCommentsForPost:_mustBePost];
     }
     return _cell;
     
@@ -143,6 +147,7 @@
     _postWithoutClass = post;
     if(![_postWithoutClass isKindOfClass:[CommentNotification class]]){
         _mustBePost = post;
+        [self getCommentsForPost:_mustBePost];
     } else {
         __weak PostsViewController *weakSelf = self;
         CommentNotification *object = (CommentNotification *)_postWithoutClass;
@@ -180,6 +185,7 @@
                                                    [Utility saveToPersistenceStore:[RKManagedObjectStore defaultStore].mainQueueManagedObjectContext failureMessage:@"failed to save."];
                                                    MBDebug(@"Fetched single post: %@", _mustBePost);
                                                    _postWithoutClass = nil;
+                                                   [self getCommentsForPost:_mustBePost];
                                                    [self.tableView reloadData];
                                                }
                                                failure:[Utility failureBlockWithAlertMessage:@"Can't connect to the server"

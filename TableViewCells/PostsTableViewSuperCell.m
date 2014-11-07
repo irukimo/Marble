@@ -32,6 +32,7 @@
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
+        [self initWhiteBackground];
         self.selectionStyle = UITableViewCellSelectionStyleNone;
         [self setBorder];
         self.clipsToBounds = YES;
@@ -77,17 +78,7 @@
 
 
 -(void) initializeAccordingToType{
-    _whiteView = [[UIView alloc] init];
-    [self resizeWhiteBackground];
-    [_whiteView setBackgroundColor:[UIColor whiteColor]];
-    _whiteView.layer.shadowColor = [UIColor colorWithWhite:0 alpha:0.2].CGColor;
-    _whiteView.layer.shadowRadius = 2.f;
-    _whiteView.layer.shadowOpacity = 1.f;
-    _whiteView.layer.shadowOffset = CGSizeMake(0, 0);
-    [self.contentView addSubview:_whiteView];
-    
-    
-    
+    [self resizeWhiteBackground:0];
     int commentIconX = 250;
     int commentNumX = 280;
     int commentIconWidth = 30;
@@ -109,8 +100,24 @@
     [self.contentView addSubview:commentIconBtn];
 }
 
--(void)resizeWhiteBackground{
+-(void)initWhiteBackground{
+    _whiteView = [[UIView alloc] init];
+    [self resizeWhiteBackground:0];
+    [_whiteView setBackgroundColor:[UIColor whiteColor]];
+    _whiteView.layer.shadowColor = [UIColor colorWithWhite:0 alpha:0.2].CGColor;
+    _whiteView.layer.shadowRadius = 2.f;
+    _whiteView.layer.shadowOpacity = 1.f;
+    _whiteView.layer.shadowOffset = CGSizeMake(0, 0);
+    [self.contentView addSubview:_whiteView];
+}
+
+-(void)resizeWhiteBackground:(int)height{
+    if(height > self.bounds.size.height){
+        _whiteView.frame = CGRectMake(CELL_UNIVERSAL_PADDING, CELL_UNIVERSAL_PADDING/2.0f, self.bounds.size.width - 2*CELL_UNIVERSAL_PADDING, height - CELL_UNIVERSAL_PADDING);
+        return;
+    }
     _whiteView.frame = CGRectMake(CELL_UNIVERSAL_PADDING, CELL_UNIVERSAL_PADDING/2.0f, self.bounds.size.width - 2*CELL_UNIVERSAL_PADDING, self.bounds.size.height - CELL_UNIVERSAL_PADDING);
+    MBDebug(@"resize height %f", self.bounds.size.height);
 }
 
 -(void) addCommentTextField{
@@ -170,7 +177,7 @@
     [_commentNumLabel setAttributedText:commentString];
     [self showComments];
     [self addCommentTextField];
-    [self resizeWhiteBackground];
+    [self resizeWhiteBackground:0];
 }
 
 -(void) showComments{

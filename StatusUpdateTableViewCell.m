@@ -77,6 +77,7 @@
 }
 
 - (void) setStatusUpdate:(StatusUpdate *)statusUpdate {
+    [self resizeWhiteBackground:0];
     NSLog(@"status %@", statusUpdate.status);
     _statusUpdate = statusUpdate;
     NSAttributedString *nameString = [[NSAttributedString alloc] initWithString:[Utility getNameToDisplay:_statusUpdate.name] attributes:[Utility getPostsViewNameFontDictionary]];
