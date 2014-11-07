@@ -201,7 +201,7 @@
 }
 
 + (NSDictionary *)getLightOrangeBoldFontDictionary{
-    return [NSDictionary dictionaryWithObjectsAndKeys: [UIFont fontWithName:@"OpenSans-Semibold" size:14],NSFontAttributeName, [UIColor marbleLightOrange] ,NSForegroundColorAttributeName, @(-0.5), NSKernAttributeName,nil];
+    return [NSDictionary dictionaryWithObjectsAndKeys: [UIFont fontWithName:@"OpenSans-Semibold" size:16],NSFontAttributeName, [UIColor marbleLightOrange] ,NSForegroundColorAttributeName, @(-0.5), NSKernAttributeName,nil];
 }
 
 + (NSDictionary *)getNotifOrangeNormalFontDictionary{

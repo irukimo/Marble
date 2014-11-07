@@ -7,12 +7,14 @@
 //
 
 #import "ExploreCollectionViewCell.h"
+#import <QuartzCore/QuartzCore.h>
 
 @interface ExploreCollectionViewCell()
 @property (strong, nonatomic) User *user;
 @property (strong, nonatomic) UILabel *nameLabel;
 @property (strong, nonatomic) UILabel *keywordLabel;
 @property (strong, nonatomic) UIImageView *authorPicView;
+@property (strong, nonatomic) UILabel *receiveNumLabel;
 @end
 
 @implementation ExploreCollectionViewCell
@@ -43,22 +45,38 @@
 
     CAGradientLayer *gradient = [CAGradientLayer layer];
     gradient.frame = picframe;
-    gradient.colors = [NSArray arrayWithObjects:(id)[[UIColor clearColor] CGColor],(id)[[UIColor colorWithWhite:0 alpha:0.5] CGColor], nil];
+    gradient.colors = [NSArray arrayWithObjects:(id)[[UIColor clearColor] CGColor],(id)[[UIColor colorWithWhite:0 alpha:0.8] CGColor], nil];
     
     [_authorPicView.layer addSublayer:gradient];
 }
 
 -(void) initStaticLabels{
-    _nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, 90, self.contentView.frame.size.width, 20)];
+    _nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, 80, self.contentView.frame.size.width, 20)];
+    _nameLabel.layer.shadowColor = [UIColor blackColor].CGColor;
+    _nameLabel.layer.shadowRadius = 3.f;
+    _nameLabel.layer.shadowOpacity = 1.f;
+    _nameLabel.layer.shadowOffset = CGSizeMake(0, 0);
     _keywordLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, 105, self.contentView.frame.size.width, 20)];
     [self.contentView addSubview:_nameLabel];
     [self.contentView addSubview:_keywordLabel];
+    
+    UIImageView *marbleView = [[UIImageView alloc] initWithFrame:CGRectMake(self.contentView.frame.size.width - 40, self.contentView.frame.size.width - 25, 20, 20)];
+    [marbleView setImage:[UIImage imageNamed:MARBLE_IMAGE_NAME]];
+    [self.contentView addSubview:marbleView];
+    
+    _receiveNumLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.contentView.frame.size.width - 20, self.contentView.frame.size.width - 25, 20, 20)];
+    [self.contentView addSubview:_receiveNumLabel];
 }
 
 -(void)setCellUser:(User *)user{
     _user = user;
     NSAttributedString *nameString = [[NSAttributedString alloc] initWithString:[Utility getNameToDisplay:_user.name] attributes:[Utility getLightOrangeBoldFontDictionary]];
     [_nameLabel setAttributedText:nameString];
+    if(_user.received){
+        NSAttributedString *receivedString = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@", _user.received] attributes:[Utility getWhiteCommentFontDictionary]];
+        [_receiveNumLabel setAttributedText:receivedString];
+        [_receiveNumLabel setTextAlignment:NSTextAlignmentCenter];
+    }
     /*
      (
      1,

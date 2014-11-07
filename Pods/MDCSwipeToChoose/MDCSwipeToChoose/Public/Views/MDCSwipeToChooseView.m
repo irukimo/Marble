@@ -93,10 +93,10 @@ static CGFloat const MDCSwipeToChooseViewLabelWidth = 65.f;
 
 //Iru for trash view
 - (void)constructTrashView {
-    CGRect frame = CGRectMake(MDCSwipeToChooseViewHorizontalPadding,
-                              MDCSwipeToChooseViewTopPadding,
-                              CGRectGetMidX(_imageView.bounds),
-                              MDCSwipeToChooseViewLabelWidth);
+    CGRect frame = CGRectMake(75,
+                              30,
+                              100,
+                              100);
     self.trashView = [[UIView alloc] initWithFrame:frame];
     [self.trashView constructBorderedLabelWithText:@"trash"
                                              color:[UIColor blackColor]
@@ -145,7 +145,7 @@ static CGFloat const MDCSwipeToChooseViewLabelWidth = 65.f;
         } else if (state.direction == MDCSwipeDirectionBottom) {
             likedImageView.alpha = 0.f;
             nopeImageView.alpha = 0.f;
-            trashImageView.alpha = state.thresholdRatio;
+            trashImageView.alpha = state.thresholdRatio*2;
         }
 
         if (weakself.options.onPan) {
