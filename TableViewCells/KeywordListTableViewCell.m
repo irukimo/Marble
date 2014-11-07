@@ -17,8 +17,10 @@ static const NSString *nameKey = @"name";
 
 
 @interface KeywordListTableViewCell () {
-    bool has_liked;
+    bool hasLiked;
+    NSInteger numLikes;
 }
+
 @property(strong, nonatomic) UIButton *keywordButton;
 @property(strong,nonatomic) NSString *keyword;
 @property(strong,nonatomic) UILabel *timesPlayedLabel;
@@ -66,7 +68,7 @@ static const NSString *nameKey = @"name";
     [self.contentView addSubview:marbleImage];
     
     _heartButton = [[UIButton alloc] initWithFrame:CGRectMake(statsStartX + 45, 22, 20, 20)];
-    if (has_liked) {
+    if (hasLiked) {
         [_heartButton setImage:[UIImage imageNamed:HEART_IMAGE_NAME] forState:UIControlStateNormal];
         [_heartButton addTarget:self action:@selector(unheartButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     } else {
@@ -92,26 +94,28 @@ static const NSString *nameKey = @"name";
 }
 
 -(void)unheartButtonClicked:(id)sender{
-    [_heartButton setImage:[UIImage imageNamed:EMPTY_HEART_IMAGE_NAME] forState:UIControlStateNormal];
-    [_heartButton removeTarget:self action:@selector(unheartButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-    [_heartButton addTarget:self action:@selector(heartButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-    
     [Utility sendThroughRKRoute:@"send_unlike" withParams:@{@"likee_fb_id": _subject.fbID, @"keyword": _keyword}
-                   successBlock:^{MBDebug(@"Successfully posted unlike");
+                   successBlock:^{
+                       MBDebug(@"Successfully posted unlike");
+                       [_heartButton setImage:[UIImage imageNamed:EMPTY_HEART_IMAGE_NAME] forState:UIControlStateNormal];
+                       [_heartButton removeTarget:self action:@selector(unheartButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+                       [_heartButton addTarget:self action:@selector(heartButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
                        [_subject setHeartForKeywordAtRow:(NSUInteger)[[self index] integerValue] toBool:false];
+                       //#TODO: change number of likes in UI
                    }
                    failureBlock:nil];
 
 }
 
 -(void)heartButtonClicked:(id)sender{
-    [_heartButton setImage:[UIImage imageNamed:HEART_IMAGE_NAME] forState:UIControlStateNormal];
-    [_heartButton removeTarget:self action:@selector(heartButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-    [_heartButton addTarget:self action:@selector(unheartButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-    
     [Utility sendThroughRKRoute:@"send_like" withParams:@{@"likee_fb_id": _subject.fbID, @"keyword": _keyword}
-                   successBlock:^{MBDebug(@"Successfully posted like");
-                               [_subject setHeartForKeywordAtRow:(NSUInteger)[[self index] integerValue] toBool:true];
+                   successBlock:^{
+                       MBDebug(@"Successfully posted like");
+                       [_heartButton setImage:[UIImage imageNamed:HEART_IMAGE_NAME] forState:UIControlStateNormal];
+                       [_heartButton removeTarget:self action:@selector(heartButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+                       [_heartButton addTarget:self action:@selector(unheartButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+                       [_subject setHeartForKeywordAtRow:(NSUInteger)[[self index] integerValue] toBool:true];
+                       //#TODO: change number of likes in UI
                    }
                    failureBlock:nil];
 }
@@ -228,7 +232,8 @@ static const NSString *nameKey = @"name";
      *     self: (number),
      *     before: {fb_id: xxxx, name: xxxx, rank: (number)}
      *   },
-     *   has_liked (0, 1)
+     *   hasLiked (bool),
+     *   num_likes
      * ]
      * NOTE: after/before might correspond to nil value.
      */
@@ -245,7 +250,9 @@ static const NSString *nameKey = @"name";
     NSDictionary *rankingDic = [keywordArray objectAtIndex:2];
     [self displayRanking:rankingDic];
     
-    has_liked = [[keywordArray objectAtIndex:3] boolValue] ? true : false;
+    hasLiked = [[keywordArray objectAtIndex:3] boolValue] ? true : false;
+    numLikes = [[keywordArray objectAtIndex:4] integerValue];
+    MBDebug(@"num of likes: %d", numLikes);
     [self generateStaticUI];
 }
 
