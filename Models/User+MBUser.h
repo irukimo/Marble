@@ -9,6 +9,7 @@
 @interface User (MBUser)
 
 - (NSString *)profileURL;
+- (void) setHeartForKeywordAtRow:(NSUInteger)index toBool:(bool)hearted;
 
 + (BOOL)createUsersInBatchForEng:(NSArray *)fbEngUsers
                       andChinese:(NSArray *)fbChUsers

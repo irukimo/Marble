@@ -12,7 +12,10 @@
 @protocol KeywordListTableViewCellDelegate;
 
 @interface KeywordListTableViewCell : UITableViewCell
+
 @property (nonatomic, weak) id delegate;
+@property (nonatomic, strong) NSNumber *index;
+
 -(void) setKeyword:(NSString *)keyword;
 @property (strong, nonatomic) User *subject;
 @end

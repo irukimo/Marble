@@ -45,7 +45,8 @@
           *     after: {fb_id: xxxx, name: xxxx, rank: (number)},
           *     self: (number),
           *     before: {fb_id: xxxx, name: xxxx, rank: (number)}
-          *   }
+          *   },
+          *   has_liked
           * ]
           * NOTE: after/before might correspond to nil value.
           */
@@ -56,6 +57,7 @@
                 MBDebug(@"other ranking: %@, %@", key, [dict objectForKey:key]);
             }
         }
+        MBDebug(@"has_liked? %@", [obj objectAtIndex:3]);
     }
     
 }
@@ -91,6 +93,7 @@
     }
     cell.subject = _subject;
     [cell setKeyword:[_keywordList objectAtIndex:indexPath.row]];
+    [cell setIndex:[NSNumber numberWithInt:indexPath.row]];
     cell.delegate = self;
     return cell;
 }

@@ -256,6 +256,9 @@
     
     RKRoute *sendGuessRoute = [RKRoute routeWithName:@"send_guess" pathPattern:@"guesses" method:RKRequestMethodPOST];
     
+    RKRoute *sendLikeRoute = [RKRoute routeWithName:@"send_like" pathPattern:@"like" method:RKRequestMethodPOST];
+    RKRoute *sendUnlikeRoute = [RKRoute routeWithName:@"send_unlike" pathPattern:@"unlike" method:RKRequestMethodPOST];
+    
     RKRoute *sendStatusRoute = [RKRoute routeWithName:@"send_status" pathPattern:@"status" method:RKRequestMethodPOST];
     
     RKRoute *getNotificationsRoute = [RKRoute routeWithName:@"get_notifications" pathPattern:@"notifications" method:RKRequestMethodGET];
@@ -265,7 +268,7 @@
     [objectManager.router.routeSet addRoutes:@[// class routes
                                                /*quizGETRoute, */quizPOSTRoute, /*statusPOSTRoute,*/ postGETRoute, userGETRoute,
                                                // named routes
-                                               sendDeviceTokenRoute, sendCommentRoute, getCommentsRoute,
+                                               sendDeviceTokenRoute, sendCommentRoute, getCommentsRoute, sendLikeRoute, sendUnlikeRoute,
                                                sendGuessRoute, sendStatusRoute, getNotificationsRoute, setBadgeRoute, getKeywordRoute]];
 
 

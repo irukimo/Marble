@@ -7,6 +7,8 @@
 //
 
 #import "KeywordListTableViewCell.h"
+#import "User+MBUser.h"
+
 #define KEYWORD_BUTTON_TAG 907
 
 
@@ -14,7 +16,9 @@ static const NSString *fbidKey = @"fb_id";
 static const NSString *nameKey = @"name";
 
 
-@interface KeywordListTableViewCell()
+@interface KeywordListTableViewCell () {
+    bool has_liked;
+}
 @property(strong, nonatomic) UIButton *keywordButton;
 @property(strong,nonatomic) NSString *keyword;
 @property(strong,nonatomic) UILabel *timesPlayedLabel;
@@ -62,8 +66,13 @@ static const NSString *nameKey = @"name";
     [self.contentView addSubview:marbleImage];
     
     _heartButton = [[UIButton alloc] initWithFrame:CGRectMake(statsStartX + 45, 22, 20, 20)];
-    [_heartButton setImage:[UIImage imageNamed:EMPTY_HEART_IMAGE_NAME] forState:UIControlStateNormal];
-    [_heartButton addTarget:self action:@selector(heartButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+    if (has_liked) {
+        [_heartButton setImage:[UIImage imageNamed:HEART_IMAGE_NAME] forState:UIControlStateNormal];
+        [_heartButton addTarget:self action:@selector(unheartButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+    } else {
+        [_heartButton setImage:[UIImage imageNamed:EMPTY_HEART_IMAGE_NAME] forState:UIControlStateNormal];
+        [_heartButton addTarget:self action:@selector(heartButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+    }
     [self.contentView addSubview:_heartButton];
 
 
@@ -82,8 +91,29 @@ static const NSString *nameKey = @"name";
     [self addThreeRanking];
 }
 
+-(void)unheartButtonClicked:(id)sender{
+    [_heartButton setImage:[UIImage imageNamed:EMPTY_HEART_IMAGE_NAME] forState:UIControlStateNormal];
+    [_heartButton removeTarget:self action:@selector(unheartButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+    [_heartButton addTarget:self action:@selector(heartButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+    
+    [Utility sendThroughRKRoute:@"send_unlike" withParams:@{@"likee_fb_id": _subject.fbID, @"keyword": _keyword}
+                   successBlock:^{MBDebug(@"Successfully posted unlike");
+                       [_subject setHeartForKeywordAtRow:(NSUInteger)[[self index] integerValue] toBool:false];
+                   }
+                   failureBlock:nil];
+
+}
+
 -(void)heartButtonClicked:(id)sender{
     [_heartButton setImage:[UIImage imageNamed:HEART_IMAGE_NAME] forState:UIControlStateNormal];
+    [_heartButton removeTarget:self action:@selector(heartButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+    [_heartButton addTarget:self action:@selector(unheartButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+    
+    [Utility sendThroughRKRoute:@"send_like" withParams:@{@"likee_fb_id": _subject.fbID, @"keyword": _keyword}
+                   successBlock:^{MBDebug(@"Successfully posted like");
+                               [_subject setHeartForKeywordAtRow:(NSUInteger)[[self index] integerValue] toBool:true];
+                   }
+                   failureBlock:nil];
 }
 
 -(void)addThreeRanking{
@@ -197,7 +227,8 @@ static const NSString *nameKey = @"name";
      *     after: {fb_id: xxxx, name: xxxx, rank: (number)},
      *     self: (number),
      *     before: {fb_id: xxxx, name: xxxx, rank: (number)}
-     *   }
+     *   },
+     *   has_liked (0, 1)
      * ]
      * NOTE: after/before might correspond to nil value.
      */
@@ -213,6 +244,9 @@ static const NSString *nameKey = @"name";
     
     NSDictionary *rankingDic = [keywordArray objectAtIndex:2];
     [self displayRanking:rankingDic];
+    
+    has_liked = [[keywordArray objectAtIndex:3] boolValue] ? true : false;
+    [self generateStaticUI];
 }
 
 -(void)displayRanking:(NSDictionary *)rankingDic{

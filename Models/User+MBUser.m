@@ -21,6 +21,19 @@
     
 }
 
+- (void) setHeartForKeywordAtRow:(NSUInteger)index toBool:(bool)hearted
+{
+    NSMutableArray *keywords = [NSMutableArray arrayWithArray:self.keywords];
+    NSMutableArray *keyword = [NSMutableArray arrayWithArray:[keywords objectAtIndex:(NSUInteger)index]];
+    [keyword setObject:[NSNumber numberWithBool:hearted] atIndexedSubscript:3];
+    [keywords setObject:keyword atIndexedSubscript:(NSUInteger)index];
+    [self setKeywords:keywords];
+    [Utility saveToPersistenceStore:[RKManagedObjectStore defaultStore].mainQueueManagedObjectContext failureMessage:nil];
+    
+    MBDebug(@"Set heart to %@ for keyword %@", [[self.keywords objectAtIndex:index] objectAtIndex:3],
+                                         [[self.keywords objectAtIndex:index] objectAtIndex:1]);
+}
+
 - (NSString *)profileURL
 {
     return [NSString stringWithFormat:@"//graph.facebook.com/%@/picture?type=square", self.fbID];
