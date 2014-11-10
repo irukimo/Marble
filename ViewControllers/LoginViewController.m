@@ -65,7 +65,9 @@
     // Align the button in the center horizontally
     _loginView.frame = CGRectOffset(_loginView.frame, (self.view.center.x - (_loginView.frame.size.width / 2)), 500);
     [self.view addSubview:_loginView];
-    _mysemaphore = dispatch_semaphore_create(1);
+    
+    NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+    [center addObserver:self selector:@selector(logoutUser) name:MBSignOutNotification object:nil];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -201,6 +203,8 @@
 
 #pragma mark - log out user method
 -(void) logoutUser{
+    MBDebug(@"Received SignOutNotification");
+    [self dismissViewControllerAnimated:YES completion:nil];
     [ClientManager logout];
     [KeyChainWrapper cleanUpCredentials];
     [self logoutFBUser];

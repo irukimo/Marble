@@ -13,8 +13,8 @@
 #define MBError NSLog
 #define URLMake(IP) (@"http://" IP @":4567/")
 
-#define PRODUCTION_SERVER @"192.168.2.222"
-//#define PRODUCTION_SERVER @"localhost"
+//#define PRODUCTION_SERVER @"192.168.2.222"
+#define PRODUCTION_SERVER @"localhost"
 
 #define ASYNC(...) dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{ __VA_ARGS__ })
 #define MAINQ(...) dispatch_async(dispatch_get_main_queue(), ^{ __VA_ARGS__ })
@@ -29,6 +29,7 @@
 #define EMPTY_HEART_IMAGE_NAME @"heart-empty.png"
 #define COMMENT_ICON_IMAGE_NAME @"comment.png"
 
+#define MBSignOutNotification @"MSSignOutNotification"
 
 #define notificationCellIdentifier @"notificationCellIdentifier"
 
