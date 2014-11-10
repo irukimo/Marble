@@ -14,7 +14,6 @@
 @property (strong,nonatomic) NSArray *comments;
 @property (strong, nonatomic) UIView *keywordsView;
 @property (strong, nonatomic) KeywordUpdate *keywordUpdate;
-@property(strong, nonatomic) UILabel *timeLabel;
 @end
 
 @implementation KeywordUpdateTableViewCell
@@ -46,11 +45,9 @@
     _nameButton = [[UIButton alloc] initWithFrame:CGRectMake(NAME_LEFT_ALIGNMENT, NAME_TOP_ALIGNMENT, 100, 20)];
     [_nameButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [_nameButton addTarget:self action:@selector(nameClicked:) forControlEvents:UIControlEventTouchUpInside];
-    _timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(NAME_LEFT_ALIGNMENT, NAME_TOP_ALIGNMENT + 44, 70, 20)];
 
     [self.contentView addSubview:_descriptionLabel];
     [self.contentView addSubview:_nameButton];
-    [self.contentView addSubview:_timeLabel];
 }
 
 -(void) initKeywordsView{
@@ -82,8 +79,8 @@
     
     if (_keywordUpdate.keyword1 != nil){
         numKeywords++;
-        NSAttributedString *keywordString =[[NSAttributedString alloc] initWithString:_keywordUpdate.keyword1 attributes:[Utility getNotifOrangeNormalFontDictionary]];
-        [self addKeywordLabelAtX:x andY:y withKeyword:keywordString atIndex:0];
+        NSAttributedString *keywordString =[[NSAttributedString alloc] initWithString:_keywordUpdate.keyword1 attributes:[Utility getWhiteCommentFontDictionary]];
+        [self addKeywordLabelAtX:x andY:y withKeyword:_keywordUpdate.keyword1 atIndex:0];
         x+= keywordString.size.width + 20;
         if(x>250){
             x=0;
@@ -94,7 +91,7 @@
     if (_keywordUpdate.keyword2 != nil){
         numKeywords++;
         NSAttributedString *keywordString =[[NSAttributedString alloc] initWithString:_keywordUpdate.keyword1 attributes:[Utility getNotifOrangeNormalFontDictionary]];
-        [self addKeywordLabelAtX:x andY:y withKeyword:keywordString atIndex:1];
+        [self addKeywordLabelAtX:x andY:y withKeyword:_keywordUpdate.keyword1 atIndex:1];
         x+= keywordString.size.width + 20;
         if(x>250){
             x=0;
@@ -105,7 +102,7 @@
     if (_keywordUpdate.keyword3 != nil){
         numKeywords++;
         NSAttributedString *keywordString =[[NSAttributedString alloc] initWithString:_keywordUpdate.keyword1 attributes:[Utility getNotifOrangeNormalFontDictionary]];
-        [self addKeywordLabelAtX:x andY:y withKeyword:keywordString atIndex:2];
+        [self addKeywordLabelAtX:x andY:y withKeyword:_keywordUpdate.keyword1 atIndex:2];
         x+= keywordString.size.width + 20;
         if(x>250){
             x=0;
@@ -122,11 +119,10 @@
 
     [Utility setUpProfilePictureImageView:_authorPicView byFBID:_keywordUpdate.fbID];
     
-    NSAttributedString *timeString = [[NSAttributedString alloc] initWithString:[Utility getDateToShow:_keywordUpdate.time inWhole:NO] attributes:[Utility getGraySmallFontDictionary]];
-    [_timeLabel setAttributedText:timeString];
+    [super setTimeForTimeLabel:_keywordUpdate.time];
 }
 
--(void) addKeywordLabelAtX:(int)x andY:(int)y withKeyword:(NSAttributedString *)string atIndex:(NSInteger)index{
+-(void) addKeywordLabelAtX:(int)x andY:(int)y withKeyword:(NSString *)string atIndex:(NSInteger)index{
     UIButton *keywordBtn = [Utility getKeywordButtonAtX:x andY:y andString:string];
     [keywordBtn setTag:index];
     [keywordBtn addTarget:self action:@selector(keywordBtnClicked:) forControlEvents:UIControlEventTouchUpInside];

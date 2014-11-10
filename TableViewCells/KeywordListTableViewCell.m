@@ -238,8 +238,7 @@ static const NSString *nameKey = @"name";
      * NOTE: after/before might correspond to nil value.
      */
     _keyword = [keywordArray objectAtIndex:1];
-    NSAttributedString *keywordString =[[NSAttributedString alloc] initWithString:_keyword attributes:[Utility getNotifOrangeNormalFontDictionary]];
-    _keywordButton = [Utility getKeywordButtonAtX:55 andY:20 andString:keywordString];
+    _keywordButton = [Utility getKeywordButtonAtX:55 andY:20 andString:_keyword];
     [_keywordButton addTarget:self action:@selector(keywordButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     [self.contentView addSubview:_keywordButton];
     

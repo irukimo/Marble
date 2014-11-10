@@ -339,8 +339,7 @@
     int y = 0;
     if([_user.keywords isKindOfClass:[NSString class]]){
         NSString *keyword = (NSString *)[_user.keywords objectAtIndex:1];
-        NSAttributedString *keywordString =[[NSAttributedString alloc] initWithString:keyword attributes:[Utility getNotifOrangeNormalFontDictionary]];
-        [self addKeywordLabelAtX:100 andY:100 withKeyword:keywordString atIndex:-1];
+        [self addKeywordLabelAtX:100 andY:100 withKeyword:keyword atIndex:-1];
     } else if([_user.keywords isKindOfClass:[NSArray class]]){
         NSArray *keywordArray = (NSArray *)_user.keywords;
         if([keywordArray count] == 0){
@@ -355,7 +354,7 @@
                 x=0;
                 y+=30;
             }
-            [self addKeywordLabelAtX:x andY:y withKeyword:keywordString atIndex:[keywordArray indexOfObject:obj]];
+            [self addKeywordLabelAtX:x andY:y withKeyword:keyword atIndex:[keywordArray indexOfObject:obj]];
             x += keywordString.size.width + 20; 
         }
     }
@@ -410,7 +409,7 @@
     [_statusTextView setAttributedText:statusString];
 }
 
--(void) addKeywordLabelAtX:(int)x andY:(int)y withKeyword:(NSAttributedString *)string atIndex:(NSInteger)index{
+-(void) addKeywordLabelAtX:(int)x andY:(int)y withKeyword:(NSString *)string atIndex:(NSInteger)index{
     UIButton *keywordBtn = [Utility getKeywordButtonAtX:x andY:y andString:string];
     [keywordBtn setTag:index];
     [keywordBtn addTarget:self action:@selector(keywordBtnClicked:) forControlEvents:UIControlEventTouchUpInside];

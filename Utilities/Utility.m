@@ -254,14 +254,16 @@
 
 
 
-+ (UIButton *)getKeywordButtonAtX:(int)x andY:(int)y andString:(NSAttributedString *)string{
-    UIButton *keywordBtn = [[UIButton alloc] initWithFrame:CGRectMake(x, y, string.size.width + 15, string.size.height + 10)];
-    [keywordBtn.layer setBorderColor:[UIColor grayColor].CGColor];
-    [keywordBtn.layer setBorderWidth:1.0f];
++ (UIButton *)getKeywordButtonAtX:(int)x andY:(int)y andString:(NSString *)string{
+    NSAttributedString *attString = [[NSAttributedString alloc] initWithString:string attributes:[Utility getWhiteCommentFontDictionary]];
+    UIButton *keywordBtn = [[UIButton alloc] initWithFrame:CGRectMake(x, y, attString.size.width + 15, attString.size.height + 10)];
+//    [keywordBtn.layer setBorderColor:[UIColor grayColor].CGColor];
+//    [keywordBtn.layer setBorderWidth:1.0f];
     [keywordBtn.layer setCornerRadius:keywordBtn.frame.size.height/2.0f];
     [keywordBtn.layer setMasksToBounds:YES];
+    [keywordBtn setBackgroundColor:[UIColor marbleOrange]];
     [keywordBtn setContentHorizontalAlignment:UIControlContentHorizontalAlignmentCenter];
-    [keywordBtn setAttributedTitle:string forState:UIControlStateNormal];
+    [keywordBtn setAttributedTitle:attString forState:UIControlStateNormal];
     return keywordBtn;
 }
 

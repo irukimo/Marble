@@ -51,8 +51,7 @@ typedef void (^voidBlock)(void);
 
 
 
-+ (UIButton *)getKeywordButtonAtX:(int)x andY:(int)y andString:(NSAttributedString *)string;
-
++ (UIButton *)getKeywordButtonAtX:(int)x andY:(int)y andString:(NSString *)string;
 //+ (void) setApplicationBadgeNumber:(NSInteger)number;
 
 

@@ -24,6 +24,7 @@
 @property(strong, nonatomic) UIButton *viewMoreCommentsBtn;
 @property( nonatomic) BOOL isSinglePostSoExpandComments;
 @property (strong, nonatomic) UIView *whiteView;
+@property(strong, nonatomic) UILabel *timeLabel;
 @end
 
 @implementation PostsTableViewSuperCell
@@ -33,6 +34,7 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         [self initWhiteBackground];
+        [self initTimeLabel];
         self.selectionStyle = UITableViewCellSelectionStyleNone;
         [self setBorder];
         self.clipsToBounds = YES;
@@ -56,6 +58,17 @@
        [UIView addLeftBorderOn:self.contentView withColor:[UIColor marbleLightGray] andWidth:CELL_UNIVERSAL_PADDING/2.0 andHeight:KeywordUpdateTableViewCellHeight withOffset:CELL_UNIVERSAL_PADDING/2.0];
         [UIView addRightBorderOn:self.contentView withColor:[UIColor marbleLightGray] andWidth:CELL_UNIVERSAL_PADDING/2.0 andHeight:QuizTableViewCellDisplayHeight withOffset:CELL_UNIVERSAL_PADDING/2.0];
     }
+}
+
+-(void)initTimeLabel{
+    _timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(285,10, 70, 20)];
+    [self.contentView addSubview:_timeLabel];
+
+}
+
+-(void)setTimeForTimeLabel:(NSDate *)time{
+    NSAttributedString *timeString = [[NSAttributedString alloc] initWithString:[Utility getDateToShow:time inWhole:NO] attributes:[Utility getGraySmallFontDictionary]];
+    [_timeLabel setAttributedText:timeString];
 }
 
 

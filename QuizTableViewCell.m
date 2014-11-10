@@ -48,7 +48,7 @@
 
 @property(strong, nonatomic) UILabel *compareNumLabel;
 
-@property(strong, nonatomic) UILabel *timeLabel;
+
 
 @property (strong, nonatomic) UIImageView *authorPicView;
 @property (strong, nonatomic) UIImageView *option0PicView;
@@ -230,7 +230,6 @@
 
 
 -(void)addStaticLabels{
-    _timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(NAME_LEFT_ALIGNMENT, NAME_TOP_ALIGNMENT + 34, 70, 20)];
     
     CGRect compareNumFrame = CGRectMake(230, QuizTableViewCellHeight - 45, 50, 20);
     _compareNumLabel = [[UILabel alloc] initWithFrame:compareNumFrame];
@@ -269,10 +268,12 @@
     [_option1NameButton addTarget:self action:@selector(option1Clicked:) forControlEvents:UIControlEventTouchUpInside];
     [_authorNameButton addTarget:self action:@selector(authorClicked:) forControlEvents:UIControlEventTouchUpInside];
 
+    
     _keywordButton = [[UIButton alloc] initWithFrame:CGRectMake(0, NAME_TOP_ALIGNMENT + 60  , self.contentView.frame.size.width, 30)];
     [_keywordButton.layer setCornerRadius:_keywordButton.frame.size.height/2.0];
-    [_keywordButton.layer setBorderColor:[UIColor grayColor].CGColor];
-    [_keywordButton.layer setBorderWidth:1.0f];
+//    [_keywordButton.layer setBorderColor:[UIColor grayColor].CGColor];
+//    [_keywordButton.layer setBorderWidth:1.0f];
+    [_keywordButton setBackgroundColor:[UIColor marbleOrange]];
     [_keywordButton.layer setMasksToBounds:YES];
     [_keywordButton addTarget:self action:@selector(keywordButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
 
@@ -287,7 +288,6 @@
     [self.contentView addSubview:_option0NameButton];
     [self.contentView addSubview:_option1NameButton];
     [self.contentView addSubview:_keywordButton];
-    [self.contentView addSubview:_timeLabel];
     
     [self.contentView addSubview:_compareTextLabel];
     [self.contentView addSubview:_andTextLabel];
@@ -353,7 +353,7 @@
 
     [self setupProfileViews];
     [self setupNameButtons];
-    NSAttributedString *keywordString = [[NSAttributedString alloc] initWithString:_quiz.keyword attributes:[Utility getNotifOrangeNormalFontDictionary]];
+    NSAttributedString *keywordString = [[NSAttributedString alloc] initWithString:_quiz.keyword attributes:[Utility getWhiteCommentFontDictionary]];
     [_keywordButton setAttributedTitle:keywordString forState:UIControlStateNormal];
     [_keywordButton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentCenter];
     CGRect keywordFrame = _keywordButton.frame;
@@ -362,8 +362,7 @@
     _keywordButton.frame = keywordFrame;
 
     
-    NSAttributedString *timeString = [[NSAttributedString alloc] initWithString:[Utility getDateToShow:quiz.time inWhole:NO] attributes:[Utility getGraySmallFontDictionary]];
-    [_timeLabel setAttributedText:timeString];
+    [super setTimeForTimeLabel:_quiz.time];
     
     //To prevent self guessing, and show the answer you guessed.
     if([_quiz.author isEqualToString:[KeyChainWrapper getSelfFBID]]){

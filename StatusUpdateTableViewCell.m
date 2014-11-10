@@ -17,7 +17,6 @@
 @property (strong, nonatomic) UIImageView *authorPicView;
 @property(strong,nonatomic) NSArray *comments;
 @property(strong, nonatomic) UILabel *saidLabel;
-@property(strong, nonatomic) UILabel *timeLabel;
 @property (strong, nonatomic) StatusUpdate *statusUpdate;
 @end
 
@@ -46,7 +45,6 @@
 
 
 -(void) addStaticLabels{
-    _timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(NAME_LEFT_ALIGNMENT, NAME_TOP_ALIGNMENT + 34, 70, 20)];
     
     _nameButton = [[UIButton alloc] initWithFrame:CGRectMake(NAME_LEFT_ALIGNMENT, NAME_TOP_ALIGNMENT, 100, 20)];
     [_nameButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
@@ -62,7 +60,6 @@
     [_saidLabel setAttributedText:saidTextString];
     
     [self.contentView addSubview:_saidLabel];
-    [self.contentView addSubview:_timeLabel];
     [self.contentView addSubview:_statusTextView];
     [self.contentView addSubview:_nameButton];
 
@@ -96,12 +93,7 @@
     saidFrame.origin.x = NAME_LEFT_ALIGNMENT + nameString.size.width + 5;
     [_saidLabel setFrame:saidFrame];
     
-    NSAttributedString *timeString = [[NSAttributedString alloc] initWithString:[Utility getDateToShow:_statusUpdate.time inWhole:NO] attributes:[Utility getGraySmallFontDictionary]];
-    [_timeLabel setAttributedText:timeString];
-    
-    CGRect timeFrame = _timeLabel.frame;
-    timeFrame.origin.y = _statusTextView.frame.origin.y + _statusTextView.frame.size.height - 5;
-    [_timeLabel setFrame:timeFrame];
+    [super setTimeForTimeLabel:_statusUpdate.time];
 }
 
 -(void)nameClicked:(id)sender{
