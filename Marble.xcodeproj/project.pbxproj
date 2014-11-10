@@ -53,6 +53,11 @@
 		7A48343B19EC56E80029D092 /* OpenSans-Semibold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7A48343919EC56E80029D092 /* OpenSans-Semibold.ttf */; };
 		7A48344019EC9B940029D092 /* PostsTableViewSuperCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A48343F19EC9B940029D092 /* PostsTableViewSuperCell.m */; };
 		7A48344319EDEFB50029D092 /* SelectKeywordViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A48344219EDEFB50029D092 /* SelectKeywordViewCell.m */; };
+		7A9F7DEB1A1146FF002B6E40 /* page1.png in Resources */ = {isa = PBXBuildFile; fileRef = 7A9F7DE71A1146FF002B6E40 /* page1.png */; };
+		7A9F7DEC1A1146FF002B6E40 /* page2.png in Resources */ = {isa = PBXBuildFile; fileRef = 7A9F7DE81A1146FF002B6E40 /* page2.png */; };
+		7A9F7DED1A1146FF002B6E40 /* page3.png in Resources */ = {isa = PBXBuildFile; fileRef = 7A9F7DE91A1146FF002B6E40 /* page3.png */; };
+		7A9F7DEE1A1146FF002B6E40 /* page4.png in Resources */ = {isa = PBXBuildFile; fileRef = 7A9F7DEA1A1146FF002B6E40 /* page4.png */; };
+		7A9F7DF11A11479B002B6E40 /* PageContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A9F7DF01A11479B002B6E40 /* PageContentViewController.m */; };
 		7AB610EC1A000765001C792D /* SinglePostViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AB610EB1A000765001C792D /* SinglePostViewController.m */; };
 		7AB610EE1A02B060001C792D /* menu-addpost@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7AB610ED1A02B060001C792D /* menu-addpost@2x.png */; };
 		7AB610F31A03FE3B001C792D /* UIImage+ImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AB610F21A03FE3B001C792D /* UIImage+ImageEffects.m */; };
@@ -188,6 +193,12 @@
 		7A48343F19EC9B940029D092 /* PostsTableViewSuperCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PostsTableViewSuperCell.m; path = TableViewCells/PostsTableViewSuperCell.m; sourceTree = "<group>"; };
 		7A48344119EDEFB50029D092 /* SelectKeywordViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SelectKeywordViewCell.h; path = TableViewCells/SelectKeywordViewCell.h; sourceTree = "<group>"; };
 		7A48344219EDEFB50029D092 /* SelectKeywordViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SelectKeywordViewCell.m; path = TableViewCells/SelectKeywordViewCell.m; sourceTree = "<group>"; };
+		7A9F7DE71A1146FF002B6E40 /* page1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = page1.png; path = Images/page1.png; sourceTree = "<group>"; };
+		7A9F7DE81A1146FF002B6E40 /* page2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = page2.png; path = Images/page2.png; sourceTree = "<group>"; };
+		7A9F7DE91A1146FF002B6E40 /* page3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = page3.png; path = Images/page3.png; sourceTree = "<group>"; };
+		7A9F7DEA1A1146FF002B6E40 /* page4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = page4.png; path = Images/page4.png; sourceTree = "<group>"; };
+		7A9F7DEF1A11479B002B6E40 /* PageContentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PageContentViewController.h; sourceTree = "<group>"; };
+		7A9F7DF01A11479B002B6E40 /* PageContentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PageContentViewController.m; sourceTree = "<group>"; };
 		7AB610EA1A000765001C792D /* SinglePostViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SinglePostViewController.h; sourceTree = "<group>"; };
 		7AB610EB1A000765001C792D /* SinglePostViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SinglePostViewController.m; sourceTree = "<group>"; };
 		7AB610ED1A02B060001C792D /* menu-addpost@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menu-addpost@2x.png"; sourceTree = "<group>"; };
@@ -388,6 +399,17 @@
 			name = Fonts;
 			sourceTree = "<group>";
 		};
+		7A9F7DDD1A1146E7002B6E40 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				7A9F7DE71A1146FF002B6E40 /* page1.png */,
+				7A9F7DE81A1146FF002B6E40 /* page2.png */,
+				7A9F7DE91A1146FF002B6E40 /* page3.png */,
+				7A9F7DEA1A1146FF002B6E40 /* page4.png */,
+			);
+			name = Images;
+			sourceTree = "<group>";
+		};
 		7ACD18D319FE154E00B23DFA /* UIViews */ = {
 			isa = PBXGroup;
 			children = (
@@ -409,6 +431,7 @@
 		7AF4122419D9FB6C00A470E1 = {
 			isa = PBXGroup;
 			children = (
+				7A9F7DDD1A1146E7002B6E40 /* Images */,
 				7AD323211A0988CE00C5C83B /* Libraries */,
 				7ACD18D319FE154E00B23DFA /* UIViews */,
 				7A261F3119F0ABD500D1E91D /* CollectionViewCells */,
@@ -481,6 +504,8 @@
 		7AF4125919D9FFD600A470E1 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				7A9F7DEF1A11479B002B6E40 /* PageContentViewController.h */,
+				7A9F7DF01A11479B002B6E40 /* PageContentViewController.m */,
 				7A0E976719DCB194003A9359 /* ProfileViewController.h */,
 				7A0E976819DCB194003A9359 /* ProfileViewController.m */,
 				50B568ED19E490590050C8EC /* NotifViewController.h */,
@@ -663,6 +688,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				50B5690519E497020050C8EC /* home-selected@2x.png in Resources */,
+				7A9F7DEC1A1146FF002B6E40 /* page2.png in Resources */,
 				50B5690119E497020050C8EC /* notif-selected@2x.png in Resources */,
 				7AB610EE1A02B060001C792D /* menu-addpost@2x.png in Resources */,
 				7AF4123C19D9FB6C00A470E1 /* Main.storyboard in Resources */,
@@ -678,11 +704,14 @@
 				50B5690C19E4AA260050C8EC /* login.png in Resources */,
 				7AD323351A0C4DB100C5C83B /* send-no-border.png in Resources */,
 				7AD323301A0C296600C5C83B /* comment.png in Resources */,
+				7A9F7DEE1A1146FF002B6E40 /* page4.png in Resources */,
+				7A9F7DEB1A1146FF002B6E40 /* page1.png in Resources */,
 				50B5690819E497020050C8EC /* explore-selected@2x.png in Resources */,
 				7AD323271A09B10800C5C83B /* wrong.png in Resources */,
 				7A48343A19EC56E80029D092 /* OpenSans-Regular.ttf in Resources */,
 				7AD323281A09B10800C5C83B /* correct.png in Resources */,
 				7AD3232D1A0C1C5500C5C83B /* heart.png in Resources */,
+				7A9F7DED1A1146FF002B6E40 /* page3.png in Resources */,
 				7A48343B19EC56E80029D092 /* OpenSans-Semibold.ttf in Resources */,
 				7AF4123E19D9FB6C00A470E1 /* Images.xcassets in Resources */,
 				7AD323361A0C4DB100C5C83B /* send-border.png in Resources */,
@@ -756,6 +785,7 @@
 				7AB925B019E3730C00F8229F /* UIColor+MBColor.m in Sources */,
 				516937AB19ECD56500EE0C0D /* Post+MBPost.m in Sources */,
 				51F5A74B19E60827006097EF /* Quiz+MBQuiz.m in Sources */,
+				7A9F7DF11A11479B002B6E40 /* PageContentViewController.m in Sources */,
 				51F5A75119E6089D006097EF /* NSNumber+MBNumber.m in Sources */,
 				7A48344319EDEFB50029D092 /* SelectKeywordViewCell.m in Sources */,
 				516937A519ECD35D00EE0C0D /* KeywordUpdate+MBKeywordUpdate.m in Sources */,

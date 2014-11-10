@@ -73,6 +73,31 @@
             </objects>
             <point key="canvasLocation" x="3723" y="70.5"/>
         </scene>
+        <!--Page View Controller-->
+        <scene sceneID="V7S-fm-bpG">
+            <objects>
+                <pageViewController storyboardIdentifier="PageViewController" autoresizesArchivedViewToFullSize="NO" transitionStyle="scroll" navigationOrientation="horizontal" spineLocation="none" id="0Xi-4m-ZLD" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Vez-q0-05P" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5589" y="455.25"/>
+        </scene>
+        <!--Page Content View Controller-->
+        <scene sceneID="BjP-11-VGe">
+            <objects>
+                <viewController storyboardIdentifier="PageContentViewController" id="PJO-7Y-WBb" customClass="PageContentViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="6AP-QL-QQ1"/>
+                        <viewControllerLayoutGuide type="bottom" id="HdU-HC-HZQ"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="KWs-PF-VXe">
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="rOu-xW-v19" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5595" y="1109.25"/>
+        </scene>
         <!--Keyword Profile View Controller-->
         <scene sceneID="hB7-pD-SOa">
             <objects>

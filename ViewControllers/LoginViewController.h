@@ -10,7 +10,7 @@
 #import <FacebookSDK/FacebookSDK.h>
 #import "ClientManager.h"
 
-@interface LoginViewController : UIViewController <FBViewControllerDelegate, FBLoginViewDelegate,
+@interface LoginViewController : UIViewController <FBViewControllerDelegate, FBLoginViewDelegate, UIPageViewControllerDataSource,
 UINavigationControllerDelegate, ClientLoginDelegate>
 
 
