@@ -58,6 +58,7 @@
 		7A9F7DED1A1146FF002B6E40 /* page3.png in Resources */ = {isa = PBXBuildFile; fileRef = 7A9F7DE91A1146FF002B6E40 /* page3.png */; };
 		7A9F7DEE1A1146FF002B6E40 /* page4.png in Resources */ = {isa = PBXBuildFile; fileRef = 7A9F7DEA1A1146FF002B6E40 /* page4.png */; };
 		7A9F7DF11A11479B002B6E40 /* PageContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A9F7DF01A11479B002B6E40 /* PageContentViewController.m */; };
+		7A9F7DF41A116BE5002B6E40 /* LaunchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A9F7DF31A116BE5002B6E40 /* LaunchViewController.m */; };
 		7AB610EC1A000765001C792D /* SinglePostViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AB610EB1A000765001C792D /* SinglePostViewController.m */; };
 		7AB610EE1A02B060001C792D /* menu-addpost@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7AB610ED1A02B060001C792D /* menu-addpost@2x.png */; };
 		7AB610F31A03FE3B001C792D /* UIImage+ImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AB610F21A03FE3B001C792D /* UIImage+ImageEffects.m */; };
@@ -199,6 +200,8 @@
 		7A9F7DEA1A1146FF002B6E40 /* page4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = page4.png; path = Images/page4.png; sourceTree = "<group>"; };
 		7A9F7DEF1A11479B002B6E40 /* PageContentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PageContentViewController.h; sourceTree = "<group>"; };
 		7A9F7DF01A11479B002B6E40 /* PageContentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PageContentViewController.m; sourceTree = "<group>"; };
+		7A9F7DF21A116BE5002B6E40 /* LaunchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LaunchViewController.h; sourceTree = "<group>"; };
+		7A9F7DF31A116BE5002B6E40 /* LaunchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LaunchViewController.m; sourceTree = "<group>"; };
 		7AB610EA1A000765001C792D /* SinglePostViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SinglePostViewController.h; sourceTree = "<group>"; };
 		7AB610EB1A000765001C792D /* SinglePostViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SinglePostViewController.m; sourceTree = "<group>"; };
 		7AB610ED1A02B060001C792D /* menu-addpost@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menu-addpost@2x.png"; sourceTree = "<group>"; };
@@ -534,6 +537,8 @@
 				7A261F2F19F0AB4B00D1E91D /* ExploreCollectionViewController.m */,
 				7AB610EA1A000765001C792D /* SinglePostViewController.h */,
 				7AB610EB1A000765001C792D /* SinglePostViewController.m */,
+				7A9F7DF21A116BE5002B6E40 /* LaunchViewController.h */,
+				7A9F7DF31A116BE5002B6E40 /* LaunchViewController.m */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -794,6 +799,7 @@
 				7AF4123319D9FB6C00A470E1 /* main.m in Sources */,
 				7A0E976919DCB194003A9359 /* ProfileViewController.m in Sources */,
 				7A261F3419F0AC0200D1E91D /* ExploreCollectionViewCell.m in Sources */,
+				7A9F7DF41A116BE5002B6E40 /* LaunchViewController.m in Sources */,
 				7AEB9CF919E9B37100409276 /* KeywordListViewController.m in Sources */,
 				7AFF5BBE19E59AEA00CFD35D /* SelectKeywordViewController.m in Sources */,
 				7A0E977519DCDFBC003A9359 /* HomeNavigationController.m in Sources */,

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="14A389" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="vdv-fJ-j5t">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Tq3-3R-wWo">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
@@ -191,6 +191,28 @@
             </objects>
             <point key="canvasLocation" x="3711" y="828.75"/>
         </scene>
+        <!--Launch View Controller-->
+        <scene sceneID="Fl4-ck-W4R">
+            <objects>
+                <viewController id="Tq3-3R-wWo" customClass="LaunchViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="13K-6C-Nt6"/>
+                        <viewControllerLayoutGuide type="bottom" id="0Ch-5t-Tbf"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="mTS-N1-MUF">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <connections>
+                        <segue destination="kcK-BR-RNu" kind="presentation" identifier="MarbleTabBarControllerSegue" animates="NO" id="BC5-5k-K1C"/>
+                        <segue destination="vdv-fJ-j5t" kind="presentation" identifier="LoginViewControllerSegue" animates="NO" id="0Ri-pr-afa"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="TlZ-en-bja" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-924" y="70.5"/>
+        </scene>
         <!--Login View Controller-->
         <scene sceneID="iXe-08-BrC">
             <objects>
@@ -212,7 +234,7 @@
                                     <rect key="frame" x="83" y="327" width="46" height="30"/>
                                 </variation>
                                 <connections>
-                                    <segue destination="kcK-BR-RNu" kind="presentation" identifier="homeSegue" id="jFC-fi-0Zo"/>
+                                    <segue destination="kcK-BR-RNu" kind="presentation" identifier="MarbleTabBarControllerSegue" id="jFC-fi-0Zo"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="{User name}" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wm4-OG-0UB">
@@ -282,7 +304,7 @@
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vmU-jj-EPg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="849" y="69"/>
+            <point key="canvasLocation" x="759" y="-21"/>
         </scene>
         <!--Create Quiz View Controller-->
         <scene sceneID="8Vd-f5-PMU">
@@ -485,6 +507,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
+        <segue reference="jFC-fi-0Zo"/>
         <segue reference="QqU-52-yxv"/>
         <segue reference="cKE-NW-u56"/>
     </inferredMetricsTieBreakers>
