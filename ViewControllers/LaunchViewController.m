@@ -42,11 +42,25 @@
     
     _fbChUsers = nil;
     _fbEngUsers = nil;
-    [self getFriendsNamesIsEngish:true];
-    [self getFriendsNamesIsEngish:false];
+    
+    [self getFriendsNamesInEngOnly];
+//    [self getFriendsNamesInEngAndCh];
     
     [KeyChainWrapper storeSelfName:user.name andID:user.id];
     
+}
+
+
+-(void)getFriendsNamesInEngOnly
+{
+    [self getFriendsNamesIsEngish:true bilingual:false];
+}
+
+
+-(void)getFriendsNamesInEngAndCh
+{
+    [self getFriendsNamesIsEngish:true bilingual:true];
+    [self getFriendsNamesIsEngish:false bilingual:true];
 }
 
 - (void) loginViewShowingLoggedInUser:(FBLoginView *)loginView {
@@ -170,7 +184,7 @@
     [FBSession.activeSession closeAndClearTokenInformation];
     [self performSegueWithIdentifier:@"LoginViewControllerSegue" sender:self];
 }
--(void) getFriendsNamesIsEngish:(BOOL)isEnglish
+-(void) getFriendsNamesIsEngish:(BOOL)isEnglish bilingual:(BOOL)bilingual
 {
     NSDictionary *params = nil;
     if (isEnglish) {
@@ -198,11 +212,14 @@
                                           _fbChUsers = friends;
                                       }
                                       
-                                      if (_fbEngUsers != nil && _fbChUsers != nil) {
+
                                           NSManagedObjectContext *context = [[RKManagedObjectStore defaultStore] newChildManagedObjectContextWithConcurrencyType:NSPrivateQueueConcurrencyType tracksChanges:YES];
                                           //                                          NSManagedObjectContext *context = [[RKManagedObjectStore defaultStore] mainQueueManagedObjectContext];
-                                          [User createUsersInBatchForEng:_fbEngUsers andChinese:_fbChUsers inManagedObjectContext:context];
-                                      }
+                                      [User createUsersInBatchForEng:_fbEngUsers
+                                                          andChinese:_fbChUsers
+                                                           bilingual:bilingual
+                                              inManagedObjectContext:context];
+
                                   }else{
                                       NSLog(@"error%@", error);
                                   }

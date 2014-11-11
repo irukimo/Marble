@@ -12,6 +12,7 @@
 
 @interface User : NSManagedObject
 
+@property (nonatomic, retain) NSNumber * isFriend;
 @property (nonatomic, retain) NSNumber * received;
 @property (nonatomic, retain) NSNumber * created;
 @property (nonatomic, retain) NSNumber * solved;

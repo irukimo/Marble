@@ -13,6 +13,7 @@
 
 + (BOOL)createUsersInBatchForEng:(NSArray *)fbEngUsers
                       andChinese:(NSArray *)fbChUsers
+                       bilingual:(BOOL)bilingual
           inManagedObjectContext:(NSManagedObjectContext *)context;
 
 + (BOOL)findOrCreateUserForName:(NSString *)name

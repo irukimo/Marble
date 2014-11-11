@@ -74,8 +74,6 @@
     // Dispose of any resources that can be recreated.
 }
 
-
-
 //functions for walkthrough
 
 - (IBAction)startWalkthrough:(id)sender {

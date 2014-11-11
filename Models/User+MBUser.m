@@ -45,10 +45,12 @@
     return [NSString stringWithFormat:@"//graph.facebook.com/%@/picture?type=square", self.fbID];
 }
 
-+ (BOOL)createUsersInBatchForEng:(NSArray *)fbEngUsers andChinese:(NSArray *)fbChUsers inManagedObjectContext:(NSManagedObjectContext *)context
+
++ (BOOL)createUsersInBatchForEng:(NSArray *)fbEngUsers andChinese:(NSArray *)fbChUsers bilingual:(BOOL)bilingual inManagedObjectContext:(NSManagedObjectContext *)context
 {
-    if (fbEngUsers == nil || fbChUsers == nil) return FALSE;
-//    MBDebug(@"fbEngUsers: %@, fbChUsers: %@", fbEngUsers, fbChUsers);
+    MBDebug(@"enter creating in batch");
+    if ( (fbEngUsers == nil || fbChUsers == nil) && bilingual ) return FALSE;
+    MBDebug(@"fbEngUsers: %@, fbChUsers: %@", fbEngUsers, fbChUsers);
     NSArray *fbIDs = [fbEngUsers valueForKey:@"id"];
     if (fbIDs != nil) [fbIDs sortedArrayUsingSelector: @selector(compare:)];
 //    MBDebug(@"fb ids: %@", fbIDs);
@@ -73,11 +75,11 @@
     //Set up the predicate for checking Chinese names
     NSString *predicateString = [NSString stringWithFormat:@"id == $FB_ID"];
     NSPredicate *predicate = [NSPredicate predicateWithFormat:predicateString];
-    
+
     int count = 0;
     int total = 0;
     for (NSDictionary<FBGraphUser>* user in fbEngUsers) {
-//        MBDebug(@"Work on User %@", user.id);
+        MBDebug(@"Work on User %@", user.id);
         NSPredicate *idPredicate = [NSPredicate predicateWithFormat:@"SELF = %@", user.id];
         NSArray *matches = [usersMatchingFbIDs filteredArrayUsingPredicate:idPredicate];
         if ([matches count] != 0) {
@@ -85,21 +87,25 @@
             continue; }
         
         NSString *name = nil;
-        NSPredicate *localPredicate = [predicate predicateWithSubstitutionVariables:@{ @"FB_ID" : user.id }];
-        NSArray *filteredArray = [fbChUsers filteredArrayUsingPredicate:localPredicate];
-        if ([filteredArray count] != 0) {
-            NSDictionary<FBGraphUser> *chUser = filteredArray[0];
-            
-            if ([chUser.name isEqualToString:user.name]) {
-                name = user.name;
+        if (bilingual) {
+            NSPredicate *localPredicate = [predicate predicateWithSubstitutionVariables:@{ @"FB_ID" : user.id }];
+            NSArray *filteredArray = [fbChUsers filteredArrayUsingPredicate:localPredicate];
+            if ([filteredArray count] != 0) {
+                NSDictionary<FBGraphUser> *chUser = filteredArray[0];
+                
+                if ([chUser.name isEqualToString:user.name]) {
+                    name = user.name;
+                } else {
+                    name = [NSString stringWithFormat:@"%@ (%@)", user.name, chUser.name];
+                }
             } else {
-                name = [NSString stringWithFormat:@"%@ (%@)", user.name, chUser.name];
+                name = user.name;
             }
-        } else {
+        } else { // English only
             name = user.name;
         }
         
-        [User createNewUserWithName:name andfbID:user.id inManagedObjectContext:context];
+        [User createNewUserWithName:name andfbID:user.id isFriend:true inManagedObjectContext:context];
         count++;
         total++;
         if (count >= 200) {
@@ -144,7 +150,7 @@
         NSLog(@"User %@ found", (*userToReturn).name);
         return TRUE;
     } else {
-        *userToReturn = [User createNewUserWithName:name andfbID:fbID inManagedObjectContext:context];
+        *userToReturn = [User createNewUserWithName:name andfbID:fbID isFriend:false inManagedObjectContext:context];
         return FALSE;
     }
 
@@ -289,13 +295,13 @@
                  existingUsers:(NSArray *)existingUsers{
     MBDebug(@"random: existing users ids: %@", [existingUsers valueForKey:@"fbID"]);
     NSFetchRequest *myRequest = [NSFetchRequest fetchRequestWithEntityName:@"User"];
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"NOT (self IN %@)", existingUsers];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"isFriend == 1 AND NOT (self IN %@)", existingUsers];
     [myRequest setPredicate:predicate];
     NSError *error = nil;
     NSUInteger myUserCount = [context countForFetchRequest:myRequest error:&error];
     [Utility saveToPersistenceStore:context failureMessage:@"Failed to save to persistent store in MBUser"];
     
-
+    
 
     NSFetchRequest *myUserRequest = [NSFetchRequest fetchRequestWithEntityName:@"User"];
     
@@ -333,13 +339,14 @@
 //}
 //
 
-+(User *)createNewUserWithName:(NSString *)name andfbID:(NSString *)fbID inManagedObjectContext:(NSManagedObjectContext *)context{
++(User *)createNewUserWithName:(NSString *)name andfbID:(NSString *)fbID isFriend:(bool)isFriend inManagedObjectContext:(NSManagedObjectContext *)context{
     
     // found nothing, create it!
     User *user = [NSEntityDescription insertNewObjectForEntityForName:@"User"
                                                inManagedObjectContext:context];
     [user setFbID:fbID];
     [user setName:name];
+    if (isFriend) {[user setIsFriend:@YES];}
     
 //    MBDebug(@"Created a user with name %@", name);
     return user;

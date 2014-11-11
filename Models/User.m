@@ -18,5 +18,6 @@
 @dynamic received;
 @dynamic created;
 @dynamic solved;
+@dynamic isFriend;
 
 @end
