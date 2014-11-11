@@ -23,7 +23,7 @@ static const CGFloat animationDuration = 0.5;
 static const CGFloat ChoosePersonButtonHorizontalPadding = 80.f;
 static const CGFloat ChoosePersonButtonVerticalPadding = 20.f;
 static const int picviewSize = 112;
-static const int picY = 75;
+static const int picY = 50;
 
 
 //#import "TouchTextField.h"
@@ -204,7 +204,7 @@ static const int picY = 75;
 - (UIImage *)blurWithImageEffects:(UIImage *)image
 {
 //    return [image applyBlurWithRadius:15 tintColor:[UIColor colorWithWhite:1 alpha:0.2] saturationDeltaFactor:1.5 maskImage:nil];
-    return [image applyBlurWithRadius:3 tintColor:[UIColor colorWithWhite:1 alpha:0.7] saturationDeltaFactor:1 maskImage:nil];
+    return [image applyBlurWithRadius:3 tintColor:[UIColor colorWithWhite:1 alpha:0.8] saturationDeltaFactor:1 maskImage:nil];
 }
 - (UIImage *)takeSnapshotOfView:(UIView *)view withReductionFactor:(CGFloat)factor
 {
@@ -383,8 +383,8 @@ static const int picY = 75;
 
 - (CGRect)frontCardViewFrame {
     CGFloat horizontalPadding = 35.f;
-    CGFloat topPadding = 230.f;
-    CGFloat bottomPadding = 400.f;
+    CGFloat topPadding = 205.f;
+    CGFloat bottomPadding = 370.f;
     return CGRectMake(horizontalPadding,
                       topPadding,
                       CGRectGetWidth(_mainView.frame) - (horizontalPadding * 2),
@@ -627,6 +627,7 @@ static const int picY = 75;
     [quiz setOption1:_option1.fbID];
     [quiz setAnswer:answer];
     [quiz initParentAttributes];
+    [KeyChainWrapper addKeyword:_keywordCurrentValue];
     NSLog(@"%@",quiz);
     NSString *sessionToken = [KeyChainWrapper getSessionTokenForUser];
     NSDictionary *params = [NSDictionary dictionaryWithObjects:@[sessionToken] forKeys:@[@"auth_token"]];
@@ -695,7 +696,7 @@ static const int picY = 75;
 
 
 -(void)addShufflePeopleButton{
-    _shufflePeopleBtn = [[UIButton alloc] initWithFrame:CGRectMake(80, 420, 170, 50)];
+    _shufflePeopleBtn = [[UIButton alloc] initWithFrame:CGRectMake(80, 450, 170, 50)];
     NSAttributedString *shuffleString = [[NSAttributedString alloc] initWithString:@"shuffle friends" attributes:[Utility getCreateQuizShuffleButtonFontDictionary]];
     [_shufflePeopleBtn setAttributedTitle:shuffleString forState:UIControlStateNormal];
     [_shufflePeopleBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];

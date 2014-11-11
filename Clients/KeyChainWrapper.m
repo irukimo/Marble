@@ -138,7 +138,7 @@ static NSString *selfFBID = nil;
     int i = 0;
     NSMutableArray *arrayOfKeywords = [[NSMutableArray alloc] init];
     for(NSString *keyword in self.keywords){
-        if([keyword rangeOfString:text].location!=NSNotFound){
+        if([keyword rangeOfString:text options:NSCaseInsensitiveSearch].location!=NSNotFound){
             [arrayOfKeywords addObject:keyword];
             i++;
         }
@@ -155,6 +155,14 @@ static NSString *selfFBID = nil;
     } else {
         NSUInteger randomNumber = arc4random() % ([self.keywords count]);
         return self.keywords[randomNumber];
+    }
+}
+
++(void)addKeyword:(NSString *)keyword{
+    if(![keywords containsObject:keyword]){
+        NSMutableArray *keywordMutable = [[NSMutableArray alloc] initWithArray:self.keywords];
+        [keywordMutable addObject:keyword];
+        keywords = keywordMutable;
     }
 }
 

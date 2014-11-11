@@ -24,6 +24,7 @@
 +(NSData *)deviceToken;
 
 +(void)storeKeywords:(NSArray *)theKeywords;
++(void)addKeyword:(NSString *)keyword;
 +(NSArray *)keywords;
 +(NSArray *)searchKeywordThatContains:(NSString *)text returnThisManyKeywords:(int)num;
 +(NSString *)getARandomKeyword;
