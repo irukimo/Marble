@@ -21,7 +21,7 @@
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        self.cellType = KEYWORD_UPDATE_CELL_TYPE;
+        self.cellType = MBKeywordUpdateCellType;
         [super initializeAccordingToType];
         [self initStaticButtonsAndLabels];
 
@@ -62,7 +62,6 @@
 }
 
 - (void) setKeywordUpdate:(KeywordUpdate *)keywordUpdate{
-    [self resizeWhiteBackground:0];
     _keywordUpdate = keywordUpdate;
     
     NSAttributedString *nameString;

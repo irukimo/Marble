@@ -425,4 +425,34 @@
     MBDebug(@"whatispostfix%@", postfix);
     return [[NSString stringWithFormat:@"%@",number] stringByAppendingString:postfix];
 }
++ (int)getCellHeightForPostWithType:(PostCellType)cellType withComments:(NSArray *)comments whetherSinglePost:(bool)isSinglePost {
+    if (cellType == MBQuizCellType){
+        if(!comments){
+            return QuizTableViewCellDisplayHeight;
+        } else if([comments count] > 2 && !isSinglePost){
+            return QuizTableViewCellDisplayHeight + 3*CommentIncrementHeight;
+        } else{
+            return QuizTableViewCellDisplayHeight + (int)[comments count]*CommentIncrementHeight;
+        }
+    } else if(cellType == MBStatusUpdateCellType){
+        if(!comments){
+            return StatusUpdateTableViewCellDisplayHeight;
+        } else if([comments count] > 2 && !isSinglePost){
+            return StatusUpdateTableViewCellDisplayHeight + 3*CommentIncrementHeight;
+        } else{
+            return StatusUpdateTableViewCellDisplayHeight + (int)[comments count]*CommentIncrementHeight;
+        }
+    } else if(cellType == MBKeywordUpdateCellType){
+        if(!comments){
+            return KeywordUpdateTableViewCellDisplayHeight;
+        } else if([comments count] > 2 && !isSinglePost){
+            return KeywordUpdateTableViewCellDisplayHeight + 3*CommentIncrementHeight;
+        } else{
+            return KeywordUpdateTableViewCellDisplayHeight + (int)[comments count]*CommentIncrementHeight;
+        }
+    } else{
+        MBDebug(@"should never happen");
+        return 0;
+    }
+}
 @end

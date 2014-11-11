@@ -12,11 +12,11 @@
 
 @interface PostsTableViewSuperCell : UITableViewCell <UITextFieldDelegate>
 @property (nonatomic, weak) id delegate;
-@property (strong, nonatomic) NSString *cellType;
+@property (nonatomic) PostCellType cellType;
 -(void)setCommentsForPostSuperCell:(NSArray *)comments;
 -(void) initializeAccordingToType;
 -(void) addCommentAtY:(int)y withName:(NSString *)name andID:(NSString *)fbid andComment:(NSString *)comment;
--(void)resizeWhiteBackground:(int)height;
+-(void)resizeWhiteBackground;
 -(void)setTimeForTimeLabel:(NSDate *)time;
 @end
 

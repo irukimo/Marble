@@ -368,32 +368,17 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     Post *post = [_fetchedResultsController objectAtIndexPath:indexPath];
-    
+    PostCellType cellType;
     if ([post isKindOfClass:[Quiz class]]){
-        if(!post.comments){
-            return QuizTableViewCellDisplayHeight;
-        } else if([post.comments count] > 2){
-            return QuizTableViewCellDisplayHeight + 3*CommentIncrementHeight;
-        } else{
-            return QuizTableViewCellDisplayHeight + [post.comments count]*CommentIncrementHeight;
-        }
+        cellType = MBQuizCellType;
     } else if([post isKindOfClass:[StatusUpdate class]]){
-        if(!post.comments){
-            return StatusUpdateTableViewCellDisplayHeight;
-        } else if([post.comments count] > 2){
-            return StatusUpdateTableViewCellDisplayHeight + 3*CommentIncrementHeight;
-        } else{
-            return StatusUpdateTableViewCellDisplayHeight + [post.comments count]*CommentIncrementHeight;
-        }
-    } else{
-        if(!post.comments){
-            return KeywordUpdateTableViewCellDisplayHeight;
-        } else if([post.comments count] > 2){
-            return KeywordUpdateTableViewCellDisplayHeight + 3*CommentIncrementHeight;
-        } else{
-            return KeywordUpdateTableViewCellDisplayHeight + [post.comments count]*CommentIncrementHeight;
-        }
+        cellType = MBStatusUpdateCellType;
+    } else if([post isKindOfClass:[KeywordUpdate class]]){
+        cellType = MBKeywordUpdateCellType;
+    } else {
+        MBDebug(@"Should never happen");
     }
+    return [Utility getCellHeightForPostWithType:cellType withComments:post.comments whetherSinglePost:NO];
 }
 
 #pragma mark -

@@ -26,7 +26,7 @@
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        self.cellType = STATUS_UPDATE_CELL_TYPE;
+        self.cellType = MBStatusUpdateCellType;
         [super initializeAccordingToType];
         [self addStaticLabels];
         [self initPicView];
@@ -74,8 +74,6 @@
 }
 
 - (void) setStatusUpdate:(StatusUpdate *)statusUpdate {
-    [self resizeWhiteBackground:0];
-    NSLog(@"status %@", statusUpdate.status);
     _statusUpdate = statusUpdate;
     NSAttributedString *nameString = [[NSAttributedString alloc] initWithString:[Utility getNameToDisplay:_statusUpdate.name] attributes:[Utility getPostsViewNameFontDictionary]];
     [_nameButton setAttributedTitle:nameString forState:UIControlStateNormal];

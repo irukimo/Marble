@@ -62,5 +62,5 @@ typedef void (^voidBlock)(void);
 + (void) setUpProfilePictureImageView:(UIImageView *)view byFBID:(NSString *)fbID;
 
 + (NSString *)getRankingFullString:(NSNumber *)number;
-
++ (int)getCellHeightForPostWithType:(PostCellType)cellType withComments:(NSArray *)comments whetherSinglePost:(bool)whetherSinglePost;
 @end

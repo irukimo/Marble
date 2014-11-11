@@ -44,31 +44,17 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    unsigned long height;
+    PostCellType cellType;
     if ([_mustBePost isKindOfClass:[Quiz class]]){
-        if(!_mustBePost.comments){
-            height = QuizTableViewCellDisplayHeight;
-        } else{
-            height = QuizTableViewCellDisplayHeight + [_mustBePost.comments count]*CommentIncrementHeight;
-        }
+        cellType = MBQuizCellType;
     } else if([_mustBePost isKindOfClass:[StatusUpdate class]]){
-        if(!_mustBePost.comments){
-            height = StatusUpdateTableViewCellDisplayHeight;
-        } else{
-            height = StatusUpdateTableViewCellDisplayHeight + [_mustBePost.comments count]*CommentIncrementHeight;
-        }
-    } else{
-        if(!_mustBePost.comments){
-            height = KeywordUpdateTableViewCellDisplayHeight;
-        } else{
-            height = KeywordUpdateTableViewCellDisplayHeight + [_mustBePost.comments count]*CommentIncrementHeight;
-        }
+        cellType = MBStatusUpdateCellType;
+    } else if([_mustBePost isKindOfClass:[KeywordUpdate class]]){
+        cellType = MBKeywordUpdateCellType;
+    } else {
+        MBDebug(@"Should never happen");
     }
-//    [UIView addLeftBorderOn:self.tableView withColor:[UIColor marbleLightGray] andWidth:5 andHeight:(int)height withOffset:5];
-//    [UIView addRightBorderOn:self.tableView withColor:[UIColor marbleLightGray] andWidth:5 andHeight:(int)height withOffset:5];
-    MBDebug(@"heightfor %lu", height);
-    [_cell resizeWhiteBackground:(int)height];
-    return height;
+    return [Utility getCellHeightForPostWithType:cellType withComments:_mustBePost.comments whetherSinglePost:YES];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {

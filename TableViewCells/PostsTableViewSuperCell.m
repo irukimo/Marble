@@ -36,7 +36,6 @@
         [self initWhiteBackground];
         [self initTimeLabel];
         self.selectionStyle = UITableViewCellSelectionStyleNone;
-        [self setBorder];
         self.clipsToBounds = YES;
         _isSinglePostSoExpandComments = ([reuseIdentifier isEqualToString:singlePostKeywordUpdateTableViewCellIdentifier] || [reuseIdentifier isEqualToString:singlePostQuizTableViewCellIdentifier] || [reuseIdentifier isEqualToString:singlePostStatusTableViewCellIdentifier])? TRUE: FALSE;
         // Initialization code
@@ -48,15 +47,17 @@
     [self setBackgroundColor:[UIColor marbleLightGray]];
 //    [self.contentView.layer setBorderColor:[UIColor marbleLightGray].CGColor];
 //    [self.contentView.layer setBorderWidth:CELL_UNIVERSAL_PADDING/2.0];
-    if([_cellType isEqualToString:QUIZ_CELL_TYPE]){
+    if(_cellType == MBQuizCellType){
         [UIView addLeftBorderOn:self.contentView withColor:[UIColor marbleLightGray] andWidth:CELL_UNIVERSAL_PADDING/2.0 andHeight:QuizTableViewCellDisplayHeight withOffset:CELL_UNIVERSAL_PADDING/2.0];
         [UIView addRightBorderOn:self.contentView withColor:[UIColor marbleLightGray] andWidth:CELL_UNIVERSAL_PADDING/2.0 andHeight:QuizTableViewCellDisplayHeight withOffset:CELL_UNIVERSAL_PADDING/2.0];
-    } else if([_cellType isEqualToString:STATUS_UPDATE_CELL_TYPE]){
+    } else if(_cellType == MBStatusUpdateCellType){
         [UIView addLeftBorderOn:self.contentView withColor:[UIColor marbleLightGray] andWidth:CELL_UNIVERSAL_PADDING/2.0 andHeight:StatusUpdateTableViewCellHeight withOffset:CELL_UNIVERSAL_PADDING/2.0];
         [UIView addRightBorderOn:self.contentView withColor:[UIColor marbleLightGray] andWidth:CELL_UNIVERSAL_PADDING/2.0 andHeight:QuizTableViewCellDisplayHeight withOffset:CELL_UNIVERSAL_PADDING/2.0];
-    } else{
+    } else if(_cellType == MBKeywordUpdateCellType){
        [UIView addLeftBorderOn:self.contentView withColor:[UIColor marbleLightGray] andWidth:CELL_UNIVERSAL_PADDING/2.0 andHeight:KeywordUpdateTableViewCellHeight withOffset:CELL_UNIVERSAL_PADDING/2.0];
         [UIView addRightBorderOn:self.contentView withColor:[UIColor marbleLightGray] andWidth:CELL_UNIVERSAL_PADDING/2.0 andHeight:QuizTableViewCellDisplayHeight withOffset:CELL_UNIVERSAL_PADDING/2.0];
+    } else{
+        MBDebug(@"should never happen");
     }
 }
 
@@ -91,31 +92,34 @@
 
 
 -(void) initializeAccordingToType{
-    [self resizeWhiteBackground:0];
+    [self setBorder];
     int commentIconX = 250;
     int commentNumX = 280;
     int commentIconWidth = 30;
     UIButton *commentIconBtn;
-    if([_cellType isEqualToString:QUIZ_CELL_TYPE]){
+    if(_cellType == MBQuizCellType){
         _commentNumLabel = [[UILabel alloc] initWithFrame:CGRectMake(commentNumX, QuizTableViewCellHeight - 45, 50, 20)];
         commentIconBtn = [[UIButton alloc] initWithFrame:CGRectMake(commentIconX, QuizTableViewCellHeight - 45 - 5, commentIconWidth, commentIconWidth)];
-    } else if([_cellType isEqualToString:STATUS_UPDATE_CELL_TYPE]){
+    } else if(_cellType == MBStatusUpdateCellType){
         _commentNumLabel = [[UILabel alloc] initWithFrame:CGRectMake(commentNumX, StatusUpdateTableViewCellHeight - 48, 50, 20)];
         commentIconBtn = [[UIButton alloc] initWithFrame:CGRectMake(commentIconX, StatusUpdateTableViewCellHeight - 48- 5, commentIconWidth, commentIconWidth)];
-    } else{
+    } else if(_cellType == MBKeywordUpdateCellType){
         _commentNumLabel = [[UILabel alloc] initWithFrame:CGRectMake(commentNumX, KeywordUpdateTableViewCellHeight - 48, 50, 20)];
         commentIconBtn = [[UIButton alloc] initWithFrame:CGRectMake(commentIconX, KeywordUpdateTableViewCellHeight - 48- 5, commentIconWidth, commentIconWidth)];
+    } else{
+        MBDebug(@"should never happen");
     }
     [_commentNumLabel setText:@"comment"];
     [commentIconBtn setImage:[UIImage imageNamed:COMMENT_ICON_IMAGE_NAME] forState:UIControlStateNormal];
     [commentIconBtn addTarget:self action:@selector(viewMoreCommentsBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
     [self.contentView addSubview:_commentNumLabel];
     [self.contentView addSubview:commentIconBtn];
+    [self resizeWhiteBackground];
 }
 
 -(void)initWhiteBackground{
     _whiteView = [[UIView alloc] init];
-    [self resizeWhiteBackground:0];
+    [self resizeWhiteBackground];
     [_whiteView setBackgroundColor:[UIColor whiteColor]];
     _whiteView.layer.shadowColor = [UIColor colorWithWhite:0 alpha:0.2].CGColor;
     _whiteView.layer.shadowRadius = 2.f;
@@ -124,18 +128,15 @@
     [self.contentView addSubview:_whiteView];
 }
 
--(void)resizeWhiteBackground:(int)height{
-    if(height > self.bounds.size.height){
-        _whiteView.frame = CGRectMake(CELL_UNIVERSAL_PADDING, CELL_UNIVERSAL_PADDING/2.0f, self.bounds.size.width - 2*CELL_UNIVERSAL_PADDING, height - CELL_UNIVERSAL_PADDING);
-        return;
-    }
-    _whiteView.frame = CGRectMake(CELL_UNIVERSAL_PADDING, CELL_UNIVERSAL_PADDING/2.0f, self.bounds.size.width - 2*CELL_UNIVERSAL_PADDING, self.bounds.size.height - CELL_UNIVERSAL_PADDING);
-    MBDebug(@"resize height %f", self.bounds.size.height);
+-(void)resizeWhiteBackground{
+    int myHeight = [Utility getCellHeightForPostWithType:_cellType withComments:_comments whetherSinglePost:_isSinglePostSoExpandComments];
+
+    _whiteView.frame = CGRectMake(CELL_UNIVERSAL_PADDING, CELL_UNIVERSAL_PADDING/2.0f, self.bounds.size.width - 2*CELL_UNIVERSAL_PADDING, myHeight - CELL_UNIVERSAL_PADDING);
 }
 
 -(void) addCommentTextField{
     NSUInteger commentCnt = [_comments count];
-    if([_cellType isEqualToString:QUIZ_CELL_TYPE]){
+    if(_cellType == MBQuizCellType){
         if(!_isSinglePostSoExpandComments && commentCnt > 2){
             _viewMoreCommentsBtn = [[UIButton alloc] initWithFrame:CGRectMake(LEFT_ALIGNMENT, QuizTableViewCellHeight - 45, 50, TEXT_FIELD_HEIGHT)];
             _commentField = [[UITextField alloc] initWithFrame:CGRectMake(COMMENT_START_X, QuizTableViewCellHeight - 25 + 3*CommentIncrementHeight, 150, TEXT_FIELD_HEIGHT)];
@@ -143,7 +144,7 @@
             _commentField = [[UITextField alloc] initWithFrame:CGRectMake(COMMENT_START_X, QuizTableViewCellHeight - 25 + commentCnt*CommentIncrementHeight, 150, TEXT_FIELD_HEIGHT)];
         }
         
-    } else if([_cellType isEqualToString:STATUS_UPDATE_CELL_TYPE]){
+    } else if(_cellType == MBStatusUpdateCellType){
         if(!_isSinglePostSoExpandComments && commentCnt > 2){
             _viewMoreCommentsBtn = [[UIButton alloc] initWithFrame:CGRectMake(LEFT_ALIGNMENT, StatusUpdateTableViewCellHeight - 50, 50, TEXT_FIELD_HEIGHT)];
             _commentField = [[UITextField alloc] initWithFrame:CGRectMake(COMMENT_START_X, StatusUpdateTableViewCellHeight-30 + 3*CommentIncrementHeight, 150, TEXT_FIELD_HEIGHT)];
@@ -151,7 +152,7 @@
             _commentField = [[UITextField alloc] initWithFrame:CGRectMake(COMMENT_START_X, StatusUpdateTableViewCellHeight -30 + commentCnt*CommentIncrementHeight, 150, TEXT_FIELD_HEIGHT)];
         }
         
-    } else{
+    } else if(_cellType == MBKeywordUpdateCellType){
         if(!_isSinglePostSoExpandComments && commentCnt > 2){
             _viewMoreCommentsBtn = [[UIButton alloc] initWithFrame:CGRectMake(LEFT_ALIGNMENT, KeywordUpdateTableViewCellHeight - 50, 50, TEXT_FIELD_HEIGHT)];
             _commentField = [[UITextField alloc] initWithFrame:CGRectMake(COMMENT_START_X, KeywordUpdateTableViewCellHeight - 30 + 3*CommentIncrementHeight, 150, TEXT_FIELD_HEIGHT)];
@@ -159,6 +160,8 @@
             _commentField = [[UITextField alloc] initWithFrame:CGRectMake(COMMENT_START_X, KeywordUpdateTableViewCellHeight - 30 + commentCnt*CommentIncrementHeight, 150, TEXT_FIELD_HEIGHT)];
         }
         
+    }else{
+        MBDebug(@"should never happen");
     }
     [_commentField setTag:COMMENT_RELATED_TAG];
     [_commentField setDelegate:self];
@@ -190,7 +193,7 @@
     [_commentNumLabel setAttributedText:commentString];
     [self showComments];
     [self addCommentTextField];
-    [self resizeWhiteBackground:0];
+    [self resizeWhiteBackground];
 }
 
 -(void) showComments{
@@ -198,12 +201,14 @@
         return;
     }
     int y;
-    if([_cellType isEqualToString:QUIZ_CELL_TYPE]){
+    if(_cellType == MBQuizCellType){
         y = QuizTableViewCellHeight - 25;
-    } else if([_cellType isEqualToString:STATUS_UPDATE_CELL_TYPE]){
+    } else if(_cellType == MBStatusUpdateCellType){
         y = StatusUpdateTableViewCellHeight - 30;
-    } else{
+    } else if(_cellType == MBKeywordUpdateCellType){
         y = KeywordUpdateTableViewCellHeight - 30;
+    } else{
+        MBDebug(@"should never happen");
     }
     int i = 0;
     for (NSDictionary *cmt in _comments) {

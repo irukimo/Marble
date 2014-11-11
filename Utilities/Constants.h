@@ -13,7 +13,7 @@
 #define MBError NSLog
 #define URLMake(IP) (@"http://" IP @":4567/")
 
-//#define PRODUCTION_SERVER @"192.168.2.222"
+//#define PRODUCTION_SERVER @"192.168.0.101"
 #define PRODUCTION_SERVER @"localhost"
 
 #define ASYNC(...) dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{ __VA_ARGS__ })
@@ -68,11 +68,8 @@
 #define NAME_LEFT_ALIGNMENT 75
 #define NAME_TOP_ALIGNMENT 16
 
-#define CELL_UNIVERSAL_PADDING 16
+#define CELL_UNIVERSAL_PADDING 12
 
-#define QUIZ_CELL_TYPE @"quiz_cell_type"
-#define STATUS_UPDATE_CELL_TYPE @"status_update_cell_type"
-#define KEYWORD_UPDATE_CELL_TYPE @"keyword_update_cell_type"
 
 #define COMMENT_DEFAULT_TEXT @"[write a comment]"
 
@@ -81,6 +78,12 @@ typedef NS_ENUM(NSUInteger, NotificationType) {
     MBCommentNotification,
     MBQuiz,
     MBKeyword
+};
+
+typedef NS_ENUM(NSUInteger, PostCellType) {
+    MBQuizCellType,
+    MBStatusUpdateCellType,
+    MBKeywordUpdateCellType
 };
 
 

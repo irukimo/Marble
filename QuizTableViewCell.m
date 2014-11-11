@@ -13,10 +13,10 @@
 
 #define CORRECT_WRONG_ICON_TAG 768
 #define WORD_SEPARATION 5
-#define OPTION_SQUARE_WIDTH 142
 
-#define OPTION_PIC_LEFT_ALIGNMENT 12
-#define OPTION_PICS_DISTANCE 12
+#define OPTION_SQUARE_WIDTH 150
+#define OPTION_PIC_LEFT_ALIGNMENT 6
+#define OPTION_PICS_DISTANCE 8
 #define OPTION_PIC_Y 112
 #define MARBLE_ON_PIC_WIDTH 20
 
@@ -72,7 +72,7 @@
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        self.cellType = QUIZ_CELL_TYPE;
+        self.cellType = MBQuizCellType;
         [super initializeAccordingToType];
         [self initPicViews];
         [self addStaticLabels];
@@ -113,9 +113,9 @@
     _option0PicView = [[UIImageView alloc] initWithFrame:CGRectMake(OPTION_PIC_LEFT_ALIGNMENT, OPTION_PIC_Y, OPTION_SQUARE_WIDTH, OPTION_SQUARE_WIDTH)];
     _option1PicView = [[UIImageView alloc] initWithFrame:CGRectMake(OPTION_PIC_LEFT_ALIGNMENT + OPTION_SQUARE_WIDTH + OPTION_PICS_DISTANCE, OPTION_PIC_Y, OPTION_SQUARE_WIDTH, OPTION_SQUARE_WIDTH)];
     [_option0PicView.layer setBorderColor:[UIColor lightGrayColor].CGColor];
-    [_option0PicView.layer setBorderWidth:1.0f];
+    [_option0PicView.layer setBorderWidth:0.5f];
     [_option1PicView.layer setBorderColor:[UIColor lightGrayColor].CGColor];
-    [_option1PicView.layer setBorderWidth:1.0f];
+    [_option1PicView.layer setBorderWidth:0.5f];
     
     UIView *option0PicContainerView = [[UIView alloc] initWithFrame:_option0PicView.frame];
     UIView *option1PicContainerView = [[UIView alloc] initWithFrame:_option1PicView.frame];
@@ -341,7 +341,6 @@
 }
 
 -(void) setQuiz:(Quiz *)quiz{
-    [self resizeWhiteBackground:0];
     _quiz = quiz;
     _authorName = [quiz.authorName copy];
     _option0Name = [quiz.option0Name copy];
