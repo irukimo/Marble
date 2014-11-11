@@ -36,7 +36,7 @@
 @property(strong, nonatomic) UIImageView *option1WrongIcon;
 @property(strong, nonatomic) UILabel *compareTextLabel;
 @property(strong, nonatomic) UILabel *andTextLabel;
-@property(strong, nonatomic) UIView *grayLine;
+//@property(strong, nonatomic) UIView *grayLine;
 
 @property(strong,nonatomic) UIButton *keywordButton;
 
@@ -269,7 +269,7 @@
     [_authorNameButton addTarget:self action:@selector(authorClicked:) forControlEvents:UIControlEventTouchUpInside];
 
     
-    _keywordButton = [[UIButton alloc] initWithFrame:CGRectMake(0, NAME_TOP_ALIGNMENT + 60  , self.contentView.frame.size.width, 30)];
+    _keywordButton = [[UIButton alloc] initWithFrame:CGRectMake(0, NAME_TOP_ALIGNMENT + 50  , self.contentView.frame.size.width, 35)];
     [_keywordButton.layer setCornerRadius:_keywordButton.frame.size.height/2.0];
 //    [_keywordButton.layer setBorderColor:[UIColor grayColor].CGColor];
 //    [_keywordButton.layer setBorderWidth:1.0f];
@@ -278,10 +278,10 @@
     [_keywordButton addTarget:self action:@selector(keywordButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
 
     
-    _grayLine = [[UIView alloc] initWithFrame:CGRectMake(0, NAME_TOP_ALIGNMENT + 55, self.contentView.frame.size.width, 1)];
-    [_grayLine setBackgroundColor:[UIColor marbleLightGray]];
+//    _grayLine = [[UIView alloc] initWithFrame:CGRectMake(0, NAME_TOP_ALIGNMENT + 55, self.contentView.frame.size.width, 1)];
+//    [_grayLine setBackgroundColor:[UIColor marbleLightGray]];
 
-    [self.contentView addSubview:_grayLine];
+//    [self.contentView addSubview:_grayLine];
     [self.contentView addSubview:marbleImage];
     [self.contentView addSubview:_compareNumLabel];
     [self.contentView addSubview:_authorNameButton];
@@ -352,12 +352,12 @@
 
     [self setupProfileViews];
     [self setupNameButtons];
-    NSAttributedString *keywordString = [[NSAttributedString alloc] initWithString:_quiz.keyword attributes:[Utility getWhiteCommentFontDictionary]];
+    NSAttributedString *keywordString = [[NSAttributedString alloc] initWithString:_quiz.keyword attributes:[Utility getQuizCellKeywordNameFontDictionary]];
     [_keywordButton setAttributedTitle:keywordString forState:UIControlStateNormal];
     [_keywordButton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentCenter];
     CGRect keywordFrame = _keywordButton.frame;
-    keywordFrame.origin.x = self.contentView.frame.size.width/2.0f - keywordString.size.width/2.0f - 2*WORD_SEPARATION;
-    keywordFrame.size.width = keywordString.size.width + 4*WORD_SEPARATION;
+    keywordFrame.origin.x = self.contentView.frame.size.width/2.0f - keywordString.size.width/2.0f - 3*WORD_SEPARATION;
+    keywordFrame.size.width = keywordString.size.width + 6*WORD_SEPARATION;
     _keywordButton.frame = keywordFrame;
 
     

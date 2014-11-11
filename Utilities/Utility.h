@@ -25,8 +25,13 @@ typedef void (^voidBlock)(void);
 
 + (NSDate *)DateForRFC3339DateTimeString:(NSString *)rfc3339datestring;
 + (NSString *)getDateToShow:(NSDate *)date inWhole:(BOOL) inWhole;
+
+
 + (NSDictionary *)getPostsViewNameFontDictionary;
 + (NSDictionary *)getPostsViewCommentFontDictionary;
++ (NSDictionary *)getQuizCellKeywordNameFontDictionary;
+
+
 + (NSDictionary *)getWhiteCommentFontDictionary;
 + (NSDictionary *)getNavigationBarTitleFontDictionary;
 + (NSDictionary *)getWriteACommentFontDictionary;
