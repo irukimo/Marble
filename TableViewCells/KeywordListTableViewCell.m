@@ -10,11 +10,12 @@
 #import "User+MBUser.h"
 
 #define KEYWORD_BUTTON_TAG 907
+#define LIKE_BUTTON_TAG 876
 
 
 static const NSString *fbidKey = @"fb_id";
 static const NSString *nameKey = @"name";
-
+static const int statsStartX = 215;
 
 @interface KeywordListTableViewCell () {
     bool hasLiked;
@@ -39,6 +40,7 @@ static const NSString *nameKey = @"name";
 @property (strong, nonatomic) UIView *expandView;
 
 @property (strong, nonatomic) UIButton *heartButton;
+@property (strong, nonatomic) UIButton *likeNumButton;
 @end
 
 
@@ -58,7 +60,7 @@ static const NSString *nameKey = @"name";
 }
 
 -(void)generateStaticUI{
-    int statsStartX = 215;
+
     _timesPlayedLabel = [[UILabel alloc] initWithFrame:CGRectMake(statsStartX + 25, 25, 30, 15)];
     [self.contentView addSubview:_timesPlayedLabel];
     
@@ -68,14 +70,19 @@ static const NSString *nameKey = @"name";
     [self.contentView addSubview:marbleImage];
     
     _heartButton = [[UIButton alloc] initWithFrame:CGRectMake(statsStartX + 45, 22, 20, 20)];
+    _likeNumButton = [[UIButton alloc] initWithFrame:CGRectMake(statsStartX + 70, 22, 40, 20)];
+    [_likeNumButton setTag:LIKE_BUTTON_TAG];
     if (hasLiked) {
         [_heartButton setImage:[UIImage imageNamed:HEART_IMAGE_NAME] forState:UIControlStateNormal];
+        [_likeNumButton addTarget:self action:@selector(unheartButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
         [_heartButton addTarget:self action:@selector(unheartButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     } else {
         [_heartButton setImage:[UIImage imageNamed:EMPTY_HEART_IMAGE_NAME] forState:UIControlStateNormal];
         [_heartButton addTarget:self action:@selector(heartButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+        [_likeNumButton addTarget:self action:@selector(heartButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     }
     [self.contentView addSubview:_heartButton];
+    [self.contentView addSubview:_likeNumButton];
 
 
     NSAttributedString *placeString = [[NSAttributedString alloc] initWithString:@"place" attributes:[Utility getProfileGrayStaticFontDictionary]];
@@ -96,12 +103,16 @@ static const NSString *nameKey = @"name";
 -(void)unheartButtonClicked:(id)sender{
     [Utility sendThroughRKRoute:@"send_unlike" withParams:@{@"likee_fb_id": _subject.fbID, @"keyword": _keyword}
                    successBlock:^{
+                       numLikes = numLikes - 1;
+                       [self setLikeNumButtonWithInt:numLikes];
                        MBDebug(@"Successfully posted unlike");
                        [_heartButton setImage:[UIImage imageNamed:EMPTY_HEART_IMAGE_NAME] forState:UIControlStateNormal];
                        [_heartButton removeTarget:self action:@selector(unheartButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
                        [_heartButton addTarget:self action:@selector(heartButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+                       [_likeNumButton removeTarget:self action:@selector(unheartButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+                       [_likeNumButton addTarget:self action:@selector(heartButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
                        [_subject setHeartForKeywordAtRow:(NSUInteger)[[self index] integerValue] toBool:false];
-                       //#TODO: change number of likes in UI
+
                    }
                    failureBlock:nil];
 
@@ -110,12 +121,16 @@ static const NSString *nameKey = @"name";
 -(void)heartButtonClicked:(id)sender{
     [Utility sendThroughRKRoute:@"send_like" withParams:@{@"likee_fb_id": _subject.fbID, @"keyword": _keyword}
                    successBlock:^{
+                       numLikes = numLikes + 1;
+                       [self setLikeNumButtonWithInt:numLikes];
                        MBDebug(@"Successfully posted like");
                        [_heartButton setImage:[UIImage imageNamed:HEART_IMAGE_NAME] forState:UIControlStateNormal];
                        [_heartButton removeTarget:self action:@selector(heartButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
                        [_heartButton addTarget:self action:@selector(unheartButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+                       [_likeNumButton removeTarget:self action:@selector(heartButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+                       [_likeNumButton addTarget:self action:@selector(unheartButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
                        [_subject setHeartForKeywordAtRow:(NSUInteger)[[self index] integerValue] toBool:true];
-                       //#TODO: change number of likes in UI
+
                    }
                    failureBlock:nil];
 }
@@ -251,8 +266,22 @@ static const NSString *nameKey = @"name";
     
     hasLiked = [[keywordArray objectAtIndex:3] boolValue] ? true : false;
     numLikes = [[keywordArray objectAtIndex:4] integerValue];
-    MBDebug(@"num of likes: %d", numLikes);
+    [self setLikeNumButtonWithInt:numLikes];
     [self generateStaticUI];
+}
+
+-(void)setLikeNumButtonWithInt:(NSInteger)intValue{
+    for(UIView *view in self.contentView.subviews){
+        if([view tag] == LIKE_BUTTON_TAG){
+            [view removeFromSuperview];
+        }
+    }
+    _likeNumButton = [[UIButton alloc] initWithFrame:CGRectMake(statsStartX + 70, 22, 40, 20)];
+    [_likeNumButton setTag:LIKE_BUTTON_TAG];
+    NSAttributedString *numLikesString = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"%ld",(long)intValue] attributes:[Utility getNotifBlackNormalFontDictionary]];
+    [_likeNumButton setAttributedTitle:numLikesString forState:UIControlStateNormal];
+    [_likeNumButton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
+    [self.contentView addSubview:_likeNumButton];
 }
 
 -(void)displayRanking:(NSDictionary *)rankingDic{
