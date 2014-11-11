@@ -22,6 +22,8 @@
         _keyword = keyword;
         [self setBackgroundColor:[UIColor whiteColor]];
         [self constructInformationView];
+        [self addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(cardClicked:)]];
+        [self setUserInteractionEnabled:YES];
     }
     return self;
 }
@@ -38,6 +40,10 @@
     [_keywordTextField setTextAlignment:NSTextAlignmentCenter];
 }
 
+
+-(void)cardClicked:(id)sender{
+    [_keywordTextField becomeFirstResponder];
+}
 
 - (void)constructInformationView {
     _keywordTextField = [[UITextField alloc] initWithFrame:CGRectMake(0, self.frame.size.height/2 - 20, self.frame.size.width, 40)];

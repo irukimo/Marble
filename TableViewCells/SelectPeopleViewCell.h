@@ -11,6 +11,5 @@
 @interface SelectPeopleViewCell : UITableViewCell
 
 @property(strong,nonatomic) NSString *personName;
-@property(strong,nonatomic) NSString *ID;
-
+-(void) setPersonName:(NSString *)personName andfbID:(NSString *)fbID;
 @end

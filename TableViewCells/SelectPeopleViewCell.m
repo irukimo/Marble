@@ -8,9 +8,12 @@
 
 #import "SelectPeopleViewCell.h"
 
+static const imageWidth = 40;
+
 @interface SelectPeopleViewCell()
 @property(strong, nonatomic) UILabel *nameLabel;
 @property(strong, nonatomic) UILabel *IDLabel;
+@property(strong, nonatomic) UIImageView *personImageView;
 @end
 
 @implementation SelectPeopleViewCell
@@ -20,10 +23,12 @@
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        _nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 320, 50)];
+        _nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(55, 0, 320, 50)];
         [self.contentView addSubview:_nameLabel];
-        _IDLabel = [[UILabel alloc] initWithFrame:CGRectMake(100, 0, 320, 50)];
-        [self.contentView addSubview:_IDLabel];
+        _personImageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 5, imageWidth, imageWidth)];
+        [_personImageView.layer setCornerRadius:imageWidth/2.0f];
+        [_personImageView.layer setMasksToBounds:YES];
+        [self.contentView addSubview:_personImageView];
         // Initialization code
     }
     return self;
@@ -39,14 +44,11 @@
     // Configure the view for the selected state
 }
 
--(void) setPersonName:(NSString *)personName{
+-(void) setPersonName:(NSString *)personName andfbID:(NSString *)fbID{
     _personName = personName;
-    [_nameLabel setText:personName];
-}
-
--(void) setID:(NSString *)ID{
-    _ID = ID;
-    [_IDLabel setText:ID];
+    NSAttributedString *personString = [[NSAttributedString alloc] initWithString:_personName attributes:[Utility getSearchResultFontDictionary]];
+    [_nameLabel setAttributedText:personString];
+    [Utility setUpProfilePictureImageView:_personImageView byFBID:fbID];
 }
 
 @end

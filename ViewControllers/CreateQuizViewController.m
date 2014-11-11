@@ -236,6 +236,7 @@ static const int picY = 50;
     _selectKeywordViewController.view.frame = searchFrame;
     _selectKeywordViewController.view.tag = AUTO_COMPLETE_SELECT_VIEW_TAG;
     _selectKeywordViewController.delegate = self;
+    [_selectKeywordViewController.view setHidden:YES];
     [_mainView addSubview:_selectKeywordViewController.view];
     
     [UIView beginAnimations:nil context:NULL];
@@ -243,6 +244,7 @@ static const int picY = 50;
     [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
     _frontCardView.frame = [self frontCardViewFrameWhenEditing];
     [UIView commitAnimations];
+    
 }
 
 -(void)initExitButton{
@@ -309,6 +311,7 @@ static const int picY = 50;
     // MDCSwipeOptions class). Since the front card view is gone, we
     // move the back card to the front, and create a new back card.
     self.frontCardView = self.backCardView;
+
     if ((self.backCardView = [self popPersonViewWithFrame:[self backCardViewFrame]])) {
         // Fade the back card into view.
         self.backCardView.alpha = 0.f;
@@ -323,6 +326,7 @@ static const int picY = 50;
 }
 
 #pragma mark - Internal Methods
+
 
 - (void)setFrontCardView:(KeywordView *)frontCardView {
     // Keep track of the person currently being chosen.
@@ -855,7 +859,12 @@ static const int picY = 50;
         [_selectPeopleViewController displaySearchResult:arrayOfUsers];
     } else{
         NSArray *arrayOfKeywords = [KeyChainWrapper searchKeywordThatContains:[textField text] returnThisManyKeywords:10];
-        [_selectKeywordViewController displaySearchResult:arrayOfKeywords];
+        if([arrayOfKeywords count] == 0){
+            [_selectKeywordViewController.view setHidden:YES];
+        } else{
+            [_selectKeywordViewController.view setHidden:NO];
+            [_selectKeywordViewController displaySearchResult:arrayOfKeywords];
+        }
     }
 }
 

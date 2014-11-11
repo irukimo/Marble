@@ -18,7 +18,7 @@
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        _keywordLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 320, 50)];
+        _keywordLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 320, 50)];
         [self.contentView addSubview:_keywordLabel];
         // Initialization code
     }
@@ -26,7 +26,8 @@
 }
 -(void) setKeyword:(NSString *)keyword{
     _keyword = keyword;
-    [_keywordLabel setText:keyword];
+    NSAttributedString *keywordString = [[NSAttributedString alloc] initWithString:_keyword attributes:[Utility getSearchResultFontDictionary]];
+    [_keywordLabel setAttributedText:keywordString];
 }
 
 

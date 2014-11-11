@@ -48,6 +48,8 @@ typedef void (^voidBlock)(void);
 + (NSDictionary *)getCreateQuizSuperBigKeywordFontDictionary;
 + (NSDictionary *)getCreateQuizShuffleButtonFontDictionary;
 + (NSDictionary *)getCreateQuizNameFontDictionary;
++ (NSDictionary *)getSearchResultFontDictionary;
+
 
 
 

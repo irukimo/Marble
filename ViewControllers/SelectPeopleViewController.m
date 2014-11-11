@@ -79,7 +79,7 @@
     }
     
     User *user = [_peopleArray objectAtIndex:indexPath.row];
-    [cell setPersonName:user.name];
+    [cell setPersonName:user.name andfbID:user.fbID];
     
     return cell;
 }
