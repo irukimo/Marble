@@ -390,6 +390,9 @@
         [self fetchTwoUsersWithCategMap:&categMap usersToReturn:usersToReturn existingUsers:existingUsers inContext:context];
     } else if (num == -1) {
         // for explore view
+        NSFetchRequest *myUserRequest = [NSFetchRequest fetchRequestWithEntityName:@"User"];
+        *usersToReturn = [NSMutableArray arrayWithArray:[context executeFetchRequest:myUserRequest error:nil]];
+        [(*usersToReturn) shuffleInOrder];
     } else {
         MBError(@"Unexpected number of users wanted: %d", num);
     }
@@ -421,6 +424,7 @@
     [user setFbID:fbID];
     [user setName:name];
     if (isFriend) {[user setIsFriend:@YES];}
+    else {[user setIsFriend:@NO];}
     
 //    MBDebug(@"Created a user with name %@", name);
     return user;
