@@ -9,8 +9,9 @@
 #import <Foundation/Foundation.h>
 
 @interface UIColor(MBColor)
-+(UIColor *) unselected;
++(UIColor *) marbleCommentBorderGray;
 +(UIColor *) marbleOrange;
 +(UIColor *) marbleLightGray;
++(UIColor *) marbleCommentFieldBGGray;
 +(UIColor *) marbleLightOrange;
 @end

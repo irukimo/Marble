@@ -10,21 +10,24 @@
 #define COMMENT_RELATED_TAG 456
 #define COMMENT_BTN_TAG 789
 #define TEXT_FIELD_DISPLACEMENT 40
-#define TEXT_FIELD_HEIGHT 25
-#define COMMENT_START_X 160
+#define TEXT_FIELD_HEIGHT 22
+#define COMMENT_START_X 200
+#define COMMENT_FIELD_WIDTH 90
+#define COMMENT_DEFAULT_TEXT @"     Comment"
 
 
 
 @interface PostsTableViewSuperCell()
 
-@property(strong, nonatomic) UILabel *commentNumLabel;
+//@property(strong, nonatomic) UILabel *commentNumLabel;
 @property (strong, nonatomic) NSArray *comments;
 @property(strong, nonatomic) UITextField *commentField;
 @property(strong, nonatomic) UIButton *commentBtn;
-@property(strong, nonatomic) UIButton *viewMoreCommentsBtn;
 @property( nonatomic) BOOL isSinglePostSoExpandComments;
 @property (strong, nonatomic) UIView *whiteView;
 @property(strong, nonatomic) UILabel *timeLabel;
+@property(strong, nonatomic) UIImageView *commentIconView;
+@property(strong,nonatomic) UIButton *allCommentsButton;
 @end
 
 @implementation PostsTableViewSuperCell
@@ -93,27 +96,22 @@
 
 -(void) initializeAccordingToType{
     [self setBorder];
-    int commentIconX = 250;
-    int commentNumX = 280;
-    int commentIconWidth = 30;
-    UIButton *commentIconBtn;
+    int y;
     if(_cellType == MBQuizCellType){
-        _commentNumLabel = [[UILabel alloc] initWithFrame:CGRectMake(commentNumX, QuizTableViewCellHeight - 45, 50, 20)];
-        commentIconBtn = [[UIButton alloc] initWithFrame:CGRectMake(commentIconX, QuizTableViewCellHeight - 45 - 5, commentIconWidth, commentIconWidth)];
+        y = QuizTableViewCellHeight - 28;
     } else if(_cellType == MBStatusUpdateCellType){
-        _commentNumLabel = [[UILabel alloc] initWithFrame:CGRectMake(commentNumX, StatusUpdateTableViewCellHeight - 48, 50, 20)];
-        commentIconBtn = [[UIButton alloc] initWithFrame:CGRectMake(commentIconX, StatusUpdateTableViewCellHeight - 48- 5, commentIconWidth, commentIconWidth)];
+        y = StatusUpdateTableViewCellHeight - 37;
     } else if(_cellType == MBKeywordUpdateCellType){
-        _commentNumLabel = [[UILabel alloc] initWithFrame:CGRectMake(commentNumX, KeywordUpdateTableViewCellHeight - 48, 50, 20)];
-        commentIconBtn = [[UIButton alloc] initWithFrame:CGRectMake(commentIconX, KeywordUpdateTableViewCellHeight - 48- 5, commentIconWidth, commentIconWidth)];
+        y = KeywordUpdateTableViewCellHeight - 37;
     } else{
         MBDebug(@"should never happen");
     }
-    [_commentNumLabel setText:@"comment"];
-    [commentIconBtn setImage:[UIImage imageNamed:COMMENT_ICON_IMAGE_NAME] forState:UIControlStateNormal];
-    [commentIconBtn addTarget:self action:@selector(viewMoreCommentsBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
-    [self.contentView addSubview:_commentNumLabel];
-    [self.contentView addSubview:commentIconBtn];
+    UIView *grayLine = [[UIView alloc] initWithFrame:CGRectMake(30, y, 255, 0.5f)];
+    [grayLine setBackgroundColor:[UIColor marbleCommentBorderGray]];
+    [self.contentView addSubview:grayLine];
+    
+//    [_commentNumLabel setText:@"Comment"];
+//    [self.contentView addSubview:_commentNumLabel];
     [self resizeWhiteBackground];
 }
 
@@ -135,48 +133,84 @@
 }
 
 -(void) addCommentTextField{
-    NSUInteger commentCnt = [_comments count];
-    if(_cellType == MBQuizCellType){
-        if(!_isSinglePostSoExpandComments && commentCnt > 2){
-            _viewMoreCommentsBtn = [[UIButton alloc] initWithFrame:CGRectMake(LEFT_ALIGNMENT, QuizTableViewCellHeight - 45, 50, TEXT_FIELD_HEIGHT)];
-            _commentField = [[UITextField alloc] initWithFrame:CGRectMake(COMMENT_START_X, QuizTableViewCellHeight - 25 + 3*CommentIncrementHeight, 150, TEXT_FIELD_HEIGHT)];
-        } else{
-            _commentField = [[UITextField alloc] initWithFrame:CGRectMake(COMMENT_START_X, QuizTableViewCellHeight - 25 + commentCnt*CommentIncrementHeight, 150, TEXT_FIELD_HEIGHT)];
-        }
-        
-    } else if(_cellType == MBStatusUpdateCellType){
-        if(!_isSinglePostSoExpandComments && commentCnt > 2){
-            _viewMoreCommentsBtn = [[UIButton alloc] initWithFrame:CGRectMake(LEFT_ALIGNMENT, StatusUpdateTableViewCellHeight - 50, 50, TEXT_FIELD_HEIGHT)];
-            _commentField = [[UITextField alloc] initWithFrame:CGRectMake(COMMENT_START_X, StatusUpdateTableViewCellHeight-30 + 3*CommentIncrementHeight, 150, TEXT_FIELD_HEIGHT)];
-        } else{
-            _commentField = [[UITextField alloc] initWithFrame:CGRectMake(COMMENT_START_X, StatusUpdateTableViewCellHeight -30 + commentCnt*CommentIncrementHeight, 150, TEXT_FIELD_HEIGHT)];
-        }
-        
-    } else if(_cellType == MBKeywordUpdateCellType){
-        if(!_isSinglePostSoExpandComments && commentCnt > 2){
-            _viewMoreCommentsBtn = [[UIButton alloc] initWithFrame:CGRectMake(LEFT_ALIGNMENT, KeywordUpdateTableViewCellHeight - 50, 50, TEXT_FIELD_HEIGHT)];
-            _commentField = [[UITextField alloc] initWithFrame:CGRectMake(COMMENT_START_X, KeywordUpdateTableViewCellHeight - 30 + 3*CommentIncrementHeight, 150, TEXT_FIELD_HEIGHT)];
-        } else{
-            _commentField = [[UITextField alloc] initWithFrame:CGRectMake(COMMENT_START_X, KeywordUpdateTableViewCellHeight - 30 + commentCnt*CommentIncrementHeight, 150, TEXT_FIELD_HEIGHT)];
-        }
-        
-    }else{
-        MBDebug(@"should never happen");
+
+    int commentIconWidth = 21;
+    int commentIconXIncrement = 4;
+    int y = [self getCommentAndCommentTextY];
+    
+    if(_comments && [_comments count] > 0){
+        UIView *grayLine = [[UIView alloc] initWithFrame:CGRectMake(30, y, 255, 0.5f)];
+        [grayLine setBackgroundColor:[UIColor marbleCommentBorderGray]];
+        [self.contentView addSubview:grayLine];
+        [grayLine setTag:COMMENT_RELATED_TAG];
+        y = y + 8;
     }
+    
+    _commentField = [[UITextField alloc] initWithFrame:CGRectMake(COMMENT_START_X, y, COMMENT_FIELD_WIDTH, TEXT_FIELD_HEIGHT)];
+    _commentIconView = [[UIImageView alloc] initWithFrame:CGRectMake(COMMENT_START_X + commentIconXIncrement,y, commentIconWidth, commentIconWidth)];
+    _allCommentsButton = [[UIButton alloc] initWithFrame:CGRectMake(COMMENT_START_X - COMMENT_FIELD_WIDTH - 5, y, COMMENT_FIELD_WIDTH, TEXT_FIELD_HEIGHT)];
+    [_allCommentsButton setBackgroundColor:[UIColor marbleCommentFieldBGGray]];
+    [_allCommentsButton.layer setCornerRadius:_allCommentsButton.frame.size.height/2.0f];
+    [_allCommentsButton.layer setMasksToBounds:YES];
+    [_allCommentsButton.layer setBorderColor:[UIColor marbleCommentBorderGray].CGColor];
+    [_allCommentsButton.layer setBorderWidth:0.5f];
+    
+    [_allCommentsButton addTarget:self action:@selector(viewMoreCommentsBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
+    [_allCommentsButton setTag:COMMENT_RELATED_TAG];
+    
+    [_commentIconView setTag:COMMENT_RELATED_TAG];
+    [_commentIconView setImage:[UIImage imageNamed:COMMENT_ICON_IMAGE_NAME]];
     [_commentField setTag:COMMENT_RELATED_TAG];
     [_commentField setDelegate:self];
     NSAttributedString *defaultText = [[NSAttributedString alloc] initWithString:COMMENT_DEFAULT_TEXT attributes:[Utility getWriteACommentFontDictionary]];
     [_commentField setAttributedText:defaultText];
-    [_commentField setTextAlignment:NSTextAlignmentLeft];
+    [_commentField setBackgroundColor:[UIColor marbleCommentFieldBGGray]];
+    [_commentField.layer setCornerRadius:_commentField.frame.size.height/2.0f];
+    [_commentField.layer setMasksToBounds:YES];
+    [_commentField.layer setBorderColor:[UIColor marbleCommentBorderGray].CGColor];
+    [_commentField.layer setBorderWidth:0.5f];
+    [_commentField setTextAlignment:NSTextAlignmentCenter];
     _commentField.returnKeyType = UIReturnKeySend;
+    [self.contentView addSubview:_allCommentsButton];
     [self.contentView addSubview:_commentField];
-    if(commentCnt > 2){
-        _viewMoreCommentsBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
-        [_viewMoreCommentsBtn setTag:COMMENT_RELATED_TAG];
-         NSAttributedString *defaultViewMoreCommentsText = [[NSAttributedString alloc] initWithString:@"[...]" attributes:[Utility getWriteACommentFontDictionary]];
-        [_viewMoreCommentsBtn setAttributedTitle:defaultViewMoreCommentsText forState:UIControlStateNormal];
-        [_viewMoreCommentsBtn addTarget:self action:@selector(viewMoreCommentsBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
-        [self.contentView addSubview:_viewMoreCommentsBtn];
+    [self.contentView addSubview:_commentIconView];
+    
+
+}
+
+-(int)getCommentAndCommentTextY{
+    NSUInteger commentCnt = [_comments count];
+    if(_cellType == MBQuizCellType){
+        if(!_comments || commentCnt == 0){
+            return QuizTableViewCellHeight - 25;
+        }
+        if(!_isSinglePostSoExpandComments && commentCnt > 2){
+            return QuizTableViewCellHeight - 25 + FirstCommentIncrementHeight + 2*CommentIncrementHeight;
+        } else{
+            return QuizTableViewCellHeight - 25 + + FirstCommentIncrementHeight + (int)(commentCnt-1)*CommentIncrementHeight;
+        }
+        
+    } else if(_cellType == MBStatusUpdateCellType){
+        if(!_comments || commentCnt == 0){
+            return StatusUpdateTableViewCellHeight-30;
+        }
+        if(!_isSinglePostSoExpandComments && commentCnt > 2){
+            return StatusUpdateTableViewCellHeight-30 + FirstCommentIncrementHeight + 2*CommentIncrementHeight;
+
+        } else{
+            return StatusUpdateTableViewCellHeight -30 + FirstCommentIncrementHeight + (int)(commentCnt-1)*CommentIncrementHeight;
+        }
+    } else if(_cellType == MBKeywordUpdateCellType){
+        if(!_comments || commentCnt == 0){
+            return KeywordUpdateTableViewCellHeight - 30;
+        }
+        if(!_isSinglePostSoExpandComments && commentCnt > 2){
+            return KeywordUpdateTableViewCellHeight - 30 + FirstCommentIncrementHeight + 2*CommentIncrementHeight;
+        } else{
+            return KeywordUpdateTableViewCellHeight - 30 + FirstCommentIncrementHeight + (int)(commentCnt-1)*CommentIncrementHeight;
+        }
+    }else{
+        return 0;
     }
 }
 
@@ -187,13 +221,18 @@
 }
 
 -(void)setCommentsForPostSuperCell:(NSArray *)comments{
-    [self removeAllCommentRelatedUIs];
     _comments = [comments copy];
-    NSAttributedString *commentString = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"%lu", (unsigned long)[_comments count]] attributes:[Utility getNotifBlackNormalFontDictionary]];
-    [_commentNumLabel setAttributedText:commentString];
+    [self removeAllCommentRelatedUIs];
     [self showComments];
     [self addCommentTextField];
     [self resizeWhiteBackground];
+    NSAttributedString *commentString;
+    if([_comments count] > 1){
+        commentString = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"%lu Comments", (unsigned long)[_comments count]] attributes:[Utility getWriteACommentFontDictionary]];
+    }else{
+        commentString = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"%lu Comment", (unsigned long)[_comments count]] attributes:[Utility getWriteACommentFontDictionary]];
+    }
+    [_allCommentsButton setAttributedTitle:commentString forState:UIControlStateNormal];
 }
 
 -(void) showComments{
@@ -209,6 +248,7 @@
         y = KeywordUpdateTableViewCellHeight - 30;
     } else{
         MBDebug(@"should never happen");
+        y=0;
     }
     int i = 0;
     for (NSDictionary *cmt in _comments) {
@@ -222,7 +262,8 @@
 
 
 -(void) addCommentAtY:(int)y withName:(NSString *)name andID:(NSString *)fbid andComment:(NSString *)comment atCommentIndex:(NSUInteger)index{
-    UIView *commentContainer = [[UIView alloc] initWithFrame:CGRectMake(LEFT_ALIGNMENT, y, self.contentView.frame.size.width, 20)];
+    int commentNameStartX = LEFT_ALIGNMENT + 8;
+    UIView *commentContainer = [[UIView alloc] initWithFrame:CGRectMake(commentNameStartX, y, self.contentView.frame.size.width, 20)];
     [commentContainer setTag:COMMENT_RELATED_TAG];
     
     UIButton *nameButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 100, 20)];
@@ -266,7 +307,7 @@
 }
 
 -(void) addCommentBtnAtY:(int)y{
-    _commentBtn = [[UIButton alloc] initWithFrame:CGRectMake(COMMENT_START_X + 110 , y, 30, 30)];
+    _commentBtn = [[UIButton alloc] initWithFrame:CGRectMake(COMMENT_START_X + 75 , y, 30, 30)];
     [_commentBtn setImage:[UIImage imageNamed:@"send-border.png"] forState:UIControlStateNormal];
 //    [_commentBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
 //    [_commentBtn setTitle:@"send" forState:UIControlStateNormal];
@@ -283,21 +324,47 @@
     }
 }
 
+-(CGRect)textFieldNormalFrame:(UITextField *)textField{
+    return CGRectMake(COMMENT_START_X, textField.frame.origin.y, COMMENT_FIELD_WIDTH, TEXT_FIELD_HEIGHT);
+}
+-(CGRect)textFieldEditingFrame:(UITextField *)textField{
+    return CGRectMake(15, textField.frame.origin.y, 260, TEXT_FIELD_HEIGHT + 4);
+}
+
+-(void)setTextFieldApprearanceNormal:(UITextField *)textField{
+    [textField setBackgroundColor:[UIColor marbleCommentFieldBGGray]];
+    NSAttributedString *defaultText = [[NSAttributedString alloc] initWithString:COMMENT_DEFAULT_TEXT attributes:[Utility getWriteACommentFontDictionary]];
+    [textField setAttributedText:defaultText];
+    [textField setBorderStyle:UITextBorderStyleNone];
+    [textField setFrame:[self textFieldNormalFrame:textField]];
+    [textField setTextAlignment:NSTextAlignmentCenter];
+    [textField.layer setCornerRadius:TEXT_FIELD_HEIGHT/2.0f];
+    [_commentIconView setHidden:NO];
+}
+
+-(void)setTextFieldApprearanceEditing:(UITextField *)textField{
+    NSAttributedString *defaultText = [[NSAttributedString alloc] initWithString:@"y" attributes:[Utility getEditingCommentFontDictionary]];
+    [textField setAttributedText:defaultText];
+    [textField setText:@""];
+    [textField setTextAlignment:NSTextAlignmentLeft];
+    [textField setBackgroundColor:[UIColor whiteColor]];
+    [textField setBorderStyle:UITextBorderStyleRoundedRect];
+    [textField setFrame:[self textFieldEditingFrame:textField]];
+    [textField.layer setCornerRadius:4];
+    [_commentIconView setHidden:YES];
+}
+
 #pragma mark -
 #pragma mark UITextField Delegate Methods
 - (void)textFieldDidBeginEditing:(UITextField *)textField{
-    [textField setText:@""];
-    [textField setBorderStyle:UITextBorderStyleRoundedRect];
+    [self setTextFieldApprearanceEditing:textField];
     [self addCommentBtnAtY:textField.frame.origin.y - 2];
-    [textField setFrame:CGRectMake(textField.frame.origin.x - TEXT_FIELD_DISPLACEMENT, textField.frame.origin.y, textField.frame.size.width, textField.frame.size.height)];
     if(_delegate && [_delegate respondsToSelector:@selector(presentCellWithKeywordOn:)]){
         [_delegate presentCellWithKeywordOn:textField];
     }
 }
 - (void)textFieldDidEndEditing:(UITextField *)textField{
-    [textField setText:COMMENT_DEFAULT_TEXT];
-    [textField setBorderStyle:UITextBorderStyleNone];
-    [textField setFrame:CGRectMake(textField.frame.origin.x + TEXT_FIELD_DISPLACEMENT, textField.frame.origin.y, textField.frame.size.width, textField.frame.size.height)];
+    [self setTextFieldApprearanceNormal:textField];
     [self removeCommentButton];
     if(_delegate && [_delegate respondsToSelector:@selector(endPresentingCellWithKeywordOn)]){
         [_delegate endPresentingCellWithKeywordOn];

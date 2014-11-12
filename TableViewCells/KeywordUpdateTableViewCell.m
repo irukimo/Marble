@@ -51,7 +51,7 @@
 }
 
 -(void) initKeywordsView{
-    _keywordsView = [[UIView alloc] initWithFrame:CGRectMake(NAME_LEFT_ALIGNMENT, NAME_TOP_ALIGNMENT + 20, self.contentView.frame.size.width, 50)];
+    _keywordsView = [[UIView alloc] initWithFrame:CGRectMake(NAME_LEFT_ALIGNMENT, NAME_TOP_ALIGNMENT + 23, self.contentView.frame.size.width, 50)];
     [self.contentView addSubview:_keywordsView];
 }
 

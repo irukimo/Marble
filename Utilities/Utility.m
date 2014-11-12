@@ -185,7 +185,10 @@
 }
 
 + (NSDictionary *)getWriteACommentFontDictionary{
-    return [NSDictionary dictionaryWithObjectsAndKeys: [UIFont fontWithName:@"OpenSans-Semibold" size:15],NSFontAttributeName, [UIColor grayColor] ,NSForegroundColorAttributeName,  @(-0.5), NSKernAttributeName, nil];
+    return [NSDictionary dictionaryWithObjectsAndKeys: [UIFont fontWithName:@"OpenSans-Semibold" size:12],NSFontAttributeName, [UIColor grayColor] ,NSForegroundColorAttributeName,  @(-0.5), NSKernAttributeName, nil];
+}
++ (NSDictionary *)getEditingCommentFontDictionary{
+    return [NSDictionary dictionaryWithObjectsAndKeys: [UIFont fontWithName:@"OpenSans" size:16],NSFontAttributeName, [UIColor blackColor] ,NSForegroundColorAttributeName,  @(-0.5), NSKernAttributeName, nil];
 }
 
 + (NSDictionary *)getWhiteCommentFontDictionary{
@@ -265,7 +268,7 @@
 
 + (UIButton *)getKeywordButtonAtX:(int)x andY:(int)y andString:(NSString *)string{
     NSAttributedString *attString = [[NSAttributedString alloc] initWithString:string attributes:[Utility getNormalKeywordFontDictionary]];
-    UIButton *keywordBtn = [[UIButton alloc] initWithFrame:CGRectMake(x, y, attString.size.width + 15, attString.size.height + 8)];
+    UIButton *keywordBtn = [[UIButton alloc] initWithFrame:CGRectMake(x, y, attString.size.width + 12, attString.size.height + 3)];
 //    [keywordBtn.layer setBorderColor:[UIColor grayColor].CGColor];
 //    [keywordBtn.layer setBorderWidth:1.0f];
     [keywordBtn.layer setCornerRadius:keywordBtn.frame.size.height/2.0f];
@@ -436,28 +439,30 @@
 }
 + (int)getCellHeightForPostWithType:(PostCellType)cellType withComments:(NSArray *)comments whetherSinglePost:(bool)isSinglePost {
     if (cellType == MBQuizCellType){
-        if(!comments){
+        if(!comments|| [comments count] == 0){
             return QuizTableViewCellDisplayHeight;
         } else if([comments count] > 2 && !isSinglePost){
-            return QuizTableViewCellDisplayHeight + 3*CommentIncrementHeight;
+            return QuizTableViewCellDisplayHeight +FirstCommentIncrementHeight + 2*CommentIncrementHeight + 8;
         } else{
-            return QuizTableViewCellDisplayHeight + (int)[comments count]*CommentIncrementHeight;
+            return QuizTableViewCellDisplayHeight + FirstCommentIncrementHeight + (int)([comments count]-1)*CommentIncrementHeight+ 8;
         }
     } else if(cellType == MBStatusUpdateCellType){
-        if(!comments){
+        if(!comments|| [comments count] == 0){
             return StatusUpdateTableViewCellDisplayHeight;
         } else if([comments count] > 2 && !isSinglePost){
-            return StatusUpdateTableViewCellDisplayHeight + 3*CommentIncrementHeight;
+            return StatusUpdateTableViewCellDisplayHeight + FirstCommentIncrementHeight + 2*CommentIncrementHeight+ 8;
+
         } else{
-            return StatusUpdateTableViewCellDisplayHeight + (int)[comments count]*CommentIncrementHeight;
+            return StatusUpdateTableViewCellDisplayHeight + FirstCommentIncrementHeight + (int)([comments count]-1)*CommentIncrementHeight+ 8;
         }
     } else if(cellType == MBKeywordUpdateCellType){
-        if(!comments){
+        if(!comments || [comments count] == 0){
             return KeywordUpdateTableViewCellDisplayHeight;
         } else if([comments count] > 2 && !isSinglePost){
-            return KeywordUpdateTableViewCellDisplayHeight + 3*CommentIncrementHeight;
+            return KeywordUpdateTableViewCellDisplayHeight + FirstCommentIncrementHeight + 2*CommentIncrementHeight+ 8;
+
         } else{
-            return KeywordUpdateTableViewCellDisplayHeight + (int)[comments count]*CommentIncrementHeight;
+            return KeywordUpdateTableViewCellDisplayHeight + FirstCommentIncrementHeight + (int)([comments count]-1)*CommentIncrementHeight+ 8;
         }
     } else{
         MBDebug(@"should never happen");

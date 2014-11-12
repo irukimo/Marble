@@ -33,6 +33,8 @@
 @property (weak, nonatomic) id callerViewController;
 @property (strong, nonatomic) Post *commentingOnPost;
 @property (nonatomic) NSUInteger commentNum;
+@property (strong, nonatomic) UIButton *centerButton;
+@property (nonatomic) CGRect centerButtonOriFrame;
 @end
 
 @implementation MarbleTabBarController
@@ -53,7 +55,7 @@
     [self setTabBarItemImages];
     // set tabbaritem font
     NSDictionary *selectedFont = [NSDictionary dictionaryWithObjectsAndKeys: [UIFont fontWithName:@"OpenSans" size:11],NSFontAttributeName, [UIColor marbleOrange] ,NSForegroundColorAttributeName,nil];
-    NSDictionary *unSelectedFont = [NSDictionary dictionaryWithObjectsAndKeys: [UIFont fontWithName:@"OpenSans" size:11],NSFontAttributeName, [UIColor unselected] ,NSForegroundColorAttributeName,nil];
+    NSDictionary *unSelectedFont = [NSDictionary dictionaryWithObjectsAndKeys: [UIFont fontWithName:@"OpenSans" size:11],NSFontAttributeName, [UIColor marbleCommentBorderGray] ,NSForegroundColorAttributeName,nil];
     for(UIViewController *v in self.customizableViewControllers){
         [v.tabBarItem setTitleTextAttributes:unSelectedFont forState:UIControlStateNormal];
         [v.tabBarItem setTitleTextAttributes:selectedFont forState:UIControlStateHighlighted];
@@ -69,10 +71,18 @@
         NSString *badgeValue = [NSString stringWithFormat:@"%ld", (long)[UIApplication sharedApplication].applicationIconBadgeNumber];
         [[[[self tabBar] items] lastObject] setBadgeValue:badgeValue];
     }
+    [self addCenterButtonWithImage:[UIImage imageNamed:MARBLE_IMAGE_NAME] highlightImage:nil];
+    
+    //set tabbar background color
+    CGRect frame = CGRectMake(0.0, 0.0, self.view.bounds.size.width, TABBAR_HEIGHT );
+    UIView *v = [[UIView alloc] initWithFrame:frame];
+    [v setBackgroundColor:[UIColor whiteColor]];
+    [v setAlpha:1];
+    [[self tabBar] insertSubview:v atIndex:0];
 }
 
 -(void)viewWillAppear:(BOOL)animated{
-    [self addCenterButtonWithImage:[UIImage imageNamed:MARBLE_IMAGE_NAME] highlightImage:nil];
+
 }
 #pragma mark - add center button
 -(void)willAppearIn:(UINavigationController *)navigationController
@@ -84,35 +94,63 @@
 -(void) addCenterButtonWithImage:(UIImage*)buttonImage highlightImage:(UIImage*)highlightImage
 {
     int buttonWidth = 60;
-    UIButton* button = [UIButton buttonWithType:UIButtonTypeCustom];
-    button.autoresizingMask = UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleTopMargin;
-    button.frame = CGRectMake(0.0, 0.0, buttonWidth, buttonWidth);
-    [button setBackgroundImage:buttonImage forState:UIControlStateNormal];
+    _centerButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    _centerButton.autoresizingMask = UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleTopMargin;
+    _centerButton.frame = CGRectMake(0.0, 0.0, buttonWidth, buttonWidth);
+    [_centerButton setBackgroundImage:buttonImage forState:UIControlStateNormal];
 //    [button setBackgroundImage:highlightImage forState:UIControlStateHighlighted];
     
-    [button addTarget:self action:@selector(centerButtonTap:) forControlEvents:UIControlEventTouchUpInside];
+    [_centerButton addTarget:self action:@selector(centerButtonTap:) forControlEvents:UIControlEventTouchUpInside];
     
-    button.adjustsImageWhenHighlighted = NO;
+    _centerButton.adjustsImageWhenHighlighted = NO;
     
     CGFloat heightDifference = buttonWidth - self.tabBar.frame.size.height;
     if (heightDifference < 0)
-        button.center = self.tabBar.center;
+        _centerButton.center = self.tabBar.center;
     else
     {
         CGPoint center = self.tabBar.center;
         center.y = center.y - heightDifference/2.0;
-        button.center = center;
+        _centerButton.center = center;
     }
     
-    [self.view addSubview:button];
+    [self.view addSubview:_centerButton];
     
     //disable dummy tabbar item
     NSArray *tabItems = self.tabBar.items;
     [[tabItems objectAtIndex:2] setEnabled:NO];
+    
+    _centerButtonOriFrame = _centerButton.frame;
 }
 #pragma mark - center button function
 -(void)centerButtonTap:(id)sender{
-    [self performSegueWithIdentifier:@"CreateQuizViewControllerSegue" sender:sender];
+    int expandWidth = 6;
+    CGRect newFrame = _centerButtonOriFrame;
+    newFrame.origin.x = newFrame.origin.x - expandWidth/2.0f;
+    newFrame.origin.y = newFrame.origin.y - expandWidth/2.0f;
+    newFrame.size.width = newFrame.size.width + expandWidth;
+    newFrame.size.height = newFrame.size.height + expandWidth;
+    [UIView animateWithDuration:0.15
+                          delay:0
+                        options: (UIViewAnimationOptions)UIViewAnimationCurveEaseOut
+                     animations:^{
+                         [_centerButton setFrame:newFrame];
+                              }
+                     completion:^(BOOL finished){
+                         [self centerButtonTapPhase2:sender];
+                              }];
+}
+
+-(void)centerButtonTapPhase2:(id)sender{
+    [UIView animateWithDuration:0.15
+                          delay:0
+                        options: (UIViewAnimationOptions)UIViewAnimationCurveEaseIn
+                     animations:^{
+                         [_centerButton setFrame:_centerButtonOriFrame];
+                     }
+                     completion:^(BOOL finished){
+                         [self performSegueWithIdentifier:@"CreateQuizViewControllerSegue" sender:sender];
+                     }];
 }
 
 

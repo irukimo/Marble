@@ -51,7 +51,8 @@ static const int picY = 50;
 @property (strong, nonatomic) User *option1;
 @property (strong, nonatomic) UIImageView *option0PicView;
 @property (strong, nonatomic) UIImageView *option1PicView;
-
+@property (nonatomic) CGRect option0PicFrame;
+@property (nonatomic) CGRect option1PicFrame;
 
 @property(strong, nonatomic) UIView *mainView;
 @property(strong,nonatomic) UIView *maskForDismissingTextField;
@@ -358,11 +359,7 @@ static const int picY = 50;
     options.nopeText = [Utility getNameToDisplay:_option0.name];
     options.likedText = [Utility getNameToDisplay:_option1.name];
     options.onPan = ^(MDCPanState *state){
-        CGRect frame = [self backCardViewFrame];
-        self.backCardView.frame = CGRectMake(frame.origin.x,
-                                             frame.origin.y - (state.thresholdRatio * 10.f),
-                                             CGRectGetWidth(frame),
-                                             CGRectGetHeight(frame));
+        [self cardOnPan:state];
     };
     
     // Create a personView with the top person in the people array, then pop
@@ -376,6 +373,32 @@ static const int picY = 50;
     [_keywordArray removeObjectAtIndex:0];
     [self checkIfNeedMoreKeyword];
     return keywordView;
+}
+
+-(void)cardOnPan:(MDCPanState *)state{
+    CGRect frame = [self backCardViewFrame];
+    self.backCardView.frame = CGRectMake(frame.origin.x,
+                                         frame.origin.y - (state.thresholdRatio * 10.f),
+                                         CGRectGetWidth(frame),
+                                         CGRectGetHeight(frame));
+    if (state.direction == MDCSwipeDirectionNone) {
+        //do nothing
+    } else if (state.direction == MDCSwipeDirectionLeft) {
+        [self expandView:_option0PicView withOriFrame:_option0PicFrame withRatio:state.thresholdRatio];
+    } else if (state.direction == MDCSwipeDirectionRight) {
+        [self expandView:_option1PicView withOriFrame:_option1PicFrame withRatio:state.thresholdRatio];
+    } else if (state.direction == MDCSwipeDirectionBottom) {
+        //do nothing
+    }
+}
+-(void)expandView:(UIView *)view withOriFrame:(CGRect)oriFrame withRatio:(CGFloat)ratio{
+    CGRect newFrame = oriFrame;
+    CGFloat expandWidth = 6.0f;
+    newFrame.origin.x = newFrame.origin.x - ratio*expandWidth/2.0f;
+    newFrame.origin.y = newFrame.origin.y - ratio*expandWidth/2.0f;
+    newFrame.size.width = newFrame.size.width + ratio*expandWidth;
+    newFrame.size.height = newFrame.size.height + ratio*expandWidth;
+    [self picViewSetFrame:view withFrame:newFrame];
 }
 
 -(void)checkIfNeedMoreKeyword{
@@ -496,6 +519,8 @@ static const int picY = 50;
     [_option1PicView setUserInteractionEnabled:YES];
     [_mainView addSubview:_option0PicView];
     [_mainView addSubview:_option1PicView];
+    _option0PicFrame = _option0PicView.frame;
+    _option1PicFrame = _option1PicView.frame;
 }
 
 -(void)option0PicViewClicked{
@@ -607,6 +632,7 @@ static const int picY = 50;
     if(!_option0 || !_option1){
         return;
     }
+    [self startBounce:_option0PicView withOriFrame:_option0PicFrame];
     [self createQuizWithAnswer:(NSString *)_option0.name];
 }
 
@@ -614,7 +640,57 @@ static const int picY = 50;
     if(!_option0 || !_option1){
         return;
     }
+    [self startBounce:_option1PicView withOriFrame:_option1PicFrame];
     [self createQuizWithAnswer:(NSString *)_option1.name];
+}
+
+
+-(void)startBounce:(UIView *)view withOriFrame:(CGRect)oriFrame{
+    int expandWidth = 10;
+    CGRect newFrame = oriFrame;
+    newFrame.origin.x = newFrame.origin.x - expandWidth/2.0f;
+    newFrame.origin.y = newFrame.origin.y - expandWidth/2.0f;
+    newFrame.size.width = newFrame.size.width + expandWidth;
+    newFrame.size.height = newFrame.size.height + expandWidth;
+    [UIView animateWithDuration:0.15
+                          delay:0
+                        options: (UIViewAnimationOptions)UIViewAnimationCurveEaseOut
+                     animations:^{
+                         [view setFrame:newFrame];
+                     }
+                     completion:^(BOOL finished){
+                         [self endBounce:view withNewFrame:newFrame andOriFrame:oriFrame];
+                     }];
+
+    CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"cornerRadius"];
+    animation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut];
+    animation.fromValue = [NSNumber numberWithFloat:oriFrame.size.width/2.0f];
+    animation.toValue = [NSNumber numberWithFloat:newFrame.size.width/2.0f];
+    animation.duration = 0.15;
+    [view.layer addAnimation:animation forKey:@"cornerRadius"];
+    
+}
+
+-(void)endBounce:(UIView *)view withNewFrame:(CGRect)newFrame andOriFrame:(CGRect)oriFrame{
+    [UIView animateWithDuration:0.15
+                          delay:0
+                        options: (UIViewAnimationOptions)UIViewAnimationCurveEaseIn
+                     animations:^{
+                         [self picViewSetFrame:view withFrame:oriFrame];
+                     }
+                     completion:^(BOOL finished){
+                     }];
+    CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"cornerRadius"];
+    animation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn];
+    animation.fromValue = [NSNumber numberWithFloat:newFrame.size.width/2.0f];
+    animation.toValue = [NSNumber numberWithFloat:oriFrame.size.width/2.0f];
+    animation.duration = 0.15;
+    [view.layer addAnimation:animation forKey:@"cornerRadius"];
+}
+
+-(void)picViewSetFrame:(UIView *)view withFrame:(CGRect)frame{
+    [view setFrame:frame];
+    [view.layer setCornerRadius:frame.size.width/2.0f];
 }
 
 -(void)createQuizWithAnswer:(NSString *)answer{

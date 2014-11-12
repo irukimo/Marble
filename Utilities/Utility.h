@@ -35,6 +35,8 @@ typedef void (^voidBlock)(void);
 + (NSDictionary *)getWhiteCommentFontDictionary;
 + (NSDictionary *)getNavigationBarTitleFontDictionary;
 + (NSDictionary *)getWriteACommentFontDictionary;
++ (NSDictionary *)getEditingCommentFontDictionary;
+
 
 + (NSDictionary *)getNotifBlackBoldFontDictionary;
 + (NSDictionary *)getNotifOrangeBoldFontDictionary;

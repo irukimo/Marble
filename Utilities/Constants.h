@@ -13,8 +13,8 @@
 #define MBError NSLog
 #define URLMake(IP) (@"http://" IP @":4567/")
 
-//#define PRODUCTION_SERVER @"192.168.0.101"
-#define PRODUCTION_SERVER @"localhost"
+#define PRODUCTION_SERVER @"192.168.0.101"
+//#define PRODUCTION_SERVER @"localhost"
 
 #define ASYNC(...) dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{ __VA_ARGS__ })
 #define MAINQ(...) dispatch_async(dispatch_get_main_queue(), ^{ __VA_ARGS__ })
@@ -56,6 +56,7 @@
 #define KeywordUpdateTableViewCellHeight 110
 #define StatusUpdateTableViewCellDisplayHeight 115
 #define KeywordUpdateTableViewCellDisplayHeight 115
+#define FirstCommentIncrementHeight 25
 #define CommentIncrementHeight 18
 
 #define KEYWORD_LIST_CELL_EXPAND_HEIGHT 155
@@ -71,7 +72,6 @@
 #define CELL_UNIVERSAL_PADDING 12
 
 
-#define COMMENT_DEFAULT_TEXT @"[write a comment]"
 
 
 typedef NS_ENUM(NSUInteger, NotificationType) {
