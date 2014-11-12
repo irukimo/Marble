@@ -30,6 +30,8 @@ typedef void (^voidBlock)(void);
 + (NSDictionary *)getPostsViewNameFontDictionary;
 + (NSDictionary *)getPostsViewCommentFontDictionary;
 + (NSDictionary *)getQuizCellKeywordNameFontDictionary;
++ (NSDictionary *)getQuizCompareNumOnPicFontDictionary;
++ (NSDictionary *)getQuizCompareNumFontDictionary;
 
 
 + (NSDictionary *)getWhiteCommentFontDictionary;
@@ -43,7 +45,6 @@ typedef void (^voidBlock)(void);
 + (NSDictionary *)getNotifOrangeNormalFontDictionary;
 + (NSDictionary *)getNotifBlackNormalFontDictionary;
 + (NSDictionary *)getGraySmallFontDictionary;
-+ (NSDictionary *)getQuizCompareNumFontDictionary;
 
 
 

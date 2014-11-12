@@ -65,9 +65,9 @@
 }
 
 -(void)initTimeLabel{
-    _timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(293,10, 70, 20)];
+    _timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(285,10, 70, 20)];
     [self.contentView addSubview:_timeLabel];
-    UIImageView *timeIcon = [[UIImageView alloc] initWithFrame:CGRectMake(275, 10, 20, 20)];
+    UIImageView *timeIcon = [[UIImageView alloc] initWithFrame:CGRectMake(_timeLabel.frame.origin.x - 18, 10, 20, 20)];
     [timeIcon setImage:[UIImage imageNamed:@"clock.png"]];
     [self.contentView addSubview:timeIcon];
 }
