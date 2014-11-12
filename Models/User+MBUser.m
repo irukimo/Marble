@@ -48,7 +48,6 @@
 
 + (BOOL)createUsersInBatchForEng:(NSArray *)fbEngUsers andChinese:(NSArray *)fbChUsers bilingual:(BOOL)bilingual inManagedObjectContext:(NSManagedObjectContext *)context
 {
-    MBDebug(@"enter creating in batch");
     if ( (fbEngUsers == nil || fbChUsers == nil) && bilingual ) return FALSE;
     MBDebug(@"fbEngUsers: %@, fbChUsers: %@", fbEngUsers, fbChUsers);
     NSArray *fbIDs = [fbEngUsers valueForKey:@"id"];
@@ -79,7 +78,7 @@
     int count = 0;
     int total = 0;
     for (NSDictionary<FBGraphUser>* user in fbEngUsers) {
-        MBDebug(@"Work on User %@", user.id);
+//        MBDebug(@"Work on User %@", user.id);
         NSPredicate *idPredicate = [NSPredicate predicateWithFormat:@"SELF = %@", user.id];
         NSArray *matches = [usersMatchingFbIDs filteredArrayUsingPredicate:idPredicate];
         if ([matches count] != 0) {
@@ -289,37 +288,112 @@
     return FALSE;
 }
 
+/*   probability             predicate
+ *
+ * 1) 1   - 100 | [isFriend == 1 AND created > 0]: getOjbect of options will update users of the numbers
+ * 2) 101 - 140 | [isFriend == 1 AND received > 0]:
+ * 3) 141 - 150 | [isFriend == 1]:
+ *
+ */
++ (int) randomlySelectCategoryWithCategMap:(NSMutableArray *)categMap
+{
+    if (![categMap[0] boolValue] && ![categMap[1] boolValue] && ![categMap[2] boolValue]) {
+        return 3; // 3 means error
+    }
+    
+    NSUInteger dice = arc4random() % (150) + 1;
+    if (dice <= 100 && [[categMap objectAtIndex:0] boolValue]) {
+        return 0;
+    } else if (dice > 101 && dice <= 140 && [[categMap objectAtIndex:1] boolValue]) {
+        return 1;
+    } else if ([[categMap objectAtIndex:2] boolValue]) {
+        return 2;
+    } else {
+        return [self randomlySelectCategoryWithCategMap:categMap];
+    }
+}
+
++ (void)fetchTwoUsersWithCategMap:(NSMutableArray **)categMap
+             usersToReturn:(NSMutableArray **)usersToReturn
+             existingUsers:(NSArray *)existingUsers
+                 inContext:(NSManagedObjectContext *)context
+{
+    int type = [self randomlySelectCategoryWithCategMap:*categMap];
+    if (type == 3) {
+        MBError(@"Error in randomly selecting categories");
+        return;
+    }
+
+    NSPredicate *predicate = nil;
+    switch (type) {
+        case 0:
+            predicate = [NSPredicate predicateWithFormat:@"isFriend == 1 AND created > 0 AND NOT (self IN %@)", existingUsers];
+            break;
+            
+        case 1:
+            predicate = [NSPredicate predicateWithFormat:@"isFriend == 1 AND received > 0 AND NOT (self IN %@)", existingUsers];
+            break;
+            
+        case 2:
+            predicate = [NSPredicate predicateWithFormat:@"isFriend == 1 AND NOT (self IN %@)", existingUsers];
+            break;
+            
+        default:
+            break;
+    }
+    
+    NSFetchRequest *myRequest = [NSFetchRequest fetchRequestWithEntityName:@"User"];
+    [myRequest setPredicate:predicate];
+    NSUInteger myUserCount = [context countForFetchRequest:myRequest error:nil];
+    [Utility saveToPersistenceStore:context failureMessage:@"Failed to save to persistent store in MBUser"];
+    MBDebug(@"type: %d number of users: %d", type, myUserCount);
+    if (myUserCount == 0) { // not enough users that match the criteria
+        (*categMap)[type] = @NO; // don't enter this category again
+    } else if (myUserCount > 0) {
+        if (myUserCount == 1) { (*categMap)[type] = @NO; }// don't enter this category again
+        
+        NSFetchRequest *myUserRequest = [NSFetchRequest fetchRequestWithEntityName:@"User"];
+        [myUserRequest setPredicate:predicate];
+        
+        NSUInteger randomNumber = arc4random() % myUserCount;
+        [myUserRequest setFetchLimit:randomNumber];
+        [myUserRequest setFetchOffset:randomNumber];
+
+        [(*usersToReturn) addObjectsFromArray:[context executeFetchRequest:myUserRequest error:nil]];
+    }
+    MBDebug(@"users to return: %d", [(*usersToReturn) count]);
+    if ([(*usersToReturn) count] <= 1) {
+        [self fetchTwoUsersWithCategMap:categMap usersToReturn:usersToReturn
+                          existingUsers:[existingUsers arrayByAddingObjectsFromArray:*usersToReturn]
+                              inContext:context];
+    }
+}
+
 + (BOOL)getRandomUsersThisMany:(int)num
-                   inThisArray:(NSArray **)usersToReturn
+                   inThisArray:(NSMutableArray **)usersToReturn
         inManagedObjectContext:(NSManagedObjectContext *)context
                  existingUsers:(NSArray *)existingUsers{
     MBDebug(@"random: existing users ids: %@", [existingUsers valueForKey:@"fbID"]);
-    NSFetchRequest *myRequest = [NSFetchRequest fetchRequestWithEntityName:@"User"];
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"isFriend == 1 AND NOT (self IN %@)", existingUsers];
-    [myRequest setPredicate:predicate];
-    NSError *error = nil;
-    NSUInteger myUserCount = [context countForFetchRequest:myRequest error:&error];
-    [Utility saveToPersistenceStore:context failureMessage:@"Failed to save to persistent store in MBUser"];
     
-    
+    /*   probability             predicate
+      *
+      * 1) 1   - 100 | [isFriend == 1 AND created > 0]: getOjbect of options will update users of the numbers
+      * 2) 101 - 140 | [isFriend == 1 AND received > 0]:
+      * 3) 141 - 150 | [isFriend == 1]:
+      *
+     */
+    if ((*usersToReturn) == nil) {
+        (*usersToReturn) = [NSMutableArray array];
+    }
+    if (num == 2) {
+        NSMutableArray *categMap = [NSMutableArray arrayWithArray:@[@YES, @YES, @YES]];
+        [self fetchTwoUsersWithCategMap:&categMap usersToReturn:usersToReturn existingUsers:existingUsers inContext:context];
+    } else if (num == -1) {
+        // for explore view
+    } else {
+        MBError(@"Unexpected number of users wanted: %d", num);
+    }
 
-    NSFetchRequest *myUserRequest = [NSFetchRequest fetchRequestWithEntityName:@"User"];
-    
-    [myUserRequest setPredicate:predicate];
-    if (num != -1) {
-        NSUInteger randomNumber = arc4random() % (myUserCount - [existingUsers count]-2);
-        [myUserRequest setFetchLimit:(randomNumber + num - 1)];
-        [myUserRequest setFetchOffset:randomNumber];
-    }
-    
-    NSMutableArray *users = [NSMutableArray arrayWithArray:[context executeFetchRequest:myUserRequest error:&error]];
-    
-    if (num == -1) {
-        [users shuffle];
-    }
-    
-    *usersToReturn = users;
-//    MBDebug(@"After random: users ids: %@", [(*usersToReturn) valueForKey:@"fbID"]);
     return TRUE;
 }
 

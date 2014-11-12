@@ -10,7 +10,7 @@
 
 @implementation NSMutableArray (Shuffling)
 
-- (void)shuffle
+- (void)shuffleInOrder
 {
     NSUInteger count = [self count];
     for (NSUInteger i = 0; i < count; ++i) {

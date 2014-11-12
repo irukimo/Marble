@@ -10,6 +10,6 @@
 
 @interface NSMutableArray (Shuffling)
 
-- (void)shuffle;
+- (void)shuffleInOrder;
 
 @end
