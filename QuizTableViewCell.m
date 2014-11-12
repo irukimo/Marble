@@ -231,15 +231,16 @@
 
 -(void)addStaticLabels{
     
-    CGRect compareNumFrame = CGRectMake(230, QuizTableViewCellHeight - 45, 50, 20);
+    CGRect compareNumFrame = CGRectMake(260, 10, 50, 20);
     _compareNumLabel = [[UILabel alloc] initWithFrame:compareNumFrame];
     
-    compareNumFrame.origin.x = compareNumFrame.origin.x - 30;
-    compareNumFrame.size.height = 20;
-    compareNumFrame.size.width = 20;
+    compareNumFrame.origin.x = compareNumFrame.origin.x - 17;
+    compareNumFrame.origin.y = 12;
+    compareNumFrame.size.height = 15;
+    compareNumFrame.size.width = 15;
     
     UIImageView *marbleImage = [[UIImageView alloc] initWithFrame:compareNumFrame];
-    [marbleImage setImage:[UIImage imageNamed:MARBLE_IMAGE_NAME]];
+    [marbleImage setImage:[UIImage imageNamed:@"little_marble.png"]];
 
     
     _authorNameButton = [[UIButton alloc] initWithFrame:CGRectMake(NAME_LEFT_ALIGNMENT, NAME_TOP_ALIGNMENT, 120, 20)];
@@ -330,7 +331,7 @@
 
 - (void) setCompareNum:(NSNumber *)compareNum option0Num:(NSNumber *)option0Num option1Num:(NSNumber *)option1Num
 {
-    NSAttributedString *compareString = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@", compareNum] attributes:[Utility getNotifBlackNormalFontDictionary]];
+    NSAttributedString *compareString = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@", compareNum] attributes:[Utility getQuizCompareNumFontDictionary]];
     [_compareNumLabel setAttributedText:compareString];
 
     NSAttributedString *num1String = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@", option0Num] attributes:[Utility getWhiteCommentFontDictionary]];
@@ -347,7 +348,7 @@
     _option1Name = [quiz.option1Name copy];
     _answerName = [quiz.answer copy];
     _keyword = [quiz.keyword copy];
-    NSAttributedString *compareString = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@", [quiz compareNum]] attributes:[Utility getNotifBlackNormalFontDictionary]];
+    NSAttributedString *compareString = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@", [quiz compareNum]] attributes:[Utility getQuizCompareNumFontDictionary]];
     [_compareNumLabel setAttributedText:compareString];
 
     [self setupProfileViews];

@@ -225,6 +225,10 @@
     return [NSDictionary dictionaryWithObjectsAndKeys: [UIFont fontWithName:@"OpenSans" size:10],NSFontAttributeName, [UIColor grayColor] ,NSForegroundColorAttributeName, @(-0.5), NSKernAttributeName,  nil];
 }
 
++ (NSDictionary *)getQuizCompareNumFontDictionary{
+    return [NSDictionary dictionaryWithObjectsAndKeys: [UIFont fontWithName:@"OpenSans" size:10],NSFontAttributeName, [UIColor marbleOrange] ,NSForegroundColorAttributeName, @(-0.5), NSKernAttributeName,  nil];
+}
+
 +(NSMutableParagraphStyle *) getNotifParagraphStyle{
     NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
     paragraphStyle.minimumLineHeight = 16.f;

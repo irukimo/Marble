@@ -65,9 +65,11 @@
 }
 
 -(void)initTimeLabel{
-    _timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(285,10, 70, 20)];
+    _timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(293,10, 70, 20)];
     [self.contentView addSubview:_timeLabel];
-
+    UIImageView *timeIcon = [[UIImageView alloc] initWithFrame:CGRectMake(275, 10, 20, 20)];
+    [timeIcon setImage:[UIImage imageNamed:@"clock.png"]];
+    [self.contentView addSubview:timeIcon];
 }
 
 -(void)setTimeForTimeLabel:(NSDate *)time{
@@ -98,7 +100,7 @@
     [self setBorder];
     int y;
     if(_cellType == MBQuizCellType){
-        y = QuizTableViewCellHeight - 28;
+        y = QuizTableViewCellHeight - 32;
     } else if(_cellType == MBStatusUpdateCellType){
         y = StatusUpdateTableViewCellHeight - 37;
     } else if(_cellType == MBKeywordUpdateCellType){
