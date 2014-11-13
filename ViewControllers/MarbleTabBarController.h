@@ -17,4 +17,5 @@
 -(void) marbleButtonClickedWithUser:(User *)user orKeyword:(NSString *)keyword;
 -(void) viewMoreComments:(NSArray *)commentArray forPost:(Post *)post calledBy:(id)viewController;
 -(void) updateComments:(NSArray *)commentArray;
+-(void) menuButtonClicked:(id)sender;
 @end

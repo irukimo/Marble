@@ -23,8 +23,6 @@
     [super viewDidLoad];
     [self setNavbarTitle];
 
-
-    self.delegate = self;
     
 
     //    [self.view addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:_CreateQuizViewController.view action:@selector(endEditing:)]];
@@ -82,6 +80,20 @@
     [myNavBar setBarTintColor:[UIColor marbleOrange]];
         self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
 //    [[self.navigationController navigationBar] setBackgroundColor:[UIColor marbleOrange]];
+    UIImage *sliderImage = [Utility imageWithImage:[UIImage imageNamed:@"slider_menu.png"] scaledToSize:CGSizeMake(25, 25)];
+    UIBarButtonItem *menuButton = [[UIBarButtonItem alloc]
+                            initWithImage:sliderImage
+                                   style: UIBarButtonItemStyleBordered
+                                   target:self action:@selector(menuButtonClicked:)];
+    
+    [self.navigationItem setRightBarButtonItem:menuButton];
+}
+
+-(void)menuButtonClicked:(id)sender{
+    if([[self tabBarController] isKindOfClass:[MarbleTabBarController class]]){
+        MarbleTabBarController *tb = (MarbleTabBarController *)[self tabBarController];
+        [tb menuButtonClicked:sender];
+    }
 }
 
 - (void)didReceiveMemoryWarning {

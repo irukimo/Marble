@@ -75,4 +75,6 @@ typedef void (^voidBlock)(void);
 
 + (NSString *)getRankingFullString:(NSNumber *)number;
 + (int)getCellHeightForPostWithType:(PostCellType)cellType withComments:(NSArray *)comments whetherSinglePost:(bool)whetherSinglePost;
+
++ (UIImage *)imageWithImage:(UIImage *)image scaledToSize:(CGSize)newSize;
 @end

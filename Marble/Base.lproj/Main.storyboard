@@ -486,11 +486,11 @@
             </objects>
             <point key="canvasLocation" x="489" y="839.25"/>
         </scene>
-        <!--Notification-->
+        <!--Notifications-->
         <scene sceneID="kNB-3t-feD">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="P4Y-Ru-Xd7" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Notification" id="N61-fo-hJt"/>
+                    <tabBarItem key="tabBarItem" title="Notifications" id="N61-fo-hJt"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Wep-66-kb1">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -508,7 +508,7 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="jFC-fi-0Zo"/>
-        <segue reference="QqU-52-yxv"/>
+        <segue reference="SBG-1F-ZvQ"/>
         <segue reference="cKE-NW-u56"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -10,6 +10,6 @@
 #import "PostsViewController.h"
 
 
-@interface HomeViewController : PostsViewController <PostsViewControllerDelegate>
+@interface HomeViewController : PostsViewController
 
 @end

@@ -35,6 +35,8 @@
 @property (nonatomic) NSUInteger commentNum;
 @property (strong, nonatomic) UIButton *centerButton;
 @property (nonatomic) CGRect centerButtonOriFrame;
+@property (strong,nonatomic) UIImageView *currentFakeView;
+@property (strong,nonatomic) UIView *sideMenu;
 @end
 
 @implementation MarbleTabBarController
@@ -466,6 +468,87 @@
 
 }
 
+-(void) menuButtonClicked:(id)sender{
+    if(_currentFakeView){
+        [UIView animateWithDuration:0.25
+                              delay:0
+                            options: (UIViewAnimationOptions)UIViewAnimationOptionCurveEaseOut
+                         animations:^{
+                             [_currentFakeView setFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
+                             [_sideMenu setFrame:CGRectMake(self.view.frame.size.width , 0, self.view.frame.size.width, self.view.frame.size.height)];
+                         }
+                         completion:^(BOOL finished){
+                             [_currentFakeView removeFromSuperview];
+                             _currentFakeView = nil;
+                             [_sideMenu removeFromSuperview];
+                             _sideMenu = nil;
+                         }];
+    } else{
+        _sideMenu = [self generateSideMenu];
+        [self.view addSubview:_sideMenu];
+        _currentFakeView = [[UIImageView alloc] initWithFrame:self.view.frame];
+        [_currentFakeView setImage:[self takeSnapshotOfView:self.view withReductionFactor:0.5f]];
+        [_currentFakeView setUserInteractionEnabled:YES];
+        [self.view addSubview:_currentFakeView];
+        [_currentFakeView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(menuButtonClicked:)]];
+        [UIView animateWithDuration:0.25
+                              delay:0
+                            options: (UIViewAnimationOptions)UIViewAnimationOptionCurveEaseOut
+                         animations:^{
+                             [_sideMenu setFrame:CGRectMake(self.view.frame.size.width - 200, 0, self.view.frame.size.width, self.view.frame.size.height)];
+                             [_currentFakeView setFrame:CGRectMake(-200, 0, self.view.frame.size.width, self.view.frame.size.height)];
+                                  }
+                                  completion:^(BOOL finished){;
+                                  }];
+
+    }
+}
+
+-(UIView *)generateSideMenu{
+    UIView *sideMenu = [[UIView alloc] initWithFrame:CGRectMake(self.view.frame.size.width, 0, self.view.frame.size.width, self.view.frame.size.height)];
+    [sideMenu setBackgroundColor:[UIColor colorWithWhite:0.2 alpha:1]];
+    UIButton *signOutButton = [[UIButton alloc] initWithFrame:CGRectMake(10, 50, 200, 30)];
+    [signOutButton setTitle:@"Sign Out" forState:UIControlStateNormal];
+    [signOutButton addTarget:self action:@selector(signOutButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    [sideMenu addSubview:signOutButton];
+    return  sideMenu;
+}
+
+- (void) signOutButtonPressed:(id)sender{
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Are you sure to sign out?"
+                                                        message:nil
+                                                       delegate:self
+                                              cancelButtonTitle:@"Cancel"
+                                              otherButtonTitles:@"Yes",nil];
+    [alertView show];
+    
+}
+
+#pragma alertView delegate method
+- (void) alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    
+    switch (buttonIndex) {
+        case 0:
+            break;
+        case 1:
+            [self dismissViewControllerAnimated:YES completion:^{
+                //send out notification
+                [[NSNotificationCenter defaultCenter] postNotificationName:MBSignOutNotification object:nil];
+            }];
+            break;
+    }
+}
+
+- (UIImage *)takeSnapshotOfView:(UIView *)view withReductionFactor:(CGFloat)factor
+{
+    CGFloat reductionFactor = factor;
+    UIGraphicsBeginImageContext(CGSizeMake(view.frame.size.width/reductionFactor, view.frame.size.height/reductionFactor));
+    [view drawViewHierarchyInRect:CGRectMake(0, 0, view.frame.size.width/reductionFactor, view.frame.size.height/reductionFactor) afterScreenUpdates:YES];
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    return image;
+}
 
 
 #pragma mark - Navigation
@@ -480,6 +563,8 @@
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
 }
+
+
 
 
 @end

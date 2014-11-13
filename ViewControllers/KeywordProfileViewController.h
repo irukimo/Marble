@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "PostsViewController.h"
 
-@interface KeywordProfileViewController :PostsViewController <PostsViewControllerDelegate>
+@interface KeywordProfileViewController :PostsViewController 
 @property (strong, nonatomic) NSString *keyword;
 -(void) setKeyword:(NSString *)keyword;
 @end

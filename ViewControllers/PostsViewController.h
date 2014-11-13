@@ -28,7 +28,7 @@
 
 
 @protocol PostsViewControllerDelegate <NSObject>
-
+-(void)sideMenuClicked:(id)sender;
 
 
 @end

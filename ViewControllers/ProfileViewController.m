@@ -51,7 +51,6 @@
     if(!_profilePicView){
         [self initFBProfilePicViews];
     }
-    self.delegate = self;
     //profileview
     self.tableView.tableHeaderView = _headerView;
     [self.tableView.tableHeaderView setClipsToBounds:YES];
@@ -132,11 +131,7 @@
     [_headerView setBackgroundColor:[UIColor whiteColor]];
     
     _nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(GOLDEN_LEFT_ALIGNMENT + 10, 50, self.view.frame.size.width, 35)];
-    UIButton *signOutButton = [[UIButton alloc] initWithFrame:CGRectMake(30, 90, self.view.frame.size.width, 35)];
-    [signOutButton setTitle:@"Sign out" forState:UIControlStateNormal];
-    [signOutButton setTitleColor:[UIColor marbleLightOrange] forState:UIControlStateNormal];
-    [signOutButton addTarget:self action:@selector(signOutButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-    [_headerView addSubview:signOutButton];
+
     
     if(_isSelf == true || _user.status){
         [_nameLabel removeFromSuperview];
@@ -423,30 +418,7 @@
     [_keywordsView addSubview:keywordBtn];
 }
 
-- (void) signOutButtonPressed:(id)sender{
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Are you sure to sign out?"
-                                                        message:nil
-                                                       delegate:self
-                                              cancelButtonTitle:@"Cancel"
-                                              otherButtonTitles:@"Yes",nil];
-    [alertView show];
 
-}
-
-#pragma alertView delegate method
-- (void) alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
-    
-    switch (buttonIndex) {
-        case 0:
-            break;
-        case 1:
-            [self dismissViewControllerAnimated:YES completion:^{
-                //send out notification
-                [[NSNotificationCenter defaultCenter] postNotificationName:MBSignOutNotification object:nil];
-            }];
-            break;
-    }
-}
 
 
 -(void) keywordBtnClicked:(id)sender{
