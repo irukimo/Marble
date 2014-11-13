@@ -374,6 +374,10 @@
                 x=0;
                 y+=30;
             }
+            //for too many keywords
+            if(y > 30 || (x > 180 && y == 30)){
+                break;
+            }
             [self addKeywordLabelAtX:x andY:y withKeyword:keyword atIndex:[keywordArray indexOfObject:obj]];
             x += keywordString.size.width + 20; 
         }

@@ -291,6 +291,20 @@ static const int picY = 50;
 // This is called when a user didn't fully swipe left or right.
 - (void)viewDidCancelSwipe:(UIView *)view {
     NSLog(@"You couldn't decide on %@.", self.currentKeyword);
+    [self bouncePicViewsBack];
+}
+
+-(void)bouncePicViewsBack{
+    [UIView animateWithDuration:0.15
+                          delay:0
+                        options: (UIViewAnimationOptions)UIViewAnimationCurveEaseOut
+                     animations:^{
+                         [_option0PicView setFrame:_option0PicFrame];
+                         [_option1PicView setFrame:_option1PicFrame];
+                     }
+                     completion:^(BOOL finished){
+
+                     }];
 }
 
 // This is called then a user swipes the view fully left or right.
@@ -340,7 +354,39 @@ static const int picY = 50;
     // It would be trivial to download these from a web service
     // as needed, but for the purposes of this sample app we'll
     // simply store them in memory.
-    return @[@"demanding", @"humorous", @"what the heck", @"why not?",@"demanding", @"humorous", @"what the heck", @"why not?",@"demanding", @"humorous", @"what the heck", @"why not?",@"demanding", @"humorous", @"what the heck", @"why not?"];
+    NSString *firstKeyword = [KeyChainWrapper getARandomKeyword];
+    NSString *secondKeyword = [KeyChainWrapper getARandomKeyword];
+    NSString *thirdKeyword = [KeyChainWrapper getARandomKeyword];
+
+    return @[@"Shy",
+             @"Romantic",
+             @"Buff",
+             @"會咬人",
+             @"Thick skinned",
+             @"Cheap",
+             @"Drinks too much",
+             @"愛把妹",
+             @"bright",
+             @"considerate",
+             @"brave",
+             @"charming",
+             @"careful",
+             @"amusing",
+             @"creative",
+             @"calm",
+             @"not calm",
+             @"modest",
+             @"quick",
+             @"polite",
+             @"愛放閃",
+             @"doesn’t shower",
+             @"high GPA",
+             @"energetic",
+             @"puppy eyes",
+             @"skinny dipping",
+             @"chipotle",
+             @"racist",
+             @"愛哭鬼"];
 }
 
 - (KeywordView *)popPersonViewWithFrame:(CGRect)frame {

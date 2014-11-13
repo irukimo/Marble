@@ -101,6 +101,8 @@
     }];
 
     self.tableView.contentInset = UIEdgeInsetsMake(CELL_UNIVERSAL_PADDING/2.0, 0, CELL_UNIVERSAL_PADDING/2.0, 0);
+    
+    [weakSelf startRefreshing];
 }
 
 -(void)viewDidAppear:(BOOL)animated{

@@ -81,10 +81,15 @@
     [v setBackgroundColor:[UIColor whiteColor]];
     [v setAlpha:1];
     [[self tabBar] insertSubview:v atIndex:0];
+//    [self centerButtonTap:self];
+
 }
 
 -(void)viewWillAppear:(BOOL)animated{
 
+}
+
+-(void)viewDidAppear:(BOOL)animated{
 }
 #pragma mark - add center button
 -(void)willAppearIn:(UINavigationController *)navigationController
