@@ -47,7 +47,7 @@
     <entity name="User" representedClassName="User" syncable="YES">
         <attribute name="created" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="fbID" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="isFriend" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="isFriend" optional="YES" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <attribute name="keywords" optional="YES" attributeType="Transformable" valueTransformerName="ArrayToDataTransformer" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="received" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>

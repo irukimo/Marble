@@ -49,13 +49,14 @@
 -(void) initSearchResults{
     [_searchTextField setText:@""];
     _searchResults = nil;
-    NSArray *results;
+    NSMutableArray *results;
     [User getRandomUsersThisMany:-1 // -1 means no limit
-                     inThisArray:&results inManagedObjectContext:[RKManagedObjectStore defaultStore].mainQueueManagedObjectContext existingUsers:nil];
+                     inThisArray:&results
+          inManagedObjectContext:[RKManagedObjectStore defaultStore].mainQueueManagedObjectContext existingUsers:nil];
 //    for(User * user in results){
 //        NSLog(@"%@", user.name);
 //    }
-    _searchResults = [NSMutableArray arrayWithArray:results];
+    _searchResults = results;
 
     [self.collectionView reloadData];
 }

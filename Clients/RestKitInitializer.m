@@ -74,7 +74,7 @@
                                                          @"num_comparison_created":  @"created",
                                                          @"num_keywords_received": @"received",
                                                          @"num_quizzes_solved":    @"solved",
-                                                         @"isFriend":    @"isFriend",
+                                                         @"is_friend": @"isFriend",
                                                          @"first_keyword": @"keywords"}];
     
     optionsMapping.identificationAttributes = @[@"fbID"];
