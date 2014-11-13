@@ -13,9 +13,7 @@
 #import "PageContentViewController.h"
 
 @interface LoginViewController ()
-@property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (strong, nonatomic) FBLoginView *loginView;
-@property (weak, nonatomic) IBOutlet UILabel *statusLabel;
 @property (strong, nonatomic) NSString *userName;
 @property dispatch_semaphore_t mysemaphore;
     
@@ -34,8 +32,8 @@
     [super viewDidLoad];
     
     //for walkthrough
-    _pageTitles = @[@"Over 200 Tips and Tricks", @"Discover Hidden Features", @"Bookmark Favorite Tip", @"Free Regular Update"];
-    _pageImages = @[@"page1.png", @"page2.png", @"page3.png", @"page4.png"];
+    _pageTitles = @[@"Swipe to compare friends", @"Guess your friends' choices", @"Explore your friends' Marbles", @"\"Like\" their Marbles"];
+    _pageImages = @[@"screen1.png", @"screen2.png", @"screen3.png", @"screen4.png"];
     // Create page view controller
     self.pageViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"PageViewController"];
     self.pageViewController.dataSource = self;
@@ -45,11 +43,15 @@
     [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
     
     // Change the size of page view controller
-    self.pageViewController.view.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height - 70);
+    self.pageViewController.view.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height -70);
+    
     
     [self addChildViewController:_pageViewController];
     [self.view addSubview:_pageViewController.view];
     [self.pageViewController didMoveToParentViewController:self];
+    
+//    [self.view bringSubviewToFront:[self getPageControlForPageViewController:self.pageViewController]];
+    
     //
     
     /*
@@ -67,6 +69,16 @@
     [self.view addSubview:_loginView];
     
 
+}
+
+- (UIPageControl *)getPageControlForPageViewController:(UIPageViewController *)pageViewController {
+    for (UIView *subview in self.pageViewController.view.subviews) {
+        if ([subview isKindOfClass:[UIPageControl class]]) {
+            return (UIPageControl *) subview;
+        }
+    }
+    
+    return nil;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -93,7 +105,7 @@
     pageContentViewController.imageFile = self.pageImages[index];
     pageContentViewController.titleText = self.pageTitles[index];
     pageContentViewController.pageIndex = index;
-    
+    [pageContentViewController.view setFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height -50)];
     return pageContentViewController;
 }
 

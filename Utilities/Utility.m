@@ -273,6 +273,10 @@
         return [NSDictionary dictionaryWithObjectsAndKeys: [UIFont fontWithName:@"OpenSans" size:16],NSFontAttributeName, [UIColor blackColor] ,NSForegroundColorAttributeName, @(-0.5), NSKernAttributeName, [Utility getNotifParagraphStyle],NSParagraphStyleAttributeName,nil];
 }
 
++ (NSDictionary *)getWalkThroughFontDictionary{
+    return [NSDictionary dictionaryWithObjectsAndKeys: [UIFont fontWithName:@"OpenSans" size:20],NSFontAttributeName, [UIColor blackColor] ,NSForegroundColorAttributeName, @(-0.5), NSKernAttributeName,  nil];
+}
+
 
 + (UIButton *)getKeywordButtonAtX:(int)x andY:(int)y andString:(NSString *)string{
     NSAttributedString *attString = [[NSAttributedString alloc] initWithString:string attributes:[Utility getNormalKeywordFontDictionary]];

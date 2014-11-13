@@ -60,6 +60,8 @@ typedef void (^voidBlock)(void);
 + (NSDictionary *)getCreateQuizNameFontDictionary;
 + (NSDictionary *)getSearchResultFontDictionary;
 
++ (NSDictionary *)getWalkThroughFontDictionary;
+
 
 
 

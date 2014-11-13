@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
-	<string></string>
+	<string>Marbles</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleGetInfoString</key>
@@ -36,7 +36,7 @@
 	<key>FacebookAppID</key>
 	<string>610309559054620</string>
 	<key>FacebookDisplayName</key>
-	<string>Marble</string>
+	<string>Marbles</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>UIAppFonts</key>

@@ -28,9 +28,9 @@
 //    [self.view addSubview:_loginView];
     _mysemaphore = dispatch_semaphore_create(1);
     
-    UILabel *marble = [[UILabel alloc] initWithFrame:CGRectMake(20, 20, 100, 20)];
-    [marble setText:@"Marbles"];
-    [self.view addSubview:marble];
+    UIImageView *imageView = [[UIImageView alloc] initWithFrame:self.view.bounds];
+    [imageView setImage:[UIImage imageNamed:@"launchImage.png"]];
+    [self.view addSubview:imageView];
     
     NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
     [center addObserver:self selector:@selector(logoutUser) name:MBSignOutNotification object:nil];

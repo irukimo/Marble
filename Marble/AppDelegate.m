@@ -98,9 +98,13 @@
     
     // Override point for customization after application launch.
     UIPageControl *pageControl = [UIPageControl appearance];
-    pageControl.pageIndicatorTintColor = [UIColor lightGrayColor];
-    pageControl.currentPageIndicatorTintColor = [UIColor blackColor];
-    pageControl.backgroundColor = [UIColor whiteColor];
+    pageControl.pageIndicatorTintColor = [UIColor blackColor];
+    pageControl.currentPageIndicatorTintColor = [UIColor marbleOrange];
+    pageControl.backgroundColor = [UIColor clearColor];
+    CGRect controlFrame = pageControl.frame;
+    controlFrame.origin.y = controlFrame.origin.y - 30;
+    [pageControl setFrame:controlFrame];
+
 
     return YES;
 }
