@@ -27,8 +27,8 @@
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-    [self.view setBackgroundColor:[UIColor marbleLightGray]];
-    [self.tableView setBackgroundColor:[UIColor marbleLightGray]];
+    [self.view setBackgroundColor:[UIColor marbleBackGroundColor]];
+    [self.tableView setBackgroundColor:[UIColor marbleBackGroundColor]];
     [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     self.tableView.contentInset = UIEdgeInsetsMake(5, 0, 5, 0);
     

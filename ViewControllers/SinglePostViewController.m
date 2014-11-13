@@ -24,7 +24,7 @@
 
 -(void)viewDidLoad{
 //    [super viewDidLoad];
-    [self.view setBackgroundColor:[UIColor marbleLightGray]];
+    [self.view setBackgroundColor:[UIColor marbleBackGroundColor]];
     [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     
     

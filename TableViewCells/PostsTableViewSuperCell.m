@@ -47,21 +47,23 @@
 }
 
 -(void) setBorder{
-    [self setBackgroundColor:[UIColor marbleLightGray]];
+    [self setBackgroundColor:[UIColor marbleBackGroundColor]];
 //    [self.contentView.layer setBorderColor:[UIColor marbleLightGray].CGColor];
 //    [self.contentView.layer setBorderWidth:CELL_UNIVERSAL_PADDING/2.0];
+    /*
     if(_cellType == MBQuizCellType){
-        [UIView addLeftBorderOn:self.contentView withColor:[UIColor marbleLightGray] andWidth:CELL_UNIVERSAL_PADDING/2.0 andHeight:QuizTableViewCellDisplayHeight withOffset:CELL_UNIVERSAL_PADDING/2.0];
-        [UIView addRightBorderOn:self.contentView withColor:[UIColor marbleLightGray] andWidth:CELL_UNIVERSAL_PADDING/2.0 andHeight:QuizTableViewCellDisplayHeight withOffset:CELL_UNIVERSAL_PADDING/2.0];
+        [UIView addLeftBorderOn:self.contentView withColor:[UIColor marbleBackGroundColor] andWidth:CELL_UNIVERSAL_PADDING/2.0 andHeight:QuizTableViewCellDisplayHeight withOffset:CELL_UNIVERSAL_PADDING/2.0];
+        [UIView addRightBorderOn:self.contentView withColor:[UIColor marbleBackGroundColor] andWidth:CELL_UNIVERSAL_PADDING/2.0 andHeight:QuizTableViewCellDisplayHeight withOffset:CELL_UNIVERSAL_PADDING/2.0];
     } else if(_cellType == MBStatusUpdateCellType){
-        [UIView addLeftBorderOn:self.contentView withColor:[UIColor marbleLightGray] andWidth:CELL_UNIVERSAL_PADDING/2.0 andHeight:StatusUpdateTableViewCellHeight withOffset:CELL_UNIVERSAL_PADDING/2.0];
-        [UIView addRightBorderOn:self.contentView withColor:[UIColor marbleLightGray] andWidth:CELL_UNIVERSAL_PADDING/2.0 andHeight:QuizTableViewCellDisplayHeight withOffset:CELL_UNIVERSAL_PADDING/2.0];
+        [UIView addLeftBorderOn:self.contentView withColor:[UIColor marbleBackGroundColor] andWidth:CELL_UNIVERSAL_PADDING/2.0 andHeight:StatusUpdateTableViewCellHeight withOffset:CELL_UNIVERSAL_PADDING/2.0];
+        [UIView addRightBorderOn:self.contentView withColor:[UIColor marbleBackGroundColor] andWidth:CELL_UNIVERSAL_PADDING/2.0 andHeight:QuizTableViewCellDisplayHeight withOffset:CELL_UNIVERSAL_PADDING/2.0];
     } else if(_cellType == MBKeywordUpdateCellType){
-       [UIView addLeftBorderOn:self.contentView withColor:[UIColor marbleLightGray] andWidth:CELL_UNIVERSAL_PADDING/2.0 andHeight:KeywordUpdateTableViewCellHeight withOffset:CELL_UNIVERSAL_PADDING/2.0];
-        [UIView addRightBorderOn:self.contentView withColor:[UIColor marbleLightGray] andWidth:CELL_UNIVERSAL_PADDING/2.0 andHeight:QuizTableViewCellDisplayHeight withOffset:CELL_UNIVERSAL_PADDING/2.0];
+       [UIView addLeftBorderOn:self.contentView withColor:[UIColor marbleBackGroundColor] andWidth:CELL_UNIVERSAL_PADDING/2.0 andHeight:KeywordUpdateTableViewCellHeight withOffset:CELL_UNIVERSAL_PADDING/2.0];
+        [UIView addRightBorderOn:self.contentView withColor:[UIColor marbleBackGroundColor] andWidth:CELL_UNIVERSAL_PADDING/2.0 andHeight:QuizTableViewCellDisplayHeight withOffset:CELL_UNIVERSAL_PADDING/2.0];
     } else{
         MBDebug(@"should never happen");
     }
+     */
 }
 
 -(void)initTimeLabel{
@@ -121,7 +123,7 @@
     _whiteView = [[UIView alloc] init];
     [self resizeWhiteBackground];
     [_whiteView setBackgroundColor:[UIColor whiteColor]];
-    _whiteView.layer.shadowColor = [UIColor colorWithWhite:0 alpha:0.2].CGColor;
+    _whiteView.layer.shadowColor = [UIColor colorWithWhite:0 alpha:0.7].CGColor;
     _whiteView.layer.shadowRadius = 2.f;
     _whiteView.layer.shadowOpacity = 1.f;
     _whiteView.layer.shadowOffset = CGSizeMake(0, 0);

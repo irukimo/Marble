@@ -95,7 +95,7 @@ static const int statsStartX = 215;
     [_selfRankingLabel setTextAlignment:NSTextAlignmentCenter];
     
     UIView *grayLine = [[UIView alloc] initWithFrame:CGRectMake(0, KEYWORD_LIST_CELL_UNEXPAND_HEIGHT - CELL_UNIVERSAL_PADDING/2.0, self.contentView.frame.size.width, 1)];
-    [grayLine setBackgroundColor:[UIColor marbleLightGray]];
+    [grayLine setBackgroundColor:[UIColor marbleBackGroundColor]];
     [self.contentView addSubview:grayLine];
     [self addThreeRanking];
 }
@@ -230,10 +230,10 @@ static const int statsStartX = 215;
     [_keywordButton removeFromSuperview];
 }
 -(void) setBorder{
-    [self.contentView.layer setBorderColor:[UIColor marbleLightGray].CGColor];
+    [self.contentView.layer setBorderColor:[UIColor marbleBackGroundColor].CGColor];
     [self.contentView.layer setBorderWidth:CELL_UNIVERSAL_PADDING/2.0];
-    [UIView addLeftBorderOn:self.contentView withColor:[UIColor marbleLightGray] andWidth:CELL_UNIVERSAL_PADDING/2.0 andHeight:QuizTableViewCellDisplayHeight withOffset:CELL_UNIVERSAL_PADDING/2.0];
-    [UIView addRightBorderOn:self.contentView withColor:[UIColor marbleLightGray] andWidth:CELL_UNIVERSAL_PADDING/2.0 andHeight:QuizTableViewCellDisplayHeight withOffset:CELL_UNIVERSAL_PADDING/2.0];
+    [UIView addLeftBorderOn:self.contentView withColor:[UIColor marbleBackGroundColor] andWidth:CELL_UNIVERSAL_PADDING/2.0 andHeight:QuizTableViewCellDisplayHeight withOffset:CELL_UNIVERSAL_PADDING/2.0];
+    [UIView addRightBorderOn:self.contentView withColor:[UIColor marbleBackGroundColor] andWidth:CELL_UNIVERSAL_PADDING/2.0 andHeight:QuizTableViewCellDisplayHeight withOffset:CELL_UNIVERSAL_PADDING/2.0];
 }
 
 
@@ -252,6 +252,7 @@ static const int statsStartX = 215;
      * ]
      * NOTE: after/before might correspond to nil value.
      */
+    MBDebug(@"%@", keywordArray);
     _keyword = [keywordArray objectAtIndex:1];
     _keywordButton = [Utility getKeywordButtonAtX:55 andY:20 andString:_keyword];
     [_keywordButton addTarget:self action:@selector(keywordButtonClicked:) forControlEvents:UIControlEventTouchUpInside];

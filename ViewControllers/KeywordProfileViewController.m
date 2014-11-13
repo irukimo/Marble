@@ -35,6 +35,9 @@
 @property(strong, nonatomic) UILabel *rank1Label;
 @property(strong, nonatomic) UILabel *rank2Label;
 
+@property (strong, nonatomic) UIView *whiteView;
+
+
 @end
 
 @implementation KeywordProfileViewController
@@ -107,22 +110,28 @@
 
 -(void) prepareHeaderView{
     _headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 195)];
-    [_headerView setBackgroundColor:[UIColor whiteColor]];
+    [_headerView setBackgroundColor:[UIColor marbleBackGroundColor]];
     
-    [UIView addLeftBorderOn:_headerView withColor:[UIColor marbleLightGray] andWidth:CELL_UNIVERSAL_PADDING/2.0f andHeight:0 withOffset:CELL_UNIVERSAL_PADDING/2.0f];
-    [UIView addRightBorderOn:_headerView withColor:[UIColor marbleLightGray] andWidth:CELL_UNIVERSAL_PADDING/2.0f andHeight:0 withOffset:CELL_UNIVERSAL_PADDING/2.0f];
-    [_headerView.layer setBorderColor:[UIColor marbleLightGray].CGColor];
-    [_headerView.layer setBorderWidth:CELL_UNIVERSAL_PADDING/2.0f];
+    _whiteView = [[UIView alloc] init];
+    [self resizeWhiteBackground];
+    [_whiteView setBackgroundColor:[UIColor whiteColor]];
+    [UIView addBackgroundShadowOnView:_whiteView];
+    [_headerView addSubview:_whiteView];
+    
+//    [UIView addLeftBorderOn:_headerView withColor:[UIColor marbleBackGroundColor] andWidth:CELL_UNIVERSAL_PADDING/2.0f andHeight:0 withOffset:CELL_UNIVERSAL_PADDING/2.0f];
+//    [UIView addRightBorderOn:_headerView withColor:[UIColor marbleBackGroundColor] andWidth:CELL_UNIVERSAL_PADDING/2.0f andHeight:0 withOffset:CELL_UNIVERSAL_PADDING/2.0f];
+//    [_headerView.layer setBorderColor:[UIColor marbleBackGroundColor].CGColor];
+//    [_headerView.layer setBorderWidth:CELL_UNIVERSAL_PADDING/2.0f];
     
     int lineX = 190;
     int lineY = 120;
     int lineWidth = 2;
     
     UIView *vertiLine = [[UIView alloc] initWithFrame:CGRectMake(lineX, 0, lineWidth, _headerView.frame.size.height)];
-    [vertiLine setBackgroundColor:[UIColor marbleLightGray]];
+    [vertiLine setBackgroundColor:[UIColor marbleBackGroundColor]];
     [_headerView addSubview:vertiLine];
     UIView *horizLine = [[UIView alloc] initWithFrame:CGRectMake(lineX, lineY, _headerView.frame.size.width - lineX, lineWidth)];
-    [horizLine setBackgroundColor:[UIColor marbleLightGray]];
+    [horizLine setBackgroundColor:[UIColor marbleBackGroundColor]];
     [_headerView addSubview:horizLine];
     
     NSAttributedString *overallString = [[NSAttributedString alloc] initWithString:@"overall friend ranking" attributes:[Utility getNotifBlackNormalFontDictionary]];
@@ -154,6 +163,12 @@
     _timePlayedLabel = [[UILabel alloc] initWithFrame:CGRectMake(200, 136, 100, 20)];
     [_headerView addSubview:_timePlayedLabel];
     
+}
+
+-(void)resizeWhiteBackground{
+    int myHeight = _headerView.frame.size.height;
+    
+    _whiteView.frame = CGRectMake(CELL_UNIVERSAL_PADDING, CELL_UNIVERSAL_PADDING/2.0f, self.view.bounds.size.width - 2*CELL_UNIVERSAL_PADDING, myHeight - CELL_UNIVERSAL_PADDING);
 }
 
 -(void) initRankingUI{

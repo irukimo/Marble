@@ -11,4 +11,5 @@
 @interface UIView(MBView)
 +(void) addLeftBorderOn:(UIView *)view withColor:(UIColor *)color andWidth:(int)width andHeight:(int)height withOffset:(int) offset;
 +(void) addRightBorderOn:(UIView *)view withColor:(UIColor *)color andWidth:(int)width andHeight:(int)height withOffset:(int) offset;
++(void)addBackgroundShadowOnView:(UIView *)view;
 @end

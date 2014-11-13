@@ -14,4 +14,5 @@
 +(UIColor *) marbleLightGray;
 +(UIColor *) marbleCommentFieldBGGray;
 +(UIColor *) marbleLightOrange;
++(UIColor *) marbleBackGroundColor;
 @end

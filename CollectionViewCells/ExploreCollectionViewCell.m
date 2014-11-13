@@ -26,6 +26,10 @@
     {
         [self initProfilePic];
         [self initStaticLabels];
+        self.contentView.layer.shadowColor = [UIColor blackColor].CGColor;
+        self.contentView.layer.shadowRadius = 2.f;
+        self.contentView.layer.shadowOpacity = 0.5f;
+        self.contentView.layer.shadowOffset = CGSizeMake(0, 0);
     }
     return self;
 }

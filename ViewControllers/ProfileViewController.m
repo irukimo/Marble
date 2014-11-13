@@ -13,6 +13,8 @@
 #import "SVPullToRefresh.h"
 #import "MarbleTabBarController.h"
 #import "UIColor+MBColor.h"
+#import <QuartzCore/QuartzCore.h>
+
 
 #define SEND_BUTTON_TAG 116
 #define GOLDEN_LEFT_ALIGNMENT 130
@@ -35,6 +37,7 @@
 @property (strong, nonatomic) UILabel *receivedNumLabel;
 @property (strong, nonatomic) UILabel *solvedNumLabel;
 @property (strong, nonatomic) UIView *keywordsView;
+@property (strong, nonatomic) UIView *whiteView;
 
 @end
 
@@ -128,7 +131,13 @@
 -(void) prepareHeaderView{
     int height = (_user.keywords)? HEADER_VIEW_HEIGHT_WITH_KEYWORDS: HEADER_VIEW_HEIGHT_WITHOUT_KEYWORDS;
     _headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, height)];
-    [_headerView setBackgroundColor:[UIColor whiteColor]];
+    [_headerView setBackgroundColor:[UIColor marbleBackGroundColor]];
+    
+    _whiteView = [[UIView alloc] init];
+    [self resizeWhiteBackground];
+    [_whiteView setBackgroundColor:[UIColor whiteColor]];
+    [UIView addBackgroundShadowOnView:_whiteView];
+    [_headerView addSubview:_whiteView];
     
     _nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(GOLDEN_LEFT_ALIGNMENT + 10, 50, self.view.frame.size.width, 35)];
 
@@ -168,21 +177,27 @@
     
     [_statusBtn addTarget:self action:@selector(sendStatusBtnClicked) forControlEvents:UIControlEventTouchUpInside];
     [_viewKeywordBtn addTarget:self action:@selector(viewKeywordBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
-    [UIView addLeftBorderOn:_headerView withColor:[UIColor marbleLightGray] andWidth:CELL_UNIVERSAL_PADDING/2.0 andHeight:0 withOffset:CELL_UNIVERSAL_PADDING/2.0];
-    [UIView addRightBorderOn:_headerView withColor:[UIColor marbleLightGray] andWidth:CELL_UNIVERSAL_PADDING/2.0 andHeight:0 withOffset:CELL_UNIVERSAL_PADDING/2.0];
-    
+//    [UIView addLeftBorderOn:_headerView withColor:[UIColor marbleBackGroundColor] andWidth:CELL_UNIVERSAL_PADDING/2.0 andHeight:0 withOffset:CELL_UNIVERSAL_PADDING/2.0];
+//    [UIView addRightBorderOn:_headerView withColor:[UIColor marbleBackGroundColor] andWidth:CELL_UNIVERSAL_PADDING/2.0 andHeight:0 withOffset:CELL_UNIVERSAL_PADDING/2.0];
+//    
     _keywordsView = [[UIView alloc] initWithFrame:CGRectMake(25, 130, self.view.frame.size.width, 50)];
     
     [_headerView addSubview:_keywordsView];
     
     [_headerView addSubview:_profilePicView];
-    [_headerView.layer setBorderColor:[UIColor marbleLightGray].CGColor];
-    [_headerView.layer setBorderWidth:CELL_UNIVERSAL_PADDING/2.0];
+//    [_headerView.layer setBorderColor:[UIColor marbleBackGroundColor].CGColor];
+//    [_headerView.layer setBorderWidth:CELL_UNIVERSAL_PADDING/2.0];
     if(_isSelf){
         [_headerView addSubview:_statusBtn];
     }
     [self addGrayStaticLabels];
     [_headerView addSubview:_statusTextView];
+}
+
+-(void)resizeWhiteBackground{
+    int myHeight = (_user.keywords)? HEADER_VIEW_HEIGHT_WITH_KEYWORDS: HEADER_VIEW_HEIGHT_WITHOUT_KEYWORDS;
+    
+    _whiteView.frame = CGRectMake(CELL_UNIVERSAL_PADDING, CELL_UNIVERSAL_PADDING/2.0f, self.view.bounds.size.width - 2*CELL_UNIVERSAL_PADDING, myHeight - CELL_UNIVERSAL_PADDING);
 }
 
 -(void)addGrayStaticLabels{
@@ -327,6 +342,7 @@
 -(void) displayKeywords{
     [self removeAllKeywords];
     NSLog(@"_user.keywords %@ for _user %@", _user.keywords, _user.name);
+    [self resizeWhiteBackground];
 
     if(!_user.keywords){
         [self setNoKeywordsSetting];
@@ -336,6 +352,8 @@
     headerFrame.size.height = HEADER_VIEW_HEIGHT_WITH_KEYWORDS;
     [_headerView setFrame:headerFrame];
     [self.tableView setTableHeaderView:_headerView];
+    
+
     
     int x = 0;
     int y = 0;
