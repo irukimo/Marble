@@ -633,30 +633,36 @@ static const int picY = 50;
 }
 
 -(void) setOption0:(User *)option0{
-    if(!option0){
+    if(!option0 && _option0 != nil){
         [self setThisNameTextField:_option0NameTextField withName:_option0.name];
         return;
+    } else if (!option0 && _option0 == nil) {
+        return;
+    } else {
+        MBDebug(@"setoption0 %@", option0.name);
+        _option0 = option0;
+        [Utility setUpProfilePictureImageView:_option0PicView byFBID:_option0.fbID];
+        [self setThisNameTextField:_option0NameTextField withName:_option0.name];
+        
+        [_frontCardView changeNopeTextTo:[Utility getNameToDisplay:_option0.name]];
+        [_backCardView changeNopeTextTo:[Utility getNameToDisplay:_option0.name]];
     }
-    MBDebug(@"setoption0 %@", option0.name);
-    _option0 = option0;
-    [Utility setUpProfilePictureImageView:_option0PicView byFBID:_option0.fbID];
-    [self setThisNameTextField:_option0NameTextField withName:_option0.name];
-    
-    [_frontCardView changeNopeTextTo:[Utility getNameToDisplay:_option0.name]];
-    [_backCardView changeNopeTextTo:[Utility getNameToDisplay:_option0.name]];
 }
 
 -(void) setOption1:(User *)option1{
-    if(!option1){
+    if(!option1 && _option1 != nil){
         [self setThisNameTextField:_option1NameTextField withName:_option1.name];
         return;
+    } else if (!option1 && _option1 == nil) {
+        return;
+    } else {
+        _option1 = option1;
+        [Utility setUpProfilePictureImageView:_option1PicView byFBID:_option1.fbID];
+        [self setThisNameTextField:_option1NameTextField withName:_option1.name];
+        
+        [_frontCardView changeLikedTextTo:[Utility getNameToDisplay:_option1.name]];
+        [_backCardView changeLikedTextTo:[Utility getNameToDisplay:_option1.name]];
     }
-    _option1 = option1;
-    [Utility setUpProfilePictureImageView:_option1PicView byFBID:_option1.fbID];
-    [self setThisNameTextField:_option1NameTextField withName:_option1.name];
-    
-    [_frontCardView changeLikedTextTo:[Utility getNameToDisplay:_option1.name]];
-    [_backCardView changeLikedTextTo:[Utility getNameToDisplay:_option1.name]];
 }
 
 -(void)setThisNameTextField:(UITextField *)textfield withName:(NSString *)name{
@@ -989,11 +995,12 @@ static const int picY = 50;
 //not a delegate method, need to set fire
 -(void)textFieldDidChange :(UITextField *)textField{
     if(textField == _option1NameTextField || textField == _option0NameTextField){
+        NSArray *existingUsers = (textField == _option0NameTextField) ? @[_option1] : @[_option0];
         NSArray *arrayOfUsers;
         [User searchUserThatContains:[textField text]
                  returnThisManyUsers:10 inThisArray:&arrayOfUsers
               inManagedObjectContext:[RKManagedObjectStore defaultStore].mainQueueManagedObjectContext
-                       existingUsers:nil];
+                       existingUsers:existingUsers];
         [_selectPeopleViewController displaySearchResult:arrayOfUsers];
     } else{
         NSArray *arrayOfKeywords = [KeyChainWrapper searchKeywordThatContains:[textField text] returnThisManyKeywords:10];

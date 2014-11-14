@@ -22,8 +22,8 @@
         NSUInteger shuffleNum = limitingCount / 10;
         MBDebug(@"shuffle num: %d", shuffleNum);
         for (NSUInteger i = 0; i < shuffleNum; ++i) {
-            NSUInteger firstIndex = arc4random_uniform(firstCount);
-            NSUInteger secondIndex = arc4random_uniform(secondCount);
+            NSUInteger firstIndex = arc4random_uniform((unsigned int)firstCount);
+            NSUInteger secondIndex = arc4random_uniform((unsigned int)secondCount);
             
             id obj1 = [firstArray objectAtIndex:firstIndex];
             id obj2 = [secondArray objectAtIndex:secondIndex];
