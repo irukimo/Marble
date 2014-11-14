@@ -150,11 +150,13 @@
             MBDebug(@"Found the single post: %@", _mustBePost);
             if(_mustBePost.comments){
                 [_cell setCommentsForPostSuperCell:_mustBePost.comments];
-            }else{
-                [self getCommentsForPost:_mustBePost];
             }
+//            else{
+//                [self getCommentsForPost:_mustBePost];
+//            }
             [self.tableView reloadData];
-        } else {
+        }
+//        else {
             NSMutableDictionary *params = [weakSelf generateBasicParams];
             [params setValue:object.postUUID forKey:@"post_uuid"];
             [[RKObjectManager sharedManager] getObject:[Post alloc]
@@ -178,7 +180,7 @@
                                                                                        block:^{
                                                                                            MBError(@"Cannot load updates");}]
              ];
-        }
+//        }
     }
 }
 
