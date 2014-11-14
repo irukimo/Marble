@@ -258,8 +258,13 @@
     return [NSDictionary dictionaryWithObjectsAndKeys: [UIFont fontWithName:@"OpenSans-Semibold" size:25],NSFontAttributeName, [UIColor marbleOrange] ,NSForegroundColorAttributeName, @(-0.5), NSKernAttributeName, nil];
 }
 
-+ (NSDictionary *)getCreateQuizNameFontDictionary{
-    return [NSDictionary dictionaryWithObjectsAndKeys: [UIFont fontWithName:@"OpenSans-Semibold" size:18],NSFontAttributeName, [UIColor marbleOrange] ,NSForegroundColorAttributeName, @(-0.5), NSKernAttributeName, nil];
++ (NSDictionary *)getCreateQuizRightNameFontDictionary{
+    return [NSDictionary dictionaryWithObjectsAndKeys: [UIFont fontWithName:@"OpenSans-Semibold" size:18],NSFontAttributeName, [UIColor marbleBlueNameColor] ,NSForegroundColorAttributeName, @(-0.5), NSKernAttributeName, nil];
+
+}
++ (NSDictionary *)getCreateQuizLeftNameFontDictionary{
+    return [NSDictionary dictionaryWithObjectsAndKeys: [UIFont fontWithName:@"OpenSans-Semibold" size:18],NSFontAttributeName, [UIColor marbleGreenNameColor] ,NSForegroundColorAttributeName, @(-0.5), NSKernAttributeName, nil];
+
 }
 + (NSDictionary *)getCreateQuizShuffleButtonFontDictionary{
     return [NSDictionary dictionaryWithObjectsAndKeys: [UIFont fontWithName:@"OpenSans-Semibold" size:18],NSFontAttributeName, [UIColor whiteColor] ,NSForegroundColorAttributeName, @(-0.5), NSKernAttributeName, nil];
@@ -274,6 +279,10 @@
 }
 
 + (NSDictionary *)getWalkThroughFontDictionary{
+    return [NSDictionary dictionaryWithObjectsAndKeys: [UIFont fontWithName:@"OpenSans" size:20],NSFontAttributeName, [UIColor blackColor] ,NSForegroundColorAttributeName, @(-0.5), NSKernAttributeName,  nil];
+}
+
++ (NSDictionary *)getCreateQuizDescFontDictionary{
     return [NSDictionary dictionaryWithObjectsAndKeys: [UIFont fontWithName:@"OpenSans" size:20],NSFontAttributeName, [UIColor blackColor] ,NSForegroundColorAttributeName, @(-0.5), NSKernAttributeName,  nil];
 }
 

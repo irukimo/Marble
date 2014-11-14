@@ -131,6 +131,8 @@
 }
 #pragma mark - center button function
 -(void)centerButtonTap:(id)sender{
+    [self performSegueWithIdentifier:@"CreateQuizViewControllerSegue" sender:sender];
+    /*
     int expandWidth = 6;
     CGRect newFrame = _centerButtonOriFrame;
     newFrame.origin.x = newFrame.origin.x - expandWidth/2.0f;
@@ -145,10 +147,11 @@
                               }
                      completion:^(BOOL finished){
                          [self centerButtonTapPhase2:sender];
-                              }];
+                              }];*/
 }
 
 -(void)centerButtonTapPhase2:(id)sender{
+    /*
     [UIView animateWithDuration:0.15
                           delay:0
                         options: (UIViewAnimationOptions)UIViewAnimationCurveEaseIn
@@ -157,7 +160,7 @@
                      }
                      completion:^(BOOL finished){
                          [self performSegueWithIdentifier:@"CreateQuizViewControllerSegue" sender:sender];
-                     }];
+                     }];*/
 }
 
 

@@ -28,7 +28,9 @@
 //    self.backgroundImageView.image = [UIImage imageNamed:self.imageFile];
 //    [self.view addSubview:_backgroundImageView];
     
-    _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 15, self.view.bounds.size.width, 30)];
+    _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 10, self.view.bounds.size.width, 60)];
+    _titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
+    _titleLabel.numberOfLines = 0;
     NSAttributedString *titleString = [[NSAttributedString alloc] initWithString:self.titleText attributes:[Utility getWalkThroughFontDictionary]];
     [_titleLabel setAttributedText:titleString];
     [self.view addSubview:_titleLabel];
@@ -36,7 +38,7 @@
     UIImage *iphone = [UIImage imageNamed:@"iphone.png"];
     CGFloat ratio = iphone.size.height/iphone.size.width;
     CGFloat imageWidth = 260.f;
-    _iphoneView = [[UIImageView alloc] initWithFrame:CGRectMake(30, 50, imageWidth, imageWidth*ratio)];
+    _iphoneView = [[UIImageView alloc] initWithFrame:CGRectMake(30, 70, imageWidth, imageWidth*ratio)];
     [_iphoneView setImage:iphone];
     [self.view addSubview:_iphoneView];
     
@@ -48,7 +50,7 @@
     [self.view addSubview:screenView];
     switch (_pageIndex) {
         case 0:
-//            [self addSwipeIcon];
+            [self addSwipeIcon];
             break;
         case 1:
             [self addTapIcon];
@@ -65,8 +67,8 @@
 -(void)addSwipeIcon{
     UIImage *image = [UIImage imageNamed:@"swipe.png"];
     CGFloat ratio = image.size.height/image.size.width;
-    CGFloat width = 120.f;
-    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(_iphoneView.frame.origin.x + 45 + 20,  _iphoneView.frame.origin.y + 180, width, width*ratio)];
+    CGFloat width = 280.f;
+    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(_iphoneView.frame.origin.x + 45 -55,  _iphoneView.frame.origin.y + 195, width, width*ratio)];
     [imageView setImage:image];
     [self.view addSubview:imageView];
 }

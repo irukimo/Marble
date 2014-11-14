@@ -346,11 +346,11 @@
             </objects>
             <point key="canvasLocation" x="2613" y="72.75"/>
         </scene>
-        <!--Home-->
+        <!--News Feed-->
         <scene sceneID="yrB-uh-HpJ">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="LW7-nv-j5O" customClass="HomeNavigationController" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Home" id="mPf-BB-lbg"/>
+                    <tabBarItem key="tabBarItem" title="News Feed" id="mPf-BB-lbg"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="ORR-VL-RWz">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>

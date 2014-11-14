@@ -32,7 +32,7 @@
     [super viewDidLoad];
     
     //for walkthrough
-    _pageTitles = @[@"Swipe to compare friends", @"Guess your friends' choices", @"Explore your friends' Marbles", @"\"Like\" their Marbles"];
+    _pageTitles = @[@"Swipe left or right \nto compare friends", @"Guess your friends' choices", @"Explore your friends' Profiles", @"\"Like\" their Marbles"];
     _pageImages = @[@"screen1.png", @"screen2.png", @"screen3.png", @"screen4.png"];
     // Create page view controller
     self.pageViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"PageViewController"];
@@ -43,7 +43,7 @@
     [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
     
     // Change the size of page view controller
-    self.pageViewController.view.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height -70);
+    self.pageViewController.view.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height -50);
     
     
     [self addChildViewController:_pageViewController];
@@ -65,7 +65,8 @@
     //its delegate will automatically be set to launchviewcontroller
     _loginView = [[FBLoginView alloc] initWithReadPermissions:@[@"public_profile", @"user_friends"]];
     // Align the button in the center horizontally
-    _loginView.frame = CGRectOffset(_loginView.frame, (self.view.center.x - (_loginView.frame.size.width / 2)), 500);
+    _loginView.frame = CGRectOffset(_loginView.frame, (self.view.center.x - (_loginView.frame.size.width / 2)), 520);
+    
     [self.view addSubview:_loginView];
     
 

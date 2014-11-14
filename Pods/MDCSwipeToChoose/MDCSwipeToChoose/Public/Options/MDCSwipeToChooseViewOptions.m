@@ -31,11 +31,11 @@
     self = [super init];
     if (self) {
         _likedText = [NSLocalizedString(@"liked", nil) uppercaseString];
-        _likedColor = [UIColor colorWith8BitRed:37.f green:175.f blue:35.f alpha:1.f];
+        _likedColor = [UIColor colorWith8BitRed:75.f green:150.f blue:191.f alpha:1.f];
         _likedRotationAngle = -15.f;
 
         _nopeText = [NSLocalizedString(@"nope", nil) uppercaseString];
-        _nopeColor = [UIColor colorWith8BitRed:239.f green:12.f blue:25.f alpha:1.f];
+        _nopeColor = [UIColor colorWith8BitRed:56.f green:153.f blue:37.f alpha:1.f];
         _nopeRotationAngle = 15.f;
 
         _threshold = 100.f;

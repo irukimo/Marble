@@ -21,4 +21,8 @@
     return [UIColor colorWithRed:255.0/255.0 green:112.0/255.0 blue:69.0/255.0 alpha:1];}
 +(UIColor *) marbleBackGroundColor{
     return [UIColor colorWithRed:133.0/255.0 green:133.0/255.0 blue:133.0/255.0 alpha:1];}
++(UIColor *) marbleBlueNameColor{
+    return [UIColor colorWithRed:75.0/255.0 green:150.0/255.0 blue:191.0/255.0 alpha:1];}
++(UIColor *) marbleGreenNameColor{
+    return [UIColor colorWithRed:56.0/255.0 green:153.0/255.0 blue:37.0/255.0 alpha:1];}
 @end

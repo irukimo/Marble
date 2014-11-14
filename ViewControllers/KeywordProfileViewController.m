@@ -140,7 +140,7 @@
     [_headerView addSubview:overallLabel];
     
     NSAttributedString *createdByString = [[NSAttributedString alloc] initWithString:@"created by" attributes:[Utility getNotifBlackNormalFontDictionary]];
-    UILabel *createdByLabel = [[UILabel alloc] initWithFrame:CGRectMake(220, 15, 100, 20)];
+    UILabel *createdByLabel = [[UILabel alloc] initWithFrame:CGRectMake(220, 12, 100, 20)];
     [createdByLabel setAttributedText:createdByString];
     [_headerView addSubview:createdByLabel];
     

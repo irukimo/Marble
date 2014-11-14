@@ -161,6 +161,7 @@
     _statusTextView = [[UITextView alloc] initWithFrame:CGRectMake(GOLDEN_LEFT_ALIGNMENT - 3, 50, self.view.frame.size.width - GOLDEN_LEFT_ALIGNMENT - 20, 40)];
     [_statusTextView setText:@""];
     [_statusTextView setScrollEnabled:NO];
+    [_statusTextView setReturnKeyType:UIReturnKeySend];
     [_statusTextView setBackgroundColor:[UIColor clearColor]];
     if(_isSelf){
         [_statusTextView setEditable:YES];
@@ -581,11 +582,16 @@
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
     
     if([text isEqualToString:@"\n"]) {
+        [self sendStatusBtnClicked];
         [textView resignFirstResponder];
         return NO;
     }
     
     return YES;
 }
+
+
+
+
 
 @end

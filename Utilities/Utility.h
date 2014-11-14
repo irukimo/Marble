@@ -51,16 +51,20 @@ typedef void (^voidBlock)(void);
 + (NSDictionary *)getLightOrangeBoldFontDictionary;
 
 + (NSDictionary *)getBigNameFontDictionary;
+
 + (NSDictionary *)getProfileGrayStaticFontDictionary;
 + (NSDictionary *)getProfileStatusFontDictionary;
 + (NSDictionary *)getProfileMoreFontDictionary;
 
 + (NSDictionary *)getCreateQuizSuperBigKeywordFontDictionary;
 + (NSDictionary *)getCreateQuizShuffleButtonFontDictionary;
-+ (NSDictionary *)getCreateQuizNameFontDictionary;
++ (NSDictionary *)getCreateQuizRightNameFontDictionary;
++ (NSDictionary *)getCreateQuizLeftNameFontDictionary;
 + (NSDictionary *)getSearchResultFontDictionary;
 
 + (NSDictionary *)getWalkThroughFontDictionary;
++ (NSDictionary *)getCreateQuizDescFontDictionary;
+
 
 
 

@@ -64,6 +64,8 @@
 - (void) setKeywordUpdate:(KeywordUpdate *)keywordUpdate{
     _keywordUpdate = keywordUpdate;
     
+    MBDebug(@"123 %@ %@ %@",keywordUpdate.keyword1, keywordUpdate.keyword2,keywordUpdate.keyword3);
+    
     NSAttributedString *nameString;
     if(_keywordUpdate.name){
         nameString = [[NSAttributedString alloc] initWithString:[Utility getNameToDisplay:_keywordUpdate.name] attributes:[Utility getPostsViewNameFontDictionary]];

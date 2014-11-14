@@ -122,10 +122,11 @@
 -(void) initPicViews{
     _option0PicView = [[UIImageView alloc] initWithFrame:[self getOption0OriFrame]];
     _option1PicView = [[UIImageView alloc] initWithFrame:[self getOption1OriFrame]];
+    /*
     [_option0PicView.layer setBorderColor:[UIColor lightGrayColor].CGColor];
     [_option0PicView.layer setBorderWidth:0.5f];
     [_option1PicView.layer setBorderColor:[UIColor lightGrayColor].CGColor];
-    [_option1PicView.layer setBorderWidth:0.5f];
+    [_option1PicView.layer setBorderWidth:0.5f];*/
     
 //    UIView *option0PicContainerView = [[UIView alloc] initWithFrame:_option0PicView.frame];
 //    UIView *option1PicContainerView = [[UIView alloc] initWithFrame:_option1PicView.frame];
@@ -171,20 +172,21 @@
     
     _marbleNum0Label = [[UILabel alloc] initWithFrame:[self getBigMarbleNumFrame]];
     _marbleNum1Label = [[UILabel alloc] initWithFrame:[self getBigMarbleNumFrame]];
-    _marbleNum0Label.layer.shadowColor = [UIColor blackColor].CGColor;
-    _marbleNum0Label.layer.shadowRadius = 2.f;
-    _marbleNum0Label.layer.shadowOpacity = 1.f;
-    _marbleNum0Label.layer.shadowOffset = CGSizeMake(0, 0);
-    _marbleNum1Label.layer.shadowColor = [UIColor blackColor].CGColor;
-    _marbleNum1Label.layer.shadowRadius = 2.f;
-    _marbleNum1Label.layer.shadowOpacity = 1.f;
-    _marbleNum1Label.layer.shadowOffset = CGSizeMake(0, 0);
-    
+//    _marbleNum0Label.layer.shadowColor = [UIColor blackColor].CGColor;
+//    _marbleNum0Label.layer.shadowRadius = 2.f;
+//    _marbleNum0Label.layer.shadowOpacity = 1.f;
+//    _marbleNum0Label.layer.shadowOffset = CGSizeMake(0, 0);
+//    _marbleNum1Label.layer.shadowColor = [UIColor blackColor].CGColor;
+//    _marbleNum1Label.layer.shadowRadius = 2.f;
+//    _marbleNum1Label.layer.shadowOpacity = 1.f;
+//    _marbleNum1Label.layer.shadowOffset = CGSizeMake(0, 0);
+//    
     _marbleImage0 = [[UIImageView alloc] initWithFrame:[self getBigMarbleIconFrame]];
     _marbleImage1 = [[UIImageView alloc] initWithFrame:[self getBigMarbleIconFrame]];
     [_marbleImage0 setImage:[UIImage imageNamed:MARBLE_IMAGE_NAME]];
     [_marbleImage1 setImage:[UIImage imageNamed:MARBLE_IMAGE_NAME]];
     
+    /*
     _marbleImage0.layer.shadowColor = [UIColor blackColor].CGColor;
     _marbleImage0.layer.shadowRadius = 3.f;
     _marbleImage0.layer.shadowOpacity = 1.f;
@@ -192,7 +194,7 @@
     _marbleImage1.layer.shadowColor = [UIColor blackColor].CGColor;
     _marbleImage1.layer.shadowRadius = 3.f;
     _marbleImage1.layer.shadowOpacity = 1.f;
-    _marbleImage1.layer.shadowOffset = CGSizeMake(0, 0);
+    _marbleImage1.layer.shadowOffset = CGSizeMake(0, 0);*/
 
     [_marbleImage0 setTag:RESULT_RELATED_TAG];
     [_marbleImage1 setTag:RESULT_RELATED_TAG];
@@ -420,19 +422,15 @@
     if(![_quiz.author isEqualToString:[KeyChainWrapper getSelfFBID]]){
         if([personGuessed isEqualToString:_quiz.option0Name]){
             if([personGuessed isEqualToString:_quiz.answer]){
-                [_option0PicView addSubview:_option0CorrectIcon];
-                [_option1PicView addSubview:_option1WrongIcon];
+                [self setOption0Correct];
             }else{
-                [_option0PicView addSubview:_option0WrongIcon];
-                [_option1PicView addSubview:_option1CorrectIcon];
+                [self setOption1Correct];
             }
         } else{
             if([personGuessed isEqualToString:_quiz.answer]){
-                [_option1PicView addSubview:_option1CorrectIcon];
-                [_option0PicView addSubview:_option0WrongIcon];
+                [self setOption1Correct];
             }else{
-                [_option1PicView addSubview:_option1WrongIcon];
-                [_option0PicView addSubview:_option0CorrectIcon];
+                [self setOption0Correct];
             }
         }
     }
@@ -446,6 +444,8 @@
     if([personGuessed isEqualToString:_quiz.option0Name]){
         if(!fromJustGuessed){
             [self putOption0MiddleOption1Side];
+            [_marbleImage0 setImage:[UIImage imageNamed:@"green_body.png"]];
+            [_marbleImage1 setImage:[UIImage imageNamed:@"red_body.png"]];
             return;
         }
         [UIView animateWithDuration:0.15
@@ -460,6 +460,8 @@
     }else{
         if(!fromJustGuessed){
             [self putOption1MiddleOption0Side];
+            [_marbleImage1 setImage:[UIImage imageNamed:@"green_body.png"]];
+            [_marbleImage0 setImage:[UIImage imageNamed:@"red_body.png"]];
             return;
         }
         [UIView animateWithDuration:0.15
@@ -474,6 +476,19 @@
     
 
     
+}
+
+-(void)setOption0Correct{
+    [_option0PicView addSubview:_option0CorrectIcon];
+    [_marbleImage0 setImage:[UIImage imageNamed:@"green_body.png"]];
+    [_option1PicView addSubview:_option1WrongIcon];
+    [_marbleImage1 setImage:[UIImage imageNamed:@"red_body.png"]];
+}
+-(void)setOption1Correct{
+    [_option1PicView addSubview:_option1CorrectIcon];
+    [_marbleImage1 setImage:[UIImage imageNamed:@"green_body.png"]];
+    [_option0PicView addSubview:_option0WrongIcon];
+    [_marbleImage0 setImage:[UIImage imageNamed:@"red_body.png"]];
 }
 
 -(void)putOption0MiddleOption1Side{
@@ -525,6 +540,7 @@
 }
 
 -(void) setupProfileViews{
+    
     [Utility setUpProfilePictureImageView:_authorPicView byFBID:_quiz.author];
     [Utility setUpProfilePictureImageView:_option0PicView byFBID:_quiz.option0];
     [Utility setUpProfilePictureImageView:_option1PicView byFBID:_quiz.option1];
@@ -595,21 +611,23 @@
     return CGRectMake([self getSmallPicWidth]/2.0f - iconWidth/2.f, 15, iconWidth, iconWidth);
 }
 -(CGRect)getBigMarbleIconFrame{
-    CGFloat iconWidth = 20.f;
-    return CGRectMake(OPTION_SQUARE_WIDTH/2.0f - iconWidth/2.f - 10, 120, iconWidth, iconWidth);
+    CGFloat iconWidth = 26.f;
+    return CGRectMake(OPTION_SQUARE_WIDTH - 16, OPTION_SQUARE_WIDTH - 16, iconWidth, iconWidth);
 }
 -(CGRect)getSmallMarbleIconFrame{
-    CGFloat iconWidth = 15.f;
-    return CGRectMake([self getSmallPicWidth]/2.0f - iconWidth/2.f - 7, 40, iconWidth, iconWidth);
+    CGFloat iconWidth = 16.f;
+    return CGRectMake([self getSmallPicWidth]-12, [self getSmallPicWidth]-12, iconWidth, iconWidth);
 }
 -(CGRect)getBigMarbleNumFrame{
     CGRect marbleIconFrame = [self getBigMarbleIconFrame];
-    marbleIconFrame.origin.x = marbleIconFrame.origin.x + 23;
+    marbleIconFrame.origin.y = marbleIconFrame.origin.y + 0;
+    marbleIconFrame.origin.x = marbleIconFrame.origin.x + 8;
     return marbleIconFrame;
 }
 -(CGRect)getSmallMarbleNumFrame{
     CGRect marbleIconFrame = [self getSmallMarbleIconFrame];
-    marbleIconFrame.origin.x = marbleIconFrame.origin.x + 18;
+    marbleIconFrame.origin.y = marbleIconFrame.origin.y + 0;
+    marbleIconFrame.origin.x = marbleIconFrame.origin.x + 4;
     return marbleIconFrame;
 }
 

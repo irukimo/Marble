@@ -19,7 +19,7 @@
 
 #define AUTO_COMPLETE_SELECT_VIEW_TAG 999
 
-static const CGFloat animationDuration = 0.5;
+static const CGFloat animationDuration = 0.25;
 static const CGFloat ChoosePersonButtonHorizontalPadding = 80.f;
 static const CGFloat ChoosePersonButtonVerticalPadding = 20.f;
 static const int picviewSize = 112;
@@ -108,6 +108,14 @@ static const int picY = 50;
     //everything is in mainView
     [self.view addSubview:[self generateMainView]];
     
+    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - 50, self.view.bounds.size.width, 30)];
+    titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
+    titleLabel.numberOfLines = 0;
+    NSAttributedString *titleString = [[NSAttributedString alloc] initWithString:@"Tap on any item to edit" attributes:[Utility getCreateQuizDescFontDictionary]];
+    [titleLabel setAttributedText:titleString];
+    [titleLabel setTextAlignment:NSTextAlignmentCenter];
+    [_mainView addSubview:titleLabel];
+    
     _keywordArray = [[self defaultKeyword] mutableCopy];
     
     [self.view setBackgroundColor:[UIColor whiteColor]];
@@ -136,6 +144,8 @@ static const int picY = 50;
     [self createBlurredView];
     
     NSLog(@"ran did load");
+    
+
 }
 
 -(void)seeIfDisplayLookingAt{
@@ -183,7 +193,8 @@ static const int picY = 50;
     // Blurred with UIImage+ImageEffects
     if(_delegate && [_delegate isKindOfClass:[MarbleTabBarController class]]){
         MarbleTabBarController *vc = (MarbleTabBarController *)_delegate;
-        _blurredBgImage.image = [self blurWithImageEffects:[self takeSnapshotOfView:vc.view withReductionFactor:1]];
+//        _blurredBgImage.image = [self takeSnapshotOfView:vc.view withReductionFactor:1];
+        _blurredBgImage.image = [self blurWithImageEffects:[self takeSnapshotOfView:vc.view withReductionFactor:2]];
     }
 
     
@@ -205,7 +216,7 @@ static const int picY = 50;
 - (UIImage *)blurWithImageEffects:(UIImage *)image
 {
 //    return [image applyBlurWithRadius:15 tintColor:[UIColor colorWithWhite:1 alpha:0.2] saturationDeltaFactor:1.5 maskImage:nil];
-    return [image applyBlurWithRadius:3 tintColor:[UIColor colorWithWhite:1 alpha:0.8] saturationDeltaFactor:1 maskImage:nil];
+    return [image applyBlurWithRadius:3 tintColor:[UIColor colorWithWhite:1 alpha:0.5] saturationDeltaFactor:1 maskImage:nil];
 }
 - (UIImage *)takeSnapshotOfView:(UIView *)view withReductionFactor:(CGFloat)factor
 {
@@ -649,7 +660,12 @@ static const int picY = 50;
 }
 
 -(void)setThisNameTextField:(UITextField *)textfield withName:(NSString *)name{
-    NSAttributedString *nameString = [[NSAttributedString alloc] initWithString:[Utility getNameToDisplay:name] attributes:[Utility getCreateQuizNameFontDictionary]];
+    NSAttributedString *nameString;
+    if(textfield == _option0NameTextField){
+        nameString = [[NSAttributedString alloc] initWithString:[Utility getNameToDisplay:name] attributes:[Utility getCreateQuizLeftNameFontDictionary]];
+    } else{
+        nameString = [[NSAttributedString alloc] initWithString:[Utility getNameToDisplay:name] attributes:[Utility getCreateQuizRightNameFontDictionary]];
+    }
     [textfield setAttributedText:nameString];
     [textfield setTextAlignment:NSTextAlignmentCenter];
 }
