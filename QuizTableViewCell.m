@@ -444,8 +444,6 @@
     if([personGuessed isEqualToString:_quiz.option0Name]){
         if(!fromJustGuessed){
             [self putOption0MiddleOption1Side];
-            [_marbleImage0 setImage:[UIImage imageNamed:@"green_body.png"]];
-            [_marbleImage1 setImage:[UIImage imageNamed:@"red_body.png"]];
             return;
         }
         [UIView animateWithDuration:0.15
@@ -460,8 +458,6 @@
     }else{
         if(!fromJustGuessed){
             [self putOption1MiddleOption0Side];
-            [_marbleImage1 setImage:[UIImage imageNamed:@"green_body.png"]];
-            [_marbleImage0 setImage:[UIImage imageNamed:@"red_body.png"]];
             return;
         }
         [UIView animateWithDuration:0.15
