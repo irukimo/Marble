@@ -13,6 +13,7 @@
 #import "CommentNotification.h"
 #import "PostsTableViewSuperCell.h"
 #import "Post+MBPost.h"
+#import "MarbleTabBarController.h"
 
 @interface SinglePostViewController()
 @property (strong, nonatomic) Post *mustBePost;
@@ -199,12 +200,23 @@
            
             [_cell setCommentsForPostSuperCell:post.comments];
             [self.tableView reloadData];
+            if([self.tabBarController isKindOfClass:[MarbleTabBarController class]]){
+                MarbleTabBarController *tabbarcontroller = (MarbleTabBarController *)self.tabBarController;
+                [tabbarcontroller updateComments:post.comments];
+            }
            
        }
        failure:^(RKObjectRequestOperation *operation, NSError *error) {
            [Utility generateAlertWithMessage:@"Network problem"];
            MBError(@"Cannot get comments!");
        }];
+}
+
+-(void) viewMoreComments:(id)sender{
+    if([self.tabBarController isKindOfClass:[MarbleTabBarController class]]){
+        MarbleTabBarController *tabbarcontroller = (MarbleTabBarController *)self.tabBarController;
+        [tabbarcontroller viewMoreComments:_mustBePost.comments forPost:_mustBePost calledBy:self];
+    }
 }
 
 @end

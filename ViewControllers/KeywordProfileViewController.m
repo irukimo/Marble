@@ -288,20 +288,26 @@
     NSString *rank1fbID = [[_ranking objectForKey:@0] objectForKey:RANKING_FBID_KEY];
     if(rank1fbID){
         [Utility setUpProfilePictureImageView:_rank1ImageView byFBID:rank1fbID];
+        [_rank1ImageView setUserInteractionEnabled:YES];
     }else{
         [_rank0Label setHidden:YES];
+        [_rank1ImageView setUserInteractionEnabled:NO];
     }
     NSString *rank2fbID = [[_ranking objectForKey:@1] objectForKey:RANKING_FBID_KEY];
     if(rank2fbID){
         [Utility setUpProfilePictureImageView:_rank2ImageView byFBID:rank2fbID];
+        [_rank2ImageView setUserInteractionEnabled:YES];
     }else{
         [_rank1Label setHidden:YES];
+        [_rank2ImageView setUserInteractionEnabled:NO];
     }
     NSString *rank3fbID = [[_ranking objectForKey:@2] objectForKey:RANKING_FBID_KEY];
     if(rank3fbID){
         [Utility setUpProfilePictureImageView:_rank3ImageView byFBID:rank3fbID];
+        [_rank3ImageView setUserInteractionEnabled:YES];
     }else{
         [_rank2Label setHidden:YES];
+        [_rank3ImageView setUserInteractionEnabled:NO];
     }
 }
 
@@ -310,37 +316,45 @@
     if(rank1Name){
         NSAttributedString *rank1NameString = [[NSAttributedString alloc] initWithString:[Utility getNameToDisplay:rank1Name] attributes:[Utility getPostsViewNameFontDictionary]];
         [_rank1NameButton setAttributedTitle:rank1NameString forState:UIControlStateNormal];
+        [_rank1NameButton setEnabled:YES];
+    }else{
+        [_rank1NameButton setEnabled:NO];
     }
     NSString *rank2Name = [[_ranking objectForKey:@1] objectForKey:RANKING_NAME_KEY];
     if(rank2Name){
         NSAttributedString *rank2NameString = [[NSAttributedString alloc] initWithString:[Utility getNameToDisplay:rank2Name] attributes:[Utility getPostsViewNameFontDictionary]];
         [_rank2NameButton setAttributedTitle:rank2NameString forState:UIControlStateNormal];
+        [_rank2NameButton setEnabled:YES];
+    }else{
+        [_rank2NameButton setEnabled:NO];
     }
     NSString *rank3Name = [[_ranking objectForKey:@2] objectForKey:RANKING_NAME_KEY];
     if(rank3Name){
         NSAttributedString *rank3NameString = [[NSAttributedString alloc] initWithString:[Utility getNameToDisplay:rank3Name] attributes:[Utility getPostsViewNameFontDictionary]];
         [_rank3NameButton setAttributedTitle:rank3NameString forState:UIControlStateNormal];
+        [_rank3NameButton setEnabled:YES];
+    }else{
+        [_rank3NameButton setEnabled:NO];
     }
 
 }
 
 -(void)rank1NameButtonClicked{
-    id sender;
-    [sender setTag:0];
-    [self rankNameButtonClicked:sender];
+    [self rankNameButtonClicked:[NSNumber numberWithInt:0]];
 }
 -(void)rank2NameButtonClicked{
-    id sender;
-    [sender setTag:1];
-    [self rankNameButtonClicked:sender];
+    [self rankNameButtonClicked:[NSNumber numberWithInt:1]];
 }
 -(void)rank3NameButtonClicked{
-    id sender;
-    [sender setTag:2];
-    [self rankNameButtonClicked:sender];
+    [self rankNameButtonClicked:[NSNumber numberWithInt:2]];
 }
 -(void)rankNameButtonClicked:(id)sender{
-    int rankNum = (int)[sender tag];
+    int rankNum;
+    if([sender isKindOfClass:[NSNumber class]]){
+        rankNum = (int)[sender integerValue];
+    }else{
+        rankNum = (int)[sender tag];
+    }
     NSNumber *number = [[NSNumber alloc] initWithInt:rankNum];
     NSString *name = [[_ranking objectForKey:number] objectForKey:RANKING_NAME_KEY];
     NSString *fbid = [[_ranking objectForKey:number] objectForKey:RANKING_FBID_KEY];

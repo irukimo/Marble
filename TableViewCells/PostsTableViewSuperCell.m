@@ -94,6 +94,7 @@
 }
 
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
+//    MBDebug(@"touchesbegan");
     [self.contentView endEditing:YES];
 }
 
@@ -255,12 +256,21 @@
         y=0;
     }
     int i = 0;
-    for (NSDictionary *cmt in _comments) {
-        if(!_isSinglePostSoExpandComments && i > 2){
-            return;
+    NSUInteger commentCnt = [_comments count];
+    if(commentCnt < 4){
+        for (NSDictionary *cmt in _comments) {
+            if(!_isSinglePostSoExpandComments && i > 2){
+                return;
+            }
+            [self addCommentAtY:(y+i*CommentIncrementHeight) withName:[cmt valueForKey:@"name"] andID:[cmt valueForKey:@"fb_id"] andComment:[cmt valueForKey:@"comment"] atCommentIndex:[_comments indexOfObject:cmt]];
+            i++;
         }
-        [self addCommentAtY:(y+i*CommentIncrementHeight) withName:[cmt valueForKey:@"name"] andID:[cmt valueForKey:@"fb_id"] andComment:[cmt valueForKey:@"comment"] atCommentIndex:[_comments indexOfObject:cmt]];
-        i++;
+    }else{
+        for (int currentIndex = (int)commentCnt - 3; currentIndex < (int)commentCnt; currentIndex++) {
+            NSDictionary *cmt = [_comments objectAtIndex:currentIndex];
+            [self addCommentAtY:(y+i*CommentIncrementHeight) withName:[cmt valueForKey:@"name"] andID:[cmt valueForKey:@"fb_id"] andComment:[cmt valueForKey:@"comment"] atCommentIndex:[_comments indexOfObject:cmt]];
+            i++;
+        }
     }
 }
 

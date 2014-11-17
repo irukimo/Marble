@@ -71,6 +71,7 @@
 
 -(void)viewWillAppear:(BOOL)animated{
     [self setNavbarTitle];
+    MBDebug(@"profile view will appeared called");
 }
 
 -(void) removeAllKeywords{

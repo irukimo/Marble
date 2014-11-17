@@ -86,7 +86,11 @@
 }
 
 -(void)viewWillAppear:(BOOL)animated{
-
+    MBDebug(@"tabbar view will appear %@",[self selectedViewController]);
+    if([[self selectedViewController] isKindOfClass:[UINavigationController class]]){
+        UINavigationController *nc = (UINavigationController *)[self selectedViewController];
+        [[nc topViewController] viewWillAppear:YES];
+    }
 }
 
 -(void)viewDidAppear:(BOOL)animated{

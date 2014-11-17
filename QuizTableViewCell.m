@@ -433,6 +433,12 @@
                 [self setOption0Correct];
             }
         }
+    }else{
+        if([personGuessed isEqualToString:_quiz.option0Name]){
+            [self setOption0GreenMarbleImage];
+        } else{
+            [self setOption1GreenMarbleImage];
+        }
     }
     
     NSAttributedString *num1String = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@",_quiz.option0Num] attributes:[Utility getQuizCompareNumOnPicFontDictionary]];
@@ -444,8 +450,6 @@
     if([personGuessed isEqualToString:_quiz.option0Name]){
         if(!fromJustGuessed){
             [self putOption0MiddleOption1Side];
-            [_marbleImage0 setImage:[UIImage imageNamed:@"green_body.png"]];
-            [_marbleImage1 setImage:[UIImage imageNamed:@"red_body.png"]];
             return;
         }
         [UIView animateWithDuration:0.15
@@ -460,8 +464,6 @@
     }else{
         if(!fromJustGuessed){
             [self putOption1MiddleOption0Side];
-            [_marbleImage1 setImage:[UIImage imageNamed:@"green_body.png"]];
-            [_marbleImage0 setImage:[UIImage imageNamed:@"red_body.png"]];
             return;
         }
         [UIView animateWithDuration:0.15
@@ -480,16 +482,24 @@
 
 -(void)setOption0Correct{
     [_option0PicView addSubview:_option0CorrectIcon];
-    [_marbleImage0 setImage:[UIImage imageNamed:@"green_body.png"]];
     [_option1PicView addSubview:_option1WrongIcon];
-    [_marbleImage1 setImage:[UIImage imageNamed:@"red_body.png"]];
+    [self setOption0GreenMarbleImage];
 }
 -(void)setOption1Correct{
     [_option1PicView addSubview:_option1CorrectIcon];
-    [_marbleImage1 setImage:[UIImage imageNamed:@"green_body.png"]];
     [_option0PicView addSubview:_option0WrongIcon];
+    [self setOption1GreenMarbleImage];
+}
+
+-(void)setOption0GreenMarbleImage{
+    [_marbleImage0 setImage:[UIImage imageNamed:@"green_body.png"]];
+    [_marbleImage1 setImage:[UIImage imageNamed:@"red_body.png"]];
+}
+-(void)setOption1GreenMarbleImage{
+    [_marbleImage1 setImage:[UIImage imageNamed:@"green_body.png"]];
     [_marbleImage0 setImage:[UIImage imageNamed:@"red_body.png"]];
 }
+
 
 -(void)putOption0MiddleOption1Side{
     [_maskLayer0 removeFromSuperlayer];
