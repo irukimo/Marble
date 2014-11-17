@@ -22,9 +22,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setNavbarTitle];
-
-    
-
+   
+    [self.tableView triggerPullToRefresh];
     //    [self.view addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:_CreateQuizViewController.view action:@selector(endEditing:)]];
     //    self.navigationController.navigationBar.hidden = YES;
     // Do any additional setup after loading the view.
@@ -35,6 +34,7 @@
 }
 
 -(void) viewDidAppear:(BOOL)animated{
+
     [super viewDidAppear:animated];
     [self setNavbarTitle];
 }
@@ -76,6 +76,7 @@
     UINavigationBar *myNavBar =[self.navigationController navigationBar];
     [myNavBar setTitleTextAttributes:[Utility getNavigationBarTitleFontDictionary]];
     [[myNavBar topItem] setTitle:@"News Feed"];
+
     [myNavBar setTranslucent:NO];
     [myNavBar setBarTintColor:[UIColor marbleOrange]];
         self.navigationController.navigationBar.tintColor = [UIColor whiteColor];

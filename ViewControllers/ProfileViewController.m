@@ -50,7 +50,7 @@
     [super viewDidLoad];
     [self prepareHeaderView];
 //    [self initiateCreateQuizViewController];
-    [self setNavbarTitle];
+//    [self setNavbarTitle];
     if(!_profilePicView){
         [self initFBProfilePicViews];
     }
@@ -74,6 +74,8 @@
     MBDebug(@"profile view will appeared called");
     [self getStatus];
 }
+
+
 
 -(void) removeAllKeywords{
     for(UIView *view in _keywordsView.subviews){
@@ -300,7 +302,7 @@
         [_statusTextView setEditable:NO];
         [_statusBtn removeFromSuperview];
     }
-    [self getStatus];
+//    [self getStatus];
 }
 
 
@@ -326,7 +328,7 @@
      path:nil //previously defined Class routes
      parameters:params
      success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
-         MBDebug(@"status result: %@", [mappingResult array]);
+//         MBDebug(@"status result: %@", [mappingResult array]);
          if([_user isKindOfClass:[User class]]){
              [self setStatusWithText:_user.status];
              [self displayKeywords];
@@ -336,7 +338,7 @@
              }
          }
      } failure:^(RKObjectRequestOperation *operation, NSError *error) {
-         MBDebug(@"failed to get status");
+         MBDebug(@"failed to get user fb id: %@", _user.fbID);
      }];
 }
 
@@ -344,7 +346,7 @@
 
 -(void) displayKeywords{
     [self removeAllKeywords];
-    NSLog(@"_user.keywords %@ for _user %@", _user.keywords, _user.name);
+//    NSLog(@"_user.keywords %@ for _user %@", _user.keywords, _user.name);
     [self resizeWhiteBackground];
 
     if(!_user.keywords){

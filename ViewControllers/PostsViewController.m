@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Orrzs Inc. All rights reserved.
 //
 
-#import "SVPullToRefresh.h"
+
 
 #import "PostsViewController.h"
 #import "ProfileViewController.h"
@@ -102,7 +102,6 @@
 
     self.tableView.contentInset = UIEdgeInsetsMake(CELL_UNIVERSAL_PADDING/2.0, 0, CELL_UNIVERSAL_PADDING/2.0, 0);
     
-    [weakSelf startRefreshing];
 }
 
 -(void)viewDidAppear:(BOOL)animated{
@@ -312,8 +311,6 @@
         
         [cell setQuiz:(Quiz *)quiz];
         
-        MBDebug(@"quiz: %@", quiz);
-
         cell.delegate = self;
 
         cell.quizUUID = quiz.uuid;
@@ -328,7 +325,7 @@
         cell.delegate = self;
         [cell setStatusUpdate:status];
 //        MBDebug(@"status cell: %@", cell);
-        MBDebug(@"status update: %@", status);
+//        MBDebug(@"status update: %@", status);
         [self getCommentsForPost:post];
         return cell;
     } else {

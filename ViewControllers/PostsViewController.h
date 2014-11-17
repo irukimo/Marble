@@ -11,6 +11,7 @@
 #import "StatusUpdateTableViewCell.h"
 #import "KeywordUpdateTableViewCell.h"
 #import "PostsTableViewSuperCell.h"
+#import "SVPullToRefresh.h"
 
 @protocol PostsViewControllerDelegate;
 

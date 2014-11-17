@@ -43,8 +43,8 @@
     _fbChUsers = nil;
     _fbEngUsers = nil;
     
-    [self getFriendsNamesInEngOnly];
-//    [self getFriendsNamesInEngAndCh];
+//    [self getFriendsNamesInEngOnly];
+    [self getFriendsNamesInEngAndCh];
     
     [KeyChainWrapper storeSelfName:user.name andID:user.id];
     
@@ -206,20 +206,20 @@
                                       NSArray* friends = [result objectForKey:@"data"];
                                       NSLog(@"Found: %lu friends", (unsigned long)friends.count);
                                       
-                                      if(isEnglish) {
-                                          _fbEngUsers = friends;
-                                      } else {
-                                          _fbChUsers = friends;
+                                      NSManagedObjectContext *context = [[RKManagedObjectStore defaultStore] newChildManagedObjectContextWithConcurrencyType:NSPrivateQueueConcurrencyType tracksChanges:YES];
+
+                                      @synchronized(self) {
+                                          if(isEnglish) {
+                                              _fbEngUsers = friends;
+                                          } else {
+                                              _fbChUsers = friends;
+                                          }
+
+                                          [User createUsersInBatchForEng:_fbEngUsers
+                                                              andChinese:_fbChUsers
+                                                               bilingual:bilingual
+                                                  inManagedObjectContext:context];
                                       }
-                                      
-
-                                          NSManagedObjectContext *context = [[RKManagedObjectStore defaultStore] newChildManagedObjectContextWithConcurrencyType:NSPrivateQueueConcurrencyType tracksChanges:YES];
-                                          //                                          NSManagedObjectContext *context = [[RKManagedObjectStore defaultStore] mainQueueManagedObjectContext];
-                                      [User createUsersInBatchForEng:_fbEngUsers
-                                                          andChinese:_fbChUsers
-                                                           bilingual:bilingual
-                                              inManagedObjectContext:context];
-
                                   }else{
                                       NSLog(@"error%@", error);
                                   }

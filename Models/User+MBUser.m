@@ -49,7 +49,7 @@
 + (BOOL)createUsersInBatchForEng:(NSArray *)fbEngUsers andChinese:(NSArray *)fbChUsers bilingual:(BOOL)bilingual inManagedObjectContext:(NSManagedObjectContext *)context
 {
     if ( (fbEngUsers == nil || fbChUsers == nil) && bilingual ) return FALSE;
-    MBDebug(@"fbEngUsers: %@, fbChUsers: %@", fbEngUsers, fbChUsers);
+//    MBDebug(@"fbEngUsers: %@, fbChUsers: %@", fbEngUsers, fbChUsers);
     NSArray *fbIDs = [fbEngUsers valueForKey:@"id"];
     if (fbIDs != nil) [fbIDs sortedArrayUsingSelector: @selector(compare:)];
 //    MBDebug(@"fb ids: %@", fbIDs);
