@@ -46,7 +46,8 @@
           *     self: (number),
           *     before: {fb_id: xxxx, name: xxxx, rank: (number)}
           *   },
-          *   has_liked
+          *   has_liked,
+          *   num_likes
           * ]
           * NOTE: after/before might correspond to nil value.
           */

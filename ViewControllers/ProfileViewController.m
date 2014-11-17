@@ -72,6 +72,7 @@
 -(void)viewWillAppear:(BOOL)animated{
     [self setNavbarTitle];
     MBDebug(@"profile view will appeared called");
+    [self getStatus];
 }
 
 -(void) removeAllKeywords{
@@ -315,7 +316,7 @@
 //    NSError *error;
 //    NSArray *matches = [[RKManagedObjectStore defaultStore].mainQueueManagedObjectContext executeFetchRequest:fetchRequest error:&error];
 //    User *user = [matches firstObject];
-    
+    MBDebug(@"About to get user object: %@", _user.name);
     NSMutableDictionary *params = [NSMutableDictionary
                                    dictionaryWithObjects:@[[KeyChainWrapper getSessionTokenForUser], _user.fbID]
                                    forKeys:@[@"auth_token", @"fb_id"]];
