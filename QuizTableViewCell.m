@@ -16,8 +16,6 @@
 #define RESULT_RELATED_TAG 768
 #define WORD_SEPARATION 5
 
-#define OPTION_SQUARE_WIDTH 150
-#define OPTION_PIC_LEFT_ALIGNMENT 6
 #define OPTION_PICS_DISTANCE 8
 #define OPTION_PIC_Y 112
 #define OPTION_PIC_SMALL_Y 150
@@ -158,7 +156,7 @@
 
 -(void)addGradientAndMarbleNum{
     /*
-    CGRect gradientFrame = CGRectMake(0, OPTION_SQUARE_WIDTH*2.0/3.0, OPTION_SQUARE_WIDTH, OPTION_SQUARE_WIDTH/3.0);
+    CGRect gradientFrame = CGRectMake(0, [KeyChainWrapper getQuizImageWidth]*2.0/3.0, [KeyChainWrapper getQuizImageWidth], [KeyChainWrapper getQuizImageWidth]/3.0);
     _gradient1 = [CAGradientLayer layer];
     _gradient1.frame = gradientFrame;
     _gradient1.colors = [NSArray arrayWithObjects:(id)[[UIColor clearColor] CGColor],(id)[[UIColor colorWithWhite:0 alpha:0.8] CGColor], nil];
@@ -211,8 +209,8 @@
     int iconY = OPTION_PIC_Y + 95;
 //    _option0CorrectIcon = [[UIImageView alloc] initWithFrame:CGRectMake(OPTION_PIC_LEFT_ALIGNMENT - 2, iconY, iconWidth, iconWidth)];
 //    _option0WrongIcon =[[UIImageView alloc] initWithFrame:CGRectMake(OPTION_PIC_LEFT_ALIGNMENT - 2, iconY, iconWidth, iconWidth)];
-//    _option1CorrectIcon = [[UIImageView alloc] initWithFrame:CGRectMake(OPTION_PIC_LEFT_ALIGNMENT - 2 + OPTION_SQUARE_WIDTH + OPTION_PICS_DISTANCE, iconY, iconWidth, iconWidth)];
-//    _option1WrongIcon =[[UIImageView alloc] initWithFrame:CGRectMake(OPTION_PIC_LEFT_ALIGNMENT - 2 + OPTION_SQUARE_WIDTH + OPTION_PICS_DISTANCE, iconY, iconWidth, iconWidth)];
+//    _option1CorrectIcon = [[UIImageView alloc] initWithFrame:CGRectMake(OPTION_PIC_LEFT_ALIGNMENT - 2 + [KeyChainWrapper getQuizImageWidth] + OPTION_PICS_DISTANCE, iconY, iconWidth, iconWidth)];
+//    _option1WrongIcon =[[UIImageView alloc] initWithFrame:CGRectMake(OPTION_PIC_LEFT_ALIGNMENT - 2 + [KeyChainWrapper getQuizImageWidth] + OPTION_PICS_DISTANCE, iconY, iconWidth, iconWidth)];
     
     _option0CorrectIcon = [[UIImageView alloc] initWithFrame:[self getBigCWIconFrame]];
     _option0WrongIcon =[[UIImageView alloc] initWithFrame:[self getBigCWIconFrame]];
@@ -265,7 +263,7 @@
 
 -(void)addStaticLabels{
     
-    CGRect compareNumFrame = CGRectMake(260, 10, 50, 20);
+    CGRect compareNumFrame = CGRectMake([KeyChainWrapper getScreenWidth] - 60, 10, 50, 20);
     _compareNumLabel = [[UILabel alloc] initWithFrame:compareNumFrame];
     
     compareNumFrame.origin.x = compareNumFrame.origin.x - 17;
@@ -391,7 +389,7 @@
     [_keywordButton setAttributedTitle:keywordString forState:UIControlStateNormal];
     [_keywordButton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentCenter];
     CGRect keywordFrame = _keywordButton.frame;
-    keywordFrame.origin.x = self.contentView.frame.size.width/2.0f - keywordString.size.width/2.0f - 3*WORD_SEPARATION;
+    keywordFrame.origin.x = [KeyChainWrapper getScreenWidth]/2.0f - keywordString.size.width/2.0f - 3*WORD_SEPARATION;
     keywordFrame.size.width = keywordString.size.width + 6*WORD_SEPARATION;
     _keywordButton.frame = keywordFrame;
 
@@ -538,11 +536,11 @@
     [_option0PicView setUserInteractionEnabled:YES];
     [_option1PicView setUserInteractionEnabled:YES];
     _maskLayer0 = [CALayer layer];
-    _maskLayer0.frame = CGRectMake(0, 0, OPTION_SQUARE_WIDTH, OPTION_SQUARE_WIDTH);
+    _maskLayer0.frame = CGRectMake(0, 0, [KeyChainWrapper getQuizImageWidth], [KeyChainWrapper getQuizImageWidth]);
     [_maskLayer0 setBackgroundColor:[UIColor colorWithWhite:1 alpha:0.5].CGColor];
     [_option0PicView.layer addSublayer:_maskLayer0];
     _maskLayer1 = [CALayer layer];
-    _maskLayer1.frame = CGRectMake(0, 0, OPTION_SQUARE_WIDTH, OPTION_SQUARE_WIDTH);
+    _maskLayer1.frame = CGRectMake(0, 0, [KeyChainWrapper getQuizImageWidth], [KeyChainWrapper getQuizImageWidth]);
     [_maskLayer1 setBackgroundColor:[UIColor colorWithWhite:1 alpha:0.5].CGColor];
     [_option1PicView.layer addSublayer:_maskLayer1];
     [_option0PicView setFrame:[self getOption0OriFrame]];
@@ -590,31 +588,31 @@
 #pragma mark Layout Helper Methods
 
 -(CGRect)getOption0OriFrame{
-    return CGRectMake(OPTION_PIC_LEFT_ALIGNMENT, OPTION_PIC_Y, OPTION_SQUARE_WIDTH, OPTION_SQUARE_WIDTH);
+    return CGRectMake(CELL_UNIVERSAL_PADDING/2.f, OPTION_PIC_Y, [KeyChainWrapper getQuizImageWidth], [KeyChainWrapper getQuizImageWidth]);
 }
 -(CGRect)getOption1OriFrame{
-    return CGRectMake(OPTION_PIC_LEFT_ALIGNMENT + OPTION_SQUARE_WIDTH + OPTION_PICS_DISTANCE, OPTION_PIC_Y, OPTION_SQUARE_WIDTH, OPTION_SQUARE_WIDTH);
+    return CGRectMake(CELL_UNIVERSAL_PADDING/2.f + [KeyChainWrapper getQuizImageWidth] + CELL_UNIVERSAL_PADDING, OPTION_PIC_Y, [KeyChainWrapper getQuizImageWidth], [KeyChainWrapper getQuizImageWidth]);
 }
 -(CGRect)getMiddlePicViewFrame{
-    return CGRectMake(self.bounds.size.width/2.0f - OPTION_SQUARE_WIDTH/2.0f, OPTION_PIC_Y, OPTION_SQUARE_WIDTH, OPTION_SQUARE_WIDTH);
+    return CGRectMake([KeyChainWrapper getScreenWidth]/2.0f - [KeyChainWrapper getQuizImageWidth]/2.0f, OPTION_PIC_Y, [KeyChainWrapper getQuizImageWidth], [KeyChainWrapper getQuizImageWidth]);
 }
 
 -(CGFloat) getSmallPicWidth{
     CGRect middleFrame = [self getMiddlePicViewFrame];
-    return middleFrame.origin.y - 55;
+    return middleFrame.origin.x - 31;
 }
 -(CGRect)getSmallOption0Frame{
-    return CGRectMake(24, OPTION_PIC_SMALL_Y, [self getSmallPicWidth], [self getSmallPicWidth]);
+    return CGRectMake(24, OPTION_PIC_Y + [KeyChainWrapper getQuizImageWidth]/2.0f - [self getSmallPicWidth]/2.0f, [self getSmallPicWidth], [self getSmallPicWidth]);
 }
 -(CGRect)getSmallOption1Frame{
     CGRect middleFrame = [self getMiddlePicViewFrame];
     CGFloat x = middleFrame.origin.x + middleFrame.size.width;
-    return CGRectMake(x + 5, OPTION_PIC_SMALL_Y, [self getSmallPicWidth], [self getSmallPicWidth]);
+    return CGRectMake(x + 5,  OPTION_PIC_Y + [KeyChainWrapper getQuizImageWidth]/2.0f - [self getSmallPicWidth]/2.0f, [self getSmallPicWidth], [self getSmallPicWidth]);
 }
 
 -(CGRect)getBigCWIconFrame{
     CGFloat iconWidth = 70.f;
-    return CGRectMake(OPTION_SQUARE_WIDTH/2.0f - iconWidth/2.f, 40, iconWidth, iconWidth);
+    return CGRectMake([KeyChainWrapper getQuizImageWidth]/2.0f - iconWidth/2.f, 40, iconWidth, iconWidth);
 }
 -(CGRect)getSmallCWIconFrame{
     CGFloat iconWidth = 25.f;
@@ -622,7 +620,7 @@
 }
 -(CGRect)getBigMarbleIconFrame{
     CGFloat iconWidth = 26.f;
-    return CGRectMake(OPTION_SQUARE_WIDTH - 16, OPTION_SQUARE_WIDTH - 16, iconWidth, iconWidth);
+    return CGRectMake([KeyChainWrapper getQuizImageWidth] - 16, [KeyChainWrapper getQuizImageWidth] - 16, iconWidth, iconWidth);
 }
 -(CGRect)getSmallMarbleIconFrame{
     CGFloat iconWidth = 16.f;

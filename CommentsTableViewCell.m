@@ -34,7 +34,7 @@
 
 
 -(void) addStaticLabels{
-    _timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(260, 5, 80, 30)];
+    _timeLabel = [[UILabel alloc] initWithFrame:CGRectMake([KeyChainWrapper getScreenWidth] - 60, 5, 80, 30)];
     _commentLabel = [[UILabel alloc] initWithFrame:CGRectMake(LEFT_ALIGNMENT + 50, 22, 150, 30)];
     _nameButton = [[UIButton alloc] initWithFrame:CGRectMake(LEFT_ALIGNMENT + 50, 5, 100, 30)];
     [_nameButton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];

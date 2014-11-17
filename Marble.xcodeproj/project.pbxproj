@@ -1019,7 +1019,7 @@
 				);
 				GCC_PREFIX_HEADER = "Marble/Marble-Prefix.pch";
 				INFOPLIST_FILE = Marble/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = Marbles;
 				PROVISIONING_PROFILE = "";
@@ -1040,7 +1040,7 @@
 				);
 				GCC_PREFIX_HEADER = "Marble/Marble-Prefix.pch";
 				INFOPLIST_FILE = Marble/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = Marbles;
 				PROVISIONING_PROFILE = "";

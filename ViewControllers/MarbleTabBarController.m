@@ -172,7 +172,7 @@
 
 -(void) setViewFrames{
     _commentsTableViewFrame = CGRectMake(0, 50, self.view.frame.size.width, self.view.frame.size.height - NAVBAR_HEIGHT - TABBAR_HEIGHT - 50);
-    _commentFieldViewFrame = CGRectMake(0, 10 + self.view.frame.size.height - TABBAR_HEIGHT - NAVBAR_HEIGHT, self.view.frame.size.width, 100);
+    _commentFieldViewFrame = CGRectMake(0, 10 + self.view.frame.size.height - TABBAR_HEIGHT - NAVBAR_HEIGHT, [KeyChainWrapper getScreenWidth], 100);
 }
 
 
@@ -340,13 +340,13 @@
 
 -(void) initCommentFieldView{
     _commentFieldView = [[UIView alloc] initWithFrame:CGRectMake(0, 10 + self.view.frame.size.height - TABBAR_HEIGHT - NAVBAR_HEIGHT, self.view.frame.size.width, 100)];
-    _commentBtn = [[UIButton alloc] initWithFrame:CGRectMake(270 , -2, 35, 35)];
+    _commentBtn = [[UIButton alloc] initWithFrame:CGRectMake([KeyChainWrapper getScreenWidth]-50 , -2, 35, 35)];
     
     [_commentBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [_commentBtn setImage:[UIImage imageNamed:@"send-no-border.png"] forState:UIControlStateNormal];
     [_commentBtn addTarget:self action:@selector(commentPostClicked:) forControlEvents:UIControlEventTouchUpInside];
     
-    _commentField = [[UITextField alloc] initWithFrame:CGRectMake(10, 0, 250, 30)];
+    _commentField = [[UITextField alloc] initWithFrame:CGRectMake(10, 0, [KeyChainWrapper getScreenWidth] - 70, 30)];
     _commentField.delegate = self;
     [_commentField setBorderStyle:UITextBorderStyleRoundedRect];
     _commentField.returnKeyType = UIReturnKeySend;
@@ -362,7 +362,7 @@
     
     UIView *blackBGView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height + KEYBOARD_HEIGHT)];
     [blackBGView setBackgroundColor:[UIColor colorWithWhite:0 alpha:0.8f]];
-    _cancelButton = [[UIButton alloc] initWithFrame:CGRectMake(270, 10, 50, 50)];
+    _cancelButton = [[UIButton alloc] initWithFrame:CGRectMake([KeyChainWrapper getScreenWidth] - 50, 10, 50, 50)];
     [_cancelButton setTitle:@"X" forState:UIControlStateNormal];
     [_cancelButton addTarget:self action:@selector(cancelCommentsTableView) forControlEvents:UIControlEventTouchUpInside];
     _commentsTableViewController = [[CommentsTableViewController alloc] init];

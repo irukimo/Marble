@@ -65,7 +65,7 @@
     //its delegate will automatically be set to launchviewcontroller
     _loginView = [[FBLoginView alloc] initWithReadPermissions:@[@"public_profile", @"user_friends"]];
     // Align the button in the center horizontally
-    _loginView.frame = CGRectOffset(_loginView.frame, (self.view.center.x - (_loginView.frame.size.width / 2)), 520);
+    _loginView.frame = CGRectOffset(_loginView.frame, (self.view.center.x - (_loginView.frame.size.width / 2)), self.view.bounds.size.height-48);
     
     [self.view addSubview:_loginView];
     

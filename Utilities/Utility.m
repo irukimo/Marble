@@ -461,11 +461,11 @@
 + (int)getCellHeightForPostWithType:(PostCellType)cellType withComments:(NSArray *)comments whetherSinglePost:(bool)isSinglePost {
     if (cellType == MBQuizCellType){
         if(!comments|| [comments count] == 0){
-            return QuizTableViewCellDisplayHeight;
+            return [KeyChainWrapper getQuizCellDisplayHeight];
         } else if([comments count] > 2 && !isSinglePost){
-            return QuizTableViewCellDisplayHeight +FirstCommentIncrementHeight + 2*CommentIncrementHeight + 8;
+            return [KeyChainWrapper getQuizCellDisplayHeight] +FirstCommentIncrementHeight + 2*CommentIncrementHeight + 8;
         } else{
-            return QuizTableViewCellDisplayHeight + FirstCommentIncrementHeight + (int)([comments count]-1)*CommentIncrementHeight+ 8;
+            return [KeyChainWrapper getQuizCellDisplayHeight] + FirstCommentIncrementHeight + (int)([comments count]-1)*CommentIncrementHeight+ 8;
         }
     } else if(cellType == MBStatusUpdateCellType){
         if(!comments|| [comments count] == 0){

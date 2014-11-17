@@ -26,7 +26,7 @@
     [self.collectionView setBackgroundColor:[UIColor whiteColor]];
     [self.collectionView registerClass:[ExploreCollectionViewCell class] forCellWithReuseIdentifier:exploreCollectionViewCellIdentifier];
     [self.collectionView setContentInset:UIEdgeInsetsMake(0, SPACING, 0, SPACING)];
-    [self.collectionView setFrame:CGRectMake(0, 50, 320, self.view.frame.size.height - 50)];
+    [self.collectionView setFrame:CGRectMake(0, 50, [KeyChainWrapper getScreenWidth], self.view.frame.size.height - 50)];
     [self setNavbarTitle];
     [self initSearchTextField];
     [self initSearchResults];

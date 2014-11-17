@@ -61,7 +61,8 @@
     _nameLabel.layer.shadowRadius = 3.f;
     _nameLabel.layer.shadowOpacity = 1.f;
     _nameLabel.layer.shadowOffset = CGSizeMake(0, 0);
-    _keywordLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, 105, self.contentView.frame.size.width, 20)];
+    MBDebug(@"selfheight %f", self.contentView.frame.size.height);
+    _keywordLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, self.contentView.frame.size.height - 22, self.contentView.frame.size.width, 20)];
     [self.contentView addSubview:_nameLabel];
     [self.contentView addSubview:_keywordLabel];
     
@@ -78,7 +79,7 @@
 }
 
 -(CGRect)getNameNormalFrame{
-    return CGRectMake(5, 88, self.contentView.frame.size.width, 20);
+    return CGRectMake(5, self.contentView.frame.size.height - 39, self.contentView.frame.size.width, 20);
 }
 
 -(void)setCellUser:(User *)user{

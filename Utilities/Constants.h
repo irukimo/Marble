@@ -52,6 +52,8 @@
 
 #define QuizTableViewCellHeight 305
 #define QuizTableViewCellDisplayHeight 315
+#define QuizImageWidthAndCellHeightDifference 157
+#define QuizImageWidthAndCellDisplayHeightDifference 167
 #define StatusUpdateTableViewCellHeight 110
 #define KeywordUpdateTableViewCellHeight 110
 #define StatusUpdateTableViewCellDisplayHeight 115

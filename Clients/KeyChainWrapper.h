@@ -34,6 +34,13 @@
 +(NSString *)getSelfFBID;
     
 +(void)cleanUpCredentials;
+
++(CGFloat)getQuizImageWidth;
++(CGFloat)getQuizCellDisplayHeight;
++(CGFloat)getQuizCellHeight;
+
++(CGFloat)getScreenWidth;
++(CGFloat)getScreenHeight;
 //+(NSString *)getValueFromKeyChain:(NSString *)key;
 //+(void)storeValueInKeyChain:(NSString *)value forKey:(NSString *)key;
 //+(void)registerDeviceId:(NSString *)uid andKey:(NSString *)key;

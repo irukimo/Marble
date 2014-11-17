@@ -25,6 +25,11 @@ static NSArray *keywords = nil;
 static NSString *selfName = nil;
 static NSString *selfFBID = nil;
 
+static CGFloat screenWidth;
+static CGFloat screenHeight;
+
+
+
 @implementation KeyChainWrapper
 
 +(void)storeFBUserID:(NSString *)fbUserID
@@ -164,6 +169,46 @@ static NSString *selfFBID = nil;
         [keywordMutable addObject:keyword];
         keywords = keywordMutable;
     }
+}
+
++(CGFloat)getQuizImageWidth{
+
+    CGRect screenBound = [[UIScreen mainScreen] bounds];
+    CGSize screenSize = screenBound.size;
+    CGFloat screenWidth = screenSize.width;
+    CGFloat width = (screenWidth - 2*CELL_UNIVERSAL_PADDING)/2.0f;
+    MBDebug(@"width %f",width);
+    return width;
+}
+
++(CGFloat)getQuizCellDisplayHeight{
+    CGFloat imageWidth = [self getQuizImageWidth];
+    return imageWidth + QuizImageWidthAndCellDisplayHeightDifference;
+}
+
++(CGFloat)getQuizCellHeight{
+    CGFloat imageWidth = [self getQuizImageWidth];
+    return imageWidth + QuizImageWidthAndCellHeightDifference;
+}
+
++(CGFloat)getScreenWidth{
+    if(screenWidth){
+        return screenWidth;
+    }
+    CGRect screenBound = [[UIScreen mainScreen] bounds];
+    screenWidth = screenBound.size.width;
+    return screenWidth;
+
+}
+
++(CGFloat)getScreenHeight{
+    if(screenHeight){
+        return screenHeight;
+    }
+    CGRect screenBound = [[UIScreen mainScreen] bounds];
+    screenHeight = screenBound.size.height;
+    return screenHeight;
+    
 }
 
 
