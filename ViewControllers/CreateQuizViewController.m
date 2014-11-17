@@ -565,7 +565,7 @@ static const int picY = 50;
 
 -(void) initFBProfilePicViews{
     _option0PicView = [[UIImageView alloc] initWithFrame:CGRectMake(40, picY, picviewSize, picviewSize)];
-    _option1PicView = [[UIImageView alloc] initWithFrame:CGRectMake(170,picY, picviewSize, picviewSize)];
+    _option1PicView = [[UIImageView alloc] initWithFrame:CGRectMake([KeyChainWrapper getScreenWidth]-150,picY, picviewSize, picviewSize)];
     _option0PicView.layer.cornerRadius = _option0PicView.frame.size.width/2.0;
     _option0PicView.layer.masksToBounds = YES;
     _option1PicView.layer.cornerRadius = _option1PicView.frame.size.width/2.0;
@@ -796,7 +796,7 @@ static const int picY = 50;
 -(void)addTextFields{
 //    _keywordTextField = [[UITextField alloc] initWithFrame:CGRectMake(80, 20, 150, 40)];
     _option0NameTextField = [[UITextField alloc] initWithFrame:CGRectMake(30, picY + picviewSize+3, 120, 30)];
-    _option1NameTextField = [[UITextField alloc] initWithFrame:CGRectMake(170, picY + picviewSize+3, 120, 30)];
+    _option1NameTextField = [[UITextField alloc] initWithFrame:CGRectMake([KeyChainWrapper getScreenWidth] - 150, picY + picviewSize+3, 120, 30)];
     _keywordCurrentValue = @"yay";
 //    [_keywordTextField setText:_keywordCurrentValue];
 //    [_keywordTextField setTextAlignment:NSTextAlignmentCenter];
@@ -844,7 +844,7 @@ static const int picY = 50;
 
 
 -(void)addShufflePeopleButton{
-    _shufflePeopleBtn = [[UIButton alloc] initWithFrame:CGRectMake(80, 450, 170, 50)];
+    _shufflePeopleBtn = [[UIButton alloc] initWithFrame:CGRectMake([KeyChainWrapper getScreenWidth]/2.f - 80, [KeyChainWrapper getScreenHeight]-118, 170, 50)];
     NSAttributedString *shuffleString = [[NSAttributedString alloc] initWithString:@"shuffle friends" attributes:[Utility getCreateQuizShuffleButtonFontDictionary]];
     [_shufflePeopleBtn setAttributedTitle:shuffleString forState:UIControlStateNormal];
     [_shufflePeopleBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
