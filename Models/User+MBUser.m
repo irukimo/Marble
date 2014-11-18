@@ -72,19 +72,19 @@
     MBDebug(@"fb ids: %@", fbIDs);
     
     // create the fetch request to get all users matching the IDs
-//    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-//    [fetchRequest setEntity:
-//     [NSEntityDescription entityForName:@"User" inManagedObjectContext:context]];
-//    [fetchRequest setPredicate: [NSPredicate predicateWithFormat: @"(fbID IN %@)", fbIDs]];
-//    
-//    // Make sure the results are sorted as well.
-//    [fetchRequest setSortDescriptors:
-//     @[ [[NSSortDescriptor alloc] initWithKey: @"fbID" ascending:YES] ]];
-//    // Execute the fetch.
-//    NSError *error;
-//    NSArray *usersMatchingFbIDs = [[[context executeFetchRequest:fetchRequest error:&error] valueForKey:@"fbID"] sortedArrayUsingSelector: @selector(compare:)];
-//    
-//    MBDebug(@"Matching IDs: %@", usersMatchingFbIDs);
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    [fetchRequest setEntity:
+     [NSEntityDescription entityForName:@"User" inManagedObjectContext:context]];
+    [fetchRequest setPredicate: [NSPredicate predicateWithFormat: @"(fbID IN %@)", fbIDs]];
+    
+    // Make sure the results are sorted as well.
+    [fetchRequest setSortDescriptors:
+     @[ [[NSSortDescriptor alloc] initWithKey: @"fbID" ascending:YES] ]];
+    // Execute the fetch.
+    NSError *error;
+    NSArray *usersMatchingFbIDs = [[[context executeFetchRequest:fetchRequest error:&error] valueForKey:@"fbID"] sortedArrayUsingSelector: @selector(compare:)];
+    
+    MBDebug(@"Matching IDs: %@", usersMatchingFbIDs);
     
     [context setUndoManager:nil];
     
@@ -96,24 +96,29 @@
     int total = 0;
     for (NSDictionary<FBGraphUser>* user in fbEngUsers) {
 //        MBDebug(@"Work on User %@", user.id);
-//        NSPredicate *idPredicate = [NSPredicate predicateWithFormat:@"fbID = %@", user.id];
-//        NSArray *matches = [usersMatchingFbIDs filteredArrayUsingPredicate:idPredicate];
+        NSPredicate *idPredicate = [NSPredicate predicateWithFormat:@"self == %@", user.id];
+        NSArray *matches = [usersMatchingFbIDs filteredArrayUsingPredicate:idPredicate];
 
-        NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-        [fetchRequest setEntity:
-         [NSEntityDescription entityForName:@"User" inManagedObjectContext:context]];
-        [fetchRequest setPredicate: [NSPredicate predicateWithFormat: @"fbID == %@", user.id]];
+//        NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+//        [fetchRequest setEntity:
+//         [NSEntityDescription entityForName:@"User" inManagedObjectContext:context]];
+//        [fetchRequest setPredicate: [NSPredicate predicateWithFormat: @"fbID == %@", user.id]];
         
         // Execute the fetch.
         NSString *name = nil;
-        NSError *error;
-        NSArray *matches = [context executeFetchRequest:fetchRequest error:&error];
+//        NSError *error;
+//        NSArray *matches = [context executeFetchRequest:fetchRequest error:&error];
         if ([matches count] != 0) {
-            MBDebug(@"User exists, %@.", [matches firstObject]);
+//            MBDebug(@"User exists, %@.", [matches firstObject]);
             // check if the name contains both languages
             
             if (bilingual) {
-                User *existingUser = [matches firstObject];
+                NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+                [fetchRequest setEntity:
+                 [NSEntityDescription entityForName:@"User" inManagedObjectContext:context]];
+                [fetchRequest setPredicate: [NSPredicate predicateWithFormat: @"fbID == %@", [matches firstObject]]];
+                NSArray *users = [context executeFetchRequest:fetchRequest error:nil];
+                User *existingUser = [users firstObject];
                 name = [self combineCombinedNameInEngAndCh:fbChUsers withUser:user withPredicateTemplate:predicate];
                 if (![name isEqualToString:existingUser.name]) {
                     MBDebug(@"About to change name: existing name: %@, new name: %@", existingUser.name, name);
