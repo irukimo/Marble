@@ -46,28 +46,45 @@
 }
 
 
++ (NSString *)combineCombinedNameInEngAndCh:(NSArray *)fbChUsers withUser:(NSDictionary<FBGraphUser> *)user withPredicateTemplate:(NSPredicate *)predicateTemplate
+{
+    NSPredicate *localPredicate = [predicateTemplate predicateWithSubstitutionVariables:@{ @"FB_ID" : user.id }];
+    NSArray *filteredArray = [fbChUsers filteredArrayUsingPredicate:localPredicate];
+    if ([filteredArray count] != 0) {
+        NSDictionary<FBGraphUser> *chUser = filteredArray[0];
+        
+        if ([chUser.name isEqualToString:user.name]) {
+            return user.name;
+        } else {
+            return [NSString stringWithFormat:@"%@ (%@)", user.name, chUser.name];
+        }
+    } else {
+        return user.name;
+    }
+}
+
 + (BOOL)createUsersInBatchForEng:(NSArray *)fbEngUsers andChinese:(NSArray *)fbChUsers bilingual:(BOOL)bilingual inManagedObjectContext:(NSManagedObjectContext *)context
 {
-    if ( (fbEngUsers == nil || fbChUsers == nil) && bilingual ) return FALSE;
+    if ( (fbEngUsers == nil || fbChUsers == nil) && bilingual ) {return FALSE;}
 //    MBDebug(@"fbEngUsers: %@, fbChUsers: %@", fbEngUsers, fbChUsers);
     NSArray *fbIDs = [fbEngUsers valueForKey:@"id"];
     if (fbIDs != nil) [fbIDs sortedArrayUsingSelector: @selector(compare:)];
-//    MBDebug(@"fb ids: %@", fbIDs);
+    MBDebug(@"fb ids: %@", fbIDs);
     
-    // create the fetch request to get all Employees matching the IDs
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    [fetchRequest setEntity:
-     [NSEntityDescription entityForName:@"User" inManagedObjectContext:context]];
-    [fetchRequest setPredicate: [NSPredicate predicateWithFormat: @"(fbID IN %@)", fbIDs]];
-    
-    // Make sure the results are sorted as well.
-    [fetchRequest setSortDescriptors:
-     @[ [[NSSortDescriptor alloc] initWithKey: @"fbID" ascending:YES] ]];
-    // Execute the fetch.
-    NSError *error;
-    NSArray *usersMatchingFbIDs = [[[context executeFetchRequest:fetchRequest error:&error] valueForKey:@"fbID"] sortedArrayUsingSelector: @selector(compare:)];
-    
-    MBDebug(@"Matching IDs: %@", usersMatchingFbIDs);
+    // create the fetch request to get all users matching the IDs
+//    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+//    [fetchRequest setEntity:
+//     [NSEntityDescription entityForName:@"User" inManagedObjectContext:context]];
+//    [fetchRequest setPredicate: [NSPredicate predicateWithFormat: @"(fbID IN %@)", fbIDs]];
+//    
+//    // Make sure the results are sorted as well.
+//    [fetchRequest setSortDescriptors:
+//     @[ [[NSSortDescriptor alloc] initWithKey: @"fbID" ascending:YES] ]];
+//    // Execute the fetch.
+//    NSError *error;
+//    NSArray *usersMatchingFbIDs = [[[context executeFetchRequest:fetchRequest error:&error] valueForKey:@"fbID"] sortedArrayUsingSelector: @selector(compare:)];
+//    
+//    MBDebug(@"Matching IDs: %@", usersMatchingFbIDs);
     
     [context setUndoManager:nil];
     
@@ -79,27 +96,35 @@
     int total = 0;
     for (NSDictionary<FBGraphUser>* user in fbEngUsers) {
 //        MBDebug(@"Work on User %@", user.id);
-        NSPredicate *idPredicate = [NSPredicate predicateWithFormat:@"SELF = %@", user.id];
-        NSArray *matches = [usersMatchingFbIDs filteredArrayUsingPredicate:idPredicate];
-        if ([matches count] != 0) {
-            MBDebug(@"User %@ exists.", [matches firstObject]);
-            continue; }
+//        NSPredicate *idPredicate = [NSPredicate predicateWithFormat:@"fbID = %@", user.id];
+//        NSArray *matches = [usersMatchingFbIDs filteredArrayUsingPredicate:idPredicate];
+
+        NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+        [fetchRequest setEntity:
+         [NSEntityDescription entityForName:@"User" inManagedObjectContext:context]];
+        [fetchRequest setPredicate: [NSPredicate predicateWithFormat: @"fbID == %@", user.id]];
         
+        // Execute the fetch.
         NSString *name = nil;
-        if (bilingual) {
-            NSPredicate *localPredicate = [predicate predicateWithSubstitutionVariables:@{ @"FB_ID" : user.id }];
-            NSArray *filteredArray = [fbChUsers filteredArrayUsingPredicate:localPredicate];
-            if ([filteredArray count] != 0) {
-                NSDictionary<FBGraphUser> *chUser = filteredArray[0];
-                
-                if ([chUser.name isEqualToString:user.name]) {
-                    name = user.name;
-                } else {
-                    name = [NSString stringWithFormat:@"%@ (%@)", user.name, chUser.name];
+        NSError *error;
+        NSArray *matches = [context executeFetchRequest:fetchRequest error:&error];
+        if ([matches count] != 0) {
+            MBDebug(@"User exists, %@.", [matches firstObject]);
+            // check if the name contains both languages
+            
+            if (bilingual) {
+                User *existingUser = [matches firstObject];
+                name = [self combineCombinedNameInEngAndCh:fbChUsers withUser:user withPredicateTemplate:predicate];
+                if (![name isEqualToString:existingUser.name]) {
+                    MBDebug(@"About to change name: existing name: %@, new name: %@", existingUser.name, name);
+                    [existingUser setName:name];
                 }
-            } else {
-                name = user.name;
             }
+            continue;
+        }
+        
+        if (bilingual) {
+            name = [self combineCombinedNameInEngAndCh:fbChUsers withUser:user withPredicateTemplate:predicate];
         } else { // English only
             name = user.name;
         }

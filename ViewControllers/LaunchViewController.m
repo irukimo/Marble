@@ -43,8 +43,8 @@
     _fbChUsers = nil;
     _fbEngUsers = nil;
     
-//    [self getFriendsNamesInEngOnly];
-    [self getFriendsNamesInEngAndCh];
+
+
     
     [KeyChainWrapper storeSelfName:user.name andID:user.id];
     
@@ -136,6 +136,8 @@
                                        success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
                                            MBDebug(@"Successfully loadded options from server");
                                            MBDebug(@"%ld options were loaded.", [[mappingResult array] count]);
+                                           //    [self getFriendsNamesInEngOnly];
+                                           [self getFriendsNamesInEngAndCh];
                                            //                                           for(User *opt in [mappingResult array]) {
                                            //                                               MBDebug(@"%@", opt.name);
                                            //                                           }
