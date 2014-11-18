@@ -65,6 +65,8 @@ typedef void (^voidBlock)(void);
 + (NSDictionary *)getWalkThroughFontDictionary;
 + (NSDictionary *)getCreateQuizDescFontDictionary;
 
++ (NSDictionary *)getDirectionTextFontDictionary;
+
 
 
 

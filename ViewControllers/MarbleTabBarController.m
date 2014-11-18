@@ -17,6 +17,8 @@
 
 #define COMMENT_TEXT @"write a comment..."
 
+#define FIRST_LAUNCH_TAG 887
+
 @interface MarbleTabBarController ()
 @property (strong, nonatomic) CommentsTableViewController *commentsTableViewController;
 @property (strong, nonatomic) UIButton *cancelButton;
@@ -82,7 +84,56 @@
     [v setAlpha:1];
     [[self tabBar] insertSubview:v atIndex:0];
 //    [self centerButtonTap:self];
+    
 
+
+}
+
+-(void)executeFirstLaunch{
+    CAGradientLayer *gradient = [CAGradientLayer layer];
+    gradient.frame = CGRectMake(0, 0,[KeyChainWrapper getScreenWidth], [KeyChainWrapper getScreenHeight] - TABBAR_HEIGHT - 5);
+    gradient.colors = [NSArray arrayWithObjects:(id)[[UIColor colorWithWhite:0 alpha:0.7] CGColor],(id)[[UIColor clearColor] CGColor], nil];
+    gradient.startPoint = CGPointMake(0.5,0.7);
+    
+    UIView *blackBGView = [[UIView alloc] initWithFrame:gradient.frame];
+    [blackBGView.layer addSublayer:gradient];
+    [blackBGView setAlpha:0];
+    
+    UIImageView *direction = [[UIImageView alloc] initWithFrame:CGRectMake([KeyChainWrapper getScreenWidth]/2.f - 20, [KeyChainWrapper getScreenHeight] - 120, 40, 70)];
+    [direction setImage:[UIImage imageNamed:@"vertical_arrow.png"]];
+    direction.layer.shadowColor = [UIColor blackColor].CGColor;
+    direction.layer.shadowRadius = 3.f;
+    direction.layer.shadowOpacity = 1.f;
+    direction.layer.shadowOffset = CGSizeMake(0, 0);
+    
+    [direction setAlpha:0];
+    
+    UILabel *textLabel = [[UILabel alloc] initWithFrame:CGRectMake([KeyChainWrapper getScreenWidth]/2.f - 120, [KeyChainWrapper getScreenHeight] - 160, 300, 40)];
+    textLabel.layer.shadowColor = [UIColor blackColor].CGColor;
+    textLabel.layer.shadowRadius = 3.f;
+    textLabel.layer.shadowOpacity = 1.f;
+    textLabel.layer.shadowOffset = CGSizeMake(0, 0);
+    [textLabel setAlpha:0];
+    
+    NSAttributedString *textString = [[NSAttributedString alloc] initWithString:@"tap to compare friends" attributes:[Utility getDirectionTextFontDictionary]];
+    [textLabel setAttributedText:textString];
+    [self.view addSubview:blackBGView];
+    [self.view addSubview:textLabel];
+    [self.view addSubview:direction];
+    [blackBGView setTag:FIRST_LAUNCH_TAG];
+    [textLabel setTag:FIRST_LAUNCH_TAG];
+    [direction setTag:FIRST_LAUNCH_TAG];
+    
+    [UIView animateWithDuration:0.85
+                          delay:1
+                        options: (UIViewAnimationOptions)UIViewAnimationCurveEaseIn
+                     animations:^{
+                         [blackBGView setAlpha:1];
+                         [textLabel setAlpha:1];
+                         [direction setAlpha:1];
+                     }
+                     completion:^(BOOL finished){
+                     }];
 }
 
 -(void)viewWillAppear:(BOOL)animated{
@@ -90,6 +141,15 @@
     if([[self selectedViewController] isKindOfClass:[UINavigationController class]]){
         UINavigationController *nc = (UINavigationController *)[self selectedViewController];
         [[nc topViewController] viewWillAppear:YES];
+    }
+    
+
+    
+    if([[NSUserDefaults standardUserDefaults] boolForKey:@"FirstLaunch"]){
+    }else{
+        [self executeFirstLaunch];
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"FirstLaunch"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
     }
 }
 
@@ -136,6 +196,11 @@
 #pragma mark - center button function
 -(void)centerButtonTap:(id)sender{
     [self performSegueWithIdentifier:@"CreateQuizViewControllerSegue" sender:sender];
+    for(UIView *view in self.view.subviews){
+        if([view tag] == FIRST_LAUNCH_TAG){
+            [view removeFromSuperview];
+        }
+    }
     /*
     int expandWidth = 6;
     CGRect newFrame = _centerButtonOriFrame;

@@ -73,6 +73,7 @@
 		7A9F7DEE1A1146FF002B6E40 /* page4.png in Resources */ = {isa = PBXBuildFile; fileRef = 7A9F7DEA1A1146FF002B6E40 /* page4.png */; };
 		7A9F7DF11A11479B002B6E40 /* PageContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A9F7DF01A11479B002B6E40 /* PageContentViewController.m */; };
 		7A9F7DF41A116BE5002B6E40 /* LaunchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A9F7DF31A116BE5002B6E40 /* LaunchViewController.m */; };
+		7AA1AE101A1AAC26006ED5DA /* vertical_arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 7AA1AE0F1A1AAC26006ED5DA /* vertical_arrow.png */; };
 		7AB610EC1A000765001C792D /* SinglePostViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AB610EB1A000765001C792D /* SinglePostViewController.m */; };
 		7AB610EE1A02B060001C792D /* menu-addpost@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7AB610ED1A02B060001C792D /* menu-addpost@2x.png */; };
 		7AB610F31A03FE3B001C792D /* UIImage+ImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AB610F21A03FE3B001C792D /* UIImage+ImageEffects.m */; };
@@ -230,6 +231,7 @@
 		7A9F7DF01A11479B002B6E40 /* PageContentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PageContentViewController.m; sourceTree = "<group>"; };
 		7A9F7DF21A116BE5002B6E40 /* LaunchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LaunchViewController.h; sourceTree = "<group>"; };
 		7A9F7DF31A116BE5002B6E40 /* LaunchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LaunchViewController.m; sourceTree = "<group>"; };
+		7AA1AE0F1A1AAC26006ED5DA /* vertical_arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = vertical_arrow.png; path = Images/vertical_arrow.png; sourceTree = "<group>"; };
 		7AB610EA1A000765001C792D /* SinglePostViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SinglePostViewController.h; sourceTree = "<group>"; };
 		7AB610EB1A000765001C792D /* SinglePostViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SinglePostViewController.m; sourceTree = "<group>"; };
 		7AB610ED1A02B060001C792D /* menu-addpost@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menu-addpost@2x.png"; sourceTree = "<group>"; };
@@ -439,6 +441,7 @@
 		7A9F7DDD1A1146E7002B6E40 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				7AA1AE0F1A1AAC26006ED5DA /* vertical_arrow.png */,
 				7A9DC0271A149A37000BEFD3 /* launchImage.png */,
 				7A9DC01F1A149450000BEFD3 /* screen4.png */,
 				7A9DC0201A149450000BEFD3 /* screen3.png */,
@@ -769,6 +772,7 @@
 				50B5690819E497020050C8EC /* explore-selected@2x.png in Resources */,
 				7AD323271A09B10800C5C83B /* wrong.png in Resources */,
 				7A48343A19EC56E80029D092 /* OpenSans-Regular.ttf in Resources */,
+				7AA1AE101A1AAC26006ED5DA /* vertical_arrow.png in Resources */,
 				7A9DC0181A14409D000BEFD3 /* slider_menu.png in Resources */,
 				7AD323281A09B10800C5C83B /* correct.png in Resources */,
 				7AD3232D1A0C1C5500C5C83B /* heart.png in Resources */,
@@ -1019,7 +1023,7 @@
 				);
 				GCC_PREFIX_HEADER = "Marble/Marble-Prefix.pch";
 				INFOPLIST_FILE = Marble/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = Marbles;
 				PROVISIONING_PROFILE = "";
@@ -1040,7 +1044,7 @@
 				);
 				GCC_PREFIX_HEADER = "Marble/Marble-Prefix.pch";
 				INFOPLIST_FILE = Marble/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = Marbles;
 				PROVISIONING_PROFILE = "";

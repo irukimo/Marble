@@ -18,6 +18,8 @@
 #import "UIImage+ImageEffects.h"
 
 #define AUTO_COMPLETE_SELECT_VIEW_TAG 999
+#define FIRST_LAUNCH_TAG 887
+
 
 static const CGFloat animationDuration = 0.25;
 static const CGFloat ChoosePersonButtonHorizontalPadding = 80.f;
@@ -72,6 +74,9 @@ static const int picY = 50;
 @property UIView *blurMask;
 @property UIImageView *blurredBgImage;
 
+@property UIImageView *guideImageView;
+@property UILabel *guideTextLabel;
+
 @end
 
 
@@ -97,7 +102,60 @@ static const int picY = 50;
     [UIView setAnimationDuration:animationDuration];
     [_mainView setAlpha:1];
     [UIView commitAnimations];
+    if([[NSUserDefaults standardUserDefaults] boolForKey:@"FirstCompare"]){
+    }else{
+        [self executeFirstCompare];
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"FirstCompare"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    }
 }
+-(void)executeFirstCompare{
+    
+    UIImage *image = [UIImage imageNamed:@"swipe.png"];
+    CGFloat ratio = image.size.height/image.size.width;
+    CGFloat width = 280.f;
+    _guideImageView = [[UIImageView alloc] initWithFrame:CGRectMake([KeyChainWrapper getScreenWidth]/2.f - width/2.f,  [self frontCardViewFrame].origin.y + [self frontCardViewFrame].size.height -80, width, width*ratio)];
+    [_guideImageView setImage:image];
+    [_guideImageView setAlpha:0];
+    [_mainView addSubview:_guideImageView];
+    [_guideImageView setTag:FIRST_LAUNCH_TAG];
+    
+
+    _guideTextLabel = [[UILabel alloc] initWithFrame:CGRectMake(_guideImageView.frame.origin.x +67, _guideImageView.frame.origin.y+6, 200, 30)];
+    [_guideTextLabel setAlpha:0];
+    NSAttributedString *textString = [[NSAttributedString alloc] initWithString:@"swipe to choose" attributes:[Utility getCreateQuizDescFontDictionary]];
+    [_guideTextLabel setAttributedText:textString];
+    [_mainView addSubview:_guideTextLabel];
+    
+
+    
+    [UIView animateWithDuration:0.85
+                          delay:2
+                        options: (UIViewAnimationOptions)UIViewAnimationCurveEaseIn
+                     animations:^{
+                         [_guideImageView setAlpha:1];
+                         [_guideTextLabel setAlpha:1];
+                     }
+                     completion:^(BOOL finished){
+                     }];
+}
+
+-(void)dismissGuideView{
+    if(_guideTextLabel){
+        [UIView animateWithDuration:0.85
+                              delay:0
+                            options: (UIViewAnimationOptions)UIViewAnimationCurveEaseIn
+                         animations:^{
+                             [_guideImageView setAlpha:0];
+                             [_guideTextLabel setAlpha:0];
+                         }
+                         completion:^(BOOL finished){
+                             _guideTextLabel = nil;
+                             _guideImageView = nil;
+                         }];
+    }
+}
+
 
 
 - (void)viewDidLoad {
@@ -216,7 +274,7 @@ static const int picY = 50;
 - (UIImage *)blurWithImageEffects:(UIImage *)image
 {
 //    return [image applyBlurWithRadius:15 tintColor:[UIColor colorWithWhite:1 alpha:0.2] saturationDeltaFactor:1.5 maskImage:nil];
-    return [image applyBlurWithRadius:3 tintColor:[UIColor colorWithWhite:1 alpha:0.5] saturationDeltaFactor:1 maskImage:nil];
+    return [image applyBlurWithRadius:3 tintColor:[UIColor colorWithWhite:1 alpha:0.75] saturationDeltaFactor:1 maskImage:nil];
 }
 - (UIImage *)takeSnapshotOfView:(UIView *)view withReductionFactor:(CGFloat)factor
 {
@@ -322,6 +380,7 @@ static const int picY = 50;
 - (void)view:(UIView *)view wasChosenWithDirection:(MDCSwipeDirection)direction {
     // MDCSwipeToChooseView shows "NOPE" on swipes to the left,
     // and "LIKED" on swipes to the right.
+    [self dismissGuideView];
     if (direction == MDCSwipeDirectionLeft) {
         NSLog(@"You noped %@.", self.currentKeyword);
         [self chooseName1BtnClicked];
