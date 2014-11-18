@@ -13,13 +13,15 @@
 #define MBError NSLog
 #define URLMake(IP) (@"http://" IP @":4567/")
 
-#define PRODUCTION_SERVER @"192.168.2.240"
-//#define PRODUCTION_SERVER @"localhost"
+//#define PRODUCTION_SERVER @"198.199.103.26"
+#define PRODUCTION_SERVER @"localhost"
+#define TESTING_SERVER @"198.199.103.26"
 
 #define ASYNC(...) dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{ __VA_ARGS__ })
 #define MAINQ(...) dispatch_async(dispatch_get_main_queue(), ^{ __VA_ARGS__ })
 
-#define BASE_URL URLMake(PRODUCTION_SERVER)
+//#define BASE_URL URLMake(PRODUCTION_SERVER)
+#define BASE_URL URLMake(TESTING_SERVER)
 
 #define NUM_QUIZZES_PER_PAGE 20
 #define NUM_UPDATES_PER_PAGE 20

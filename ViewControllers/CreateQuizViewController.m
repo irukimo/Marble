@@ -759,8 +759,22 @@ static const int picY = 50;
     if(!_option0 || !_option1){
         return;
     }
+    
     [self startBounce:_option0PicView withOriFrame:_option0PicFrame];
     [self createQuizWithAnswer:(NSString *)_option0.name];
+    MBDebug(@"About to get user object: %@", _option0.name);
+    NSMutableDictionary *params = [NSMutableDictionary
+                                   dictionaryWithObjects:@[[KeyChainWrapper getSessionTokenForUser], _option0.fbID]
+                                   forKeys:@[@"auth_token", @"fb_id"]];
+    
+    [[RKObjectManager sharedManager]
+     getObject:_option0
+     path:nil //previously defined Class routes
+     parameters:params
+     success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+     } failure:^(RKObjectRequestOperation *operation, NSError *error) {
+         MBDebug(@"failed to get user fb id: %@", _option0.fbID);
+     }];
 }
 
 -(void)chooseName2BtnClicked{
@@ -769,6 +783,19 @@ static const int picY = 50;
     }
     [self startBounce:_option1PicView withOriFrame:_option1PicFrame];
     [self createQuizWithAnswer:(NSString *)_option1.name];
+    MBDebug(@"About to get user object: %@", _option1.name);
+    NSMutableDictionary *params = [NSMutableDictionary
+                                   dictionaryWithObjects:@[[KeyChainWrapper getSessionTokenForUser], _option1.fbID]
+                                   forKeys:@[@"auth_token", @"fb_id"]];
+    
+    [[RKObjectManager sharedManager]
+     getObject:_option1
+     path:nil //previously defined Class routes
+     parameters:params
+     success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+     } failure:^(RKObjectRequestOperation *operation, NSError *error) {
+         MBDebug(@"failed to get user fb id: %@", _option1.fbID);
+     }];
 }
 
 
