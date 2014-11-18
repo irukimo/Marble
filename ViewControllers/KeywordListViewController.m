@@ -60,8 +60,27 @@
         }
         MBDebug(@"has_liked? %@", [obj objectAtIndex:3]);
     }
-    
 }
+
+-(void)viewWillAppear:(BOOL)animated{
+    [self setNavbarTitle];
+}
+
+-(void)viewDidAppear:(BOOL)animated{
+    [self setNavbarTitle];
+
+}
+
+-(void) setNavbarTitle{
+    UINavigationBar *myNavBar =[self.navigationController navigationBar];
+    [myNavBar setTitleTextAttributes:[Utility getNavigationBarTitleFontDictionary]];
+    [[myNavBar topItem] setTitle:[NSString stringWithFormat:@"%@'s Marbles", [Utility getNameToDisplay:_subject.name]]];
+    [myNavBar setTranslucent:NO];
+    [myNavBar setBarTintColor:[UIColor marbleOrange]];
+    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
+    //    [self setTitle:title];
+}
+
 
 #pragma mark - Table view data source
 

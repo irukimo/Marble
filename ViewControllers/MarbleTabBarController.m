@@ -140,7 +140,7 @@
     MBDebug(@"tabbar view will appear %@",[self selectedViewController]);
     if([[self selectedViewController] isKindOfClass:[UINavigationController class]]){
         UINavigationController *nc = (UINavigationController *)[self selectedViewController];
-        [[nc topViewController] viewWillAppear:YES];
+        [[nc topViewController] viewWillAppear:NO];
     }
     
 
@@ -151,9 +151,22 @@
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"FirstLaunch"];
         [[NSUserDefaults standardUserDefaults] synchronize];
     }
+    [self.selectedViewController beginAppearanceTransition: YES animated: animated];
+
+}
+
+
+-(void) viewWillDisappear:(BOOL)animated
+{
+    [self.selectedViewController beginAppearanceTransition: NO animated: animated];
+}
+-(void) viewDidDisappear:(BOOL)animated
+{
+    [self.selectedViewController endAppearanceTransition];
 }
 
 -(void)viewDidAppear:(BOOL)animated{
+    [self.selectedViewController endAppearanceTransition];
 }
 #pragma mark - add center button
 -(void)willAppearIn:(UINavigationController *)navigationController
@@ -195,12 +208,13 @@
 }
 #pragma mark - center button function
 -(void)centerButtonTap:(id)sender{
-    [self performSegueWithIdentifier:@"CreateQuizViewControllerSegue" sender:sender];
     for(UIView *view in self.view.subviews){
         if([view tag] == FIRST_LAUNCH_TAG){
             [view removeFromSuperview];
         }
     }
+    [self performSegueWithIdentifier:@"CreateQuizViewControllerSegue" sender:sender];
+
     /*
     int expandWidth = 6;
     CGRect newFrame = _centerButtonOriFrame;

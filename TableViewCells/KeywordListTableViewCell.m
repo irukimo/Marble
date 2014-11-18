@@ -66,7 +66,7 @@ static const int statsStartX = 215;
     
     
     UIImageView *marbleImage = [[UIImageView alloc] initWithFrame:CGRectMake(statsStartX, 22, 20, 20)];
-    [marbleImage setImage:[UIImage imageNamed:MARBLE_IMAGE_NAME]];
+    [marbleImage setImage:[UIImage imageNamed:@"little_marble.png"]];
     [self.contentView addSubview:marbleImage];
     
     _heartButton = [[UIButton alloc] initWithFrame:CGRectMake(statsStartX + 45, 22, 20, 20)];

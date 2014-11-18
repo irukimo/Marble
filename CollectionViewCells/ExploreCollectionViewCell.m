@@ -67,7 +67,7 @@
     [self.contentView addSubview:_keywordLabel];
     
     UIImageView *marbleView = [[UIImageView alloc] initWithFrame:CGRectMake(self.contentView.frame.size.width - 40, 5, 20, 20)];
-    [marbleView setImage:[UIImage imageNamed:MARBLE_IMAGE_NAME]];
+    [marbleView setImage:[UIImage imageNamed:@"little_marble.png"]];
     [self.contentView addSubview:marbleView];
     
     _receiveNumLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.contentView.frame.size.width - 20, 5, 20, 20)];
