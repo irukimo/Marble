@@ -292,7 +292,7 @@
 
 + (UIButton *)getKeywordButtonAtX:(int)x andY:(int)y andString:(NSString *)string{
     NSAttributedString *attString = [[NSAttributedString alloc] initWithString:string attributes:[Utility getNormalKeywordFontDictionary]];
-    UIButton *keywordBtn = [[UIButton alloc] initWithFrame:CGRectMake(x, y, attString.size.width + 12, attString.size.height + 3)];
+    UIButton *keywordBtn = [[UIButton alloc] initWithFrame:CGRectMake(x, y, attString.size.width + 15, attString.size.height + 5)];
 //    [keywordBtn.layer setBorderColor:[UIColor grayColor].CGColor];
 //    [keywordBtn.layer setBorderWidth:1.0f];
     [keywordBtn.layer setCornerRadius:keywordBtn.frame.size.height/2.0f];

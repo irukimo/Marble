@@ -39,6 +39,7 @@
 		51DF106E19E460E00021C3F9 /* ArrayToDataTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 51DF106D19E460E00021C3F9 /* ArrayToDataTransformer.m */; };
 		51F5A74B19E60827006097EF /* Quiz+MBQuiz.m in Sources */ = {isa = PBXBuildFile; fileRef = 51F5A74A19E60827006097EF /* Quiz+MBQuiz.m */; };
 		51F5A75119E6089D006097EF /* NSNumber+MBNumber.m in Sources */ = {isa = PBXBuildFile; fileRef = 51F5A75019E6089D006097EF /* NSNumber+MBNumber.m */; };
+		7A0836811A1C07DE00A7C510 /* pen_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 7A0836801A1C07DE00A7C510 /* pen_icon.png */; };
 		7A0E976919DCB194003A9359 /* ProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A0E976819DCB194003A9359 /* ProfileViewController.m */; };
 		7A0E976C19DCB389003A9359 /* MarbleTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A0E976B19DCB389003A9359 /* MarbleTabBarController.m */; };
 		7A0E976F19DCBCBF003A9359 /* QuizTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A0E976E19DCBCBF003A9359 /* QuizTableViewCell.m */; };
@@ -183,6 +184,7 @@
 		51F5A74A19E60827006097EF /* Quiz+MBQuiz.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Quiz+MBQuiz.m"; sourceTree = "<group>"; };
 		51F5A74F19E6089D006097EF /* NSNumber+MBNumber.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSNumber+MBNumber.h"; sourceTree = "<group>"; };
 		51F5A75019E6089D006097EF /* NSNumber+MBNumber.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSNumber+MBNumber.m"; sourceTree = "<group>"; };
+		7A0836801A1C07DE00A7C510 /* pen_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = pen_icon.png; path = Icons/pen_icon.png; sourceTree = "<group>"; };
 		7A0E976719DCB194003A9359 /* ProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileViewController.h; sourceTree = "<group>"; };
 		7A0E976819DCB194003A9359 /* ProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileViewController.m; sourceTree = "<group>"; };
 		7A0E976A19DCB389003A9359 /* MarbleTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MarbleTabBarController.h; sourceTree = "<group>"; };
@@ -330,6 +332,7 @@
 		50B568F019E4949E0050C8EC /* Icons */ = {
 			isa = PBXGroup;
 			children = (
+				7A0836801A1C07DE00A7C510 /* pen_icon.png */,
 				7A9DC02B1A1573E1000BEFD3 /* green_body.png */,
 				7A9DC02C1A1573E1000BEFD3 /* red_body.png */,
 				7A9DC0291A1543B0000BEFD3 /* head.png */,
@@ -739,6 +742,7 @@
 			files = (
 				50B5690519E497020050C8EC /* home-selected@2x.png in Resources */,
 				7A9DC02E1A1573E1000BEFD3 /* red_body.png in Resources */,
+				7A0836811A1C07DE00A7C510 /* pen_icon.png in Resources */,
 				7A9DC0241A149450000BEFD3 /* screen3.png in Resources */,
 				7A9F7DEC1A1146FF002B6E40 /* page2.png in Resources */,
 				50B5690119E497020050C8EC /* notif-selected@2x.png in Resources */,

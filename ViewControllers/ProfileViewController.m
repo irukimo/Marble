@@ -162,7 +162,7 @@
     [_viewKeywordBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     
     
-    _statusTextView = [[UITextView alloc] initWithFrame:CGRectMake(GOLDEN_LEFT_ALIGNMENT - 3, 50, self.view.frame.size.width - GOLDEN_LEFT_ALIGNMENT - 20, 40)];
+    _statusTextView = [[UITextView alloc] initWithFrame:CGRectMake(GOLDEN_LEFT_ALIGNMENT - 3, 50, [KeyChainWrapper getScreenWidth] - GOLDEN_LEFT_ALIGNMENT - 20 -33, 40)];
     [_statusTextView setText:@""];
     [_statusTextView setScrollEnabled:NO];
     [_statusTextView setReturnKeyType:UIReturnKeySend];
@@ -175,10 +175,11 @@
         [_statusTextView setUserInteractionEnabled:NO];
     }
 
-    _statusBtn = [[UIButton alloc] initWithFrame:CGRectMake(240, 95, 40, 20)];
+    _statusBtn = [[UIButton alloc] initWithFrame:[self getSendStatusBtnFrame]];
     [_statusTextView setDelegate:self];
-    [_statusBtn setTitle:@"edit" forState:UIControlStateNormal];
-    [_statusBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+//    [_statusBtn setTitle:@"edit" forState:UIControlStateNormal];
+//    [_statusBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [_statusBtn setImage:[UIImage imageNamed:@"pen_icon.png"] forState:UIControlStateNormal];
     
     [_statusBtn addTarget:self action:@selector(sendStatusBtnClicked) forControlEvents:UIControlEventTouchUpInside];
     [_viewKeywordBtn addTarget:self action:@selector(viewKeywordBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
@@ -423,19 +424,29 @@
 }
 
 -(void) setStatusWithText:(NSString *)status{
-    if(!status){
-        if(_isSelf){
-            NSAttributedString *statusString =[[NSAttributedString alloc] initWithString:@"[update your status...]" attributes:[Utility getPostsViewCommentFontDictionary]];
+    NSAttributedString *statusString;
+    if(!status || [status isEqualToString:@""]){
+        if(_user.status){
+            statusString =[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"\"%@\"",_user.status] attributes:[Utility getProfileStatusFontDictionary]];
             [_statusTextView setAttributedText:statusString];
-            return;
-        } else{
-            [_statusTextView setText:@""];
-            return;
+        }else{
+            if(_isSelf){
+                statusString =[[NSAttributedString alloc] initWithString:@"[update status]" attributes:[Utility getPostsViewCommentFontDictionary]];
+                [_statusTextView setAttributedText:statusString];
+            } else{
+                [_statusTextView setText:@""];
+            }
         }
+    }else{
+        NSLog(@"status %@", status);
+        statusString =[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"\"%@\"",status] attributes:[Utility getProfileStatusFontDictionary]];
+        [_statusTextView setAttributedText:statusString];
     }
-    NSLog(@"status %@", status);
-    NSAttributedString *statusString =[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"\"%@\"",_user.status] attributes:[Utility getProfileStatusFontDictionary]];
-    [_statusTextView setAttributedText:statusString];
+    CGRect btnframe = [self getSendStatusBtnFrame];
+    CGFloat increment = (statusString.size.width < _statusTextView.frame.size.width)? statusString.size.width : _statusTextView.frame.size.width;
+    btnframe.origin.x = _statusTextView.frame.origin.x + increment + 7;
+    [_statusBtn setFrame:btnframe];
+    
 }
 
 -(void) addKeywordLabelAtX:(int)x andY:(int)y withKeyword:(NSString *)string atIndex:(NSInteger)index{
@@ -467,11 +478,13 @@
 {
     if([_statusTextView isFirstResponder]){
         NSString *status = _statusTextView.text;
-        MBDebug(@"To send status: %@", status);
-        [Utility sendThroughRKRoute:@"send_status" withParams:@{@"status": status}];
-        [self getStatus];
-        [_statusTextView resignFirstResponder];
-        [self.tableView triggerPullToRefresh];
+        if(![status isEqualToString:@""]){
+            MBDebug(@"To send status: %@", status);
+            [Utility sendThroughRKRoute:@"send_status" withParams:@{@"status": status}];
+            [self getStatus];
+            [_statusTextView resignFirstResponder];
+            [self.tableView triggerPullToRefresh];
+        }
     } else{
         [_statusTextView becomeFirstResponder];
     }
@@ -554,6 +567,10 @@
     }
 }
 
+-(CGRect)getSendStatusBtnFrame{
+    return CGRectMake([KeyChainWrapper getScreenWidth] - 50, 50, 35, 35);
+}
+
 #pragma mark -
 #pragma mark PostViewController Delegate Methods
 -(void) postSelected:(NSString *)name andID:(NSString *)fbid{
@@ -573,15 +590,17 @@
     //The rounded corner part, where you specify your view's corner radius:
     textView.layer.cornerRadius = 5;
     textView.clipsToBounds = YES;
-    [_statusBtn setTitle:@"send" forState:UIControlStateNormal];
+    [_statusBtn setImage:[UIImage imageNamed:@"send-border.png"] forState:UIControlStateNormal];
+    [_statusBtn setFrame:[self getSendStatusBtnFrame]];
 }
 
 - (void)textViewDidEndEditing:(UITextView *)textView
 {
     [self.view endEditing:YES];
-    [_statusBtn setTitle:@"edit" forState:UIControlStateNormal];
-    [self setStatusWithText:_user.status];
+    [self setStatusWithText:textView.text];
     [textView.layer setBorderWidth:0];
+    [_statusBtn setImage:[UIImage imageNamed:@"pen_icon.png"] forState:UIControlStateNormal];
+
 }
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
     
