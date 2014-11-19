@@ -91,8 +91,8 @@
     
     if (_keywordUpdate.keyword2 != nil){
         numKeywords++;
-        NSAttributedString *keywordString =[[NSAttributedString alloc] initWithString:_keywordUpdate.keyword1 attributes:[Utility getNotifOrangeNormalFontDictionary]];
-        [self addKeywordLabelAtX:x andY:y withKeyword:_keywordUpdate.keyword1 atIndex:1];
+        NSAttributedString *keywordString =[[NSAttributedString alloc] initWithString:_keywordUpdate.keyword2 attributes:[Utility getNotifOrangeNormalFontDictionary]];
+        [self addKeywordLabelAtX:x andY:y withKeyword:_keywordUpdate.keyword2 atIndex:1];
         x+= keywordString.size.width + 20;
         if(x>250){
             x=0;
@@ -102,8 +102,8 @@
     
     if (_keywordUpdate.keyword3 != nil){
         numKeywords++;
-        NSAttributedString *keywordString =[[NSAttributedString alloc] initWithString:_keywordUpdate.keyword1 attributes:[Utility getNotifOrangeNormalFontDictionary]];
-        [self addKeywordLabelAtX:x andY:y withKeyword:_keywordUpdate.keyword1 atIndex:2];
+        NSAttributedString *keywordString =[[NSAttributedString alloc] initWithString:_keywordUpdate.keyword3 attributes:[Utility getNotifOrangeNormalFontDictionary]];
+        [self addKeywordLabelAtX:x andY:y withKeyword:_keywordUpdate.keyword3 atIndex:2];
         x+= keywordString.size.width + 20;
         if(x>250){
             x=0;
