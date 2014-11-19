@@ -421,42 +421,7 @@ static const int picY = 50;
 }
 
 - (NSArray *)defaultKeyword {
-    // It would be trivial to download these from a web service
-    // as needed, but for the purposes of this sample app we'll
-    // simply store them in memory.
-    NSString *firstKeyword = [KeyChainWrapper getARandomKeyword];
-    NSString *secondKeyword = [KeyChainWrapper getARandomKeyword];
-    NSString *thirdKeyword = [KeyChainWrapper getARandomKeyword];
-
-    return @[@"Shy",
-             @"Romantic",
-             @"Buff",
-             @"會咬人",
-             @"Thick skinned",
-             @"Cheap",
-             @"Drinks too much",
-             @"愛把妹",
-             @"bright",
-             @"considerate",
-             @"brave",
-             @"charming",
-             @"careful",
-             @"amusing",
-             @"creative",
-             @"calm",
-             @"not calm",
-             @"modest",
-             @"quick",
-             @"polite",
-             @"愛放閃",
-             @"doesn’t shower",
-             @"high GPA",
-             @"energetic",
-             @"puppy eyes",
-             @"skinny dipping",
-             @"chipotle",
-             @"racist",
-             @"愛哭鬼"];
+    return [KeyChainWrapper keywords];
 }
 
 - (KeywordView *)popPersonViewWithFrame:(CGRect)frame {
