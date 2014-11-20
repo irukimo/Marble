@@ -55,6 +55,7 @@ typedef void (^voidBlock)(void);
 + (NSDictionary *)getProfileGrayStaticFontDictionary;
 + (NSDictionary *)getProfileStatusFontDictionary;
 + (NSDictionary *)getProfileMoreFontDictionary;
++ (NSDictionary *)getProfileUpdateStatusFontDictionary;
 
 + (NSDictionary *)getCreateQuizSuperBigKeywordFontDictionary;
 + (NSDictionary *)getCreateQuizShuffleButtonFontDictionary;

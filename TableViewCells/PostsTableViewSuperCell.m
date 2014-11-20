@@ -96,6 +96,9 @@
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
 //    MBDebug(@"touchesbegan");
     [self.contentView endEditing:YES];
+    if(_delegate && [_delegate respondsToSelector:@selector(tappedTableView)]){
+        [_delegate tappedTableView];
+    }
 }
 
 

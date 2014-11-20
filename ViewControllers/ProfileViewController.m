@@ -57,7 +57,7 @@
     //profileview
     self.tableView.tableHeaderView = _headerView;
     [self.tableView.tableHeaderView setClipsToBounds:YES];
-    [self.tableView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedTableView)]];
+
     
 }
 
@@ -136,7 +136,7 @@
     int height = (_user.keywords)? HEADER_VIEW_HEIGHT_WITH_KEYWORDS: HEADER_VIEW_HEIGHT_WITHOUT_KEYWORDS;
     _headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, height)];
     [_headerView setBackgroundColor:[UIColor marbleBackGroundColor]];
-    
+    [_headerView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tappedTableView)]];
     _whiteView = [[UIView alloc] init];
     [self resizeWhiteBackground];
     [_whiteView setBackgroundColor:[UIColor whiteColor]];
@@ -162,7 +162,7 @@
     [_viewKeywordBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     
     
-    _statusTextView = [[UITextView alloc] initWithFrame:CGRectMake(GOLDEN_LEFT_ALIGNMENT - 3, 50, [KeyChainWrapper getScreenWidth] - GOLDEN_LEFT_ALIGNMENT - 20 -33, 40)];
+    _statusTextView = [[UITextView alloc] initWithFrame:CGRectMake(GOLDEN_LEFT_ALIGNMENT - 3, 70, [KeyChainWrapper getScreenWidth] - GOLDEN_LEFT_ALIGNMENT - 20 -33, 40)];
     [_statusTextView setText:@""];
     [_statusTextView setScrollEnabled:NO];
     [_statusTextView setReturnKeyType:UIReturnKeySend];
@@ -431,7 +431,7 @@
             [_statusTextView setAttributedText:statusString];
         }else{
             if(_isSelf){
-                statusString =[[NSAttributedString alloc] initWithString:@"[update status]" attributes:[Utility getPostsViewCommentFontDictionary]];
+                statusString =[[NSAttributedString alloc] initWithString:@"[update status]" attributes:[Utility getProfileUpdateStatusFontDictionary]];
                 [_statusTextView setAttributedText:statusString];
             } else{
                 [_statusTextView setText:@""];
@@ -568,7 +568,7 @@
 }
 
 -(CGRect)getSendStatusBtnFrame{
-    return CGRectMake([KeyChainWrapper getScreenWidth] - 50, 50, 35, 35);
+    return CGRectMake([KeyChainWrapper getScreenWidth] - 50, 70, 35, 35);
 }
 
 #pragma mark -
@@ -583,6 +583,8 @@
 
 - (void)textViewDidBeginEditing:(UITextView *) textView
 {
+    NSAttributedString *defaultText = [[NSAttributedString alloc] initWithString:@"y" attributes:[Utility getProfileStatusFontDictionary]];
+    [textView setAttributedText:defaultText];
     [textView setText:@""];
     [textView.layer setBorderColor:[[[UIColor grayColor] colorWithAlphaComponent:0.5] CGColor]];
     [textView.layer setBorderWidth:0.5];
@@ -609,6 +611,24 @@
         [textView resignFirstResponder];
         return NO;
     }
+    
+        
+    // limit the number of lines in textview
+    NSString* newText = [textView.text stringByReplacingCharactersInRange:range withString:text];
+    
+    // pretend there's more vertical space to get that extra line to check on
+    CGSize tallerSize = CGSizeMake(textView.frame.size.width-15, textView.frame.size.height*2);
+    
+    CGRect newSize = [newText boundingRectWithSize:tallerSize options:NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading attributes:[Utility getProfileStatusFontDictionary] context:nil];
+//    CGSize newSize = [newText sizeWithFont:textView.font constrainedToSize:tallerSize lineBreakMode:NSLineBreakByWordWrapping];
+    
+    if (newSize.size.height > textView.frame.size.height)
+    {
+        NSLog(@"two lines are full");
+        return NO;
+    }
+
+    
     
     return YES;
 }

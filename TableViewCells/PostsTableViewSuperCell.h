@@ -32,4 +32,5 @@
 -(void) endPresentingCellWithKeywordOn;
 -(void) viewMoreComments:(id)sender;
 -(void) gotoKeywordProfileWithKeyword:(NSString *)keyword;
+-(void)tappedTableView;
 @end

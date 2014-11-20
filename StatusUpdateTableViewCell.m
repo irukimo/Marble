@@ -37,7 +37,7 @@
 
 
 -(void) prepareForReuse{
-    _statusTextView.frame = CGRectMake(NAME_LEFT_ALIGNMENT, NAME_TOP_ALIGNMENT + 20, self.contentView.frame.size.width - NAME_LEFT_ALIGNMENT - 20, 40);
+//    _statusTextView.frame = CGRectMake(NAME_LEFT_ALIGNMENT, NAME_TOP_ALIGNMENT + 17, self.contentView.frame.size.width - NAME_LEFT_ALIGNMENT - 20, 40);
 }
 
 
@@ -50,7 +50,7 @@
     [_nameButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [_nameButton addTarget:self action:@selector(nameClicked:) forControlEvents:UIControlEventTouchUpInside];
     
-    _statusTextView = [[UITextView alloc] initWithFrame:CGRectMake(NAME_LEFT_ALIGNMENT, NAME_TOP_ALIGNMENT + 20, self.contentView.frame.size.width - NAME_LEFT_ALIGNMENT - 20, 40)];
+    _statusTextView = [[UITextView alloc] initWithFrame:CGRectMake(NAME_LEFT_ALIGNMENT, NAME_TOP_ALIGNMENT + 15, self.contentView.frame.size.width - NAME_LEFT_ALIGNMENT - 20, 40)];
     [_statusTextView setUserInteractionEnabled:NO];
     [_statusTextView setEditable:NO];
 //    [_statusTextView sizeToFit];
@@ -83,7 +83,7 @@
     [_statusTextView setAttributedText:statusString];
 //    _statusTextView.lineBreakMode = NSLineBreakByWordWrapping;
 //    _statusTextView.numberOfLines = 0;
-    [_statusTextView sizeToFit];
+//    [_statusTextView sizeToFit];
 
     [Utility setUpProfilePictureImageView:_authorPicView byFBID:_statusUpdate.fbID];
     
