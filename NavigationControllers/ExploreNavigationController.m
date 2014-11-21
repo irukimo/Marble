@@ -11,7 +11,7 @@
 
 @implementation ExploreNavigationController
 -(void)backToRoot{
-    [self popToRootViewControllerAnimated:NO];
+//    [self popToRootViewControllerAnimated:NO];
     if([[self.viewControllers firstObject] isKindOfClass:[ExploreCollectionViewController class]]){
         ExploreCollectionViewController *exploreCollectionViewController = [self.viewControllers firstObject];
         [exploreCollectionViewController initSearchResults];
