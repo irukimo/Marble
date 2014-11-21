@@ -164,7 +164,7 @@
     
      
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"User"];
-    request.predicate = [NSPredicate predicateWithFormat:@"fbID = %@ AND name = %@", fbID, name];
+    request.predicate = [NSPredicate predicateWithFormat:@"fbID = %@", fbID];
     NSArray *matches = [context
                         executeFetchRequest:request error:&error];
     
@@ -180,10 +180,8 @@
         return TRUE;
     } else {
         *userToReturn = [User createNewUserWithName:name andfbID:fbID isFriend:false inManagedObjectContext:context];
-        return FALSE;
+        return TRUE;
     }
-
-    return true;
 }
 
 
