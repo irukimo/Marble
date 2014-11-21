@@ -17,7 +17,9 @@
 @property (nonatomic, strong) NSNumber *index;
 
 -(void) setKeyword:(NSString *)keyword;
+-(void)resizeWhiteBackground:(CGFloat)height;
 @property (strong, nonatomic) User *subject;
+-(void)setShouldExpand:(BOOL)shoudExpand;
 @end
 
 @protocol KeywordListTableViewCellDelegate <NSObject>

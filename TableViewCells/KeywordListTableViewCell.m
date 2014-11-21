@@ -41,6 +41,9 @@ static const int statsStartX = 215;
 
 @property (strong, nonatomic) UIButton *heartButton;
 @property (strong, nonatomic) UIButton *likeNumButton;
+@property (strong,nonatomic) UIView *whiteView;
+@property (strong,nonatomic) UIView *secondWhiteView;
+@property (nonatomic) BOOL shouldExpand;
 @end
 
 
@@ -60,6 +63,8 @@ static const int statsStartX = 215;
 }
 
 -(void)generateStaticUI{
+    
+    
 
     _timesPlayedLabel = [[UILabel alloc] initWithFrame:CGRectMake(statsStartX + 25, 25, 30, 15)];
     [self.contentView addSubview:_timesPlayedLabel];
@@ -94,11 +99,12 @@ static const int statsStartX = 215;
     [self.contentView addSubview:_selfRankingLabel];
     [_selfRankingLabel setTextAlignment:NSTextAlignmentCenter];
     
-    UIView *grayLine = [[UIView alloc] initWithFrame:CGRectMake(0, KEYWORD_LIST_CELL_UNEXPAND_HEIGHT - CELL_UNIVERSAL_PADDING/2.0, self.contentView.frame.size.width, 1)];
+    UIView *grayLine = [[UIView alloc] initWithFrame:CGRectMake(0, KEYWORD_LIST_CELL_UNEXPAND_HEIGHT - CELL_UNIVERSAL_PADDING, _whiteView.frame.size.width, 1)];
     [grayLine setBackgroundColor:[UIColor marbleBackGroundColor]];
-    [self.contentView addSubview:grayLine];
+    [_whiteView addSubview:grayLine];
     [self addThreeRanking];
 }
+
 
 -(void)unheartButtonClicked:(id)sender{
     [Utility sendThroughRKRoute:@"send_unlike" withParams:@{@"likee_fb_id": _subject.fbID, @"keyword": _keyword}
@@ -180,7 +186,7 @@ static const int statsStartX = 215;
     [_expandView addSubview:_rank2NameButton];
     [_expandView addSubview:_rank3NameButton];
     
-    [self.contentView addSubview:_expandView];
+    [_whiteView addSubview:_expandView];
 }
 
 -(void)rank1NameButtonClicked{
@@ -230,10 +236,41 @@ static const int statsStartX = 215;
     [_keywordButton removeFromSuperview];
 }
 -(void) setBorder{
-    [self.contentView.layer setBorderColor:[UIColor marbleBackGroundColor].CGColor];
-    [self.contentView.layer setBorderWidth:CELL_UNIVERSAL_PADDING/2.0];
-    [UIView addLeftBorderOn:self.contentView withColor:[UIColor marbleBackGroundColor] andWidth:CELL_UNIVERSAL_PADDING/2.0 andHeight:QuizTableViewCellDisplayHeight withOffset:CELL_UNIVERSAL_PADDING/2.0];
-    [UIView addRightBorderOn:self.contentView withColor:[UIColor marbleBackGroundColor] andWidth:CELL_UNIVERSAL_PADDING/2.0 andHeight:QuizTableViewCellDisplayHeight withOffset:CELL_UNIVERSAL_PADDING/2.0];
+    _secondWhiteView = [[UIView alloc] init];
+    [UIView addBackgroundShadowOnView:_secondWhiteView];
+    [_secondWhiteView setBackgroundColor:[UIColor whiteColor]];
+    
+    [self setBackgroundColor:[UIColor marbleBackGroundColor]];
+    _whiteView = [[UIView alloc] init];
+    [self resizeWhiteBackground:KEYWORD_LIST_CELL_UNEXPAND_HEIGHT animated:NO];
+    [_whiteView setBackgroundColor:[UIColor whiteColor]];
+
+    [_whiteView setClipsToBounds:YES];
+    [self.contentView addSubview:_secondWhiteView];
+    [self.contentView addSubview:_whiteView];
+//    [self.contentView.layer setBorderColor:[UIColor marbleBackGroundColor].CGColor];
+//    [self.contentView.layer setBorderWidth:CELL_UNIVERSAL_PADDING/2.0];
+//    [UIView addLeftBorderOn:self.contentView withColor:[UIColor marbleBackGroundColor] andWidth:CELL_UNIVERSAL_PADDING/2.0 andHeight:QuizTableViewCellDisplayHeight withOffset:CELL_UNIVERSAL_PADDING/2.0];
+//    [UIView addRightBorderOn:self.contentView withColor:[UIColor marbleBackGroundColor] andWidth:CELL_UNIVERSAL_PADDING/2.0 andHeight:QuizTableViewCellDisplayHeight withOffset:CELL_UNIVERSAL_PADDING/2.0];
+}
+
+-(void)resizeWhiteBackground:(CGFloat)height animated:(BOOL)animate{
+    if(animate){
+        [UIView animateWithDuration:0.25
+                              delay:0
+                            options: (UIViewAnimationOptions)UIViewAnimationOptionCurveEaseInOut
+                        animations:^{
+                            [_whiteView setFrame:CGRectMake(CELL_UNIVERSAL_PADDING, CELL_UNIVERSAL_PADDING/2.f, [KeyChainWrapper getScreenWidth] - 2*CELL_UNIVERSAL_PADDING, height - CELL_UNIVERSAL_PADDING)];
+                            [_secondWhiteView setFrame:CGRectMake(CELL_UNIVERSAL_PADDING, CELL_UNIVERSAL_PADDING/2.f, [KeyChainWrapper getScreenWidth] - 2*CELL_UNIVERSAL_PADDING, height - CELL_UNIVERSAL_PADDING)];
+                                  }
+         
+                                  completion:^(BOOL finished){
+                                  }];
+
+    }else{
+        [_whiteView setFrame:CGRectMake(CELL_UNIVERSAL_PADDING, CELL_UNIVERSAL_PADDING/2.f, [KeyChainWrapper getScreenWidth] - 2*CELL_UNIVERSAL_PADDING, height - CELL_UNIVERSAL_PADDING)];
+        [_secondWhiteView setFrame:CGRectMake(CELL_UNIVERSAL_PADDING, CELL_UNIVERSAL_PADDING/2.f, [KeyChainWrapper getScreenWidth] - 2*CELL_UNIVERSAL_PADDING, height - CELL_UNIVERSAL_PADDING)];
+    }
 }
 
 
@@ -268,7 +305,6 @@ static const int statsStartX = 215;
     hasLiked = [[keywordArray objectAtIndex:3] boolValue] ? true : false;
     numLikes = [[keywordArray objectAtIndex:4] integerValue];
     [self setLikeNumButtonWithInt:numLikes];
-    [self generateStaticUI];
 }
 
 -(void)setLikeNumButtonWithInt:(NSInteger)intValue{
@@ -342,6 +378,15 @@ static const int statsStartX = 215;
 -(void)keywordButtonClicked:(id)sender{
     if(self.delegate && [self.delegate respondsToSelector:@selector(gotoKeywordProfileWithKeyword:)]){
         [self.delegate gotoKeywordProfileWithKeyword:_keyword];
+    }
+}
+
+-(void)setShouldExpand:(BOOL)shoudExpand{
+    _shouldExpand = shoudExpand;
+    if(_shouldExpand){
+        [self resizeWhiteBackground:KEYWORD_LIST_CELL_EXPAND_HEIGHT animated:YES];
+    }else{
+        [self resizeWhiteBackground:KEYWORD_LIST_CELL_UNEXPAND_HEIGHT animated:YES];
     }
 }
 

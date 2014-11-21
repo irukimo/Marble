@@ -128,10 +128,7 @@
     _whiteView = [[UIView alloc] init];
     [self resizeWhiteBackground];
     [_whiteView setBackgroundColor:[UIColor whiteColor]];
-    _whiteView.layer.shadowColor = [UIColor colorWithWhite:0 alpha:0.7].CGColor;
-    _whiteView.layer.shadowRadius = 2.f;
-    _whiteView.layer.shadowOpacity = 1.f;
-    _whiteView.layer.shadowOffset = CGSizeMake(0, 0);
+    [UIView addBackgroundShadowOnView:_whiteView];
     [self.contentView addSubview:_whiteView];
 }
 

@@ -82,6 +82,7 @@
 }
 
 
+
 #pragma mark - Table view data source
 
 
@@ -92,6 +93,7 @@
         _ongoingPath = indexPath;
     }
     [self.tableView beginUpdates];
+    [self.tableView reloadData];
     [self.tableView endUpdates];
 }
 
@@ -115,6 +117,7 @@
     [cell setKeyword:[_keywordList objectAtIndex:indexPath.row]];
     [cell setIndex:[NSNumber numberWithInt:indexPath.row]];
     cell.delegate = self;
+    [cell setShouldExpand:(indexPath == _ongoingPath)? true:false];
     return cell;
 }
 
@@ -132,6 +135,15 @@
     }
     return KEYWORD_LIST_CELL_UNEXPAND_HEIGHT;
 }
+
+//-(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath{
+//    MBDebug(@"willdisplaycellcalled");
+//    KeywordListTableViewCell *listCell = (KeywordListTableViewCell *)cell;
+//    [listCell resizeWhiteBackground:cell.frame.size.height];
+//
+//}
+
+
 
 -(void) setKeywords:(id)keywords{
     if(keywords){
