@@ -40,6 +40,7 @@ static const int picY = 50;
 @property (strong, nonatomic) UITextField *option1NameTextField;
 @property (strong, nonatomic) UIButton *shufflePeopleBtn;
 @property (strong, nonatomic) UITextField *ongoingTextField;
+@property (strong, nonatomic) UITextView *ongoingTextView;
 
 @property (strong, nonatomic) NSString *keywordCurrentValue;
 @property (strong, nonatomic) NSString *keywordStoreValue;
@@ -963,7 +964,7 @@ static const int picY = 50;
     _frontCardView.keyword = keyword;
     
     
-    [_ongoingTextField endEditing:YES];
+    [_ongoingTextView endEditing:YES];
     [self recordData];
 }
 
@@ -973,6 +974,7 @@ static const int picY = 50;
 //    if(CGRectContainsPoint(searchFrame, tappedPoint)){
 //        return;
 //    }
+    MBDebug(@"tappedview");
     [_mainView endEditing:YES];
     [self presentData];
 }
@@ -1064,7 +1066,65 @@ static const int picY = 50;
     }
 }
 
+#pragma mark -
+#pragma mark TextView Delegate Methods
 
+- (void)textViewDidBeginEditing:(UITextView *) textView
+{
+    [_frontCardView textViewDidBeginEditing];
+    _ongoingTextView = textView;
+    [self addMaskAndPrepareSelectKeywordViewController];
+}
+
+- (void)textViewDidEndEditing:(UITextView *)textView
+{
+    [self.view endEditing:YES];
+    for(id view in _mainView.subviews){
+        if([view tag] == AUTO_COMPLETE_SELECT_VIEW_TAG){
+            [view removeFromSuperview];
+        }
+    }
+    if([textView.text isEqualToString:@""]){
+        _frontCardView.keyword = _keywordCurrentValue;
+    } else{
+        _keywordCurrentValue = textView.text;
+    }
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationDuration:0.25];
+    [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
+    _frontCardView.frame = [self frontCardViewFrame];
+    [UIView commitAnimations];
+}
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
+    
+    if([text isEqualToString:@"\n"]) {
+        [self tappedView];
+        return NO;
+    }
+    
+    
+    // limit the number of lines in textview
+    NSString* newText = [textView.text stringByReplacingCharactersInRange:range withString:text];
+    
+    // pretend there's more vertical space to get that extra line to check on
+    CGSize tallerSize = CGSizeMake(textView.frame.size.width-15, textView.frame.size.height*2);
+    
+    CGRect newSize = [newText boundingRectWithSize:tallerSize options:NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading attributes:[Utility getCreateQuizSuperBigKeywordFontDictionary] context:nil];
+    //    CGSize newSize = [newText sizeWithFont:textView.font constrainedToSize:tallerSize lineBreakMode:NSLineBreakByWordWrapping];
+    
+    if (newSize.size.height > textView.frame.size.height)
+    {
+        NSLog(@"two lines are full");
+        return NO;
+    }
+    
+    return YES;
+}
+
+
+
+#pragma mark -
+#pragma mark Helper Methods
 -(void) presentAndEmptyData:(UITextField *)textField{
     [self presentData];
     [textField setText:@""];

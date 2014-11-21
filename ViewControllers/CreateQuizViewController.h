@@ -16,7 +16,7 @@
 
 
 
-@interface CreateQuizViewController : UIViewController <UITextFieldDelegate,MDCSwipeToChooseDelegate,SelectKeywordViewControllerDelegate,SelectPeopleViewControllerDelegate, KeywordViewDelegate>
+@interface CreateQuizViewController : UIViewController <UITextFieldDelegate,MDCSwipeToChooseDelegate,SelectKeywordViewControllerDelegate,SelectPeopleViewControllerDelegate, KeywordViewDelegate, UITextViewDelegate>
 -(void) setUser:(User *)user;
 -(void) setKeyword:(NSString *)keyword;
 -(void) setOption0:(User *)option0;

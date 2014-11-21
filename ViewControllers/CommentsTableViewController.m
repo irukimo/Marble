@@ -100,18 +100,23 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSDictionary *commentDic = [_commentsArray objectAtIndex:indexPath.row];
+    NSString *comment = [commentDic valueForKey:@"comment"];
+    NSAttributedString *commentString = [[NSAttributedString alloc] initWithString:comment attributes:[Utility getWhiteCommentFontDictionary]];
+    if (commentString.size.width > ([KeyChainWrapper getScreenWidth] - (LEFT_ALIGNMENT + 50) - 20 -10))
+    {
+        return 70;
+    }
+
     return 50;
 }
 
 
 
 #pragma mark - CommentsTableViewCell Delegate Method
--(void) gotoProfile:(id)sender{
-    CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.tableView];
-    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:buttonPosition];
-    NSDictionary *comment = [_commentsArray objectAtIndex:indexPath.row];
+-(void) gotoProfileWithName:(NSString *)name andID:(NSString *)fbid{
     if(_delegate && [_delegate respondsToSelector:@selector(gotoProfileWithName:andID:)]){
-        [_delegate gotoProfileWithName:[comment valueForKey:@"name"] andID:[comment valueForKey:@"fb_id"]];
+        [_delegate gotoProfileWithName:name andID:fbid];
     }
 }
 

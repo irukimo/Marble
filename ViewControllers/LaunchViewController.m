@@ -44,7 +44,7 @@
     _fbEngUsers = nil;
     
 
-
+    MBDebug(@"storename %@, %@",user.name, user.id);
     
     [KeyChainWrapper storeSelfName:user.name andID:user.id];
     

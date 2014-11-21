@@ -19,5 +19,5 @@
 @protocol CommentsTableViewCellDelegate <NSObject>
 
 @required
--(void) gotoProfile:(id)sender;
+-(void) gotoProfileWithName:(NSString *)name andID:(NSString *)fbid;
 @end

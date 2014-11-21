@@ -28,6 +28,7 @@
 @property(strong, nonatomic) UILabel *timeLabel;
 @property(strong, nonatomic) UIImageView *commentIconView;
 @property(strong,nonatomic) UIButton *allCommentsButton;
+@property(strong,nonatomic) NSString *commentBeforeChange;
 @end
 
 @implementation PostsTableViewSuperCell
@@ -182,6 +183,10 @@
     [self.contentView addSubview:_commentField];
     [self.contentView addSubview:_commentIconView];
     
+    [_commentField addTarget:self
+                              action:@selector(textFieldDidChange:)
+                    forControlEvents:UIControlEventEditingChanged];
+    
 
 }
 
@@ -302,7 +307,7 @@
     NSAttributedString *nameString = [[NSAttributedString alloc] initWithString:[Utility getNameToDisplay:name] attributes:[Utility getPostsViewNameFontDictionary]];
     CGSize nameSize = [nameString size];
     
-    UILabel *commentLabel = [[UILabel alloc] initWithFrame:CGRectMake(3+nameSize.width, 0, 150, 20)];
+    UILabel *commentLabel = [[UILabel alloc] initWithFrame:CGRectMake(3+nameSize.width, 0, [KeyChainWrapper getScreenWidth] - (3+nameSize.width) - 70, 20)];
     
     NSAttributedString *commentString = [[NSAttributedString alloc] initWithString:comment attributes:[Utility getPostsViewCommentFontDictionary]];
     [nameButton setAttributedTitle:nameString forState:UIControlStateNormal];
@@ -403,6 +408,16 @@
     [self commentPostClicked:textField];
     [self.contentView endEditing:YES];
     return YES;
+}
+
+-(void)textFieldDidChange:(UITextField *)textField{
+    NSString *commentAfterChange = [textField text];
+    NSAttributedString *commentAfterChangeString = [[NSAttributedString alloc] initWithString:commentAfterChange attributes:[Utility getEditingCommentFontDictionary]];
+    if(commentAfterChangeString.size.width > (_commentField.frame.size.width - 18) ){
+        [_commentField setText:_commentBeforeChange];
+    }else{
+        _commentBeforeChange = commentAfterChange;
+    }
 }
 
 @end

@@ -257,7 +257,7 @@
     if (![User findOrCreateUserForName:name withfbID:fbid returnAsEntity:&user
                 inManagedObjectContext:[RKManagedObjectStore defaultStore].mainQueueManagedObjectContext])
     {
-        MBError(@"Cannot find or create the user (id: %@, name: %@)", name, fbid);
+        MBError(@"Cannot find or create the user (id: %@, name: %@)", fbid,name);
         return;
     }
     _user = user;

@@ -9,7 +9,7 @@
 #import "KeywordView.h"
 
 @interface KeywordView()
-@property(strong,nonatomic) UITextField *keywordTextField;
+@property(strong,nonatomic) UITextView *keywordTextView;
 
 @end
 
@@ -28,30 +28,36 @@
     return self;
 }
 
--(void)setDelegate:(id<KeywordViewDelegate,UITextFieldDelegate>)delegate{
+-(void)setDelegate:(id<KeywordViewDelegate,UITextViewDelegate>)delegate{
     _delegate = delegate;
-    _keywordTextField.delegate = _delegate;
+    _keywordTextView.delegate = _delegate;
 }
 
 -(void)setKeyword:(NSString *)keyword{
     _keyword = keyword;
     NSAttributedString *keywordString = [[NSAttributedString alloc] initWithString:_keyword attributes:[Utility getCreateQuizSuperBigKeywordFontDictionary]];
-    [_keywordTextField setAttributedText:keywordString];
-    [_keywordTextField setTextAlignment:NSTextAlignmentCenter];
+    [_keywordTextView setAttributedText:keywordString];
+    [_keywordTextView setTextAlignment:NSTextAlignmentCenter];
 }
 
 
 -(void)cardClicked:(id)sender{
-    [_keywordTextField becomeFirstResponder];
+    [_keywordTextView becomeFirstResponder];
 }
 
 - (void)constructInformationView {
-    _keywordTextField = [[UITextField alloc] initWithFrame:CGRectMake(0, self.frame.size.height/2 - 20, self.frame.size.width, 40)];
-    _keywordTextField.delegate = _delegate;
+    _keywordTextView = [[UITextView alloc] initWithFrame:CGRectMake(0, self.frame.size.height/2 - 20, self.frame.size.width, 40)];
+    _keywordTextView.delegate = _delegate;
+    [_keywordTextView setBackgroundColor:[UIColor clearColor]];
+
     [self setKeyword:_keyword];
-    [_keywordTextField addTarget:_delegate
-                              action:@selector(textFieldDidChange:)
-                    forControlEvents:UIControlEventEditingChanged];
-    [self addSubview:_keywordTextField];
+//    [_keywordTextView addTarget:_delegate
+//                              action:@selector(textFieldDidChange:)
+//                    forControlEvents:UIControlEventEditingChanged];
+    [self addSubview:_keywordTextView];
+}
+
+-(void)textViewDidBeginEditing{
+    _keywordTextView.text = @"";
 }
 @end

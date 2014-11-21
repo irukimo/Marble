@@ -14,8 +14,9 @@
 
 @interface KeywordView : MDCSwipeToChooseView
 @property (strong, nonatomic) NSString *keyword;
-@property(weak, nonatomic) id<KeywordViewDelegate, UITextFieldDelegate> delegate;
+@property(weak, nonatomic) id<KeywordViewDelegate, UITextViewDelegate> delegate;
 - (instancetype)initWithFrame:(CGRect)frame
                       keyword:(NSString *)keyword
                       options:(MDCSwipeToChooseViewOptions *)options;
+-(void)textViewDidBeginEditing;
 @end
