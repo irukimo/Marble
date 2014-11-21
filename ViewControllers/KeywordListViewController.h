@@ -10,6 +10,6 @@
 #import "KeywordListTableViewCell.h"
 
 @interface KeywordListViewController : UITableViewController <KeywordListTableViewCellDelegate>
--(void) setKeywords:(id)keywords;
+-(void) setKeywords:(id)keywords withCollapseIndex:(NSNumber *)index;
 @property (strong, nonatomic) User *subject;
 @end

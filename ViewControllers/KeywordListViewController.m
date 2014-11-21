@@ -32,7 +32,6 @@
     [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     self.tableView.contentInset = UIEdgeInsetsMake(5, 0, 5, 0);
     
-    _ongoingPath = [NSIndexPath indexPathForRow:0 inSection:0];
     
     for (NSArray *obj in _keywordList) {
         MBDebug(@"KEYWORDLIST: keyword: %@", [obj objectAtIndex:1]);
@@ -145,7 +144,7 @@
 
 
 
--(void) setKeywords:(id)keywords{
+-(void) setKeywords:(id)keywords withCollapseIndex:(NSNumber *)index{
     if(keywords){
         if([keywords isKindOfClass:[NSString class]]){
             NSString *keyword = (NSString *)keywords;
@@ -155,6 +154,12 @@
             _keywordList = [[NSMutableArray alloc] initWithArray:keywordArray];
         }
     }
+    if([index integerValue] < 0){
+        _ongoingPath = [NSIndexPath indexPathForRow:0 inSection:0];
+    }else{
+        _ongoingPath = [NSIndexPath indexPathForRow:[index integerValue] inSection:0];
+    }
+
     [self.tableView reloadData];
 }
 

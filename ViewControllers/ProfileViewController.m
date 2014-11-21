@@ -94,7 +94,7 @@
 }
 
 -(void) viewKeywordBtnClicked:(id)sender{
-    [self performSegueWithIdentifier:@"KeywordListViewControllerSegue" sender:_user.keywords];
+    [self performSegueWithIdentifier:@"KeywordListViewControllerSegue" sender:[NSNumber numberWithLong:0]];
 }
 
 -(void) initFBProfilePicViews{
@@ -155,8 +155,8 @@
         [_headerView addSubview:_nameLabel];
     }
     
-    _viewKeywordBtn = [[UIButton alloc] initWithFrame:CGRectMake(200, 4, 80, 20)];
-    NSAttributedString *moreString = [[NSAttributedString alloc] initWithString:@"more" attributes:[Utility getProfileMoreFontDictionary]];
+    _viewKeywordBtn = [[UIButton alloc] initWithFrame:CGRectMake(200, 15, 80, 20)];
+    NSAttributedString *moreString = [[NSAttributedString alloc] initWithString:@"more >>" attributes:[Utility getProfileMoreFontDictionary]];
     [_viewKeywordBtn setAttributedTitle:moreString forState:UIControlStateNormal];
     [_viewKeywordBtn setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
     [_viewKeywordBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
@@ -395,7 +395,7 @@
     MBDebug(@"moreframe %d %d", x, y);
     CGRect moreFrame = _viewKeywordBtn.frame;
     moreFrame.origin.x = x;
-    moreFrame.origin.y = y;
+    moreFrame.origin.y = y + 2;
     _viewKeywordBtn.frame = moreFrame;
     [_keywordsView addSubview:_viewKeywordBtn];
 }
@@ -460,14 +460,15 @@
 
 
 -(void) keywordBtnClicked:(id)sender{
-    NSString *keyword;
+    /*NSString *keyword;
     if([sender tag] == -1){
         keyword = (NSString *)[_user.keywords objectAtIndex:1];
     } else{
         MBDebug(@"SELECTED KEYWORD: %@", [_user.keywords objectAtIndex:[sender tag]]);
         keyword = [[_user.keywords objectAtIndex:[sender tag]] objectAtIndex:1];
-    }
-    [self performSegueWithIdentifier:@"KeywordProfileViewControllerSegue" sender:keyword];
+    }*/
+    NSNumber *index = [NSNumber numberWithLong:[sender tag]];
+    [self performSegueWithIdentifier:@"KeywordListViewControllerSegue" sender:index];
 }
 
 -(void) postSelected:(NSString *)name{
@@ -554,7 +555,7 @@
     NSLog(@"segue %@", [[segue destinationViewController] class]);
     if([[segue destinationViewController] isKindOfClass:[KeywordListViewController class]]){
         KeywordListViewController *keywordListViewController =[segue destinationViewController];
-        [keywordListViewController setKeywords:sender];
+        [keywordListViewController setKeywords:_user.keywords withCollapseIndex:sender];
         keywordListViewController.subject = _user;
     } else if([[segue destinationViewController] isKindOfClass:[ProfileViewController class]]){
          if([sender isKindOfClass:[NSArray class]]){
