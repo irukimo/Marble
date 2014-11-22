@@ -105,19 +105,7 @@
 
 -(void) initializeAccordingToType{
     [self setBorder];
-    int y;
-    if(_cellType == MBQuizCellType){
-        y = [KeyChainWrapper getQuizCellHeight] - 32;
-    } else if(_cellType == MBStatusUpdateCellType){
-        y = StatusUpdateTableViewCellHeight - 37;
-    } else if(_cellType == MBKeywordUpdateCellType){
-        y = KeywordUpdateTableViewCellHeight - 37;
-    } else{
-        MBDebug(@"should never happen");
-    }
-    UIView *grayLine = [[UIView alloc] initWithFrame:CGRectMake(30, y, [KeyChainWrapper getScreenWidth] - 60, 0.5f)];
-    [grayLine setBackgroundColor:[UIColor marbleCommentBorderGray]];
-    [self.contentView addSubview:grayLine];
+
     
 //    [_commentNumLabel setText:@"Comment"];
 //    [self.contentView addSubview:_commentNumLabel];
@@ -133,7 +121,7 @@
 }
 
 -(void)resizeWhiteBackground{
-    int myHeight = [Utility getCellHeightForPostWithType:_cellType withComments:_comments whetherSinglePost:_isSinglePostSoExpandComments];
+    int myHeight = [Utility getCellHeightForPost:_post whetherSinglePost:_isSinglePostSoExpandComments];
     _whiteView.frame = CGRectMake(CELL_UNIVERSAL_PADDING, CELL_UNIVERSAL_PADDING/2.0f, [KeyChainWrapper getScreenWidth] - 2*CELL_UNIVERSAL_PADDING, myHeight - CELL_UNIVERSAL_PADDING);
 }
 
@@ -210,13 +198,16 @@
             return StatusUpdateTableViewCellHeight -30 + FirstCommentIncrementHeight + (int)(commentCnt-1)*CommentIncrementHeight;
         }
     } else if(_cellType == MBKeywordUpdateCellType){
+        KeywordUpdate *keywordUpdate = (KeywordUpdate *)_post;
+        NSArray *array = [Utility getKeywordArray:keywordUpdate];
+        int lineNum = [Utility getLineNumForKeywords:array withWidth:[KeyChainWrapper getScreenWidth] - 40];
         if(!_comments || commentCnt == 0){
-            return KeywordUpdateTableViewCellHeight - 30;
+            return KeywordUpdateTableViewCellHeight - 30+ lineNum * KeywordUpdateTableViewCellKeywordIncrementHeight;
         }
         if(!_isSinglePostSoExpandComments && commentCnt > 2){
-            return KeywordUpdateTableViewCellHeight - 30 + FirstCommentIncrementHeight + 2*CommentIncrementHeight;
+            return KeywordUpdateTableViewCellHeight - 30 + FirstCommentIncrementHeight + 2*CommentIncrementHeight+ lineNum * KeywordUpdateTableViewCellKeywordIncrementHeight;
         } else{
-            return KeywordUpdateTableViewCellHeight - 30 + FirstCommentIncrementHeight + (int)(commentCnt-1)*CommentIncrementHeight;
+            return KeywordUpdateTableViewCellHeight - 30 + FirstCommentIncrementHeight + (int)(commentCnt-1)*CommentIncrementHeight+ lineNum * KeywordUpdateTableViewCellKeywordIncrementHeight;
         }
     }else{
         return 0;
@@ -254,12 +245,23 @@
     } else if(_cellType == MBStatusUpdateCellType){
         y = StatusUpdateTableViewCellHeight - 30;
     } else if(_cellType == MBKeywordUpdateCellType){
-        y = KeywordUpdateTableViewCellHeight - 30;
+        KeywordUpdate *keywordUpdate = (KeywordUpdate *)_post;
+        NSArray *array = [Utility getKeywordArray:keywordUpdate];
+        int lineNum = [Utility getLineNumForKeywords:array withWidth:[KeyChainWrapper getScreenWidth] - 40];
+        y = KeywordUpdateTableViewCellHeight - 30 + lineNum*KeywordUpdateTableViewCellKeywordIncrementHeight;
     } else{
         MBDebug(@"should never happen");
         y=0;
     }
+    
+    UIView *grayLine = [[UIView alloc] initWithFrame:CGRectMake(30, y - 7, [KeyChainWrapper getScreenWidth] - 60, 0.5f)];
+    [grayLine setBackgroundColor:[UIColor marbleCommentBorderGray]];
+    [grayLine setTag:COMMENT_RELATED_TAG];
+    [self.contentView addSubview:grayLine];
+    
+    
     int i = 0;
+    
     
     //only if coming from single post view
     if(_isSinglePostSoExpandComments){

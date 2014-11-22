@@ -367,17 +367,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     Post *post = [_fetchedResultsController objectAtIndexPath:indexPath];
-    PostCellType cellType;
-    if ([post isKindOfClass:[Quiz class]]){
-        cellType = MBQuizCellType;
-    } else if([post isKindOfClass:[StatusUpdate class]]){
-        cellType = MBStatusUpdateCellType;
-    } else if([post isKindOfClass:[KeywordUpdate class]]){
-        cellType = MBKeywordUpdateCellType;
-    } else {
-        MBDebug(@"Should never happen");
-    }
-    return [Utility getCellHeightForPostWithType:cellType withComments:post.comments whetherSinglePost:NO];
+    return [Utility getCellHeightForPost:post whetherSinglePost:NO];
 }
 
 #pragma mark -

@@ -203,7 +203,7 @@
 -(void)resizeWhiteBackground{
     int myHeight = (_user.keywords)? HEADER_VIEW_HEIGHT_WITH_KEYWORDS: HEADER_VIEW_HEIGHT_WITHOUT_KEYWORDS;
     
-    _whiteView.frame = CGRectMake(CELL_UNIVERSAL_PADDING, CELL_UNIVERSAL_PADDING/2.0f, self.view.bounds.size.width - 2*CELL_UNIVERSAL_PADDING, myHeight - CELL_UNIVERSAL_PADDING);
+    _whiteView.frame = CGRectMake(CELL_UNIVERSAL_PADDING, CELL_UNIVERSAL_PADDING/2.0f, [KeyChainWrapper getScreenWidth] - 2*CELL_UNIVERSAL_PADDING, myHeight - CELL_UNIVERSAL_PADDING);
 }
 
 -(void)addGrayStaticLabels{

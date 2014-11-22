@@ -45,17 +45,7 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    PostCellType cellType;
-    if ([_mustBePost isKindOfClass:[Quiz class]]){
-        cellType = MBQuizCellType;
-    } else if([_mustBePost isKindOfClass:[StatusUpdate class]]){
-        cellType = MBStatusUpdateCellType;
-    } else if([_mustBePost isKindOfClass:[KeywordUpdate class]]){
-        cellType = MBKeywordUpdateCellType;
-    } else {
-        MBDebug(@"Should never happen");
-    }
-    return [Utility getCellHeightForPostWithType:cellType withComments:_mustBePost.comments whetherSinglePost:YES];
+    return [Utility getCellHeightForPost:_mustBePost whetherSinglePost:YES];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {

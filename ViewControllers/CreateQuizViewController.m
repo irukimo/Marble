@@ -847,8 +847,8 @@ static const int picY = 50;
 
 -(void)addTextFields{
 //    _keywordTextField = [[UITextField alloc] initWithFrame:CGRectMake(80, 20, 150, 40)];
-    _option0NameTextField = [[UITextField alloc] initWithFrame:CGRectMake(30, picY + picviewSize+3, 120, 30)];
-    _option1NameTextField = [[UITextField alloc] initWithFrame:CGRectMake([KeyChainWrapper getScreenWidth] - 150, picY + picviewSize+3, 120, 30)];
+    _option0NameTextField = [[UITextField alloc] initWithFrame:CGRectMake(30, picY + picviewSize+3, 150, 30)];
+    _option1NameTextField = [[UITextField alloc] initWithFrame:CGRectMake([KeyChainWrapper getScreenWidth] - 150, picY + picviewSize+3, 150, 30)];
     _keywordCurrentValue = @"yay";
 //    [_keywordTextField setText:_keywordCurrentValue];
 //    [_keywordTextField setTextAlignment:NSTextAlignmentCenter];

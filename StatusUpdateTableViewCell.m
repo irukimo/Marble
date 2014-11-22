@@ -46,7 +46,7 @@
 
 -(void) addStaticLabels{
     
-    _nameButton = [[UIButton alloc] initWithFrame:CGRectMake(NAME_LEFT_ALIGNMENT, NAME_TOP_ALIGNMENT, 100, 20)];
+    _nameButton = [[UIButton alloc] initWithFrame:CGRectMake(NAME_LEFT_ALIGNMENT, NAME_TOP_ALIGNMENT, 150, 20)];
     [_nameButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [_nameButton addTarget:self action:@selector(nameClicked:) forControlEvents:UIControlEventTouchUpInside];
     
@@ -74,6 +74,7 @@
 }
 
 - (void) setStatusUpdate:(StatusUpdate *)statusUpdate {
+    self.post = statusUpdate;
     _statusUpdate = statusUpdate;
     NSAttributedString *nameString = [[NSAttributedString alloc] initWithString:[Utility getNameToDisplay:_statusUpdate.name] attributes:[Utility getPostsViewNameFontDictionary]];
     [_nameButton setAttributedTitle:nameString forState:UIControlStateNormal];

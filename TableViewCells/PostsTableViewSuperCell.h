@@ -13,6 +13,7 @@
 @interface PostsTableViewSuperCell : UITableViewCell <UITextFieldDelegate>
 @property (nonatomic, weak) id delegate;
 @property (nonatomic) PostCellType cellType;
+@property (strong,nonatomic) Post * post;
 -(void)setCommentsForPostSuperCell:(NSArray *)comments;
 -(void) initializeAccordingToType;
 -(void) addCommentAtY:(int)y withName:(NSString *)name andID:(NSString *)fbid andComment:(NSString *)comment;

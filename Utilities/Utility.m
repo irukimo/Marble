@@ -465,8 +465,9 @@
     MBDebug(@"whatispostfix%@", postfix);
     return [[NSString stringWithFormat:@"%@",number] stringByAppendingString:postfix];
 }
-+ (int)getCellHeightForPostWithType:(PostCellType)cellType withComments:(NSArray *)comments whetherSinglePost:(bool)isSinglePost {
-    if (cellType == MBQuizCellType){
++ (int)getCellHeightForPost:(Post *)post whetherSinglePost:(bool)isSinglePost{
+    NSArray *comments = post.comments;
+    if ([post isKindOfClass:[Quiz class]]){
         if(!comments|| [comments count] == 0){
             return [KeyChainWrapper getQuizCellDisplayHeight];
         } else if([comments count] > 2 && !isSinglePost){
@@ -474,7 +475,7 @@
         } else{
             return [KeyChainWrapper getQuizCellDisplayHeight] + FirstCommentIncrementHeight + (int)([comments count]-1)*CommentIncrementHeight+ 8;
         }
-    } else if(cellType == MBStatusUpdateCellType){
+    } else if([post isKindOfClass:[StatusUpdate class]]){
         if(!comments|| [comments count] == 0){
             return StatusUpdateTableViewCellDisplayHeight;
         } else if([comments count] > 2 && !isSinglePost){
@@ -483,14 +484,17 @@
         } else{
             return StatusUpdateTableViewCellDisplayHeight + FirstCommentIncrementHeight + (int)([comments count]-1)*CommentIncrementHeight+ 8;
         }
-    } else if(cellType == MBKeywordUpdateCellType){
+    } else if([post isKindOfClass:[KeywordUpdate class]]){
+        KeywordUpdate *keywordUpdate = (KeywordUpdate *)post;
+        NSArray *array = [Utility getKeywordArray:keywordUpdate];
+        int lineNum = [Utility getLineNumForKeywords:array withWidth:[KeyChainWrapper getScreenWidth] - 40];
         if(!comments || [comments count] == 0){
-            return KeywordUpdateTableViewCellDisplayHeight;
+            return KeywordUpdateTableViewCellDisplayHeight + lineNum * KeywordUpdateTableViewCellKeywordIncrementHeight;
         } else if([comments count] > 2 && !isSinglePost){
-            return KeywordUpdateTableViewCellDisplayHeight + FirstCommentIncrementHeight + 2*CommentIncrementHeight+ 8;
+            return KeywordUpdateTableViewCellDisplayHeight + FirstCommentIncrementHeight + 2*CommentIncrementHeight+ 8+ lineNum * KeywordUpdateTableViewCellKeywordIncrementHeight;
 
         } else{
-            return KeywordUpdateTableViewCellDisplayHeight + FirstCommentIncrementHeight + (int)([comments count]-1)*CommentIncrementHeight+ 8;
+            return KeywordUpdateTableViewCellDisplayHeight + FirstCommentIncrementHeight + (int)([comments count]-1)*CommentIncrementHeight+ 8+ lineNum * KeywordUpdateTableViewCellKeywordIncrementHeight;
         }
     } else{
         MBDebug(@"should never happen");
@@ -508,4 +512,39 @@
     UIGraphicsEndImageContext();
     return newImage;
 }
+
++(int)getLineNumForKeywords:(NSArray *)keywords withWidth:(CGFloat)width{
+    CGFloat x = 0.f;
+    int lineNum = 0;
+    for(NSString *keyword in keywords){
+        UIButton *button = [self getKeywordButtonAtX:x andY:0 andString:keyword];
+        if(x == 0.f && button.frame.size.width >= width){
+            
+        }else{
+            CGFloat temp = x + button.frame.size.width;
+            if(temp > width){
+                lineNum ++;
+                x = button.frame.size.width;
+            }else{
+                x = temp;
+            }
+        }
+    }
+    return  lineNum;
+}
+
++(NSArray *)getKeywordArray:(KeywordUpdate *)keywordUpdate{
+    NSMutableArray *keywordArray = [[NSMutableArray alloc] init];
+    if(keywordUpdate.keyword1){
+        [keywordArray addObject:keywordUpdate.keyword1];
+    }
+    if(keywordUpdate.keyword2){
+        [keywordArray addObject:keywordUpdate.keyword2];
+    }
+    if(keywordUpdate.keyword3){
+        [keywordArray addObject:keywordUpdate.keyword3];
+    }
+    return keywordArray;
+}
+
 @end

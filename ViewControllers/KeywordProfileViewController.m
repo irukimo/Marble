@@ -123,7 +123,7 @@
 //    [_headerView.layer setBorderColor:[UIColor marbleBackGroundColor].CGColor];
 //    [_headerView.layer setBorderWidth:CELL_UNIVERSAL_PADDING/2.0f];
     
-    int lineX = 190;
+    CGFloat lineX = [KeyChainWrapper getScreenWidth]*0.59f;
     int lineY = 120;
     int lineWidth = 2;
     
@@ -139,12 +139,13 @@
     [overallLabel setAttributedText:overallString];
     [_headerView addSubview:overallLabel];
     
+    CGFloat creatorX = [KeyChainWrapper getScreenWidth]*0.78 - 30;
     NSAttributedString *createdByString = [[NSAttributedString alloc] initWithString:@"created by" attributes:[Utility getNotifBlackNormalFontDictionary]];
-    UILabel *createdByLabel = [[UILabel alloc] initWithFrame:CGRectMake(220, 12, 100, 20)];
+    UILabel *createdByLabel = [[UILabel alloc] initWithFrame:CGRectMake(creatorX, 12, 100, 20)];
     [createdByLabel setAttributedText:createdByString];
     [_headerView addSubview:createdByLabel];
     
-    _creatorImageView = [[UIImageView alloc] initWithFrame:CGRectMake(220, 30, 58, 58)];
+    _creatorImageView = [[UIImageView alloc] initWithFrame:CGRectMake(creatorX, 30, 58, 58)];
     [_creatorImageView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(creatorNameButtonClicked:)]];
     [_creatorImageView setUserInteractionEnabled:YES];
     _creatorImageView.layer.cornerRadius = _creatorImageView.frame.size.width/2.0f;
@@ -155,12 +156,12 @@
     [_headerView addSubview:_creatorImageView];
     
     NSAttributedString *timesPlayedString = [[NSAttributedString alloc] initWithString:@"times played" attributes:[Utility getProfileGrayStaticFontDictionary]];
-    UILabel *timesPlayedStringLabel = [[UILabel alloc] initWithFrame:CGRectMake(200, 150, 100, 20)];
+    UILabel *timesPlayedStringLabel = [[UILabel alloc] initWithFrame:CGRectMake(creatorX - 20, 150, 100, 20)];
     [timesPlayedStringLabel setAttributedText:timesPlayedString];
     [timesPlayedStringLabel setTextAlignment:NSTextAlignmentCenter];
     [_headerView addSubview:timesPlayedStringLabel];
     
-    _timePlayedLabel = [[UILabel alloc] initWithFrame:CGRectMake(200, 136, 100, 20)];
+    _timePlayedLabel = [[UILabel alloc] initWithFrame:CGRectMake(creatorX - 20, 136, 100, 20)];
     [_headerView addSubview:_timePlayedLabel];
     
 }
@@ -176,6 +177,8 @@
     const int IMAGE_LEFT_ALIGN = 50;
     const int RANKING_Y_INCREMENT = 50;
     const int IMAGE_SIZE = 40;
+    CGFloat lineX = [KeyChainWrapper getScreenWidth]*0.59f;
+
     
     for(int i = 0; i < 3; i++) {
         NSAttributedString *rankNum = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"#%d",i+1] attributes:[Utility getNotifBlackBoldFontDictionary]];
@@ -199,11 +202,12 @@
         }
     }
     
-    _rank1NameButton = [[UIButton alloc] initWithFrame:CGRectMake(IMAGE_LEFT_ALIGN + IMAGE_SIZE + 3, RANKING_Y_START + 10, 100, 20)];
+    CGFloat imageWidth = lineX - (IMAGE_LEFT_ALIGN + IMAGE_SIZE + 3);
+    _rank1NameButton = [[UIButton alloc] initWithFrame:CGRectMake(IMAGE_LEFT_ALIGN + IMAGE_SIZE + 3, RANKING_Y_START + 10, imageWidth, 20)];
     [_rank1NameButton setTag:0];
-    _rank2NameButton = [[UIButton alloc] initWithFrame:CGRectMake(IMAGE_LEFT_ALIGN + IMAGE_SIZE + 3, RANKING_Y_START + RANKING_Y_INCREMENT + 10, 100, 20)];
+    _rank2NameButton = [[UIButton alloc] initWithFrame:CGRectMake(IMAGE_LEFT_ALIGN + IMAGE_SIZE + 3, RANKING_Y_START + RANKING_Y_INCREMENT + 10, imageWidth, 20)];
     [_rank2NameButton setTag:1];
-    _rank3NameButton = [[UIButton alloc] initWithFrame:CGRectMake(IMAGE_LEFT_ALIGN + IMAGE_SIZE + 3, RANKING_Y_START + RANKING_Y_INCREMENT*2 + 10, 100, 20)];
+    _rank3NameButton = [[UIButton alloc] initWithFrame:CGRectMake(IMAGE_LEFT_ALIGN + IMAGE_SIZE + 3, RANKING_Y_START + RANKING_Y_INCREMENT*2 + 10, imageWidth, 20)];
     [_rank3NameButton setTag:2];
     [_rank1NameButton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
     [_rank2NameButton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];

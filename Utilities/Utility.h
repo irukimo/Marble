@@ -7,6 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "KeywordUpdate.h"
+#import "StatusUpdate.h"
+#import "Quiz.h"
 
 @interface Utility : NSObject
 + (void) generateAlertWithMessage:(NSString *)message;
@@ -83,7 +86,8 @@ typedef void (^voidBlock)(void);
 + (void) setUpProfilePictureImageView:(UIImageView *)view byFBID:(NSString *)fbID;
 
 + (NSString *)getRankingFullString:(NSNumber *)number;
-+ (int)getCellHeightForPostWithType:(PostCellType)cellType withComments:(NSArray *)comments whetherSinglePost:(bool)whetherSinglePost;
-
++ (int)getCellHeightForPost:(Post *)post whetherSinglePost:(bool)isSinglePost;
++(int)getLineNumForKeywords:(NSArray *)keywords withWidth:(CGFloat)width;
++(NSArray *)getKeywordArray:(KeywordUpdate *)keywordUpdate;
 + (UIImage *)imageWithImage:(UIImage *)image scaledToSize:(CGSize)newSize;
 @end

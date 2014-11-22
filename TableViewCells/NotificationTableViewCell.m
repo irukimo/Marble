@@ -53,10 +53,10 @@
 }
 
 -(void) addStaticLabels{
-    _descLabel = [[UILabel alloc] initWithFrame:CGRectMake(60, 0, self.contentView.frame.size.width - LEFT_ALIGNMENT - LEFT_ALIGNMENT - 30, self.contentView.frame.size.height)];
+    _descLabel = [[UILabel alloc] initWithFrame:CGRectMake(60, 0, [KeyChainWrapper getScreenWidth] - LEFT_ALIGNMENT - LEFT_ALIGNMENT - 30, self.contentView.frame.size.height)];
     _descLabel.lineBreakMode = NSLineBreakByWordWrapping;
     _descLabel.numberOfLines = 0;
-    _timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(60, 30, self.contentView.frame.size.width - LEFT_ALIGNMENT - LEFT_ALIGNMENT - 30, 30)];
+    _timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(60, 30, [KeyChainWrapper getScreenWidth] - LEFT_ALIGNMENT - LEFT_ALIGNMENT - 30, 30)];
     [self.contentView addSubview:_descLabel];
     [self.contentView addSubview:_timeLabel];
 }

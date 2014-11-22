@@ -275,9 +275,9 @@
     [marbleImage setImage:[UIImage imageNamed:@"little_marble.png"]];
 
     
-    _authorNameButton = [[UIButton alloc] initWithFrame:CGRectMake(NAME_LEFT_ALIGNMENT, NAME_TOP_ALIGNMENT, 120, 20)];
-    _option0NameButton = [[UIButton alloc] initWithFrame:CGRectMake(NAME_LEFT_ALIGNMENT, NAME_TOP_ALIGNMENT + 17, 120, 20)];
-    _option1NameButton = [[UIButton alloc] initWithFrame:CGRectMake(160, NAME_TOP_ALIGNMENT + 17, 120, 20)];
+    _authorNameButton = [[UIButton alloc] initWithFrame:CGRectMake(NAME_LEFT_ALIGNMENT, NAME_TOP_ALIGNMENT, 150, 20)];
+    _option0NameButton = [[UIButton alloc] initWithFrame:CGRectMake(NAME_LEFT_ALIGNMENT, NAME_TOP_ALIGNMENT + 17, 150, 20)];
+    _option1NameButton = [[UIButton alloc] initWithFrame:CGRectMake(160, NAME_TOP_ALIGNMENT + 17, 150, 20)];
     
 
     NSAttributedString *compareTextString = [[NSAttributedString alloc] initWithString:@"compared" attributes:[Utility getNotifBlackNormalFontDictionary]];
@@ -374,6 +374,7 @@
 }
 
 -(void) setQuiz:(Quiz *)quiz{
+    self.post = quiz;
     _quiz = quiz;
     _authorName = [quiz.authorName copy];
     _option0Name = [quiz.option0Name copy];

@@ -42,7 +42,7 @@
 
 -(void)initStaticButtonsAndLabels{
     _descriptionLabel = [[UILabel alloc] initWithFrame:CGRectMake(NAME_LEFT_ALIGNMENT, NAME_TOP_ALIGNMENT + 1, 150, 20)];
-    _nameButton = [[UIButton alloc] initWithFrame:CGRectMake(NAME_LEFT_ALIGNMENT, NAME_TOP_ALIGNMENT, 100, 20)];
+    _nameButton = [[UIButton alloc] initWithFrame:CGRectMake(NAME_LEFT_ALIGNMENT, NAME_TOP_ALIGNMENT, 150, 20)];
     [_nameButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [_nameButton addTarget:self action:@selector(nameClicked:) forControlEvents:UIControlEventTouchUpInside];
 
@@ -51,7 +51,7 @@
 }
 
 -(void) initKeywordsView{
-    _keywordsView = [[UIView alloc] initWithFrame:CGRectMake(NAME_LEFT_ALIGNMENT, NAME_TOP_ALIGNMENT + 23, self.contentView.frame.size.width, 50)];
+    _keywordsView = [[UIView alloc] initWithFrame:CGRectMake(NAME_LEFT_ALIGNMENT, NAME_TOP_ALIGNMENT + 23, [KeyChainWrapper getScreenWidth] - 40, 50)];
     [self.contentView addSubview:_keywordsView];
 }
 
@@ -62,6 +62,7 @@
 }
 
 - (void) setKeywordUpdate:(KeywordUpdate *)keywordUpdate{
+    self.post = keywordUpdate;
     _keywordUpdate = keywordUpdate;
     
     MBDebug(@"123 %@ %@ %@",keywordUpdate.keyword1, keywordUpdate.keyword2,keywordUpdate.keyword3);
@@ -75,41 +76,82 @@
 
     NSInteger numKeywords = 0;
     
-    int x = 0;
-    int y = 0;
+    
+    CGFloat x = 0.f;
+    CGFloat y = 0.f;
+    CGFloat lineIncrementY = 28.f;
     
     if (_keywordUpdate.keyword1 != nil){
         numKeywords++;
-        NSAttributedString *keywordString =[[NSAttributedString alloc] initWithString:_keywordUpdate.keyword1 attributes:[Utility getWhiteCommentFontDictionary]];
-        [self addKeywordLabelAtX:x andY:y withKeyword:_keywordUpdate.keyword1 atIndex:0];
-        x+= keywordString.size.width + 20;
-        if(x>250){
-            x=0;
-            y+=33;
+        UIButton *keywordButton = [Utility getKeywordButtonAtX:x andY:0 andString:_keywordUpdate.keyword1];
+        if(x == 0.f && keywordButton.frame.size.width >= _keywordsView.frame.size.width){
+            CGRect frame = keywordButton.frame;
+            frame.size.width =  _keywordsView.frame.size.width - 5;
+            [keywordButton setFrame:frame];
+            [self addKeywordButton:keywordButton atIndex:0];
+            y += lineIncrementY;
+        }else{
+            x = keywordButton.frame.size.width + 3;
+            [self addKeywordButton:keywordButton atIndex:0];
+            
         }
+        MBDebug(@"keyword1 %@ at x %f and y %f", _keywordUpdate.keyword1, keywordButton.frame.origin.x, keywordButton.frame.origin.y);
     }
     
     if (_keywordUpdate.keyword2 != nil){
         numKeywords++;
-        NSAttributedString *keywordString =[[NSAttributedString alloc] initWithString:_keywordUpdate.keyword2 attributes:[Utility getNotifOrangeNormalFontDictionary]];
-        [self addKeywordLabelAtX:x andY:y withKeyword:_keywordUpdate.keyword2 atIndex:1];
-        x+= keywordString.size.width + 20;
-        if(x>250){
-            x=0;
-            y+=33;
+        UIButton *keywordButton = [Utility getKeywordButtonAtX:x andY:y andString:_keywordUpdate.keyword2];
+        if(x == 0.f && keywordButton.frame.size.width >= _keywordsView.frame.size.width){
+            CGRect frame = keywordButton.frame;
+            frame.size.width =  _keywordsView.frame.size.width - 5;
+            [keywordButton setFrame:frame];
+            [self addKeywordButton:keywordButton atIndex:1];
+            y += lineIncrementY;
+        }else if((x+keywordButton.frame.size.width) > _keywordsView.frame.size.width){
+            y += lineIncrementY;
+            CGRect frame = keywordButton.frame;
+            frame.origin.x =  0.f;
+            frame.origin.y =  y;
+            [keywordButton setFrame:frame];
+            [self addKeywordButton:keywordButton atIndex:1];
+            x = keywordButton.frame.size.width + 3;
+        }else{
+            x += keywordButton.frame.size.width + 3;
+            [self addKeywordButton:keywordButton atIndex:1];
+            
         }
+        MBDebug(@"keyword2 %@ at x %f and y %f", _keywordUpdate.keyword2, keywordButton.frame.origin.x, keywordButton.frame.origin.y);
+
     }
     
     if (_keywordUpdate.keyword3 != nil){
         numKeywords++;
-        NSAttributedString *keywordString =[[NSAttributedString alloc] initWithString:_keywordUpdate.keyword3 attributes:[Utility getNotifOrangeNormalFontDictionary]];
-        [self addKeywordLabelAtX:x andY:y withKeyword:_keywordUpdate.keyword3 atIndex:2];
-        x+= keywordString.size.width + 20;
-        if(x>250){
-            x=0;
-            y+=33;
+        UIButton *keywordButton = [Utility getKeywordButtonAtX:x andY:y andString:_keywordUpdate.keyword3];
+        if(x == 0.f && keywordButton.frame.size.width >= _keywordsView.frame.size.width){
+            CGRect frame = keywordButton.frame;
+            frame.size.width =  _keywordsView.frame.size.width - 5;
+            [keywordButton setFrame:frame];
+            [self addKeywordButton:keywordButton atIndex:2];
+            y += lineIncrementY;
+        }else if((x+keywordButton.frame.size.width) > _keywordsView.frame.size.width){
+            y += lineIncrementY;
+            CGRect frame = keywordButton.frame;
+            frame.origin.x =  0.f;
+            frame.origin.y =  y;
+            [keywordButton setFrame:frame];
+            [self addKeywordButton:keywordButton atIndex:2];
+            x = keywordButton.frame.size.width + 3;
+        }else{
+            x += keywordButton.frame.size.width + 3;
+            [self addKeywordButton:keywordButton atIndex:2];
+            
         }
+        MBDebug(@"keyword3 %@ at x %f and y %f", _keywordUpdate.keyword3, keywordButton.frame.origin.x, keywordButton.frame.origin.y);
+
     }
+    CGRect keywordViewFrame = _keywordsView.frame;
+    keywordViewFrame.size.height = y + lineIncrementY;
+    [_keywordsView setFrame:keywordViewFrame];
     
     
     NSAttributedString *descString = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"has %lu new marble:",numKeywords] attributes:[Utility getNotifBlackNormalFontDictionary]];
@@ -123,8 +165,7 @@
     [super setTimeForTimeLabel:_keywordUpdate.time];
 }
 
--(void) addKeywordLabelAtX:(int)x andY:(int)y withKeyword:(NSString *)string atIndex:(NSInteger)index{
-    UIButton *keywordBtn = [Utility getKeywordButtonAtX:x andY:y andString:string];
+-(void) addKeywordButton:(UIButton *)keywordBtn atIndex:(NSInteger)index{
     [keywordBtn setTag:index];
     [keywordBtn addTarget:self action:@selector(keywordBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
     [_keywordsView addSubview:keywordBtn];
