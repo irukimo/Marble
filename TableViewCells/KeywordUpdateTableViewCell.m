@@ -153,8 +153,12 @@
     keywordViewFrame.size.height = y + lineIncrementY;
     [_keywordsView setFrame:keywordViewFrame];
     
-    
-    NSAttributedString *descString = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"has %lu new marble:",numKeywords] attributes:[Utility getNotifBlackNormalFontDictionary]];
+    NSAttributedString *descString;
+    if(numKeywords > 1){
+        descString = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"has %lu new marbles:",numKeywords] attributes:[Utility getNotifBlackNormalFontDictionary]];
+    }else{
+        descString = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"has %lu new marble:",numKeywords] attributes:[Utility getNotifBlackNormalFontDictionary]];
+    }
     [_descriptionLabel setAttributedText:descString];
     CGRect descFrame = _descriptionLabel.frame;
     descFrame.origin.x = NAME_LEFT_ALIGNMENT + nameString.size.width + 5;
