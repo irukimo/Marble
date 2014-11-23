@@ -211,5 +211,9 @@ static CGFloat screenHeight;
     
 }
 
++(CGFloat)getKeywordUpdateKeywordsViewWidth{
+    return [self getScreenWidth] - 90;
+}
+
 
 @end

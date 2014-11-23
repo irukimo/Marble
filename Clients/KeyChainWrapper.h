@@ -41,6 +41,7 @@
 
 +(CGFloat)getScreenWidth;
 +(CGFloat)getScreenHeight;
++(CGFloat)getKeywordUpdateKeywordsViewWidth;
 //+(NSString *)getValueFromKeyChain:(NSString *)key;
 //+(void)storeValueInKeyChain:(NSString *)value forKey:(NSString *)key;
 //+(void)registerDeviceId:(NSString *)uid andKey:(NSString *)key;

@@ -487,7 +487,7 @@
     } else if([post isKindOfClass:[KeywordUpdate class]]){
         KeywordUpdate *keywordUpdate = (KeywordUpdate *)post;
         NSArray *array = [Utility getKeywordArray:keywordUpdate];
-        int lineNum = [Utility getLineNumForKeywords:array withWidth:[KeyChainWrapper getScreenWidth] - 40];
+        int lineNum = [Utility getLineNumForKeywords:array withWidth:[KeyChainWrapper getKeywordUpdateKeywordsViewWidth]];
         if(!comments || [comments count] == 0){
             return KeywordUpdateTableViewCellDisplayHeight + lineNum * KeywordUpdateTableViewCellKeywordIncrementHeight;
         } else if([comments count] > 2 && !isSinglePost){

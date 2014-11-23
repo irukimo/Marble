@@ -51,7 +51,9 @@
 }
 
 -(void) initKeywordsView{
-    _keywordsView = [[UIView alloc] initWithFrame:CGRectMake(NAME_LEFT_ALIGNMENT, NAME_TOP_ALIGNMENT + 23, [KeyChainWrapper getScreenWidth] - 40, 50)];
+    _keywordsView = [[UIView alloc] initWithFrame:CGRectMake(NAME_LEFT_ALIGNMENT, NAME_TOP_ALIGNMENT + 23, [KeyChainWrapper getKeywordUpdateKeywordsViewWidth], 50)];
+//    [_keywordsView.layer setBorderWidth:2.f];
+//    [_keywordsView.layer setBorderColor:[UIColor blackColor].CGColor];
     [self.contentView addSubview:_keywordsView];
 }
 
@@ -127,6 +129,7 @@
     if (_keywordUpdate.keyword3 != nil){
         numKeywords++;
         UIButton *keywordButton = [Utility getKeywordButtonAtX:x andY:y andString:_keywordUpdate.keyword3];
+        MBDebug(@"x %f, width, %f, (x+keywordButton.frame.size.width) %f, %f", x, keywordButton.frame.size.width, (x+keywordButton.frame.size.width), _keywordsView.frame.size.width);
         if(x == 0.f && keywordButton.frame.size.width >= _keywordsView.frame.size.width){
             CGRect frame = keywordButton.frame;
             frame.size.width =  _keywordsView.frame.size.width - 5;

@@ -200,7 +200,7 @@
     } else if(_cellType == MBKeywordUpdateCellType){
         KeywordUpdate *keywordUpdate = (KeywordUpdate *)_post;
         NSArray *array = [Utility getKeywordArray:keywordUpdate];
-        int lineNum = [Utility getLineNumForKeywords:array withWidth:[KeyChainWrapper getScreenWidth] - 40];
+        int lineNum = [Utility getLineNumForKeywords:array withWidth:[KeyChainWrapper getKeywordUpdateKeywordsViewWidth]];
         if(!_comments || commentCnt == 0){
             return KeywordUpdateTableViewCellHeight - 30+ lineNum * KeywordUpdateTableViewCellKeywordIncrementHeight;
         }
@@ -247,7 +247,7 @@
     } else if(_cellType == MBKeywordUpdateCellType){
         KeywordUpdate *keywordUpdate = (KeywordUpdate *)_post;
         NSArray *array = [Utility getKeywordArray:keywordUpdate];
-        int lineNum = [Utility getLineNumForKeywords:array withWidth:[KeyChainWrapper getScreenWidth] - 40];
+        int lineNum = [Utility getLineNumForKeywords:array withWidth:[KeyChainWrapper getKeywordUpdateKeywordsViewWidth]];
         y = KeywordUpdateTableViewCellHeight - 30 + lineNum*KeywordUpdateTableViewCellKeywordIncrementHeight;
     } else{
         MBDebug(@"should never happen");
