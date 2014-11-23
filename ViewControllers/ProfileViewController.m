@@ -481,8 +481,11 @@
         NSString *status = _statusTextView.text;
         if(![status isEqualToString:@""]){
             MBDebug(@"To send status: %@", status);
-            [Utility sendThroughRKRoute:@"send_status" withParams:@{@"status": status}];
-            [self getStatus];
+            [Utility sendThroughRKRoute:@"send_status" withParams:@{@"status": status}
+                           successBlock:^{
+                               [self getStatus];
+                           }
+                    failureBlock:^{MBError(@"Did not send successfully");}];
             [_statusTextView resignFirstResponder];
             [self.tableView triggerPullToRefresh];
         }
@@ -609,7 +612,6 @@
     
     if([text isEqualToString:@"\n"]) {
         [self sendStatusBtnClicked];
-        [textView resignFirstResponder];
         return NO;
     }
     
