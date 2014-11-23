@@ -422,7 +422,16 @@ static const int picY = 50;
 }
 
 - (NSArray *)defaultKeyword {
-    return [KeyChainWrapper keywords];
+    NSMutableArray *array = [[NSMutableArray alloc] init];
+    
+    for(int i = 0; i < 5; i++){
+        NSString *keyword;
+        do{
+            keyword = [KeyChainWrapper getARandomKeyword];
+        }while ([array containsObject:keyword]);
+        [array addObject:keyword];
+    }
+    return array;
 }
 
 - (KeywordView *)popPersonViewWithFrame:(CGRect)frame {
@@ -484,8 +493,12 @@ static const int picY = 50;
 }
 
 -(void)checkIfNeedMoreKeyword{
-    if([_keywordArray count] < 2){
-        [_keywordArray addObject:[KeyChainWrapper getARandomKeyword]];
+    if([_keywordArray count] < 4){
+        NSString *keyword;
+        do{
+            keyword = [KeyChainWrapper getARandomKeyword];
+        }while ([_keywordArray containsObject:keyword]);
+        [_keywordArray addObject:keyword];
     }
 }
 #pragma mark View Contruction
