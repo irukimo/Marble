@@ -25,7 +25,8 @@ static const CGFloat animationDuration = 0.25;
 static const CGFloat ChoosePersonButtonHorizontalPadding = 80.f;
 static const CGFloat ChoosePersonButtonVerticalPadding = 20.f;
 static const int picviewSize = 112;
-static const int picY = 50;
+
+static const CGFloat horizontalPadding = 35.f;
 
 
 //#import "TouchTextField.h"
@@ -77,6 +78,8 @@ static const int picY = 50;
 
 @property UIImageView *guideImageView;
 @property UILabel *guideTextLabel;
+
+@property CGFloat picY;
 
 @end
 
@@ -162,12 +165,15 @@ static const int picY = 50;
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    _picY = [KeyChainWrapper getScreenHeight]*0.11f;
+
+    
     //put original view at background first
     [self.view addSubview:[self generateBackgroundView]];
     //everything is in mainView
     [self.view addSubview:[self generateMainView]];
     
-    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - 50, self.view.bounds.size.width, 30)];
+    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 20, [KeyChainWrapper getScreenWidth], 30)];
     titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
     titleLabel.numberOfLines = 0;
     NSAttributedString *titleString = [[NSAttributedString alloc] initWithString:@"Tap on any item to edit" attributes:[Utility getCreateQuizDescFontDictionary]];
@@ -236,8 +242,8 @@ static const int picY = 50;
 }
 
 -(UIView *)generateMainView{
-    _mainView = [[UIView alloc] initWithFrame:self.view.frame];
-    _blurredBgImage = [[UIImageView  alloc] initWithFrame:self.view.frame];
+    _mainView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, [KeyChainWrapper getScreenWidth], [KeyChainWrapper getScreenHeight])];
+    _blurredBgImage = [[UIImageView  alloc] initWithFrame:CGRectMake(0, 0, [KeyChainWrapper getScreenWidth], [KeyChainWrapper getScreenHeight])];
     [_blurredBgImage setContentMode:UIViewContentModeScaleToFill];
     [_mainView addSubview:_blurredBgImage];
     [_blurredBgImage addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(exitButtonClicked:)]];
@@ -504,9 +510,15 @@ static const int picY = 50;
 #pragma mark View Contruction
 
 - (CGRect)frontCardViewFrame {
-    CGFloat horizontalPadding = 35.f;
-    CGFloat topPadding = 205.f;
-    CGFloat bottomPadding = 370.f;
+    CGFloat height = [KeyChainWrapper getScreenHeight];
+    CGFloat topPadding;
+    if(height < 500){
+        topPadding = height*0.39f + 20;
+    }else{
+        topPadding = height*0.39f;
+    }
+
+    CGFloat bottomPadding = height*0.65f;
     return CGRectMake(horizontalPadding,
                       topPadding,
                       CGRectGetWidth(_mainView.frame) - (horizontalPadding * 2),
@@ -602,8 +614,8 @@ static const int picY = 50;
 
 
 -(void) initFBProfilePicViews{
-    _option0PicView = [[UIImageView alloc] initWithFrame:CGRectMake(40, picY, picviewSize, picviewSize)];
-    _option1PicView = [[UIImageView alloc] initWithFrame:CGRectMake([KeyChainWrapper getScreenWidth]-150,picY, picviewSize, picviewSize)];
+    _option0PicView = [[UIImageView alloc] initWithFrame:CGRectMake(40, _picY, picviewSize, picviewSize)];
+    _option1PicView = [[UIImageView alloc] initWithFrame:CGRectMake([KeyChainWrapper getScreenWidth]-150,_picY, picviewSize, picviewSize)];
     _option0PicView.layer.cornerRadius = _option0PicView.frame.size.width/2.0;
     _option0PicView.layer.masksToBounds = YES;
     _option1PicView.layer.cornerRadius = _option1PicView.frame.size.width/2.0;
@@ -860,8 +872,8 @@ static const int picY = 50;
 
 -(void)addTextFields{
 //    _keywordTextField = [[UITextField alloc] initWithFrame:CGRectMake(80, 20, 150, 40)];
-    _option0NameTextField = [[UITextField alloc] initWithFrame:CGRectMake(30, picY + picviewSize+3, 150, 30)];
-    _option1NameTextField = [[UITextField alloc] initWithFrame:CGRectMake([KeyChainWrapper getScreenWidth] - 150, picY + picviewSize+3, 150, 30)];
+    _option0NameTextField = [[UITextField alloc] initWithFrame:CGRectMake(18, _picY + picviewSize+3, 150, 30)];
+    _option1NameTextField = [[UITextField alloc] initWithFrame:CGRectMake([KeyChainWrapper getScreenWidth] - 164, _picY + picviewSize+3, 150, 30)];
     _keywordCurrentValue = @"yay";
 //    [_keywordTextField setText:_keywordCurrentValue];
 //    [_keywordTextField setTextAlignment:NSTextAlignmentCenter];
@@ -909,7 +921,15 @@ static const int picY = 50;
 
 
 -(void)addShufflePeopleButton{
-    _shufflePeopleBtn = [[UIButton alloc] initWithFrame:CGRectMake([KeyChainWrapper getScreenWidth]/2.f - 80, [KeyChainWrapper getScreenHeight]-118, 170, 50)];
+    CGFloat height = [KeyChainWrapper getScreenHeight];
+    CGFloat y;
+    if(height < 500){
+        y = [KeyChainWrapper getScreenHeight]*0.79 + 20;
+    }else{
+        y = [KeyChainWrapper getScreenHeight]*0.79;
+    }
+    
+    _shufflePeopleBtn = [[UIButton alloc] initWithFrame:CGRectMake([KeyChainWrapper getScreenWidth]/2.f - 80, y, 170, 50)];
     NSAttributedString *shuffleString = [[NSAttributedString alloc] initWithString:@"shuffle friends" attributes:[Utility getCreateQuizShuffleButtonFontDictionary]];
     [_shufflePeopleBtn setAttributedTitle:shuffleString forState:UIControlStateNormal];
     [_shufflePeopleBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
@@ -993,7 +1013,7 @@ static const int picY = 50;
 }
 
 -(CGRect)getSearchRect{
-    return CGRectMake(0, picviewSize+picY+40
+    return CGRectMake(0, picviewSize+_picY+40
                       , _mainView.bounds.size.width, 200);
 }
 

@@ -46,7 +46,7 @@
 }
 
 - (void)constructInformationView {
-    _keywordTextView = [[UITextView alloc] initWithFrame:CGRectMake(0, self.frame.size.height/2 - 20, self.frame.size.width, 40)];
+    _keywordTextView = [[UITextView alloc] initWithFrame:CGRectMake(0, self.frame.size.height/2 - 20, self.frame.size.width, 50)];
     _keywordTextView.delegate = _delegate;
     [_keywordTextView setBackgroundColor:[UIColor clearColor]];
 

@@ -290,7 +290,7 @@
 }
 
 + (NSDictionary *)getCreateQuizDescFontDictionary{
-    return [NSDictionary dictionaryWithObjectsAndKeys: [UIFont fontWithName:@"OpenSans" size:20],NSFontAttributeName, [UIColor blackColor] ,NSForegroundColorAttributeName, @(-0.5), NSKernAttributeName,  nil];
+    return [NSDictionary dictionaryWithObjectsAndKeys: [UIFont fontWithName:@"OpenSans" size:18],NSFontAttributeName, [UIColor colorWithWhite:0.2 alpha:1] ,NSForegroundColorAttributeName, @(-0.5), NSKernAttributeName,  nil];
 }
 
 
