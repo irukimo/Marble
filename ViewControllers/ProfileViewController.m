@@ -186,7 +186,7 @@
 //    [UIView addLeftBorderOn:_headerView withColor:[UIColor marbleBackGroundColor] andWidth:CELL_UNIVERSAL_PADDING/2.0 andHeight:0 withOffset:CELL_UNIVERSAL_PADDING/2.0];
 //    [UIView addRightBorderOn:_headerView withColor:[UIColor marbleBackGroundColor] andWidth:CELL_UNIVERSAL_PADDING/2.0 andHeight:0 withOffset:CELL_UNIVERSAL_PADDING/2.0];
 //    
-    _keywordsView = [[UIView alloc] initWithFrame:CGRectMake(25, 130, self.view.frame.size.width, 50)];
+    _keywordsView = [[UIView alloc] initWithFrame:CGRectMake(25, 130, [KeyChainWrapper getScreenWidth] - 50, 50)];
     
     [_headerView addSubview:_keywordsView];
     
@@ -373,25 +373,38 @@
             return;
         }
         for(NSArray *obj in keywordArray){
+
             NSString *keyword = obj[1];
-            NSAttributedString *keywordString =[[NSAttributedString alloc] initWithString:keyword attributes:[Utility getNotifOrangeNormalFontDictionary]];
-            int tempX = x + keywordString.size.width + 20;
-            if(tempX >290){
-                x=0;
-                y+=30;
+            UIButton *keywordButton =[Utility getKeywordButtonAtX:0 andY:0 andString:keyword];
+            MBDebug(@" %d %d for keyword %@", x, y, keyword);
+            int tempX = x + keywordButton.frame.size.width + 3;
+            if(tempX >_keywordsView.frame.size.width){
+                if((tempX >_keywordsView.frame.size.width-50 && y == 30)){
+                    break;
+                }else{
+                    x=0;
+                    y+=30;
+                }
             }
-            //for too many keywords
-            if(y > 30 || (x > 180 && y == 30)){
+            if(y > 30){
+                y = 30;
                 break;
             }
+
+            //for too many keywords
+
             [self addKeywordLabelAtX:x andY:y withKeyword:keyword atIndex:[keywordArray indexOfObject:obj]];
-            x += keywordString.size.width + 20; 
+            x += keywordButton.frame.size.width + 3;
+            if((x >_keywordsView.frame.size.width-50 && y == 30)){
+                break;
+            }
         }
     }
-    if(x >260){
-        x=0;
-        y+=30;
-    }
+    MBDebug(@"before moreframe %d %d", x, y);
+//    if(x >_keywordsView.frame.size.width - 50){
+//        x=0;
+//        y+=30;
+//    }
     MBDebug(@"moreframe %d %d", x, y);
     CGRect moreFrame = _viewKeywordBtn.frame;
     moreFrame.origin.x = x;
