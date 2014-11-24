@@ -218,7 +218,10 @@ static const CGFloat horizontalPadding = 35.f;
         return;
     }
     if([_lookingAtEitherUserOrKeyword isKindOfClass:[User class]]){
-        [self setOption0:(User *)_lookingAtEitherUserOrKeyword];
+        User *thisUser = (User *)_lookingAtEitherUserOrKeyword;
+        if(![thisUser.fbID isEqualToString:[KeyChainWrapper getSelfFBID]]){
+            [self setOption0:(User *)_lookingAtEitherUserOrKeyword];
+        }
     }else if([_lookingAtEitherUserOrKeyword isKindOfClass:[NSString class]]){
         [self setKeyword:(NSString *)_lookingAtEitherUserOrKeyword];
     }
@@ -705,7 +708,9 @@ static const CGFloat horizontalPadding = 35.f;
         return;
     } else if (!option1 && _option1 == nil) {
         return;
-    } else {
+    } else if([option1.fbID isEqualToString:_option0.fbID]){
+        return;
+    }else {
         _option1 = option1;
         [Utility setUpProfilePictureImageView:_option1PicView byFBID:_option1.fbID];
         [self setThisNameTextField:_option1NameTextField withName:_option1.name];
