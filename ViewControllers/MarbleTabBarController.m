@@ -14,6 +14,7 @@
 #import "PostsViewController.h"
 
 #import "DAKeyboardControl.h"
+#import "UserVoice.h"
 
 #define COMMENT_TEXT @"write a comment..."
 
@@ -602,7 +603,18 @@
     [signOutButton setTitle:@"Sign Out" forState:UIControlStateNormal];
     [signOutButton addTarget:self action:@selector(signOutButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     [sideMenu addSubview:signOutButton];
+    
+    UIButton *feedbackButton = [[UIButton alloc] initWithFrame:CGRectMake(10, 100, 200, 30)];
+    [feedbackButton setTitle:@"Feedback & Support" forState:UIControlStateNormal];
+    [feedbackButton addTarget:self action:@selector(feedbackButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    [sideMenu addSubview:feedbackButton];
+
     return  sideMenu;
+}
+
+- (void) feedbackButtonPressed:(id)sender{
+    // Call this wherever you want to launch UserVoice
+    [UserVoice presentUserVoiceInterfaceForParentViewController:self];
 }
 
 - (void) signOutButtonPressed:(id)sender{

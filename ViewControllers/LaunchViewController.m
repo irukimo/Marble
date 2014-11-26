@@ -9,7 +9,7 @@
 #import "LaunchViewController.h"
 #import "dispatch/semaphore.h"
 #import "User+MBUser.h"
-
+#import "UserVoice.h"
 
 @interface LaunchViewController()
 @property (strong, nonatomic) FBLoginView *loginView;
@@ -34,6 +34,12 @@
     
     NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
     [center addObserver:self selector:@selector(logoutUser) name:MBSignOutNotification object:nil];
+    
+    // Set this up once when your application launches
+    UVConfig *config = [UVConfig configWithSite:@"yoursapp.uservoice.com"];
+    config.forumId = 275241;
+    // [config identifyUserWithEmail:@"email@example.com" name:@"User Name", guid:@"USER_ID");
+    [UserVoice initialize:config];
 }
 #pragma mark -
 #pragma mark Facebook Login View
