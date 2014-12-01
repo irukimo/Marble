@@ -28,9 +28,7 @@
 //    [self.view addSubview:_loginView];
     _mysemaphore = dispatch_semaphore_create(1);
     
-    UIImageView *imageView = [[UIImageView alloc] initWithFrame:self.view.bounds];
-    [imageView setImage:[UIImage imageNamed:@"launchImage.png"]];
-    [self.view addSubview:imageView];
+    [self setBackground];
     
     NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
     [center addObserver:self selector:@selector(logoutUser) name:MBSignOutNotification object:nil];
@@ -40,6 +38,10 @@
     config.forumId = 275241;
     // [config identifyUserWithEmail:@"email@example.com" name:@"User Name", guid:@"USER_ID");
     [UserVoice initialize:config];
+}
+
+-(void)setBackground{
+    [self.view setBackgroundColor:[UIColor marbleBackGroundColor]];
 }
 #pragma mark -
 #pragma mark Facebook Login View
