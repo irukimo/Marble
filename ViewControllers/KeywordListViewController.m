@@ -116,7 +116,7 @@
     [cell setKeyword:[_keywordList objectAtIndex:indexPath.row]];
     [cell setIndex:[NSNumber numberWithInt:indexPath.row]];
     cell.delegate = self;
-    [cell setShouldExpand:(indexPath == _ongoingPath)? true:false];
+    [cell setShouldExpand:(_ongoingPath && indexPath.row == _ongoingPath.row)? true:false];
     return cell;
 }
 

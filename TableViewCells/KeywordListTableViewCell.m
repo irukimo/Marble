@@ -392,7 +392,7 @@ static const NSString *nameKey = @"name";
 
 -(void)setShouldExpand:(BOOL)shoudExpand{
     _shouldExpand = shoudExpand;
-    if(_shouldExpand){
+    if(_shouldExpand && _shouldExpand == true){
         [self resizeWhiteBackground:KEYWORD_LIST_CELL_EXPAND_HEIGHT animated:YES];
     }else{
         [self resizeWhiteBackground:KEYWORD_LIST_CELL_UNEXPAND_HEIGHT animated:YES];
