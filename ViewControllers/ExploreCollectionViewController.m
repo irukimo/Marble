@@ -97,7 +97,7 @@
 -(void) setNavbarTitle{
     UINavigationBar *myNavBar =[self.navigationController navigationBar];
     [myNavBar setTitleTextAttributes:[Utility getNavigationBarTitleFontDictionary]];
-    [[myNavBar topItem] setTitle:@"Explore"];
+    [[myNavBar topItem] setTitle:@"探索"];
     [myNavBar setTranslucent:NO];
     [myNavBar setBarTintColor:[UIColor marbleOrange]];
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];

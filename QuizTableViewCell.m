@@ -280,8 +280,8 @@
     _option1NameButton = [[UIButton alloc] initWithFrame:CGRectMake(160, NAME_TOP_ALIGNMENT + 17, 150, 20)];
     
 
-    NSAttributedString *compareTextString = [[NSAttributedString alloc] initWithString:@"compared" attributes:[Utility getNotifBlackNormalFontDictionary]];
-    NSAttributedString *andTextString = [[NSAttributedString alloc] initWithString:@"and" attributes:[Utility getNotifBlackNormalFontDictionary]];
+    NSAttributedString *compareTextString = [[NSAttributedString alloc] initWithString:@"比了" attributes:[Utility getNotifBlackNormalFontDictionary]];
+    NSAttributedString *andTextString = [[NSAttributedString alloc] initWithString:@"和" attributes:[Utility getNotifBlackNormalFontDictionary]];
     _compareTextLabel = [[UILabel alloc] initWithFrame:CGRectMake(NAME_LEFT_ALIGNMENT + _authorNameButton.frame.size.width, NAME_TOP_ALIGNMENT + 3, compareTextString.size.width, compareTextString.size.height)];
     _andTextLabel = [[UILabel alloc] initWithFrame:CGRectMake(NAME_LEFT_ALIGNMENT + _option0NameButton.frame.size.width, NAME_TOP_ALIGNMENT + 20 , andTextString.size.width, andTextString.size.height)];
     [_compareTextLabel setAttributedText:compareTextString];

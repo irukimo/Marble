@@ -56,7 +56,7 @@
 //    [_statusTextView sizeToFit];
     
     _saidLabel= [[UILabel alloc] initWithFrame:CGRectMake(NAME_LEFT_ALIGNMENT + 30, NAME_TOP_ALIGNMENT, 100, 20)];
-    NSAttributedString *saidTextString = [[NSAttributedString alloc] initWithString:@"said:" attributes:[Utility getNotifBlackNormalFontDictionary]];
+    NSAttributedString *saidTextString = [[NSAttributedString alloc] initWithString:@"說:" attributes:[Utility getNotifBlackNormalFontDictionary]];
     [_saidLabel setAttributedText:saidTextString];
     
     [self.contentView addSubview:_saidLabel];

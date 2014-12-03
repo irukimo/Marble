@@ -75,7 +75,7 @@
 -(void) setNavbarTitle{
     UINavigationBar *myNavBar =[self.navigationController navigationBar];
     [myNavBar setTitleTextAttributes:[Utility getNavigationBarTitleFontDictionary]];
-    [[myNavBar topItem] setTitle:@"News Feed"];
+    [[myNavBar topItem] setTitle:@"首頁"];
 
     [myNavBar setTranslucent:NO];
     [myNavBar setBarTintColor:[UIColor marbleOrange]];

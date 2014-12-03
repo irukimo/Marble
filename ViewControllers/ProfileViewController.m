@@ -156,7 +156,7 @@
     }
     
     _viewKeywordBtn = [[UIButton alloc] initWithFrame:CGRectMake(200, 15, 80, 20)];
-    NSAttributedString *moreString = [[NSAttributedString alloc] initWithString:@"more >>" attributes:[Utility getProfileMoreFontDictionary]];
+    NSAttributedString *moreString = [[NSAttributedString alloc] initWithString:@"更多 >>" attributes:[Utility getProfileMoreFontDictionary]];
     [_viewKeywordBtn setAttributedTitle:moreString forState:UIControlStateNormal];
     [_viewKeywordBtn setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
     [_viewKeywordBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];

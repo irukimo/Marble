@@ -127,7 +127,7 @@
     }
     NSTimeInterval timedifference = -date.timeIntervalSinceNow;
     if(timedifference < 60){
-        return @"now";
+        return @"現在";
     }
     int yearCnt = floor(timedifference/YEAR_SECOND);
     if(yearCnt > 0){
@@ -144,31 +144,31 @@
     int monthCnt = floor(timedifference/MONTH_SECOND);
     if(monthCnt > 0){
         NSString *monthString = [NSString stringWithFormat: @"%d", monthCnt];
-        return [monthString stringByAppendingString:@"mo"];
+        return [monthString stringByAppendingString:@"月"];
     }
     int weekCnt = floor(timedifference/WEEK_SECOND);
     if(weekCnt > 0){
         NSString *weekString = [NSString stringWithFormat: @"%d", weekCnt];
-        return [weekString stringByAppendingString:@"w"];
+        return [weekString stringByAppendingString:@"周"];
     }
     int dayCnt = floor(timedifference/DAY_SECOND);
     if(dayCnt > 0){
         NSString *dayString = [NSString stringWithFormat: @"%d", dayCnt];
-        return [dayString stringByAppendingString:@"d"];
+        return [dayString stringByAppendingString:@"天"];
     }
     int hourCnt = floor(timedifference/HOUR_SECOND);
     if(hourCnt > 0){
         NSString *hourString = [NSString stringWithFormat: @"%d", hourCnt];
-        return [hourString stringByAppendingString:@"h"];
+        return [hourString stringByAppendingString:@"時"];
     }
     int minCnt = floor(timedifference/MIN_SECOND);
     if(minCnt > 0){
         NSString *minString = [NSString stringWithFormat: @"%d", minCnt];
-        return [minString stringByAppendingString:@"m"];
+        return [minString stringByAppendingString:@"分"];
     }
     
     NSString *secString = [NSString stringWithFormat: @"%d", (int)timedifference];
-    return [secString stringByAppendingString:@"s"];
+    return [secString stringByAppendingString:@"秒"];
     
 }
 

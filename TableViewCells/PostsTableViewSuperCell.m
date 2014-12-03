@@ -13,7 +13,7 @@
 #define TEXT_FIELD_HEIGHT 22
 #define COMMENT_START_DIFF_TO_RIGHT 120
 #define COMMENT_FIELD_WIDTH 90
-#define COMMENT_DEFAULT_TEXT @"     Comment"
+#define COMMENT_DEFAULT_TEXT @"     留言"
 
 
 
@@ -140,7 +140,8 @@
     }
     
     _commentField = [[UITextField alloc] initWithFrame:CGRectMake([KeyChainWrapper getScreenWidth]-COMMENT_START_DIFF_TO_RIGHT, y, COMMENT_FIELD_WIDTH, TEXT_FIELD_HEIGHT)];
-    _commentIconView = [[UIImageView alloc] initWithFrame:CGRectMake([KeyChainWrapper getScreenWidth]-COMMENT_START_DIFF_TO_RIGHT + commentIconXIncrement,y, commentIconWidth, commentIconWidth)];
+    //chinese version to right
+    _commentIconView = [[UIImageView alloc] initWithFrame:CGRectMake([KeyChainWrapper getScreenWidth]-COMMENT_START_DIFF_TO_RIGHT + commentIconXIncrement + 15,y, commentIconWidth, commentIconWidth)];
     _allCommentsButton = [[UIButton alloc] initWithFrame:CGRectMake([KeyChainWrapper getScreenWidth]-COMMENT_START_DIFF_TO_RIGHT - COMMENT_FIELD_WIDTH - 5, y, COMMENT_FIELD_WIDTH, TEXT_FIELD_HEIGHT)];
     [_allCommentsButton setBackgroundColor:[UIColor marbleCommentFieldBGGray]];
     [_allCommentsButton.layer setCornerRadius:_allCommentsButton.frame.size.height/2.0f];
@@ -228,9 +229,9 @@
     [self resizeWhiteBackground];
     NSAttributedString *commentString;
     if([_comments count] > 1){
-        commentString = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"%lu Comments", (unsigned long)[_comments count]] attributes:[Utility getWriteACommentFontDictionary]];
+        commentString = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"%lu 則留言", (unsigned long)[_comments count]] attributes:[Utility getWriteACommentFontDictionary]];
     }else{
-        commentString = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"%lu Comment", (unsigned long)[_comments count]] attributes:[Utility getWriteACommentFontDictionary]];
+        commentString = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"%lu 則留言", (unsigned long)[_comments count]] attributes:[Utility getWriteACommentFontDictionary]];
     }
     [_allCommentsButton setAttributedTitle:commentString forState:UIControlStateNormal];
 }

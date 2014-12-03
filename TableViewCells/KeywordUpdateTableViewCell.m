@@ -158,9 +158,9 @@
     
     NSAttributedString *descString;
     if(numKeywords > 1){
-        descString = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"has %lu new marbles:",numKeywords] attributes:[Utility getNotifBlackNormalFontDictionary]];
+        descString = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"有 %lu 個新珠:",numKeywords] attributes:[Utility getNotifBlackNormalFontDictionary]];
     }else{
-        descString = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"has %lu new marble:",numKeywords] attributes:[Utility getNotifBlackNormalFontDictionary]];
+        descString = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"有 %lu 個新珠:",numKeywords] attributes:[Utility getNotifBlackNormalFontDictionary]];
     }
     [_descriptionLabel setAttributedText:descString];
     CGRect descFrame = _descriptionLabel.frame;
