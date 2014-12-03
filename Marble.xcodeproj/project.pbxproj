@@ -56,6 +56,7 @@
 		7A48344319EDEFB50029D092 /* SelectKeywordViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A48344219EDEFB50029D092 /* SelectKeywordViewCell.m */; };
 		7A642F161A12EB1200C7F1CE /* clock.png in Resources */ = {isa = PBXBuildFile; fileRef = 7A642F151A12EB1200C7F1CE /* clock.png */; };
 		7A9CCBE01A2EB147007829D7 /* typename.png in Resources */ = {isa = PBXBuildFile; fileRef = 7A9CCBDF1A2EB147007829D7 /* typename.png */; };
+		7A9CCBE21A2EB6C1007829D7 /* whitecross@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7A9CCBE11A2EB6C1007829D7 /* whitecross@2x.png */; };
 		7A9DC0161A12F172000BEFD3 /* little_marble.png in Resources */ = {isa = PBXBuildFile; fileRef = 7A9DC0151A12F172000BEFD3 /* little_marble.png */; };
 		7A9DC0181A14409D000BEFD3 /* slider_menu.png in Resources */ = {isa = PBXBuildFile; fileRef = 7A9DC0171A14409D000BEFD3 /* slider_menu.png */; };
 		7A9DC01C1A147ED8000BEFD3 /* swipe.png in Resources */ = {isa = PBXBuildFile; fileRef = 7A9DC0191A147ED8000BEFD3 /* swipe.png */; };
@@ -214,6 +215,7 @@
 		7A48344219EDEFB50029D092 /* SelectKeywordViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SelectKeywordViewCell.m; path = TableViewCells/SelectKeywordViewCell.m; sourceTree = "<group>"; };
 		7A642F151A12EB1200C7F1CE /* clock.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = clock.png; path = Icons/clock.png; sourceTree = "<group>"; };
 		7A9CCBDF1A2EB147007829D7 /* typename.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = typename.png; path = Icons/typename.png; sourceTree = "<group>"; };
+		7A9CCBE11A2EB6C1007829D7 /* whitecross@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "whitecross@2x.png"; path = "Icons/whitecross@2x.png"; sourceTree = "<group>"; };
 		7A9DC0151A12F172000BEFD3 /* little_marble.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = little_marble.png; path = Icons/little_marble.png; sourceTree = "<group>"; };
 		7A9DC0171A14409D000BEFD3 /* slider_menu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = slider_menu.png; path = Icons/slider_menu.png; sourceTree = "<group>"; };
 		7A9DC0191A147ED8000BEFD3 /* swipe.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = swipe.png; path = Images/swipe.png; sourceTree = "<group>"; };
@@ -334,6 +336,7 @@
 		50B568F019E4949E0050C8EC /* Icons */ = {
 			isa = PBXGroup;
 			children = (
+				7A9CCBE11A2EB6C1007829D7 /* whitecross@2x.png */,
 				7A9CCBDF1A2EB147007829D7 /* typename.png */,
 				7A0836801A1C07DE00A7C510 /* pen_icon.png */,
 				7A9DC02B1A1573E1000BEFD3 /* green_body.png */,
@@ -779,6 +782,7 @@
 				7A9DC0161A12F172000BEFD3 /* little_marble.png in Resources */,
 				50B5690819E497020050C8EC /* explore-selected@2x.png in Resources */,
 				7AD323271A09B10800C5C83B /* wrong.png in Resources */,
+				7A9CCBE21A2EB6C1007829D7 /* whitecross@2x.png in Resources */,
 				7A48343A19EC56E80029D092 /* OpenSans-Regular.ttf in Resources */,
 				7AA1AE101A1AAC26006ED5DA /* vertical_arrow.png in Resources */,
 				7A9DC0181A14409D000BEFD3 /* slider_menu.png in Resources */,

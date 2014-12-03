@@ -70,6 +70,7 @@ typedef void (^voidBlock)(void);
 + (NSDictionary *)getCreateQuizDescFontDictionary;
 
 + (NSDictionary *)getDirectionTextFontDictionary;
++ (NSDictionary *)getCommentsTableCommentNumFontDictionary;
 
 
 

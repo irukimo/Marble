@@ -293,6 +293,10 @@
     return [NSDictionary dictionaryWithObjectsAndKeys: [UIFont fontWithName:@"OpenSans" size:18],NSFontAttributeName, [UIColor colorWithWhite:0.2 alpha:1] ,NSForegroundColorAttributeName, @(-0.5), NSKernAttributeName,  nil];
 }
 
++ (NSDictionary *)getCommentsTableCommentNumFontDictionary{
+    return [NSDictionary dictionaryWithObjectsAndKeys: [UIFont fontWithName:@"OpenSans-Semibold" size:18],NSFontAttributeName, [UIColor whiteColor] ,NSForegroundColorAttributeName, @(-0.5), NSKernAttributeName,  nil];
+}
+
 
 + (UIButton *)getKeywordButtonAtX:(int)x andY:(int)y andString:(NSString *)string{
     NSAttributedString *attString = [[NSAttributedString alloc] initWithString:string attributes:[Utility getNormalKeywordFontDictionary]];

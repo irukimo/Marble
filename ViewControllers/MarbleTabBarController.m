@@ -23,6 +23,7 @@
 @interface MarbleTabBarController ()
 @property (strong, nonatomic) CommentsTableViewController *commentsTableViewController;
 @property (strong, nonatomic) UIButton *cancelButton;
+@property (strong, nonatomic) UILabel *commentNumLabel;
 @property (strong, nonatomic) UIView *createQuizWholeView;
 @property (strong, nonatomic) UIScrollView *commentsWholeView;
 @property(strong, nonatomic) UITextField *commentField;
@@ -393,6 +394,7 @@
     _commentFieldView.frame = _commentFieldViewFrame;
     _commentsTableViewController.view.frame = _commentsTableViewFrame;
     [_commentsTableViewController setCommentArray:commentArray];
+    [self setCommentsNumWithNum:[commentArray count]];
     [self.view addSubview:_commentsWholeView];
     
     //HYJ
@@ -403,6 +405,7 @@
 
 -(void) updateComments:(NSArray *)commentArray{
     [_commentsTableViewController setCommentArray:commentArray];
+    [self setCommentsNumWithNum:[commentArray count]];
     
     //HYJ
     // auto scroll to bottom
@@ -442,18 +445,38 @@
     
     UIView *blackBGView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height + KEYBOARD_HEIGHT)];
     [blackBGView setBackgroundColor:[UIColor colorWithWhite:0 alpha:0.8f]];
-    _cancelButton = [[UIButton alloc] initWithFrame:CGRectMake([KeyChainWrapper getScreenWidth] - 50, 10, 50, 50)];
-    [_cancelButton setTitle:@"X" forState:UIControlStateNormal];
+    _cancelButton = [[UIButton alloc] initWithFrame:CGRectMake([KeyChainWrapper getScreenWidth] - 50, 10, 30, 30)];
+    [_cancelButton setImage:[UIImage imageNamed:@"whitecross.png"] forState:UIControlStateNormal];
     [_cancelButton addTarget:self action:@selector(cancelCommentsTableView) forControlEvents:UIControlEventTouchUpInside];
     _commentsTableViewController = [[CommentsTableViewController alloc] init];
 //    _commentsTableViewController.delegate = self;
     _commentsTableViewController.view.frame = CGRectMake(0, 50, self.view.frame.size.width, self.view.frame.size.height - NAVBAR_HEIGHT - TABBAR_HEIGHT - 50);
     _commentsTableViewController.delegate = self;
     _commentsWholeView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, NAVBAR_HEIGHT, self.view.frame.size.width, self.view.frame.size.height + KEYBOARD_HEIGHT)];
+    
+    _commentNumLabel = [[UILabel alloc] initWithFrame:CGRectMake([KeyChainWrapper getScreenWidth]/2.f - 100, 12, 200, 30)];
+    [self setCommentsNumWithNum:0];
+    
+    UIView *whiteLine = [[UIView alloc] initWithFrame:CGRectMake(30, 46, [KeyChainWrapper getScreenWidth] - 60, 0.5f)];
+    [whiteLine setBackgroundColor:[UIColor whiteColor]];
+    
     [_commentsWholeView addSubview:blackBGView];
     [_commentsWholeView addSubview:_cancelButton];
     [_commentsWholeView addSubview:_commentsTableViewController.view];
     [_commentsWholeView addSubview:_commentFieldView];
+    [_commentsWholeView addSubview:_commentNumLabel];
+    [_commentsWholeView addSubview:whiteLine];
+}
+
+-(void)setCommentsNumWithNum:(NSUInteger)num{
+    if(num < 2){
+        NSAttributedString *string = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"%lu Comment",(unsigned long)num] attributes:[Utility getCommentsTableCommentNumFontDictionary]];
+        [_commentNumLabel setAttributedText:string];
+    }else{
+        NSAttributedString *string = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"%lu Comments",(unsigned long)num] attributes:[Utility getCommentsTableCommentNumFontDictionary]];
+        [_commentNumLabel setAttributedText:string];
+    }
+    [_commentNumLabel setTextAlignment:NSTextAlignmentCenter];
 }
 
 //HYJ
