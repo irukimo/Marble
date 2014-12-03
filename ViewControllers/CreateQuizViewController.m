@@ -688,6 +688,7 @@ static const CGFloat horizontalPadding = 35.f;
 -(void) setOption0:(User *)option0{
     if(!option0 && _option0 != nil){
         [self setThisNameTextField:_option0NameTextField withName:_option0.name];
+        [Utility setUpProfilePictureImageView:_option0PicView byFBID:_option0.fbID];
         return;
     } else if (!option0 && _option0 == nil) {
         return;
@@ -705,6 +706,7 @@ static const CGFloat horizontalPadding = 35.f;
 -(void) setOption1:(User *)option1{
     if(!option1 && _option1 != nil){
         [self setThisNameTextField:_option1NameTextField withName:_option1.name];
+        [Utility setUpProfilePictureImageView:_option1PicView byFBID:_option1.fbID];
         return;
     } else if (!option1 && _option1 == nil) {
         return;
@@ -1077,6 +1079,12 @@ static const CGFloat horizontalPadding = 35.f;
     _ongoingTextField = textField;
     if(textField == _option0NameTextField || textField == _option1NameTextField){
         [self addMaskAndPrepareSelectPeopleViewController];
+        if(textField == _option0NameTextField){
+            [_option0PicView setImage:[UIImage imageNamed:@"typename.png"]];
+        }else{
+            [_option1PicView setImage:[UIImage imageNamed:@"typename.png"]];
+            
+        }
     } else{
         [self addMaskAndPrepareSelectKeywordViewController];
     }
