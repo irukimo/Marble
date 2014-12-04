@@ -379,10 +379,11 @@
             UIButton *keywordButton =[Utility getKeywordButtonAtX:0 andY:0 andString:keyword];
             MBDebug(@" %d %d for keyword %@", x, y, keyword);
             int tempX = x + keywordButton.frame.size.width + 3;
-            if(tempX >_keywordsView.frame.size.width){
-                if((tempX >_keywordsView.frame.size.width-50 && y == 30)){
+            
+            if(tempX >_keywordsView.frame.size.width-80){
+                if((tempX >_keywordsView.frame.size.width-80 && y == 30)){
                     break;
-                }else{
+                }else if(tempX >_keywordsView.frame.size.width){
                     x=0;
                     y+=30;
                 }
@@ -396,18 +397,19 @@
 
             [self addKeywordLabelAtX:x andY:y withKeyword:keyword atIndex:[keywordArray indexOfObject:obj]];
             x += keywordButton.frame.size.width + 3;
-            if((x >_keywordsView.frame.size.width-50 && y == 30)){
+            if((x >_keywordsView.frame.size.width-80 && y == 30)){
                 break;
             }
         }
     }
     MBDebug(@"before moreframe %d %d", x, y);
-    if(x >_keywordsView.frame.size.width - 50 && y == 0){
+    if(x >_keywordsView.frame.size.width - 80 && y == 0){
         x=0;
         y+=30;
     }
-    MBDebug(@"moreframe %d %d", x, y);
+
     CGRect moreFrame = _viewKeywordBtn.frame;
+    MBDebug(@"moreframe %d %d %f", x, y, moreFrame.size.width);
     moreFrame.origin.x = x;
     moreFrame.origin.y = y + 2;
     _viewKeywordBtn.frame = moreFrame;
