@@ -134,14 +134,14 @@
     [horizLine setBackgroundColor:[UIColor marbleBackGroundColor]];
     [_headerView addSubview:horizLine];
     
-    NSAttributedString *overallString = [[NSAttributedString alloc] initWithString:@"overall friend ranking" attributes:[Utility getNotifBlackNormalFontDictionary]];
-    UILabel *overallLabel = [[UILabel alloc] initWithFrame:CGRectMake(35, 15, 150, 20)];
+    NSAttributedString *overallString = [[NSAttributedString alloc] initWithString:@"朋友總排名" attributes:[Utility getNotifBlackNormalFontDictionary]];
+    UILabel *overallLabel = [[UILabel alloc] initWithFrame:CGRectMake(80, 15, 150, 20)];
     [overallLabel setAttributedText:overallString];
     [_headerView addSubview:overallLabel];
     
     CGFloat creatorX = [KeyChainWrapper getScreenWidth]*0.78 - 30;
-    NSAttributedString *createdByString = [[NSAttributedString alloc] initWithString:@"created by" attributes:[Utility getNotifBlackNormalFontDictionary]];
-    UILabel *createdByLabel = [[UILabel alloc] initWithFrame:CGRectMake(creatorX, 12, 100, 20)];
+    NSAttributedString *createdByString = [[NSAttributedString alloc] initWithString:@"創造人" attributes:[Utility getNotifBlackNormalFontDictionary]];
+    UILabel *createdByLabel = [[UILabel alloc] initWithFrame:CGRectMake(creatorX+8, 10, 100, 20)];
     [createdByLabel setAttributedText:createdByString];
     [_headerView addSubview:createdByLabel];
     
@@ -155,7 +155,7 @@
     [_headerView addSubview:_creatorNameButton];
     [_headerView addSubview:_creatorImageView];
     
-    NSAttributedString *timesPlayedString = [[NSAttributedString alloc] initWithString:@"times played" attributes:[Utility getProfileGrayStaticFontDictionary]];
+    NSAttributedString *timesPlayedString = [[NSAttributedString alloc] initWithString:@"玩的次數" attributes:[Utility getProfileGrayStaticFontDictionary]];
     UILabel *timesPlayedStringLabel = [[UILabel alloc] initWithFrame:CGRectMake(creatorX - 20, 150, 100, 20)];
     [timesPlayedStringLabel setAttributedText:timesPlayedString];
     [timesPlayedStringLabel setTextAlignment:NSTextAlignmentCenter];

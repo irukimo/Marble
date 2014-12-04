@@ -73,7 +73,7 @@
 -(void) setNavbarTitle{
     UINavigationBar *myNavBar =[self.navigationController navigationBar];
     [myNavBar setTitleTextAttributes:[Utility getNavigationBarTitleFontDictionary]];
-    [[myNavBar topItem] setTitle:[NSString stringWithFormat:@"%@'s Marbles", [Utility getNameToDisplay:_subject.name]]];
+    [[myNavBar topItem] setTitle:[NSString stringWithFormat:@"%@的珠們", [Utility getNameToDisplay:_subject.name]]];
     [myNavBar setTranslucent:NO];
     [myNavBar setBarTintColor:[UIColor marbleOrange]];
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];

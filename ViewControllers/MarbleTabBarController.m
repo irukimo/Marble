@@ -16,7 +16,7 @@
 #import "DAKeyboardControl.h"
 #import "UserVoice.h"
 
-#define COMMENT_TEXT @"write a comment..."
+#define COMMENT_TEXT @"留言⋯"
 
 #define FIRST_LAUNCH_TAG 887
 
@@ -470,10 +470,10 @@
 
 -(void)setCommentsNumWithNum:(NSUInteger)num{
     if(num < 2){
-        NSAttributedString *string = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"%lu Comment",(unsigned long)num] attributes:[Utility getCommentsTableCommentNumFontDictionary]];
+        NSAttributedString *string = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"%lu 則留言",(unsigned long)num] attributes:[Utility getCommentsTableCommentNumFontDictionary]];
         [_commentNumLabel setAttributedText:string];
     }else{
-        NSAttributedString *string = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"%lu Comments",(unsigned long)num] attributes:[Utility getCommentsTableCommentNumFontDictionary]];
+        NSAttributedString *string = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"%lu 則留言",(unsigned long)num] attributes:[Utility getCommentsTableCommentNumFontDictionary]];
         [_commentNumLabel setAttributedText:string];
     }
     [_commentNumLabel setTextAlignment:NSTextAlignmentCenter];
@@ -623,12 +623,12 @@
     UIView *sideMenu = [[UIView alloc] initWithFrame:CGRectMake(self.view.frame.size.width, 0, self.view.frame.size.width, self.view.frame.size.height)];
     [sideMenu setBackgroundColor:[UIColor colorWithWhite:0.2 alpha:1]];
     UIButton *signOutButton = [[UIButton alloc] initWithFrame:CGRectMake(10, 50, 200, 30)];
-    [signOutButton setTitle:@"Sign Out" forState:UIControlStateNormal];
+    [signOutButton setTitle:@"登出" forState:UIControlStateNormal];
     [signOutButton addTarget:self action:@selector(signOutButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     [sideMenu addSubview:signOutButton];
     
     UIButton *feedbackButton = [[UIButton alloc] initWithFrame:CGRectMake(10, 100, 200, 30)];
-    [feedbackButton setTitle:@"Feedback & Support" forState:UIControlStateNormal];
+    [feedbackButton setTitle:@"意見回饋" forState:UIControlStateNormal];
     [feedbackButton addTarget:self action:@selector(feedbackButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     [sideMenu addSubview:feedbackButton];
 

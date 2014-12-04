@@ -127,7 +127,7 @@ static const CGFloat horizontalPadding = 35.f;
 
     _guideTextLabel = [[UILabel alloc] initWithFrame:CGRectMake(_guideImageView.frame.origin.x +67, _guideImageView.frame.origin.y+6, 200, 30)];
     [_guideTextLabel setAlpha:0];
-    NSAttributedString *textString = [[NSAttributedString alloc] initWithString:@"swipe to choose" attributes:[Utility getCreateQuizDescFontDictionary]];
+    NSAttributedString *textString = [[NSAttributedString alloc] initWithString:@"向左右滑動來選擇" attributes:[Utility getCreateQuizDescFontDictionary]];
     [_guideTextLabel setAttributedText:textString];
     [_mainView addSubview:_guideTextLabel];
     
@@ -176,7 +176,7 @@ static const CGFloat horizontalPadding = 35.f;
     UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 20, [KeyChainWrapper getScreenWidth], 30)];
     titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
     titleLabel.numberOfLines = 0;
-    NSAttributedString *titleString = [[NSAttributedString alloc] initWithString:@"Tap on any item to edit" attributes:[Utility getCreateQuizDescFontDictionary]];
+    NSAttributedString *titleString = [[NSAttributedString alloc] initWithString:@"點擊任一區塊編輯" attributes:[Utility getCreateQuizDescFontDictionary]];
     [titleLabel setAttributedText:titleString];
     [titleLabel setTextAlignment:NSTextAlignmentCenter];
     [_mainView addSubview:titleLabel];
@@ -937,7 +937,7 @@ static const CGFloat horizontalPadding = 35.f;
     }
     
     _shufflePeopleBtn = [[UIButton alloc] initWithFrame:CGRectMake([KeyChainWrapper getScreenWidth]/2.f - 80, y, 170, 50)];
-    NSAttributedString *shuffleString = [[NSAttributedString alloc] initWithString:@"shuffle friends" attributes:[Utility getCreateQuizShuffleButtonFontDictionary]];
+    NSAttributedString *shuffleString = [[NSAttributedString alloc] initWithString:@"換朋友" attributes:[Utility getCreateQuizShuffleButtonFontDictionary]];
     [_shufflePeopleBtn setAttributedTitle:shuffleString forState:UIControlStateNormal];
     [_shufflePeopleBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [_mainView addSubview:_shufflePeopleBtn];

@@ -110,9 +110,10 @@
     NSAttributedString *nameString = [[NSMutableAttributedString alloc] initWithString:[Utility getNameToDisplay:name] attributes:[Utility getNotifBlackBoldFontDictionary]];
     NSAttributedString *descString;
     if([type isEqualToString:@"quiz"]){
-        descString = [[NSAttributedString alloc] initWithString:@" commented on your Marble: " attributes:[Utility getNotifBlackNormalFontDictionary]];
+//        descString = [[NSAttributedString alloc] initWithString:@" commented on your Marble: " attributes:[Utility getNotifBlackNormalFontDictionary]];
+        descString = [[NSAttributedString alloc] initWithString:@" 在你的珠留言: " attributes:[Utility getNotifBlackNormalFontDictionary]];
     } else{
-        descString = [[NSAttributedString alloc] initWithString:@" commented on your profile quote: " attributes:[Utility getNotifBlackNormalFontDictionary]];
+        descString = [[NSAttributedString alloc] initWithString:@" 在你的: " attributes:[Utility getNotifBlackNormalFontDictionary]];
     }
     NSAttributedString *commentString = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"\"%@\"", comment] attributes:[Utility getNotifOrangeNormalFontDictionary]];
     [finalString appendAttributedString:nameString];
@@ -132,17 +133,17 @@
         i++;
     }
     if(_keywordUpdate.keyword2){
-        NSAttributedString *keywordstring = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"\"%@\"", _keywordUpdate.keyword2] attributes:[Utility getNotifOrangeNormalFontDictionary]];
+        NSAttributedString *keywordstring = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@" \"%@\"", _keywordUpdate.keyword2] attributes:[Utility getNotifOrangeNormalFontDictionary]];
         [finalString appendAttributedString:keywordstring];
         i++;
     }
     if(_keywordUpdate.keyword3){
-        NSAttributedString *keywordstring = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"\"%@\"", _keywordUpdate.keyword3] attributes:[Utility getNotifOrangeNormalFontDictionary]];
+        NSAttributedString *keywordstring = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@" \"%@\"", _keywordUpdate.keyword3] attributes:[Utility getNotifOrangeNormalFontDictionary]];
         [finalString appendAttributedString:keywordstring];
         i++;
     }
 
-    NSAttributedString *descString = [[NSAttributedString alloc] initWithString:@" was added to your profile" attributes:[Utility getNotifBlackNormalFontDictionary]];
+    NSAttributedString *descString = [[NSAttributedString alloc] initWithString:@" 成為你的新珠" attributes:[Utility getNotifBlackNormalFontDictionary]];
     [finalString appendAttributedString:descString];
     return finalString;
 }
@@ -155,11 +156,11 @@
 
 -(NSAttributedString *)generateAttributedStringForQuizWithAuthor:(NSString *)authorName andOption0:(NSString *)option0Name andOption1:(NSString *)option1Name andKeyword:(NSString *)keyword{
     NSMutableAttributedString *authorString = [[NSMutableAttributedString alloc] initWithString:[Utility getNameToDisplay:authorName] attributes:[Utility getNotifBlackBoldFontDictionary]];
-    NSAttributedString *desc1String = [[NSAttributedString alloc] initWithString:@" compared " attributes:[Utility getNotifBlackNormalFontDictionary]];
+    NSAttributedString *desc1String = [[NSAttributedString alloc] initWithString:@" 比了 " attributes:[Utility getNotifBlackNormalFontDictionary]];
     NSAttributedString *option0String = [[NSAttributedString alloc] initWithString:[Utility getNameToDisplay:option0Name] attributes:[Utility getNotifOrangeBoldFontDictionary]];
-    NSAttributedString *andString = [[NSAttributedString alloc] initWithString:@" and " attributes:[Utility getNotifBlackNormalFontDictionary]];
+    NSAttributedString *andString = [[NSAttributedString alloc] initWithString:@" 和 " attributes:[Utility getNotifBlackNormalFontDictionary]];
     NSAttributedString *option1String = [[NSAttributedString alloc] initWithString:[Utility getNameToDisplay:option1Name] attributes:[Utility getNotifOrangeBoldFontDictionary]];
-    NSAttributedString *desc2String = [[NSAttributedString alloc] initWithString:@" with " attributes:[Utility getNotifBlackNormalFontDictionary]];
+    NSAttributedString *desc2String = [[NSAttributedString alloc] initWithString:@" 在 " attributes:[Utility getNotifBlackNormalFontDictionary]];
     NSAttributedString *keywordString = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"\"%@\"", keyword] attributes:[Utility getNotifOrangeNormalFontDictionary]];
 
     [authorString appendAttributedString:desc1String];

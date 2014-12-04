@@ -207,12 +207,13 @@
 }
 
 -(void)addGrayStaticLabels{
-    NSAttributedString *createdString = [[NSAttributedString alloc] initWithString:@"compared" attributes:[Utility getProfileGrayStaticFontDictionary]];
-    NSAttributedString *receivedString = [[NSAttributedString alloc] initWithString:@"received" attributes:[Utility getProfileGrayStaticFontDictionary]];
-    NSAttributedString *solvedString = [[NSAttributedString alloc] initWithString:@"correct" attributes:[Utility getProfileGrayStaticFontDictionary]];
+    NSAttributedString *createdString = [[NSAttributedString alloc] initWithString:@"比了" attributes:[Utility getProfileGrayStaticFontDictionary]];
+    NSAttributedString *receivedString = [[NSAttributedString alloc] initWithString:@"被比" attributes:[Utility getProfileGrayStaticFontDictionary]];
+    NSAttributedString *solvedString = [[NSAttributedString alloc] initWithString:@"猜對" attributes:[Utility getProfileGrayStaticFontDictionary]];
     UILabel *createdLabel = [[UILabel alloc] initWithFrame:CGRectMake(GOLDEN_LEFT_ALIGNMENT, GRAY_Y, createdString.size.width, createdString.size.height)];
-    UILabel *receivedLabel = [[UILabel alloc] initWithFrame:CGRectMake(GOLDEN_LEFT_ALIGNMENT + createdString.size.width + 12, GRAY_Y, receivedString.size.width, receivedString.size.height)];
-    UILabel *solvedLabel = [[UILabel alloc] initWithFrame:CGRectMake(GOLDEN_LEFT_ALIGNMENT + createdString.size.width + receivedString.size.width + 24, GRAY_Y, solvedString.size.width, solvedString.size.height)];
+    //chinese version more right
+    UILabel *receivedLabel = [[UILabel alloc] initWithFrame:CGRectMake(GOLDEN_LEFT_ALIGNMENT + createdString.size.width + 30, GRAY_Y, receivedString.size.width, receivedString.size.height)];
+    UILabel *solvedLabel = [[UILabel alloc] initWithFrame:CGRectMake(GOLDEN_LEFT_ALIGNMENT + createdString.size.width + receivedString.size.width + 60, GRAY_Y, solvedString.size.width, solvedString.size.height)];
     [createdLabel setAttributedText:createdString];
     [receivedLabel setAttributedText:receivedString];
     [solvedLabel setAttributedText:solvedString];
