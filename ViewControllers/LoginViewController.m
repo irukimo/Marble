@@ -42,8 +42,16 @@
     NSArray *viewControllers = @[startingViewController];
     [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
     
+    CGFloat calculateY;
+    if([KeyChainWrapper getScreenHeight] > 568){
+        calculateY = 510 + ([KeyChainWrapper getScreenHeight] - 568)*0.5f;
+    }else if([KeyChainWrapper getScreenHeight] < 500){
+        calculateY = 420;
+    }else{
+        calculateY = 510;
+    }
     // Change the size of page view controller
-    self.pageViewController.view.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height -50);
+    self.pageViewController.view.frame = CGRectMake(0, 0, [KeyChainWrapper getScreenWidth], calculateY-4);
     
     
     [self addChildViewController:_pageViewController];
@@ -65,7 +73,8 @@
     //its delegate will automatically be set to launchviewcontroller
     _loginView = [[FBLoginView alloc] initWithReadPermissions:@[@"public_profile", @"user_friends"]];
     // Align the button in the center horizontally
-    _loginView.frame = CGRectOffset(_loginView.frame, (self.view.center.x - (_loginView.frame.size.width / 2)), self.view.bounds.size.height-48);
+    _loginView.frame = CGRectOffset(_loginView.frame, (self.view.center.x - (_loginView.frame.size.width / 2)), calculateY);
+    MBDebug(@"height%f", [KeyChainWrapper getScreenHeight]);
     
     [self.view addSubview:_loginView];
     

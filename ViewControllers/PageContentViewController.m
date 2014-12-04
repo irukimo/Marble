@@ -27,8 +27,13 @@
 //    _backgroundImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 50, 320, 500)];
 //    self.backgroundImageView.image = [UIImage imageNamed:self.imageFile];
 //    [self.view addSubview:_backgroundImageView];
-    
-    _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 10, self.view.bounds.size.width, 60)];
+    CGFloat titleY;
+    if([KeyChainWrapper getScreenHeight] > 568){
+        titleY =6 + ([KeyChainWrapper getScreenHeight] - 568)*0.1f;
+    }else{
+        titleY = 6;
+    }
+    _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, titleY, [KeyChainWrapper getScreenWidth], 60)];
     _titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
     _titleLabel.numberOfLines = 0;
     NSAttributedString *titleString = [[NSAttributedString alloc] initWithString:self.titleText attributes:[Utility getWalkThroughFontDictionary]];
@@ -38,7 +43,13 @@
     UIImage *iphone = [UIImage imageNamed:@"iphone.png"];
     CGFloat ratio = iphone.size.height/iphone.size.width;
     CGFloat imageWidth = 260.f;
-    _iphoneView = [[UIImageView alloc] initWithFrame:CGRectMake(30, 70, imageWidth, imageWidth*ratio)];
+    CGFloat Y;
+    if([KeyChainWrapper getScreenHeight] > 568){
+        Y =60 + ([KeyChainWrapper getScreenHeight] - 568)*0.3f;
+    }else{
+        Y = 60;
+    }
+    _iphoneView = [[UIImageView alloc] initWithFrame:CGRectMake([KeyChainWrapper getScreenWidth]/2.f - 130, Y, imageWidth, imageWidth*ratio)];
     [_iphoneView setImage:iphone];
     [self.view addSubview:_iphoneView];
     
