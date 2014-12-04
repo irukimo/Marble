@@ -135,7 +135,7 @@
     [_headerView addSubview:horizLine];
     
     NSAttributedString *overallString = [[NSAttributedString alloc] initWithString:@"朋友總排名" attributes:[Utility getNotifBlackNormalFontDictionary]];
-    UILabel *overallLabel = [[UILabel alloc] initWithFrame:CGRectMake(80, 15, 150, 20)];
+    UILabel *overallLabel = [[UILabel alloc] initWithFrame:CGRectMake(lineX/2.f - 40, 15, 150, 20)];
     [overallLabel setAttributedText:overallString];
     [_headerView addSubview:overallLabel];
     
