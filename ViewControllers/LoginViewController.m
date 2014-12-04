@@ -32,7 +32,7 @@
     [super viewDidLoad];
     
     //for walkthrough
-    _pageTitles = @[@"Swipe left or right \nto compare friends", @"Guess your friends' choices", @"Explore your friends' Profiles", @"\"Like\" their Marbles"];
+    _pageTitles = @[@"左右滑動來比較朋友", @"猜猜朋友的答案", @"看朋友拿到了什麼珠", @"讚他們的珠"];
     _pageImages = @[@"screen1.png", @"screen2.png", @"screen3.png", @"screen4.png"];
     // Create page view controller
     self.pageViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"PageViewController"];
