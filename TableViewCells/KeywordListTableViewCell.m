@@ -107,12 +107,12 @@ static const NSString *nameKey = @"name";
 
 
 -(void)unheartButtonClicked:(id)sender{
+   [_heartButton removeTarget:self action:@selector(unheartButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     [Utility sendThroughRKRoute:@"send_unlike" withParams:@{@"likee_fb_id": _subject.fbID, @"keyword": _keyword}
                    successBlock:^{
 
                        MBDebug(@"Successfully posted unlike");
                        [_heartImage setImage:[UIImage imageNamed:EMPTY_HEART_IMAGE_NAME]];
-                       [_heartButton removeTarget:self action:@selector(unheartButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
                        [_heartButton addTarget:self action:@selector(heartButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
 //                       [_likeNumButton removeTarget:self action:@selector(unheartButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
 //                       [_likeNumButton addTarget:self action:@selector(heartButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
@@ -120,24 +120,28 @@ static const NSString *nameKey = @"name";
                        [self setLikeNumButtonWithInt:[[[_subject.keywords objectAtIndex:[[self index] integerValue] ] objectAtIndex:4] integerValue]];
 
                    }
-                   failureBlock:nil];
+                   failureBlock:^{
+                      [_heartButton addTarget:self action:@selector(unheartButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+                   }];
 
 }
 
 -(void)heartButtonClicked:(id)sender{
+   [_heartButton removeTarget:self action:@selector(heartButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     [Utility sendThroughRKRoute:@"send_like" withParams:@{@"likee_fb_id": _subject.fbID, @"keyword": _keyword}
                    successBlock:^{
 
                        MBDebug(@"Successfully posted like");
                        [_heartImage setImage:[UIImage imageNamed:HEART_IMAGE_NAME]];
-                       [_heartButton removeTarget:self action:@selector(heartButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
                        [_heartButton addTarget:self action:@selector(unheartButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
 //                       [_likeNumButton removeTarget:self action:@selector(heartButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
 //                       [_likeNumButton addTarget:self action:@selector(unheartButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
                        [_subject setHeartForKeywordAtRow:(NSUInteger)[[self index] integerValue] toBool:true];
                        [self setLikeNumButtonWithInt:[[[_subject.keywords objectAtIndex:[[self index] integerValue] ] objectAtIndex:4] integerValue]];
                    }
-                   failureBlock:nil];
+                   failureBlock:^{
+                          [_heartButton addTarget:self action:@selector(heartButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+                   }];
 }
 
 -(void)addThreeRanking{
