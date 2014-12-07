@@ -25,6 +25,12 @@
 		516937AB19ECD56500EE0C0D /* Post+MBPost.m in Sources */ = {isa = PBXBuildFile; fileRef = 516937AA19ECD56500EE0C0D /* Post+MBPost.m */; };
 		516937AE19EF07BF00EE0C0D /* User.h in Sources */ = {isa = PBXBuildFile; fileRef = 516937AC19EF070D00EE0C0D /* User.h */; };
 		516937AF19EF07BF00EE0C0D /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 516937AD19EF070D00EE0C0D /* User.m */; };
+		516EC39E1A34F1DD00B5EF4C /* AMPDeviceInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 516EC3961A34F1DD00B5EF4C /* AMPDeviceInfo.m */; };
+		516EC39F1A34F1DD00B5EF4C /* Amplitude-iOS.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 516EC3971A34F1DD00B5EF4C /* Amplitude-iOS.podspec */; };
+		516EC3A01A34F1DD00B5EF4C /* Amplitude.m in Sources */ = {isa = PBXBuildFile; fileRef = 516EC3991A34F1DD00B5EF4C /* Amplitude.m */; };
+		516EC3A11A34F1DD00B5EF4C /* AMPLocationManagerDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 516EC39B1A34F1DD00B5EF4C /* AMPLocationManagerDelegate.m */; };
+		516EC3A21A34F1DD00B5EF4C /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 516EC39C1A34F1DD00B5EF4C /* LICENSE */; };
+		516EC3A31A34F1DD00B5EF4C /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = 516EC39D1A34F1DD00B5EF4C /* README.md */; };
 		51706D3419E88F0B005010E6 /* StatusUpdate.h in Sources */ = {isa = PBXBuildFile; fileRef = 51706D2A19E88E42005010E6 /* StatusUpdate.h */; };
 		51706D3519E88F0B005010E6 /* StatusUpdate.m in Sources */ = {isa = PBXBuildFile; fileRef = 51706D2B19E88E42005010E6 /* StatusUpdate.m */; };
 		51706D3919E9E50D005010E6 /* KeywordUpdate.m in Sources */ = {isa = PBXBuildFile; fileRef = 51706D3819E9E50D005010E6 /* KeywordUpdate.m */; };
@@ -156,6 +162,17 @@
 		516937AA19ECD56500EE0C0D /* Post+MBPost.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Post+MBPost.m"; sourceTree = "<group>"; };
 		516937AC19EF070D00EE0C0D /* User.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
 		516937AD19EF070D00EE0C0D /* User.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
+		516EC3931A34F1DD00B5EF4C /* AMPARCMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMPARCMacros.h; sourceTree = "<group>"; };
+		516EC3941A34F1DD00B5EF4C /* AMPConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMPConstants.h; sourceTree = "<group>"; };
+		516EC3951A34F1DD00B5EF4C /* AMPDeviceInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMPDeviceInfo.h; sourceTree = "<group>"; };
+		516EC3961A34F1DD00B5EF4C /* AMPDeviceInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMPDeviceInfo.m; sourceTree = "<group>"; };
+		516EC3971A34F1DD00B5EF4C /* Amplitude-iOS.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Amplitude-iOS.podspec"; sourceTree = "<group>"; };
+		516EC3981A34F1DD00B5EF4C /* Amplitude.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Amplitude.h; sourceTree = "<group>"; };
+		516EC3991A34F1DD00B5EF4C /* Amplitude.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Amplitude.m; sourceTree = "<group>"; };
+		516EC39A1A34F1DD00B5EF4C /* AMPLocationManagerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMPLocationManagerDelegate.h; sourceTree = "<group>"; };
+		516EC39B1A34F1DD00B5EF4C /* AMPLocationManagerDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMPLocationManagerDelegate.m; sourceTree = "<group>"; };
+		516EC39C1A34F1DD00B5EF4C /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		516EC39D1A34F1DD00B5EF4C /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		51706D1F19E73AC0005010E6 /* Model 8.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Model 8.xcdatamodel"; sourceTree = "<group>"; };
 		51706D2919E88DBA005010E6 /* Model 9.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Model 9.xcdatamodel"; sourceTree = "<group>"; };
 		51706D2A19E88E42005010E6 /* StatusUpdate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StatusUpdate.h; sourceTree = "<group>"; };
@@ -400,6 +417,24 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		516EC3921A34F1DD00B5EF4C /* Amplitude-iOS-master */ = {
+			isa = PBXGroup;
+			children = (
+				516EC3931A34F1DD00B5EF4C /* AMPARCMacros.h */,
+				516EC3941A34F1DD00B5EF4C /* AMPConstants.h */,
+				516EC3951A34F1DD00B5EF4C /* AMPDeviceInfo.h */,
+				516EC3961A34F1DD00B5EF4C /* AMPDeviceInfo.m */,
+				516EC3971A34F1DD00B5EF4C /* Amplitude-iOS.podspec */,
+				516EC3981A34F1DD00B5EF4C /* Amplitude.h */,
+				516EC3991A34F1DD00B5EF4C /* Amplitude.m */,
+				516EC39A1A34F1DD00B5EF4C /* AMPLocationManagerDelegate.h */,
+				516EC39B1A34F1DD00B5EF4C /* AMPLocationManagerDelegate.m */,
+				516EC39C1A34F1DD00B5EF4C /* LICENSE */,
+				516EC39D1A34F1DD00B5EF4C /* README.md */,
+			);
+			path = "Amplitude-iOS-master";
+			sourceTree = "<group>";
+		};
 		517C894319DB630E005A8407 /* Clients */ = {
 			isa = PBXGroup;
 			children = (
@@ -479,6 +514,7 @@
 		7AD323211A0988CE00C5C83B /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				516EC3921A34F1DD00B5EF4C /* Amplitude-iOS-master */,
 				7AD323221A0988DB00C5C83B /* DAKeyboardControl.h */,
 				7AD323231A0988DB00C5C83B /* DAKeyboardControl.m */,
 			);
@@ -775,6 +811,7 @@
 				7A9CCBE01A2EB147007829D7 /* typename.png in Resources */,
 				7AD323351A0C4DB100C5C83B /* send-no-border.png in Resources */,
 				7A9DC02D1A1573E1000BEFD3 /* green_body.png in Resources */,
+				516EC39F1A34F1DD00B5EF4C /* Amplitude-iOS.podspec in Resources */,
 				7AD323301A0C296600C5C83B /* comment.png in Resources */,
 				7A9F7DEE1A1146FF002B6E40 /* page4.png in Resources */,
 				7A642F161A12EB1200C7F1CE /* clock.png in Resources */,
@@ -787,6 +824,7 @@
 				7AA1AE101A1AAC26006ED5DA /* vertical_arrow.png in Resources */,
 				7A9DC0181A14409D000BEFD3 /* slider_menu.png in Resources */,
 				7AD323281A09B10800C5C83B /* correct.png in Resources */,
+				516EC3A21A34F1DD00B5EF4C /* LICENSE in Resources */,
 				7AD3232D1A0C1C5500C5C83B /* heart.png in Resources */,
 				7A9F7DED1A1146FF002B6E40 /* page3.png in Resources */,
 				7A48343B19EC56E80029D092 /* OpenSans-Semibold.ttf in Resources */,
@@ -846,9 +884,11 @@
 				51BB7CB519EF221A00D10F0D /* Quiz.m in Sources */,
 				7AB610F31A03FE3B001C792D /* UIImage+ImageEffects.m in Sources */,
 				516937AE19EF07BF00EE0C0D /* User.h in Sources */,
+				516EC3A31A34F1DD00B5EF4C /* README.md in Sources */,
 				516937AF19EF07BF00EE0C0D /* User.m in Sources */,
 				51706D3419E88F0B005010E6 /* StatusUpdate.h in Sources */,
 				51706D3519E88F0B005010E6 /* StatusUpdate.m in Sources */,
+				516EC3A01A34F1DD00B5EF4C /* Amplitude.m in Sources */,
 				7AD9AF4119F6EB7200A83B59 /* UIView+MBView.m in Sources */,
 				7AEB9CFF19E9B80E00409276 /* KeywordListTableViewCell.m in Sources */,
 				51706D3919E9E50D005010E6 /* KeywordUpdate.m in Sources */,
@@ -876,6 +916,7 @@
 				7AFF5BBE19E59AEA00CFD35D /* SelectKeywordViewController.m in Sources */,
 				7A0E977519DCDFBC003A9359 /* HomeNavigationController.m in Sources */,
 				7A261F3719F1A8FB00D1E91D /* ExploreNavigationController.m in Sources */,
+				516EC39E1A34F1DD00B5EF4C /* AMPDeviceInfo.m in Sources */,
 				7AFF5BC119E7631F00CFD35D /* StatusUpdateTableViewCell.m in Sources */,
 				7A10A56A19EF23BB006A2CED /* CommentsTableViewController.m in Sources */,
 				7AD323241A0988DB00C5C83B /* DAKeyboardControl.m in Sources */,
@@ -893,6 +934,7 @@
 				7AF4126E19DA672500A470E1 /* SelectPeopleViewController.m in Sources */,
 				516937A819ECD38300EE0C0D /* StatusUpdate+MBStatusUpdate.m in Sources */,
 				7A0E976F19DCBCBF003A9359 /* QuizTableViewCell.m in Sources */,
+				516EC3A11A34F1DD00B5EF4C /* AMPLocationManagerDelegate.m in Sources */,
 				519CB25C19F59688001E1C1A /* NSMutableArray+Shuffling.m in Sources */,
 				7AF4127519DB392200A470E1 /* LoginViewController.m in Sources */,
 				7AF4125819D9FFB800A470E1 /* HomeViewController.m in Sources */,
