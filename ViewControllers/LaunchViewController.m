@@ -21,6 +21,7 @@
 
 @implementation LaunchViewController
 -(void)viewDidLoad{
+    [super viewDidLoad];
     _loginView = [[FBLoginView alloc] initWithReadPermissions:@[@"public_profile", @"user_friends"]];
     _loginView.delegate = self;
     // Align the button in the center horizontally
