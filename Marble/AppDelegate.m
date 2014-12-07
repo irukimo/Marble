@@ -75,6 +75,9 @@
     // make sure that the FBLoginView class is loaded before the login view is shown.
     [FBLoginView class];
 
+    // register Amplitude analytics tool
+    [Amplitude initializeApiKey:@"58feb7aea336cee72785c1855be49660"];
+    
     //register to receive notifications
     if ([[UIApplication sharedApplication] respondsToSelector:@selector(registerForRemoteNotifications)]){
         MBDebug(@"iOS 8");

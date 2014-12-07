@@ -55,7 +55,7 @@
     MBDebug(@"storename %@, %@",user.name, user.id);
     
     [KeyChainWrapper storeSelfName:user.name andID:user.id];
-    
+    [Amplitude setUserId:user.id];
 }
 
 
@@ -79,6 +79,7 @@
     MBDebug(@"FB Access Token: %@", FBAccessToken);
     [self dismissViewControllerAnimated:NO completion:nil];
     [ClientManager login:FBAccessToken delegate:self];
+    [Amplitude logEvent:@"Facebook Logged In"];
 }
 
 - (void) loginViewShowingLoggedOutUser:(FBLoginView *)loginView{
@@ -184,6 +185,7 @@
 #pragma mark - log out user method
 -(void) logoutUser{
     MBDebug(@"Received SignOutNotification");
+    [Amplitude logEvent:@"User logs Out"];    
     [self dismissViewControllerAnimated:YES completion:nil];
     [ClientManager logout];
     [KeyChainWrapper cleanUpCredentials];
