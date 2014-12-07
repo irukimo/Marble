@@ -218,7 +218,7 @@
 
 + (BOOL)searchUserThatContains:(NSString *)string
            returnThisManyUsers:(int)num
-                   inThisArray:(NSArray **)usersToReturn
+                   inThisArray:(NSMutableArray **)usersToReturn
         inManagedObjectContext:(NSManagedObjectContext *)context
                  existingUsers:(NSArray *)existingUsers {
     NSError *error = nil;
@@ -306,9 +306,9 @@
         return FALSE;
     } else if([allMatches count]){
         if([allMatches count] > num && num != -1){
-            *usersToReturn = [allMatches subarrayWithRange:NSMakeRange(0, (int)num)];
+            *usersToReturn = [NSMutableArray arrayWithArray:[allMatches subarrayWithRange:NSMakeRange(0, (int)num)]];
         } else{
-            *usersToReturn = allMatches;
+            *usersToReturn = [NSMutableArray arrayWithArray:allMatches];
         }
         MBDebug(@"After LOAD MORE: users ids: %@", [(*usersToReturn) valueForKey:@"fbID"]);
         return TRUE;
