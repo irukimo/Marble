@@ -32,12 +32,12 @@ static CGFloat screenHeight;
 
 @implementation KeyChainWrapper
 
-+(void)storeFBUserID:(NSString *)fbUserID
-{
-    if (fbUserID != nil) {
-        FBUserID = [NSString stringWithString:fbUserID];
-    }
-}
+//+(void)storeFBUserID:(NSString *)fbUserID
+//{
+//    if (fbUserID != nil) {
+//        FBUserID = [NSString stringWithString:fbUserID];
+//    }
+//}
 
 +(void)storeFBAccessToken:(NSString *)fbAccessToken
 {
@@ -50,20 +50,20 @@ static CGFloat screenHeight;
 {
     return FBAccessToken;
 }
-
-+(NSString *)FBUserID
-{
-    return FBUserID;
-}
-
-+(BOOL)isFBUserIDValid
-{
-    if (FBUserID == nil || [FBUserID isEqualToString:@""]){
-        return false;
-    } else {
-        return true;
-    }
-}
+//
+//+(NSString *)FBUserID
+//{
+//    return FBUserID;
+//}
+//
+//+(BOOL)isFBUserIDValid
+//{
+//    if (FBUserID == nil || [FBUserID isEqualToString:@""]){
+//        return false;
+//    } else {
+//        return true;
+//    }
+//}
 
 +(bool)isExpired:(NSDate *)date
 {

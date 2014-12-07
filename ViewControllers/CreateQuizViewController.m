@@ -1095,11 +1095,21 @@ static const CGFloat horizontalPadding = 35.f;
 -(void)textFieldDidChange :(UITextField *)textField{
     if(textField == _option1NameTextField || textField == _option0NameTextField){
         NSArray *existingUsers = (textField == _option0NameTextField) ? @[_option1] : @[_option0];
-        NSArray *arrayOfUsers;
+        NSMutableArray *arrayOfUsers;
         [User searchUserThatContains:[textField text]
                  returnThisManyUsers:10 inThisArray:&arrayOfUsers
               inManagedObjectContext:[RKManagedObjectStore defaultStore].mainQueueManagedObjectContext
                        existingUsers:existingUsers];
+        
+        //remove self from the array
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"fbID == %@", [KeyChainWrapper getSelfFBID]];
+        NSArray *matches = [arrayOfUsers filteredArrayUsingPredicate:predicate];
+        if ([matches count] > 0) {
+            MBDebug(@"Found self in creating quiz selecting people, %d. Will remove it.", [matches count]);
+            User *selfObject = [matches firstObject];
+            [arrayOfUsers removeObject:selfObject];
+        }
+        
         [_selectPeopleViewController displaySearchResult:arrayOfUsers];
     } else{
         NSArray *arrayOfKeywords = [KeyChainWrapper searchKeywordThatContains:[textField text] returnThisManyKeywords:10];

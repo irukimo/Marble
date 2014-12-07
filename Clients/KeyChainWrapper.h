@@ -13,10 +13,6 @@
 +(NSString *)getSessionTokenForUser;
 +(BOOL) isSessionTokenValid;
 
-+(void)storeFBUserID:(NSString *)fbUserID;
-+(BOOL)isFBUserIDValid;
-+(NSString *)FBUserID;
-
 +(void)storeFBAccessToken:(NSString *)fbAccessToken;
 +(NSString *)FBAccessToken;
 

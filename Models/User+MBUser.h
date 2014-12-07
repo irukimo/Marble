@@ -23,7 +23,7 @@
 
 + (BOOL)searchUserThatContains:(NSString *)string
            returnThisManyUsers:(int)num
-                   inThisArray:(NSArray **)usersToReturn
+                   inThisArray:(NSMutableArray **)usersToReturn
         inManagedObjectContext:(NSManagedObjectContext *)context
                  existingUsers:(NSArray *)existingUsers;
 
