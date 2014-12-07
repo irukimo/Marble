@@ -38,6 +38,7 @@
     NSAttributedString *keywordString = [[NSAttributedString alloc] initWithString:_keyword attributes:[Utility getCreateQuizSuperBigKeywordFontDictionary]];
     [_keywordTextView setAttributedText:keywordString];
     [_keywordTextView setTextAlignment:NSTextAlignmentCenter];
+    [_keywordTextView setScrollEnabled:NO];
 }
 
 
