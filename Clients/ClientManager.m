@@ -75,6 +75,7 @@ static NSInteger tryAgainButtonIndex;
                                                                                error:nil]];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [self handleFailedToLogIn:error];
+        MBDebug(@"Failed to log in");
     }];
 }
 
@@ -120,6 +121,7 @@ static NSInteger tryAgainButtonIndex;
                                           otherButtonTitles:nil];
     tryAgainButtonIndex = [alert addButtonWithTitle:@"Try again!"];
     MBDebug(@"%ld", tryAgainButtonIndex);
+    MBDebug(@"Failed to log in");
     [alert show];
 }
 

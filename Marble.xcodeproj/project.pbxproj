@@ -31,6 +31,7 @@
 		516EC3A11A34F1DD00B5EF4C /* AMPLocationManagerDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 516EC39B1A34F1DD00B5EF4C /* AMPLocationManagerDelegate.m */; };
 		516EC3A21A34F1DD00B5EF4C /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 516EC39C1A34F1DD00B5EF4C /* LICENSE */; };
 		516EC3A31A34F1DD00B5EF4C /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = 516EC39D1A34F1DD00B5EF4C /* README.md */; };
+		516EC3A51A3533D500B5EF4C /* icon-120.png in Resources */ = {isa = PBXBuildFile; fileRef = 516EC3A41A3533D500B5EF4C /* icon-120.png */; };
 		51706D3419E88F0B005010E6 /* StatusUpdate.h in Sources */ = {isa = PBXBuildFile; fileRef = 51706D2A19E88E42005010E6 /* StatusUpdate.h */; };
 		51706D3519E88F0B005010E6 /* StatusUpdate.m in Sources */ = {isa = PBXBuildFile; fileRef = 51706D2B19E88E42005010E6 /* StatusUpdate.m */; };
 		51706D3919E9E50D005010E6 /* KeywordUpdate.m in Sources */ = {isa = PBXBuildFile; fileRef = 51706D3819E9E50D005010E6 /* KeywordUpdate.m */; };
@@ -173,6 +174,7 @@
 		516EC39B1A34F1DD00B5EF4C /* AMPLocationManagerDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMPLocationManagerDelegate.m; sourceTree = "<group>"; };
 		516EC39C1A34F1DD00B5EF4C /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		516EC39D1A34F1DD00B5EF4C /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		516EC3A41A3533D500B5EF4C /* icon-120.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-120.png"; sourceTree = "<group>"; };
 		51706D1F19E73AC0005010E6 /* Model 8.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Model 8.xcdatamodel"; sourceTree = "<group>"; };
 		51706D2919E88DBA005010E6 /* Model 9.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Model 9.xcdatamodel"; sourceTree = "<group>"; };
 		51706D2A19E88E42005010E6 /* StatusUpdate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StatusUpdate.h; sourceTree = "<group>"; };
@@ -468,6 +470,7 @@
 		7A48343719EC56D60029D092 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				516EC3A41A3533D500B5EF4C /* icon-120.png */,
 				7A48343D19EC576C0029D092 /* Fonts */,
 			);
 			name = Resources;
@@ -811,6 +814,7 @@
 				7A9CCBE01A2EB147007829D7 /* typename.png in Resources */,
 				7AD323351A0C4DB100C5C83B /* send-no-border.png in Resources */,
 				7A9DC02D1A1573E1000BEFD3 /* green_body.png in Resources */,
+				516EC3A51A3533D500B5EF4C /* icon-120.png in Resources */,
 				516EC39F1A34F1DD00B5EF4C /* Amplitude-iOS.podspec in Resources */,
 				7AD323301A0C296600C5C83B /* comment.png in Resources */,
 				7A9F7DEE1A1146FF002B6E40 /* page4.png in Resources */,
