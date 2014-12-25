@@ -2,6 +2,8 @@
 #import <UIKit/UIKit.h>
 #endif
 
+#define _AFNETWORKING_ALLOW_INVALID_SSL_CERTIFICATES_ 1
+
 #import "Pods-environment.h"
 #import <Availability.h>
 
