@@ -76,7 +76,7 @@
     [FBLoginView class];
 
     // register Amplitude analytics tool
-    [Amplitude initializeApiKey:@"58feb7aea336cee72785c1855be49660"];
+    [Amplitude initializeApiKey:@"f1debc1c0ff681ecdb3c1ee808672ce0"];
     
     //register to receive notifications
     if ([[UIApplication sharedApplication] respondsToSelector:@selector(registerForRemoteNotifications)]){

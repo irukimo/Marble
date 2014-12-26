@@ -34,8 +34,9 @@
     [center addObserver:self selector:@selector(logoutUser) name:MBSignOutNotification object:nil];
     
     // Set this up once when your application launches
-    UVConfig *config = [UVConfig configWithSite:@"yoursapp.uservoice.com"];
-    config.forumId = 275241;
+    UVConfig *config = [UVConfig configWithSite:@"themarbles.uservoice.com"];
+    config.forumId = 279186;
+    
     // [config identifyUserWithEmail:@"email@example.com" name:@"User Name", guid:@"USER_ID");
     [UserVoice initialize:config];
 }
