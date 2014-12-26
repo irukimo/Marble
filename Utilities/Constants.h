@@ -13,8 +13,8 @@
 #define MBError NSLog
 #define URLMake(IP) (@"http://" IP @":8081/")
 
-//#define PRODUCTION_SERVER @"128.199.253.27"
-#define PRODUCTION_SERVER @"192.168.1.103"
+#define PRODUCTION_SERVER @"128.199.253.27"
+//#define PRODUCTION_SERVER @"192.168.1.103"
 #define TESTING_SERVER @"192.168.0.101"
 
 #define ASYNC(...) dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{ __VA_ARGS__ })
