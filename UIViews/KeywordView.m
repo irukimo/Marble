@@ -22,7 +22,7 @@
         _keyword = keyword;
         [self setBackgroundColor:[UIColor whiteColor]];
         [self constructInformationView];
-        [self addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(cardClicked:)]];
+//        [self addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(cardClicked:)]];
         [self setUserInteractionEnabled:YES];
     }
     return self;
@@ -48,6 +48,7 @@
 
 - (void)constructInformationView {
     _keywordTextView = [[UITextView alloc] initWithFrame:CGRectMake(0, self.frame.size.height/2 - 20, self.frame.size.width, 50)];
+    [_keywordTextView setEditable:NO];
     _keywordTextView.delegate = _delegate;
     [_keywordTextView setBackgroundColor:[UIColor clearColor]];
 
